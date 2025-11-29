@@ -1,0 +1,13 @@
+// This script removes the -Werror flag from all JavaCompile tasks
+// to prevent compilation failures due to warnings being treated as errors
+
+gradle.projectsEvaluated {
+    allprojects {
+        tasks.withType(JavaCompile) { task ->
+            if (task.options.compilerArgs.contains('-Werror')) {
+                task.options.compilerArgs.remove('-Werror')
+                println "Removed -Werror from ${task.path}"
+            }
+        }
+    }
+}
