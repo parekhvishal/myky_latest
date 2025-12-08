@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myky_clone/services/api.dart';
 import 'package:myky_clone/widget/custom_text.dart';
+import 'package:myky_clone/widget/theme.dart';
 
 import '../../spin-wheel/spin_wheel.dart';
 import '../../utils/app_utils.dart';
@@ -93,7 +94,7 @@ class _RewardState extends State<Reward> {
         )
       ),
       body: isLoading
-          ? const Center(child: SizedBox.shrink())
+          ?  Center(child: emptyWidget(context, 'assets/images/no_data_found.png', 'No Data Found', ''))
           : GridView.builder(
             itemCount: spinList.length,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(

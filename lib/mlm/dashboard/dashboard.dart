@@ -5,7 +5,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:flutter_barcode_scanner_plus/flutter_barcode_scanner_plus.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myky_clone/mlm/reports/reports.dart';
@@ -545,7 +545,7 @@ class _MainDashboardState extends State<MainDashboard> {
                                 _buildBankDetail(context, bankDetail),
                               ],
                               16.heightBox,
-                              _dayWiseEarning(),
+                              // _dayWiseEarning(),
                               16.heightBox,
                               // _dayWiseDownLine(),
                               // SizedBox(height: 30),
@@ -1324,19 +1324,19 @@ class _MainDashboardState extends State<MainDashboard> {
     ).marginSymmetric(horizontal: 10.w);
   }
 
-  _dayWiseEarning() {
-    return DayWiseEarningGraph(
-      title: 'Last 7 Days Rewards Graph',
-      dayWiseEarning: mlmDashboard['dayWiseEarnings'],
-    );
-  }
+  // _dayWiseEarning() {
+  //   return DayWiseEarningGraph(
+  //     title: 'Last 7 Days Rewards Graph',
+  //     dayWiseEarning: mlmDashboard['dayWiseEarnings'],
+  //   );
+  // }
 
-  _dayWiseDownLine() {
-    return DayWiseDownLineGraph(
-      title: 'Last 7 Days Patron Members',
-      dayWiseDownLine: mlmDashboard['dayWiseDownline'],
-    );
-  }
+  // _dayWiseDownLine() {
+  //   return DayWiseDownLineGraph(
+  //     title: 'Last 7 Days Patron Members',
+  //     dayWiseDownLine: mlmDashboard['dayWiseDownline'],
+  //   );
+  // }
 
   // Method to check if the string is a JSON
   static bool isJson(String str) {

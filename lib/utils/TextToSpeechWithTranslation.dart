@@ -1,6 +1,6 @@
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:translator/translator.dart';
-import 'package:volume_control/volume_control.dart';
+// import 'package:volume_control/volume_control.dart';
 
 import '../services/storage.dart';
 
@@ -55,7 +55,7 @@ class TextToSpeechWithTranslation {
       // ttsState = TtsState.stopped;
     });
 
-    VolumeControl.setVolume(0.6);
+    // VolumeControl.setVolume(0.6);
 
     // await flutterTts.setLanguage('hi-IN');
     await flutterTts.setVolume(volume);

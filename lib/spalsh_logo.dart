@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:myky_clone/utils/app_config.dart';
-import 'package:package_info/package_info.dart';
 import 'package:video_player/video_player.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 import '../../services/api.dart';
 import '../../services/auth.dart';

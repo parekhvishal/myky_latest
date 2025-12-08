@@ -54,7 +54,7 @@ void showDialogSingleButton(BuildContext context, Map data,
                     children: <Widget>[
                       Text(
                         data['status'] ? "Success!" : "Oops!!!",
-                        style: Theme.of(context).textTheme.subtitle1,
+                        style: Theme.of(context).textTheme.titleMedium,
                       ),
                       SizedBox(height: 10.0),
                       Flexible(

@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:paytm_allinonesdk/paytm_allinonesdk.dart';
+// import 'package:paytm_allinonesdk/paytm_allinonesdk.dart';
 
 import '../services/api.dart';
 import '../services/auth.dart';
@@ -341,27 +341,27 @@ class AppUtils {
     });
   }
 
-  static Future<void> startTransaction(data) async {
-    try {
-      var response = AllInOneSdk.startTransaction(
-        data['params']['MID'],
-        data['params']['ORDERID'],
-        data['amount'].toString(),
-        // "1000",
-        data['txnToken'],
-        data['payTmCallbackUrl'],
-        data['isStaging'],
-        false,
-      );
-      response.then((value) {
-        callPaymentProcess(data['params']['ORDERID'], data['orderId']);
-      }).catchError((onError) {
-        callPaymentProcess(data['params']['ORDERID'], data['orderId']);
-        if (onError is PlatformException) {
-        } else {}
-      });
-    } catch (err) {}
-  }
+  // static Future<void> startTransaction(data) async {
+  //   try {
+  //     var response = AllInOneSdk.startTransaction(
+  //       data['params']['MID'],
+  //       data['params']['ORDERID'],
+  //       data['amount'].toString(),
+  //       // "1000",
+  //       data['txnToken'],
+  //       data['payTmCallbackUrl'],
+  //       data['isStaging'],
+  //       false,
+  //     );
+  //     response.then((value) {
+  //       callPaymentProcess(data['params']['ORDERID'], data['orderId']);
+  //     }).catchError((onError) {
+  //       callPaymentProcess(data['params']['ORDERID'], data['orderId']);
+  //       if (onError is PlatformException) {
+  //       } else {}
+  //     });
+  //   } catch (err) {}
+  // }
 
   static callPaymentProcess(uniqueOrderNo, orderId) {
     Api.http.post('member/recharge/payment-process', data: {

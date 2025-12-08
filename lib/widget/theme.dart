@@ -123,7 +123,7 @@ ThemeData buildThemeData() {
       dialogBackgroundColor: Colors.white,
       unselectedWidgetColor: Colors.black,
       dividerColor: Colors.white,
-      dialogTheme: DialogTheme(shape: dialogShape()),
+      dialogTheme: DialogThemeData(shape: dialogShape()),
       bottomSheetTheme: BottomSheetThemeData(
         shape: RoundedRectangleBorder(
             borderRadius:

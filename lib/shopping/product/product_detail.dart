@@ -9,7 +9,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:like_button/like_button.dart';
 import 'package:myky_clone/widget/custom_container.dart';
-import 'package:nb_utils/nb_utils.dart' hide white;
+import 'package:nb_utils/nb_utils.dart' hide white, Debouncer;
 import 'package:path_provider/path_provider.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:share_plus/share_plus.dart';

@@ -31,7 +31,7 @@ class FileDownloadCtrl {
         return (await getApplicationDocumentsDirectory()).path;
       }
 
-      return await ExternalPath.getExternalStoragePublicDirectory(ExternalPath.DIRECTORY_DOWNLOADS);
+      return await ExternalPath.getExternalStoragePublicDirectory('Download');
     } else {
       return (await getApplicationDocumentsDirectory()).path;
     }

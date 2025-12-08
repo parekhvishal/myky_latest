@@ -1,5 +1,7 @@
 // import 'package:firebase_core/firebase_core.dart';
 // import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
@@ -27,23 +29,23 @@ String? engine;
 double volume = 0.8;
 double pitch = 1.0;
 double rate = 0.5;
-//
-// Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-//   await Firebase.initializeApp();
-//   // toast('${message.data['isAudio']}');
-//   // toast('${message.data['isAudio'] == "1"}');
-//   // toast('${message.data['isAudio'].runtimeType}');
-//   toast('${message.data}');
-//   toast('${message.notification}');
-//   RemoteNotification? notification = message.notification;
-//   TextToSpeechWithTranslation textToSpeechWithTranslation =
-//       TextToSpeechWithTranslation();
-//   if (message.data['isAudio'] == "1") {
-//     textToSpeechWithTranslation.speak(
-//       message.data['message'],
-//     );
-//   }
-// }
+
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
+  // toast('${message.data['isAudio']}');
+  // toast('${message.data['isAudio'] == "1"}');
+  // toast('${message.data['isAudio'].runtimeType}');
+  toast('${message.data}');
+  toast('${message.notification}');
+  RemoteNotification? notification = message.notification;
+  TextToSpeechWithTranslation textToSpeechWithTranslation =
+      TextToSpeechWithTranslation();
+  if (message.data['isAudio'] == "1") {
+    textToSpeechWithTranslation.speak(
+      message.data['message'],
+    );
+  }
+}
 
 const AndroidNotificationChannel channel = AndroidNotificationChannel(
   'my_channel', // id
@@ -61,17 +63,17 @@ void main() async {
   await FlutterDownloader.initialize();
   await AppConfig.init();
   await Auth.initialize();
-  // await Firebase.initializeApp();
+  await Firebase.initializeApp();
 
-  // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   await flutterLocalNotificationsPlugin
       .resolvePlatformSpecificImplementation<
           AndroidFlutterLocalNotificationsPlugin>()
       ?.createNotificationChannel(channel);
 
-  // await PushNotificationManager().init();
-  // DynamicLink.initDynamicLinkData();
+  await PushNotificationManager().init();
+  DynamicLink.initDynamicLinkData();
 
   Get.put<Cart>(Cart());
   await Get.putAsync(() => UPIAppService().init());

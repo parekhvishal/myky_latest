@@ -311,7 +311,7 @@ class _GasBillState extends State<GasBill> {
 
               Api.http.post('member/recharge/gas-bill', data: sendData).then((response) {
                 if (response.data['status']) {
-                  AppUtils.startTransaction(response.data);
+                  // AppUtils.startTransaction(response.data);
                 } else {
                   AppUtils.showErrorSnackBar(response.data['message']);
                 }

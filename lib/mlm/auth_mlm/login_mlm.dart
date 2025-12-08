@@ -206,8 +206,10 @@ class _LoginMLMState extends State<LoginMLM> {
                                         .requestFocus(FocusNode());
 
                                     Api.http.post('member/login', data: {
-                                      'code': 100001,
-                                      'password': 1,
+                                      'code':_codeController.text,
+                                      // 100001,
+                                      'password': _passwordController.text,
+                                      // 1,
                                       'deviceId': deviceId,
                                       'fcmToken': fcmToken,
                                     }).then((response) async {
