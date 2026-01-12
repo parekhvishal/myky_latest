@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner_plus/flutter_barcode_scanner_plus.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:myky_clone/banner_ad_widget.dart';
@@ -17,7 +18,8 @@ import 'package:myky_clone/utils/en_extensions.dart';
 import 'package:myky_clone/widget/cash_giveaway.dart';
 import 'package:myky_clone/widget/custom_text.dart';
 import 'package:myky_clone/widget/qr_scanner.dart';
-import 'package:unicons/unicons.dart';import 'package:url_launcher/url_launcher.dart';
+import 'package:unicons/unicons.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 // New package for confetti
 import 'package:flutter_confetti/flutter_confetti.dart';
@@ -125,67 +127,71 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
 
   Future<bool> _onWillPop() {
     if (_selectedIndex == 0) {
-      Get.dialog(Dialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
-        insetPadding: const EdgeInsets.all(25),
-        clipBehavior: Clip.antiAliasWithSaveLayer,
-        child: Material(
-          child: Container(
-            decoration: new BoxDecoration(
-              color: Colors.white,
-              shape: BoxShape.rectangle,
-              borderRadius: BorderRadius.circular(16),
-              boxShadow: [
-                const BoxShadow(
-                  color: Colors.black26,
-                  blurRadius: 10.0,
-                  offset: Offset(0.0, 10.0),
-                ),
-              ],
-            ),
-            width: MediaQuery.of(context).size.width,
-            child: Column(
-              mainAxisSize: MainAxisSize.min, // To make the card compact
-              children: <Widget>[
-                const SizedBox(height: 24),
-                text(
-                  'Are you sure?\n Do you want to exit an App',
-                  textColor: textColorPrimary,
-                  fontFamily: fontBold,
-                  fontSize: textSizeLargeMedium,
-                  isCentered: true,
-                  isLongText: true,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    TextButton(
-                      onPressed: () => Navigator.of(context).pop(false),
-                      child: text(
-                        'No',
-                        fontSize: textSizeLargeMedium,
-                        fontFamily: fontBold,
-                        textColor: green,
+      Get.dialog(
+        Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(24),
+          ),
+          insetPadding: const EdgeInsets.all(25),
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          child: Material(
+            child: Container(
+              decoration: new BoxDecoration(
+                color: Colors.white,
+                shape: BoxShape.rectangle,
+                borderRadius: BorderRadius.circular(16),
+                boxShadow: [
+                  const BoxShadow(
+                    color: Colors.black26,
+                    blurRadius: 10.0,
+                    offset: Offset(0.0, 10.0),
+                  ),
+                ],
+              ),
+              width: MediaQuery.of(context).size.width,
+              child: Column(
+                mainAxisSize: MainAxisSize.min, // To make the card compact
+                children: <Widget>[
+                  const SizedBox(height: 24),
+                  text(
+                    'Are you sure?\n Do you want to exit an App',
+                    textColor: textColorPrimary,
+                    fontFamily: fontBold,
+                    fontSize: textSizeLargeMedium,
+                    isCentered: true,
+                    isLongText: true,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      TextButton(
+                        onPressed: () => Navigator.of(context).pop(false),
+                        child: text(
+                          'No',
+                          fontSize: textSizeLargeMedium,
+                          fontFamily: fontBold,
+                          textColor: green,
+                        ),
                       ),
-                    ),
-                    TextButton(
-                      onPressed: () async {
-                        SystemNavigator.pop();
-                      },
-                      child: text(
-                        'Yes',
-                        fontSize: textSizeLargeMedium,
-                        fontFamily: fontBold,
-                        textColor: red,
+                      TextButton(
+                        onPressed: () async {
+                          SystemNavigator.pop();
+                        },
+                        child: text(
+                          'Yes',
+                          fontSize: textSizeLargeMedium,
+                          fontFamily: fontBold,
+                          textColor: red,
+                        ),
                       ),
-                    ),
-                  ],
-                )
-              ],
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),
-      ));
+      );
     } else {
       setState(() {
         _selectedIndex = 0;
@@ -241,10 +247,7 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
 
     // Apply padding only to non-home tabs
     if (_selectedIndex != 0) {
-      content = Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: content,
-      );
+      content = Padding(padding: const EdgeInsets.all(16.0), child: content);
     }
 
     // Always wrap in SingleChildScrollView with Expanded parent
@@ -261,7 +264,8 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
               ? content
               : ConstrainedBox(
                   constraints: BoxConstraints(
-                    minHeight: MediaQuery.of(context).size.height -
+                    minHeight:
+                        MediaQuery.of(context).size.height -
                         kBottomNavigationBarHeight -
                         MediaQuery.of(context).padding.top -
                         MediaQuery.of(context).padding.bottom,
@@ -285,11 +289,13 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
           // }),
           16.heightBox,
           _buildScannerSection(),
-          _buildYoutubeSection(),
-          const SizedBox(height: 16.0),
+          _buildHowToPaySection(),
+          // _buildYoutubeSection(),
+          // const SizedBox(height: 16.0),
           _buildFeatureCards(),
-          const WinnersWidget(),
-          HomeSlider(bannerMedia: sliderImages),
+          _buildWinnersSection(),
+          //
+          _buildOnlineProducts(),
           BannerAdWidget(
             adUnitId: 'ca-app-pub-7980318439455341/2126062629',
             adSize: AdSize.largeBanner,
@@ -298,9 +304,24 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
             useTestAds: true,
           ),
           socialMediaContainers(
-            title: 'Instagram',
-            imageUrl: 'https://cdn-icons-png.flaticon.com/512/2111/2111463.png',
-            link: 'https://www.instagram.com/',
+            heading: "Connect With Us",
+            items: const [
+              SocialItem(
+                label: "YouTube",
+                svgAssetPath: "assets/images/svg/youtube.svg",
+                link: "https://www.youtube.com/",
+              ),
+              SocialItem(
+                label: "Facebook",
+                svgAssetPath: "assets/images/svg/facebook.svg",
+                link: "https://www.facebook.com/",
+              ),
+              SocialItem(
+                label: "Instagram",
+                svgAssetPath: "assets/images/svg/instagram.svg",
+                link: "https://www.instagram.com/",
+              ),
+            ],
           ),
           const FreeCashGiveaway(),
         ],
@@ -335,72 +356,69 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
 
   // MARK: - Modern Bottom Navigation Bar
   Widget _buildBottomNavigationBar() {
-    return Container(
-      height: 90,
-      color: Colors.transparent,
-      child: Stack(
-        alignment: Alignment.bottomCenter,
+    return Padding(
+      padding: const EdgeInsets.all(12),
+      child: Row(
         children: [
-          // Main Rounded Bar Background
-          Positioned(
-            bottom: 15,
-            left: 20,
-            right: 90, // Space for red "Shop" button
+          /// ✅ LEFT: Blue pill with 4 icons
+          Expanded(
             child: Container(
-              height: 65,
+              height: 50,
+              padding: const EdgeInsets.symmetric(horizontal: 14),
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.6),
-                borderRadius: BorderRadius.circular(40),
+                color: const Color(0xFF00089E),
+                borderRadius: BorderRadius.circular(10),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.25),
-                    blurRadius: 10,
-                    offset: const Offset(0, 4),
+                    color: Colors.black.withOpacity(0.08),
+                    blurRadius: 15,
+                    offset: const Offset(0, 6),
                   ),
                 ],
               ),
-              padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  _buildIconItem(0, UniconsLine.home, 'Home', colorPrimary),
-                  _buildIconItem(
-                      2, UniconsLine.wallet, 'Wallet', Colors.orange),
-                  _buildIconItem(3, UniconsLine.user, 'Profile', Colors.red),
-                  _buildIconItem(5, UniconsLine.gift, 'Reward', Colors.pink),
+                  _buildIconItem(0, UniconsLine.home),
+                  _buildIconItem(2, UniconsLine.wallet),
+                  _buildIconItem(3, UniconsLine.user),
+                  _buildIconItem(5, UniconsLine.gift),
                 ],
               ),
             ),
           ),
-          // Red "Shop" Button (like Zomato)
-          Positioned(
-            bottom: 10,
-            right: 15,
-            child: GestureDetector(
-              onTap: () => _onTabTapped(4),
-              child: Container(
-                height: 70,
-                width: 70,
-                decoration: BoxDecoration(
-                  color: colorPrimary,
-                  shape: BoxShape.circle,
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Colors.black38,
-                      blurRadius: 8,
-                      offset: Offset(0, 3),
-                    ),
-                  ],
-                ),
-                child: Center(
-                  child: CustomText(
-                    'Shop',
-                    textColor: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14.sp,
-                    letterSpacing: 0.5,
+
+          // const SizedBox(width: 10),
+
+          /// ✅ RIGHT: Green shop tab (separate container)
+          GestureDetector(
+            onTap: () => _onTabTapped(4),
+            child: Container(
+              height: 50,
+              width: 95,
+              decoration: BoxDecoration(
+                color: const Color(0xFF2EE6C5),
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.12),
+                    blurRadius: 12,
+                    offset: const Offset(0, 6),
                   ),
-                ),
+                ],
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(UniconsLine.store, color: Colors.black, size: 22),
+                  const SizedBox(height: 3),
+                  CustomText(
+                    'Shop',
+                    textColor: Colors.black,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 12.sp,
+                  ),
+                ],
               ),
             ),
           ),
@@ -409,38 +427,22 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
     );
   }
 
-  Widget _buildIconItem(
-      int index, IconData icon, String label, Color activeColor) {
+  Widget _buildIconItem(int index, IconData icon) {
     bool isSelected = _selectedIndex == index;
 
-    return GestureDetector(
-      onTap: () => _onTabTapped(index),
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
-        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 6),
-        decoration: BoxDecoration(
-          color:
-              isSelected ? Colors.white.withOpacity(0.15) : Colors.transparent,
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
+    return Expanded(
+      child: GestureDetector(
+        onTap: () => _onTabTapped(index),
+        child: Center(
+          child: AnimatedScale(
+            scale: isSelected ? 1.10 : 1.0,
+            duration: const Duration(milliseconds: 200),
+            child: Icon(
               icon,
-              size: isSelected ? 26 : 24,
-              color: isSelected ? activeColor : Colors.black45,
+              size: 26,
+              color: Colors.white, // icons should be white like your UI
             ),
-            const SizedBox(height: 4),
-            Text(
-              label,
-              style: TextStyle(
-                fontSize: 10,
-                fontWeight: FontWeight.w600,
-                color: isSelected ? activeColor : Colors.black45,
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );
@@ -467,168 +469,85 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
   }
 
   // MARK: - Rest of your existing methods (unchanged)
-  Widget socialMediaContainers(
-      {required String title, required String imageUrl, required String link}) {
-    void _launchURL(String url) async {
+  Widget socialMediaContainers({
+    required String heading,
+    required List<SocialItem> items,
+  }) {
+    Future<void> _launchURL(String url) async {
       final Uri uri = Uri.parse(url);
       if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
         throw 'Could not launch $url';
       }
     }
 
-    Widget modernSocialCard(
-        {required String title,
-        required String imageUrl,
-        required String link,
-        required Color brandColor}) {
-      return GestureDetector(
-        onTap: () => _launchURL(link),
-        child: Container(
-          padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 8.w),
-          decoration: BoxDecoration(
-            color: brandColor.withOpacity(0.08),
-            borderRadius: BorderRadius.circular(18),
-            border: Border.all(
-              color: brandColor.withOpacity(0.2),
-              width: 1.5,
-            ),
+    return Column(
+      //crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          heading,
+          style: TextStyle(
+            fontFamily: fontPoppinsMedium,
+            fontSize: 20.sp,
+            fontWeight: FontWeight.w500,
+
+            color: const Color(0xFF1A1A1A),
           ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                padding: EdgeInsets.all(12.w),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  shape: BoxShape.circle,
-                  boxShadow: [
-                    BoxShadow(
-                      color: brandColor.withOpacity(0.2),
-                      blurRadius: 12,
-                      offset: const Offset(0, 4),
+        ),
+
+        SizedBox(height: 18),
+
+        /// ✅ Dynamic row for SVG icons
+        Container(
+          margin: EdgeInsets.only(bottom: 20),
+          padding: EdgeInsets.symmetric(horizontal: 20),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: items.map((item) {
+              return GestureDetector(
+                onTap: () => _launchURL(item.link),
+                child: Column(
+                  children: [
+                    Container(
+                      width: 68.w,
+                      height: 68.w,
+                      decoration: const BoxDecoration(
+                        color: Color(0xFFF2F4FF),
+                        shape: BoxShape.circle,
+                      ),
+                      child: Center(
+                        child: SvgPicture.asset(
+                          item.svgAssetPath,
+                          width: 22.w,
+                          height: 22.w,
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 8.h),
+                    Text(
+                      item.label,
+                      style: TextStyle(
+                        fontSize: 13.sp,
+                        fontWeight: FontWeight.w500,
+                        fontFamily: fontPoppinsMedium,
+                        color: const Color(0xFF1A1A1A),
+                      ),
                     ),
                   ],
                 ),
-                child: Image.network(
-                  imageUrl,
-                  height: 28,
-                  width: 28,
-                  errorBuilder: (_, __, ___) => Icon(
-                    Icons.error_outline,
-                    size: 28,
-                    color: brandColor,
-                  ),
-                ),
-              ),
-              SizedBox(height: 10.h),
-              Text(
-                title,
-                style: TextStyle(
-                  color: brandColor,
-                  fontSize: 12.sp,
-                  fontWeight: FontWeight.w700,
-                  letterSpacing: 0.3,
-                ),
-                textAlign: TextAlign.center,
-              ),
-            ],
+              );
+            }).toList(),
           ),
         ),
-      );
-    }
-
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 20.w, vertical: 16.h),
-      padding: EdgeInsets.all(24.w),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(28),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.08),
-            blurRadius: 24,
-            offset: const Offset(0, 12),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Container(
-                padding: EdgeInsets.all(10.w),
-                decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    colors: [
-                      Color(0xFF667EEA),
-                      Color(0xFF764BA2),
-                    ],
-                  ),
-                  borderRadius: BorderRadius.circular(14),
-                ),
-                child: const Icon(
-                  Icons.connect_without_contact_rounded,
-                  color: Colors.white,
-                  size: 22,
-                ),
-              ),
-              SizedBox(width: 12.w),
-              Text(
-                'Connect With Us',
-                style: TextStyle(
-                  color: const Color(0xFF1A1A1A),
-                  fontSize: 20.sp,
-                  fontWeight: FontWeight.w800,
-                  letterSpacing: 0.3,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: 20.h),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: modernSocialCard(
-                  title: 'YouTube',
-                  imageUrl:
-                      'https://cdn-icons-png.flaticon.com/512/1384/1384060.png',
-                  link: 'https://www.youtube.com/',
-                  brandColor: const Color(0xFFFF0000),
-                ),
-              ),
-              SizedBox(width: 12.w),
-              Expanded(
-                child: modernSocialCard(
-                  title: 'Facebook',
-                  imageUrl:
-                      'https://cdn-icons-png.flaticon.com/512/733/733547.png',
-                  link: 'https://www.facebook.com/',
-                  brandColor: const Color(0xFF1877F2),
-                ),
-              ),
-              SizedBox(width: 12.w),
-              Expanded(
-                child: modernSocialCard(
-                  title: 'Instagram',
-                  imageUrl:
-                      'https://cdn-icons-png.flaticon.com/512/2111/2111463.png',
-                  link: 'https://www.instagram.com/',
-                  brandColor: const Color(0xFFE4405F),
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
+      ],
     );
   }
 
-  Widget reelVideoContainer(
-      {required String thumbnailUrl,
-      required String title,
-      required VoidCallback onTap}) {
+  Widget reelVideoContainer({
+    required String thumbnailUrl,
+    required String title,
+    required VoidCallback onTap,
+  }) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -639,12 +558,15 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
           borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
-                color: Colors.black.withOpacity(0.3),
-                blurRadius: 8,
-                offset: const Offset(2, 4))
+              color: Colors.black.withOpacity(0.3),
+              blurRadius: 8,
+              offset: const Offset(2, 4),
+            ),
           ],
           image: DecorationImage(
-              image: NetworkImage(thumbnailUrl), fit: BoxFit.cover),
+            image: NetworkImage(thumbnailUrl),
+            fit: BoxFit.cover,
+          ),
         ),
         child: Stack(
           children: [
@@ -652,35 +574,41 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
                 gradient: LinearGradient(
-                    begin: Alignment.bottomCenter,
-                    end: Alignment.topCenter,
-                    colors: [
-                      Colors.black.withOpacity(0.6),
-                      Colors.transparent
-                    ]),
+                  begin: Alignment.bottomCenter,
+                  end: Alignment.topCenter,
+                  colors: [Colors.black.withOpacity(0.6), Colors.transparent],
+                ),
               ),
             ),
             Positioned(
               left: 10,
               bottom: 10,
               right: 10,
-              child: Text(title,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                      shadows: [
-                        Shadow(
-                            color: Colors.black54,
-                            offset: Offset(1, 1),
-                            blurRadius: 3)
-                      ])),
+              child: Text(
+                title,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                  shadows: [
+                    Shadow(
+                      color: Colors.black54,
+                      offset: Offset(1, 1),
+                      blurRadius: 3,
+                    ),
+                  ],
+                ),
+              ),
             ),
             const Center(
-                child: Icon(Icons.play_circle_fill_rounded,
-                    color: Colors.white70, size: 60)),
+              child: Icon(
+                Icons.play_circle_fill_rounded,
+                color: Colors.white70,
+                size: 60,
+              ),
+            ),
           ],
         ),
       ),
@@ -689,25 +617,28 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
 
   Widget _buildMykySymbol() {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Container(
-          width: 40,
-          height: 40,
-          decoration: BoxDecoration(
-              color: Colors.white, borderRadius: BorderRadius.circular(8)),
-          child: Center(
-              child: Text('M',
-                  style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: colorPrimary))),
+        Image.asset("assets/images/logo copy.png", height: 28),
+
+        Row(
+          children: [
+            IconButton(
+              onPressed: () {
+                // TODO: notification action
+              },
+              icon: const Icon(
+                Icons.notifications_none_rounded,
+                color: Colors.white,
+              ),
+            ),
+            const SizedBox(width: 6),
+            const CircleAvatar(
+              radius: 16,
+              backgroundImage: AssetImage("assets/logo/profilePic.png"),
+            ),
+          ],
         ),
-        const SizedBox(width: 10),
-        const Text('MYKY',
-            style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: Colors.white)),
       ],
     );
   }
@@ -722,78 +653,105 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
       'assets/static-images/06.jpg',
     ];
 
-    return Container(
-      height: MediaQuery.of(context).size.height * 0.8,
-      child: Stack(
-        children: [
-          CarouselSlider(
-            options: CarouselOptions(
-              height: MediaQuery.of(context).size.height * 0.8,
-              viewportFraction: 1.0,
-              enlargeCenterPage: false,
-              autoPlay: true,
-              autoPlayInterval: const Duration(seconds: 3),
-            ),
-            items: imageUrls.map((url) {
-              return Builder(builder: (context) {
-                return Container(
-                  width: MediaQuery.of(context).size.width,
-                  child: Stack(
-                    children: [
-                      Image.asset(url,
-                          width: MediaQuery.of(context).size.width,
-                          height: MediaQuery.of(context).size.height * 0.8,
-                          fit: BoxFit.cover,
-                          errorBuilder: (_, __, ___) => Container(
+    return ClipRRect(
+      borderRadius: const BorderRadius.only(
+        bottomLeft: Radius.circular(24),
+        bottomRight: Radius.circular(24),
+      ),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(24),
+            bottomRight: Radius.circular(24),
+          ),
+        ),
+        height: MediaQuery.of(context).size.height * 0.8,
+        child: Stack(
+          children: [
+            CarouselSlider(
+              options: CarouselOptions(
+                height: MediaQuery.of(context).size.height * 0.8,
+                viewportFraction: 1.0,
+                enlargeCenterPage: false,
+                autoPlay: true,
+                autoPlayInterval: const Duration(seconds: 3),
+              ),
+              items: imageUrls.map((url) {
+                return Builder(
+                  builder: (context) {
+                    return Container(
+                      width: MediaQuery.of(context).size.width,
+
+                      child: Stack(
+                        children: [
+                          Image.asset(
+                            url,
+                            width: MediaQuery.of(context).size.width,
+                            height: MediaQuery.of(context).size.height * 0.8,
+                            fit: BoxFit.cover,
+                            errorBuilder: (_, __, ___) => Container(
                               color: Colors.grey[300],
                               child: Center(
-                                  child: Icon(Icons.image_not_supported,
-                                      size: 50, color: Colors.grey[600])))),
-                      Positioned(
-                        top: 0,
-                        left: 0,
-                        right: 0,
-                        child: Container(
-                          height: 120,
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                              colors: [
-                                colorPrimary.withOpacity(0.7),
-                                colorPrimary.withOpacity(0.3),
-                                Colors.transparent
-                              ],
-                              stops: [0.0, 0.7, 1.0],
+                                child: Icon(
+                                  Icons.image_not_supported,
+                                  size: 50,
+                                  color: Colors.grey[600],
+                                ),
+                              ),
                             ),
                           ),
-                        ),
+                          Positioned(
+                            top: 0,
+                            left: 0,
+                            right: 0,
+                            child: Container(
+                              height: 120,
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  begin: Alignment.topCenter,
+                                  end: Alignment.bottomCenter,
+                                  colors: [
+                                    colorPrimary.withOpacity(0.7),
+                                    colorPrimary.withOpacity(0.3),
+                                    Colors.transparent,
+                                  ],
+                                  stops: [0.0, 0.7, 1.0],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    );
+                  },
                 );
-              });
-            }).toList(),
-          ),
-          Positioned(
+              }).toList(),
+            ),
+            Positioned(
               top: MediaQuery.of(context).padding.top + 20,
               left: 20,
-              child: _buildMykySymbol()),
-        ],
+              right: 20,
+              child: _buildMykySymbol(),
+            ),
+          ],
+        ),
       ),
     );
   }
 
   String extractYouTubeVideoId(String embedUrl) {
-    RegExp regExp =
-        RegExp(r'youtube\.com\/embed\/([a-zA-Z0-9_-]+)', caseSensitive: false);
+    RegExp regExp = RegExp(
+      r'youtube\.com\/embed\/([a-zA-Z0-9_-]+)',
+      caseSensitive: false,
+    );
     final match = regExp.firstMatch(embedUrl);
     return match?.group(1) ?? 'dQw4w9WgXcQ';
   }
 
   Future<void> _openYouTubeVideo(String videoId) async {
-    final youtubeAppUrl =
-        Uri.parse('youtube://www.youtube.com/watch?v=$videoId');
+    final youtubeAppUrl = Uri.parse(
+      'youtube://www.youtube.com/watch?v=$videoId',
+    );
     final youtubeWebUrl = Uri.parse('https://www.youtube.com/watch?v=$videoId');
     try {
       if (await canLaunchUrl(youtubeAppUrl)) {
@@ -802,24 +760,39 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
         await launchUrl(youtubeWebUrl, mode: LaunchMode.externalApplication);
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text('Could not open video.'), backgroundColor: Colors.red));
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Could not open video.'),
+          backgroundColor: Colors.red,
+        ),
+      );
     }
   }
 
   Future<void> _openQRScanner() async {
     try {
       String barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
-          '#ff6666', 'Cancel', true, ScanMode.QR);
+        '#ff6666',
+        'Cancel',
+        true,
+        ScanMode.QR,
+      );
       if (barcodeScanRes != '-1') {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
             content: Text('Scanned: $barcodeScanRes'),
-            backgroundColor: Colors.green));
+            backgroundColor: Colors.green,
+          ),
+        );
         _processScanResult(barcodeScanRes);
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text('Scan failed.'), backgroundColor: Colors.red));
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Scan failed.'),
+          backgroundColor: Colors.red,
+        ),
+      );
     }
   }
 
@@ -839,12 +812,57 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
   }
 
   void _processPaymentQR(String upiString) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
         content: const Text('Payment QR detected'),
-        backgroundColor: colorPrimary));
+        backgroundColor: colorPrimary,
+      ),
+    );
   }
 
-  Widget _buildScannerSection() => const QRScannerBox();
+  Widget _buildScannerSection() => QrScannerBox();
+  Widget _buildHowToPaySection() {
+    final List<String> images = [
+      "assets/images/img1.jpg",
+      "assets/images/img2.jpg",
+      "assets/images/img2.jpg",
+    ];
+    return Column(
+      children: [
+        Text(
+          "HOW TO PAY",
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w500,
+            color: Colors.black,
+            fontFamily: fontPoppinsMedium,
+          ),
+        ),
+        SizedBox(height: 10),
+        CarouselSlider(
+          items: images.map((path) {
+            return ClipRRect(
+              borderRadius: BorderRadius.circular(16),
+              child: Image.asset(
+                path,
+                fit: BoxFit.cover,
+                width: double.infinity,
+              ),
+            );
+          }).toList(),
+          options: CarouselOptions(
+            height: 220,
+            autoPlay: true,
+            enlargeCenterPage: true,
+            viewportFraction: 0.88,
+            autoPlayInterval: const Duration(seconds: 3),
+            autoPlayCurve: Curves.fastOutSlowIn,
+            enlargeFactor: 0.2,
+          ),
+        ),
+      ],
+    );
+  }
 
   Widget _buildFeatureCards() {
     return Container(
@@ -856,309 +874,239 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
             'Services',
             style: TextStyle(
               color: Colors.black,
-              fontSize: 24.sp,
-              fontWeight: FontWeight.w800,
-              letterSpacing: 0.5,
-              // shadows: [
-              //   Shadow(
-              //     color: Colors.white.withOpacity(0.4),
-              //     offset: const Offset(-1, 2),
-              //     blurRadius: 8,
-              //   ),
-              // ],
+              fontSize: 20.sp,
+              fontWeight: FontWeight.w500,
+
+              fontFamily: fontPoppinsMedium,
             ),
           ),
-          SizedBox(height: 16.h),
-          Row(
-            children: [
-              Expanded(
-                child: _buildPremiumFeatureCard(
-                  title: 'Nearby',
-                  subtitle: 'Offline Stores',
+          //  SizedBox(height: 16.h),
 
-                  // IMPROVED PURPLE-LAVENDER PALLETE
-                  primaryColor: const Color(0xFF8A7CFF),
-                  secondaryColor: const Color(0xFFB5A9FF),
-                  iconBg: const Color(0xFFF4EEFF),
-
-                  icon: Icons.store_mall_directory_rounded,
-                  onTap: () => Get.toNamed('/nearby-offline-store'),
-
-                  mainGradient: const LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [
-                      Color.fromARGB(255, 162, 157, 254), // Purple
-                      Color.fromARGB(255, 248, 225, 254), // Lavender blend
-                      Color.fromARGB(255, 255, 255, 255), // Very end white
-                    ],
-                    stops: [0.0, 0.8, 1.0],
-
-                    // Purple covers more
-                  ),
-
-
-                ),
-
-              ),
-              SizedBox(width: 14.w),
-              Expanded(
-                  child: _buildPremiumFeatureCard(
-                      title: 'Coins',
-                      subtitle: 'Earn Rewards',
-                      primaryColor: const Color(0xFFFF6B6B),
-                      secondaryColor: const Color(0xFFFF8E8E),
-                      icon: Icons.stars_rounded,
-                      iconBg: const Color(0xFFFFE5E5),
-                      mainGradient: const LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: [
-                          Color.fromARGB(200, 255, 85, 85),   // Softened red start
-                          Color.fromARGB(255, 255, 170, 170), // Soft red tint
-                          Color.fromARGB(255, 255, 245, 245), // Minimal white touch
-                        ],
-                        stops: [0.0, 0.85, 1.0],
-
-
+          /// ✅ OFFER GRID UI (like your OfferGrid code)
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 0.w, vertical: 8.h),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                /// Left side - Flex 3
+                Expanded(
+                  flex: 3,
+                  child: Column(
+                    children: [
+                      _buildOfferTile(
+                        height: 180.h,
+                        gradient: const LinearGradient(
+                          colors: [
+                            // Color.fromARGB(255, 162, 157, 254),
+                            Color.fromARGB(255, 255, 255, 255),
+                            Color.fromARGB(255, 255, 255, 255),
+                          ],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
+                        imagePath: "assets/images/grid/offlineStore.png",
+                        fit: BoxFit.cover,
+                        onTap: () => Get.toNamed('/nearby-offline-store'),
                       ),
-                      onTap: () {
-                        Get.toNamed('/coin-wallet');
-                      })),
-            ],
+                      SizedBox(height: 10.h),
+                      _buildOfferTile(
+                        height: 70.h,
+                        gradient: const LinearGradient(
+                          colors: [
+                            Color.fromARGB(255, 255, 255, 255),
+                            Color.fromARGB(255, 255, 206, 255),
+                          ],
+                        ),
+                        imagePath: "assets/images/grid/map.png",
+                        fit: BoxFit.contain,
+                        onTap: () => Get.toNamed('/near-me-store'),
+                      ),
+                    ],
+                  ),
+                ),
+
+                SizedBox(width: 12.w),
+
+                /// Right side - Flex 2
+                Expanded(
+                  flex: 2,
+                  child: Column(
+                    children: [
+                      _buildOfferTile(
+                        height: 125.h,
+                        gradient: const LinearGradient(
+                          colors: [
+                            Color.fromARGB(255, 199, 255, 204),
+                            Color.fromARGB(255, 255, 255, 255),
+                          ],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
+                        imagePath: "assets/images/grid/coins.png",
+                        fit: BoxFit.cover,
+                        onTap: () => Get.toNamed('/coin-wallet'),
+                      ),
+                      SizedBox(height: 10.h),
+                      _buildOfferTile(
+                        height: 125.h,
+                        gradient: const LinearGradient(
+                          colors: [
+                            Color.fromARGB(255, 158, 234, 255),
+                            Color.fromARGB(255, 229, 248, 255),
+                          ],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
+                        imagePath: "assets/images/grid/recharge.png",
+                        fit: BoxFit.cover,
+                        onTap: () {
+                          setState(() {
+                            _selectedIndex = 1;
+                          });
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
-          SizedBox(height: 14.h),
-          Row(children: [
-            Expanded(
-              child: _buildPremiumFeatureCard(
-                title: 'Map',
-                subtitle: 'Directions',
-
-                // MATCHED COLORS
-                primaryColor: const Color(0xFF6ECFF6),
-                secondaryColor: const Color(0xFF9DE3F9),
-                iconBg: const Color(0xFFE8F9FF),
-
-                icon: Icons.explore_rounded,
-
-                mainGradient: const LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [
-                    Color.fromARGB(230, 158, 234, 255), // Soft aqua
-                    Color.fromARGB(255, 229, 248, 255), // Pale aqua blend
-                    Color.fromARGB(255, 255, 255, 255), // End white
-                  ],
-                  stops: [0.0, 0.85, 1.0],
-                ),
-
-                onTap: () {
-                  Get.toNamed('/near-me-store');
-                },
-              ),
-            ),
-            SizedBox(width: 14.w),
-            Expanded(
-              child: _buildPremiumFeatureCard(
-                title: 'Recharge',
-                subtitle: 'Pay Bills',
-
-                // MATCHED MINT GREEN COLORS
-                primaryColor: const Color(0xFF6EDB8D),
-                secondaryColor: const Color(0xFF9EEFC0),
-                iconBg: const Color(0xFFEFFEF4),
-
-                icon: Icons.phone_iphone_rounded,
-
-                mainGradient: const LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [
-                    Color.fromARGB(230, 199, 255, 204), // Soft mint
-                    Color.fromARGB(255, 225, 255, 230), // Lighter mint blend
-                    Color.fromARGB(255, 255, 255, 255), // End white
-                  ],
-                  stops: [0.0, 0.85, 1.0],
-                ),
-
-                onTap: () {
-                  setState(() {
-                    _selectedIndex = 1;
-                  });
-                },
-              ),
-            ),
-          ]),
-          SizedBox(height: 24.h),
         ],
       ),
     );
   }
 
-  Widget _buildPremiumFeatureCard({
-    required String title,
-    required String subtitle,
-    required Color primaryColor,
-    required Color secondaryColor,
-    required IconData icon,
-    required Color iconBg,
+  Widget _buildOfferTile({
+    required double height,
+    required LinearGradient gradient,
+    required String imagePath,
+    required BoxFit fit,
     required VoidCallback onTap,
-    LinearGradient? mainGradient, // Custom main background gradient (optional)
   }) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        height: 180.h,
+        height: height,
+        width: double.infinity,
         decoration: BoxDecoration(
-          gradient: mainGradient ??
-              LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  Colors.white,
-                  primaryColor.withOpacity(0.03),
-                  secondaryColor.withOpacity(0.02),
-                ],
-                stops: const [0.0, 0.6, 1.0],
-              ),
-          borderRadius: BorderRadius.circular(28),
-          boxShadow: [
+          gradient: gradient,
+          borderRadius: BorderRadius.circular(20.r),
+          boxShadow: const [
             BoxShadow(
-              color: primaryColor.withOpacity(0.15),
-              blurRadius: 24,
-              offset: const Offset(0, 12),
-            ),
-            BoxShadow(
-              color: Colors.black.withOpacity(0.05),
-              blurRadius: 8,
-              offset: const Offset(0, 4),
+              color: Color.fromARGB(102, 0, 0, 0),
+              offset: Offset.zero,
+              blurRadius: 12,
             ),
           ],
         ),
-        child: Stack(
-          children: [
-            // Top accent bar
-            Positioned(
-              top: 0,
-              left: 0,
-              right: 0,
-              child: Container(
-                height: 6,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [primaryColor, secondaryColor],
-                  ),
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(28),
-                    topRight: Radius.circular(28),
-                  ),
-                ),
-              ),
-            ),
-            // Decorative circles
-            Positioned(
-              top: -30,
-              right: -30,
-              child: Container(
-                width: 100,
-                height: 100,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      primaryColor.withOpacity(0.03),
-                      primaryColor.withOpacity(0.08),
-                    ],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                  shape: BoxShape.circle,
-                ),
-              ),
-            ),
-            Positioned(
-              bottom: -20,
-              left: -20,
-              child: Container(
-                width: 70,
-                height: 70,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      secondaryColor.withOpacity(0.02),
-                      secondaryColor.withOpacity(0.06),
-                    ],
-                    begin: Alignment.topRight,
-                    end: Alignment.bottomLeft,
-                  ),
-                  shape: BoxShape.circle,
-                ),
-              ),
-            ),
-            // Main content
-            Padding(
-              padding: EdgeInsets.all(18.w),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    padding: EdgeInsets.all(14.w),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      // gradient: LinearGradient(
-                      //   colors: [iconBg, iconBg.withOpacity(0.9)],
-                      //   begin: Alignment.topLeft,
-                      //   end: Alignment.bottomRight,
-                      // ),
-                      borderRadius: BorderRadius.circular(18),
-                      boxShadow: [
-                        BoxShadow(
-                          color: primaryColor.withOpacity(0.1),
-                          blurRadius: 12,
-                          offset: const Offset(0, 4),
-                        ),
-                      ],
-                    ),
-                    child: Icon(icon, color: primaryColor, size: 32),
-                  ),
-                  const Spacer(),
-                  Text(
-                    title,
-                    style: TextStyle(
-                      color: const Color(0xFF1A1A1A),
-                      fontSize: 18.sp,
-                      fontWeight: FontWeight.w800,
-                      letterSpacing: 0.3,
-                      height: 1.2,
-                    ),
-                  ),
-                  SizedBox(height: 4.h),
-                  Text(
-                    subtitle,
-                    style: TextStyle(
-                      color: const Color(0xFF6B6B6B),
-                      fontSize: 12.sp,
-                      fontWeight: FontWeight.w600,
-                      letterSpacing: 0.2,
-                    ),
-                  ),
-                  SizedBox(height: 8.h),
-                  Container(
-                    padding: EdgeInsets.all(6.w),
-                    decoration: const BoxDecoration(
-                      color: Colors.white,
-                      shape: BoxShape.circle,
-                    ),
-                    child: Icon(
-                      Icons.arrow_forward_rounded,
-                      color: primaryColor,
-                      size: 16,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(20.r),
+          child: Image.asset(
+            imagePath,
+            height: double.infinity,
+            width: double.infinity,
+            fit: fit,
+          ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildWinnersSection() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "Winners",
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w500,
+              fontFamily: fontPoppinsMedium,
+            ),
+          ),
+          SizedBox(height: 10),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(15.0),
+            child: Image.asset("assets/images/winners3.jpg"),
+          ),
+          SizedBox(height: 10),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(15.0),
+            child: Image.asset("assets/images/winners2.jpg"),
+          ),
+          SizedBox(height: 10),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(15.0),
+            child: Image.asset("assets/images/winners1.jpg"),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildOnlineProducts() {
+    return Column(
+      children: [
+        Text(
+          "Online Products",
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w500,
+            color: Colors.black,
+            fontFamily: fontPoppinsMedium,
+          ),
+        ),
+        SizedBox(height: 10),
+        Image.asset("assets/images/luxury.png", fit: BoxFit.cover),
+      ],
+    );
+  }
+
+  Widget peopleLove() {
+    final List<Map<String, String>> people = const [
+      {"image": "assets/images/p1.jpg", "name": "Maneesh Apte"},
+      {"image": "assets/images/p2.jpg", "name": "Samantha Lee"},
+      {"image": "assets/images/p3.jpg", "name": "Rohit Verma"},
+      {"image": "assets/images/p2.jpg", "name": "Andrea Collins"},
+      {"image": "assets/images/p1.jpg", "name": "Daniel Cruz"},
+    ];
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          // ------------------ TITLE ------------------
+          const Text(
+            "WHY PEOPLE LOVE MYKY",
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w700,
+              letterSpacing: 0.5,
+            ),
+          ),
+
+          const SizedBox(height: 14),
+
+          // ------------------ HORIZONTAL SCROLL CAROUSEL ------------------
+          SizedBox(
+            height: 150,
+            child: ListView.separated(
+              scrollDirection: Axis.horizontal,
+              padding: const EdgeInsets.symmetric(horizontal: 4),
+              itemCount: 6, // add more cards if needed
+              separatorBuilder: (_, __) => const SizedBox(width: 12),
+              itemBuilder: (context, index) {
+                final person = people[index];
+                return _LoveCard(
+                  image: person["image"]!,
+                  name: person["name"]!,
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -1166,48 +1114,54 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
   Widget _buildYoutubeSection() {
     List<Map<String, String>> videoData =
         youtubeVideos != null && youtubeVideos!.isNotEmpty
-            ? youtubeVideos!.map((video) {
-                String videoId = extractYouTubeVideoId(video['link']);
-                return {
-                  'thumbnail':
-                      'https://img.youtube.com/vi/$videoId/hqdefault.jpg',
-                  'title': 'How to Play - Tutorial ${video['id']}',
-                  'videoId': videoId,
-                };
-              }).toList()
-            : [
-                {
-                  'thumbnail':
-                      'https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg',
-                  'title': 'How to Play - Tutorial 1',
-                  'videoId': 'dQw4w9WgXcQ'
-                },
-                {
-                  'thumbnail':
-                      'https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg',
-                  'title': 'How to Play - Tutorial 2',
-                  'videoId': 'dQw4w9WgXcQ'
-                },
-                {
-                  'thumbnail':
-                      'https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg',
-                  'title': 'How to Play - Tutorial 3',
-                  'videoId': 'dQw4w9WgXcQ'
-                },
-              ];
+        ? youtubeVideos!.map((video) {
+            String videoId = extractYouTubeVideoId(
+              (video['link'] ?? '').toString(),
+            );
+            return {
+              'thumbnail': 'https://img.youtube.com/vi/$videoId/hqdefault.jpg',
+              'title': 'How to Play - Tutorial ${video['id']}',
+              'videoId': videoId,
+            };
+          }).toList()
+        : [
+            {
+              'thumbnail':
+                  'https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg',
+              'title': 'How to Play - Tutorial 1',
+              'videoId': 'dQw4w9WgXcQ',
+            },
+            {
+              'thumbnail':
+                  'https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg',
+              'title': 'How to Play - Tutorial 2',
+              'videoId': 'dQw4w9WgXcQ',
+            },
+            {
+              'thumbnail':
+                  'https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg',
+              'title': 'How to Play - Tutorial 3',
+              'videoId': 'dQw4w9WgXcQ',
+            },
+          ];
 
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(15)),
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(15),
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('Watch How to Play!',
-              style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black)),
+          const Text(
+            'Watch How to Play!',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            ),
+          ),
           const SizedBox(height: 15),
           SizedBox(
             height: 180,
@@ -1223,39 +1177,54 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
                       child: Card(
                         elevation: 4,
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12)),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
                         child: Stack(
                           children: [
                             ClipRRect(
                               borderRadius: const BorderRadius.vertical(
-                                  top: Radius.circular(12)),
+                                top: Radius.circular(12),
+                              ),
                               child: AspectRatio(
                                 aspectRatio: 16 / 9,
-                                child: Image.network(video['thumbnail']!,
-                                    fit: BoxFit.cover,
-                                    errorBuilder: (_, __, ___) => Container(
-                                        color: Colors.grey[300],
-                                        child: Center(
-                                            child: Icon(Icons.video_library,
-                                                size: 40,
-                                                color: Colors.grey[600])))),
+                                child: Image.network(
+                                  video['thumbnail']!,
+                                  fit: BoxFit.cover,
+                                  errorBuilder: (_, __, ___) => Container(
+                                    color: Colors.grey[300],
+                                    child: Center(
+                                      child: Icon(
+                                        Icons.video_library,
+                                        size: 40,
+                                        color: Colors.grey[600],
+                                      ),
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
                             Positioned.fill(
                               child: Container(
                                 decoration: BoxDecoration(
-                                    borderRadius: const BorderRadius.vertical(
-                                        top: Radius.circular(12)),
-                                    color: Colors.black.withOpacity(0.3)),
+                                  borderRadius: const BorderRadius.vertical(
+                                    top: Radius.circular(12),
+                                  ),
+                                  color: Colors.black.withOpacity(0.3),
+                                ),
                                 child: Center(
-                                    child: Container(
-                                        padding: const EdgeInsets.all(12),
-                                        decoration: BoxDecoration(
-                                            color: Colors.red,
-                                            borderRadius:
-                                                BorderRadius.circular(8)),
-                                        child: const Icon(Icons.play_arrow,
-                                            color: Colors.white, size: 30))),
+                                  child: Container(
+                                    padding: const EdgeInsets.all(12),
+                                    decoration: BoxDecoration(
+                                      color: Colors.red,
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    child: const Icon(
+                                      Icons.play_arrow,
+                                      color: Colors.white,
+                                      size: 30,
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
                           ],
@@ -1402,10 +1371,7 @@ class _RewardCard extends StatelessWidget {
                   if (rank == 1)
                     const Padding(
                       padding: EdgeInsets.only(top: 8),
-                      child: Text(
-                        "👑",
-                        style: TextStyle(fontSize: 32),
-                      ),
+                      child: Text("👑", style: TextStyle(fontSize: 32)),
                     ),
                 ],
               ),
@@ -1414,9 +1380,7 @@ class _RewardCard extends StatelessWidget {
             // Subtle particle shine effect on top card
             if (isTop)
               Positioned.fill(
-                child: IgnorePointer(
-                  child: _CardShineOverlayCompact(),
-                ),
+                child: IgnorePointer(child: _CardShineOverlayCompact()),
               ),
           ],
         ),
@@ -1448,9 +1412,10 @@ class _PendingRewardsBottomSheetState extends State<PendingRewardsBottomSheet>
   @override
   void initState() {
     super.initState();
-    _pulseController =
-        AnimationController(vsync: this, duration: const Duration(seconds: 2))
-          ..repeat();
+    _pulseController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 2),
+    )..repeat();
   }
 
   @override
@@ -1480,8 +1445,9 @@ class _PendingRewardsBottomSheetState extends State<PendingRewardsBottomSheet>
           // Background Image
           Positioned.fill(
             child: ClipRRect(
-              borderRadius:
-                  const BorderRadius.vertical(top: Radius.circular(32)),
+              borderRadius: const BorderRadius.vertical(
+                top: Radius.circular(32),
+              ),
               child: Image.asset(
                 "assets/images/bottom_sheet_bg.png",
                 fit: BoxFit.cover,
@@ -1493,8 +1459,9 @@ class _PendingRewardsBottomSheetState extends State<PendingRewardsBottomSheet>
           Positioned.fill(
             child: Container(
               decoration: BoxDecoration(
-                borderRadius:
-                    const BorderRadius.vertical(top: Radius.circular(32)),
+                borderRadius: const BorderRadius.vertical(
+                  top: Radius.circular(32),
+                ),
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
@@ -1607,9 +1574,7 @@ class _PendingRewardsBottomSheetState extends State<PendingRewardsBottomSheet>
 
                 // Stacked cards
                 Expanded(
-                  child: Center(
-                    child: buildRewardStack(widget.pendingRewards),
-                  ),
+                  child: Center(child: buildRewardStack(widget.pendingRewards)),
                 ),
 
                 30.heightBox,
@@ -1630,9 +1595,11 @@ class _PendingRewardsBottomSheetState extends State<PendingRewardsBottomSheet>
                           ),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.pink.withOpacity(0.6 +
-                                  0.1 * sin(_pulseController.value * 6.28)),
-                              blurRadius: 25 +
+                              color: Colors.pink.withOpacity(
+                                0.6 + 0.1 * sin(_pulseController.value * 6.28),
+                              ),
+                              blurRadius:
+                                  25 +
                                   5 * sin(_pulseController.value * 6.28).abs(),
                               offset: const Offset(0, 8),
                               spreadRadius: 2,
@@ -1641,20 +1608,28 @@ class _PendingRewardsBottomSheetState extends State<PendingRewardsBottomSheet>
                         ),
                         child: ElevatedButton(
                           onPressed: () {
-                            Confetti.launch(context,
-                                options: const ConfettiOptions(
-                                    particleCount: 80, spread: 90, y: 0.6));
+                            Confetti.launch(
+                              context,
+                              options: const ConfettiOptions(
+                                particleCount: 80,
+                                spread: 90,
+                                y: 0.6,
+                              ),
+                            );
                             // call parent's onRedeem after small delay so confetti is visible
-                            Future.delayed(const Duration(milliseconds: 300),
-                                () {
-                              widget.onRedeem();
-                            });
+                            Future.delayed(
+                              const Duration(milliseconds: 300),
+                              () {
+                                widget.onRedeem();
+                              },
+                            );
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.transparent,
                             shadowColor: Colors.transparent,
                             shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30)),
+                              borderRadius: BorderRadius.circular(30),
+                            ),
                           ),
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
@@ -1680,15 +1655,15 @@ class _PendingRewardsBottomSheetState extends State<PendingRewardsBottomSheet>
                 40.heightBox,
               ],
             ),
-          )
+          ),
         ],
       ),
     );
   }
 
   // ========================
-// TOP-LEVEL FUNCTION
-// ========================
+  // TOP-LEVEL FUNCTION
+  // ========================
   Widget buildRewardStack(List rewards) {
     final topFive = (rewards ?? []).take(5).toList();
 
@@ -1792,9 +1767,10 @@ class _FloatingParticlesState extends State<FloatingParticles>
       );
     });
 
-    _controller =
-        AnimationController(vsync: this, duration: const Duration(seconds: 12))
-          ..repeat();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 12),
+    )..repeat();
   }
 
   @override
@@ -1825,13 +1801,14 @@ class _Particle {
   double sway;
   double opacity;
 
-  _Particle(
-      {required this.dx,
-      required this.dy,
-      required this.size,
-      required this.speed,
-      required this.sway,
-      required this.opacity});
+  _Particle({
+    required this.dx,
+    required this.dy,
+    required this.size,
+    required this.speed,
+    required this.sway,
+    required this.opacity,
+  });
 }
 
 class _ParticlePainter extends CustomPainter {
@@ -1907,4 +1884,68 @@ class _CardShineOverlayCompact extends StatelessWidget {
       },
     );
   }
+}
+
+class _LoveCard extends StatelessWidget {
+  final String image;
+  final String name;
+
+  const _LoveCard({required this.image, required this.name});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 115,
+      height: 150,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(16),
+        child: Stack(
+          children: [
+            Positioned.fill(child: Image.asset(image, fit: BoxFit.cover)),
+
+            // bottom overlay bar
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                width: double.infinity,
+                padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 8),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Colors.transparent,
+                      Colors.black.withOpacity(0.65),
+                    ],
+                  ),
+                ),
+                child: Text(
+                  name,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 12.5,
+                    fontWeight: FontWeight.w600,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class SocialItem {
+  final String label;
+  final String svgAssetPath;
+  final String link;
+
+  const SocialItem({
+    required this.label,
+    required this.svgAssetPath,
+    required this.link,
+  });
 }

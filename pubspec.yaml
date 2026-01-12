@@ -46,7 +46,7 @@ dependencies:
   bubble: ^1.2.1
   firebase_messaging: ^15.2.10
   firebase_core: ^3.15.2
-  firebase_messaging_platform_interface: ^4.5.23
+  # firebase_messaging_platform_interface: ^4.5.23
   flutter_local_notifications: ^19.5.0
   firebase_dynamic_links: ^6.1.10
   video_player: ^2.9.1
@@ -122,32 +122,43 @@ flutter:
     - assets/paymentAppIcon/
     - assets/images/tab/
     - assets/video/
+    - assets/images/svg/
+    - assets/images/grid/
+    - assets/images/spin/
     - .env.stage
     - .env.local
     - .env.live
 
 
   fonts:
-    - family: ExtraLight
+    - family: LexendRegular
       fonts:
-        - asset: assets/fonts/Sora-ExtraLight.ttf
+        - asset: assets/fonts/Lexend-Regular.ttf
 
-    - family: Light
+    - family: LexendMedium
       fonts:
-        - asset: assets/fonts/Sora-Light.ttf
+        - asset: assets/fonts/Lexend-Medium.ttf
 
-    - family: Regular
+    - family: LexendSemiBold
       fonts:
-        - asset: assets/fonts/Sora-Regular.ttf
+        - asset: assets/fonts/Lexend-SemiBold.ttf
 
-    - family: SemiBold
+    - family: LexendBold
       fonts:
-        - asset: assets/fonts/Sora-SemiBold.ttf
+        - asset: assets/fonts/Lexend-Bold.ttf
 
-    - family: Bold
+    - family: PoppinsRegular
       fonts:
-        - asset: assets/fonts/Sora-Bold.ttf
+        - asset: assets/fonts/Poppins-Regular.ttf
 
-    - family: ExtraBold
+    - family: PoppinsSemiBold
       fonts:
-        - asset: assets/fonts/Sora-ExtraBold.ttf
+        - asset: assets/fonts/Poppins-SemiBold.ttf
+
+    - family: PoppinsMedium
+      fonts:
+        - asset: assets/fonts/Poppins-Medium.ttf
+    
+    - family: PoppinsBold
+      fonts:
+        - asset: assets/fonts/Poppins-Bold.ttf

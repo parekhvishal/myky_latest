@@ -42,7 +42,7 @@ class _WinnersWidgetState extends State<WinnersWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 230.h,
+      height: 235.h,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16.r),
@@ -126,9 +126,7 @@ class WinnerCard extends StatelessWidget {
       width: double.infinity,
       margin: EdgeInsets.symmetric(horizontal: 5.w),
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [colorPrimary, colorAccent],
-        ),
+        gradient: LinearGradient(colors: [colorPrimary, colorAccent]),
         borderRadius: BorderRadius.circular(16.r),
       ),
       child: Stack(

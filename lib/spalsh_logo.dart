@@ -17,7 +17,8 @@ class SplashLogo extends StatefulWidget {
   _SplashLogoState createState() => _SplashLogoState();
 }
 
-class _SplashLogoState extends State<SplashLogo> with SingleTickerProviderStateMixin {
+class _SplashLogoState extends State<SplashLogo>
+    with SingleTickerProviderStateMixin {
   final int splashDuration = 4;
   var _visible = true;
 
@@ -43,51 +44,52 @@ class _SplashLogoState extends State<SplashLogo> with SingleTickerProviderStateM
         storage.deleteAll();
       }
 
-      await Api.httpWithoutLoader.get('member/app-status?appVersion=$version').then((res) {
-        String key = Platform.isAndroid ? 'android' : 'ios';
+      await Api.httpWithoutLoader
+          .get('member/app-status?appVersion=$version')
+          .then((res) {
+            String key = Platform.isAndroid ? 'android' : 'ios';
 
-        if (res.data[key]['maintenance']) {
-          Get.offAllNamed('/app-maintenance', arguments: {
-            "message": res.data[key]['maintenanceMessage'],
-          });
-        } else if (res.data[key]['update']) {
-          Map sendData = {};
+            if (res.data[key]['maintenance']) {
+              Get.offAllNamed(
+                '/app-maintenance',
+                arguments: {"message": res.data[key]['maintenanceMessage']},
+              );
+            } else if (res.data[key]['update']) {
+              Map sendData = {};
 
-          if (res.data[key].containsKey('hardUpdate') && res.data[key]['hardUpdate']) {
-            // App update from Play store
-            sendData['updateAppUrl'] = AppConfig.playStoreUrl;
-          } else if (res.data.containsKey('webUpdate')) {
-            // App update from web link
-            if (res.data['webUpdate']) {
-              sendData['updateAppUrl'] = res.data['webUrl'] ?? '';
+              if (res.data[key].containsKey('hardUpdate') &&
+                  res.data[key]['hardUpdate']) {
+                // App update from Play store
+                sendData['updateAppUrl'] = AppConfig.playStoreUrl;
+              } else if (res.data.containsKey('webUpdate')) {
+                // App update from web link
+                if (res.data['webUpdate']) {
+                  sendData['updateAppUrl'] = res.data['webUrl'] ?? '';
+                } else {
+                  sendData['updateAppUrl'] = AppConfig.playStoreUrl;
+                }
+              }
+
+              Get.offAllNamed('/app-update', arguments: sendData);
             } else {
-              sendData['updateAppUrl'] = AppConfig.playStoreUrl;
+              // Check if user is logged in
+              if (Auth.check() == true) {
+                // User is already logged in, go to MainDashboard
+                Get.offAllNamed('/main-dashboard');
+              } else if (Auth.isGuestLoggedIn == true &&
+                  Auth.isMLMLoggedIn == false) {
+                Get.offAllNamed('/ecommerce');
+              } else {
+                // User is not logged in, check language video status
+                if (status == null) {
+                  Get.offAllNamed('/language-video');
+                } else {
+                  // Show login screen first
+                  Get.offAllNamed('/login-mlm');
+                }
+              }
             }
-          }
-
-          Get.offAllNamed(
-            '/app-update',
-            arguments: sendData,
-          );
-        } else {
-          // Check if user is logged in
-          if (Auth.check() == true) {
-            // User is already logged in, go to MainDashboard
-            Get.offAllNamed('/main-dashboard');
-          } else if (Auth.isGuestLoggedIn == true && Auth.isMLMLoggedIn == false) {
-            Get.offAllNamed('/ecommerce');
-          }
-          else {
-            // User is not logged in, check language video status
-            if (status == null) {
-              Get.offAllNamed('/language-video');
-            } else {
-              // Show login screen first
-              Get.offAllNamed('/login-mlm');
-            }
-          }
-        }
-      }, onError: (err) {});
+          }, onError: (err) {});
     });
   }
 

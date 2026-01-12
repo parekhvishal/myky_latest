@@ -25,6 +25,14 @@ const fontInterLight = 'InterLight';
 const fontMedium = 'InterRegular';
 const fontInterBold = 'InterBold';
 const fontInterSemiBold = 'InterSemiBold';
+const fontPoppinsBold = 'PoppinsBold';
+const fontPoppinsRegular = 'PoppinsRegular';
+const fontPoppinsMedium = 'PoppinsMedium';
+const fontPoppinsSemiBold = 'PoppinsSemiMedium';
+const fontLexendBold = 'LexendBold';
+const fontLexendRegular = 'LexendRegular';
+const fontLexendMedium = 'LexendMedium';
+const fontLexendSemiBold = 'LexendSemiMedium';
 
 /* font sizes*/
 const textSizeExtraSmall = 10.0;
@@ -115,85 +123,79 @@ ListView listviewBuilder(
 
 ThemeData buildThemeData() {
   return ThemeData(
-      primarySwatch: createMaterialColor(colorPrimary),
-      scaffoldBackgroundColor: Color(0xffF5F8FA),
-      useMaterial3: true,
-      bottomNavigationBarTheme:
-          const BottomNavigationBarThemeData(backgroundColor: Colors.white),
-      dialogBackgroundColor: Colors.white,
-      unselectedWidgetColor: Colors.black,
-      dividerColor: Colors.white,
-      dialogTheme: DialogThemeData(shape: dialogShape()),
-      bottomSheetTheme: BottomSheetThemeData(
-        shape: RoundedRectangleBorder(
-            borderRadius:
-                radiusOnly(topLeft: defaultRadius, topRight: defaultRadius)),
-        backgroundColor: Colors.white,
+    primarySwatch: createMaterialColor(colorPrimary),
+    scaffoldBackgroundColor: Color(0xffF5F8FA),
+    useMaterial3: true,
+    bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+      backgroundColor: Colors.white,
+    ),
+    dialogBackgroundColor: Colors.white,
+    unselectedWidgetColor: Colors.black,
+    dividerColor: Colors.white,
+    dialogTheme: DialogThemeData(shape: dialogShape()),
+    bottomSheetTheme: BottomSheetThemeData(
+      shape: RoundedRectangleBorder(
+        borderRadius: radiusOnly(
+          topLeft: defaultRadius,
+          topRight: defaultRadius,
+        ),
       ),
-      cardColor: Colors.white,
-      radioTheme: RadioThemeData(
-        fillColor: MaterialStateProperty.all(gray),
-      ),
-      iconTheme: IconThemeData(
+      backgroundColor: Colors.white,
+    ),
+    cardColor: Colors.white,
+    radioTheme: RadioThemeData(fillColor: MaterialStateProperty.all(gray)),
+    iconTheme: IconThemeData(color: Colors.black, size: 25.sp),
+    listTileTheme: const ListTileThemeData(
+      iconColor: Colors.black,
+      textColor: Colors.black,
+    ),
+    fontFamily: fontRegular,
+    textTheme: TextTheme(
+      bodyMedium: TextStyle(
+        fontFamily: fontRegular,
         color: Colors.black,
-        size: 25.sp,
+        fontSize: 18.sp,
       ),
-      listTileTheme: const ListTileThemeData(
-        iconColor: Colors.black,
-        textColor: Colors.black,
-      ),
-      fontFamily: fontRegular,
-      textTheme: TextTheme(
-        bodyMedium: TextStyle(
-          fontFamily: fontRegular,
-          color: Colors.black,
-          fontSize: 18.sp,
-        ),
-        bodyLarge: TextStyle(
-          fontFamily: fontRegular,
-          fontSize: 16.sp,
+      bodyLarge: TextStyle(fontFamily: fontRegular, fontSize: 16.sp),
+    ),
+    inputDecorationTheme: InputDecorationTheme(
+      contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 17),
+      filled: true,
+      fillColor: white,
+      prefixIconColor: colorPrimary,
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12.r),
+        borderSide: BorderSide(
+          color: textPrimaryColor.withOpacity(0.3),
+          width: 0.5,
         ),
       ),
-      inputDecorationTheme: InputDecorationTheme(
-        contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 17),
-        filled: true,
-        fillColor: white,
-        prefixIconColor: colorPrimary,
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12.r),
-          borderSide: BorderSide(
-            color: textPrimaryColor.withOpacity(0.3),
-            width: 0.5,
-          ),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12.r),
-          borderSide: BorderSide(
-            color: colorPrimary,
-            width: 0.5.w,
-          ),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12.r),
-          borderSide: const BorderSide(color: redColor, width: 1.0),
-          gapPadding: 0,
-        ),
-        disabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12.r),
-          borderSide: const BorderSide(color: white, width: 0.0),
-        ),
-        focusedErrorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12.r),
-          borderSide: const BorderSide(color: redColor, width: 1.5),
-        ),
-        hintStyle: TextStyle(
-          color: textPrimaryColor.withOpacity(0.5),
-          fontSize: 16.sp,
-        ),
-        suffixIconColor: black,
-        isDense: true,
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12.r),
+        borderSide: BorderSide(color: colorPrimary, width: 0.5.w),
       ),
-      appBarTheme: appBarTheme());
+      errorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12.r),
+        borderSide: const BorderSide(color: redColor, width: 1.0),
+        gapPadding: 0,
+      ),
+      disabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12.r),
+        borderSide: const BorderSide(color: white, width: 0.0),
+      ),
+      focusedErrorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12.r),
+        borderSide: const BorderSide(color: redColor, width: 1.5),
+      ),
+      hintStyle: TextStyle(
+        color: textPrimaryColor.withOpacity(0.5),
+        fontSize: 16.sp,
+      ),
+      suffixIconColor: black,
+      isDense: true,
+    ),
+    appBarTheme: appBarTheme(),
+  );
 }
 
 AppBarTheme appBarTheme() {
@@ -235,10 +237,7 @@ BoxDecoration boxContain({
   return BoxDecoration(
     color: white,
     borderRadius: BorderRadius.all(Radius.circular(radius)),
-    border: Border.all(
-      color: borderColor,
-      width: borderWidth,
-    ),
+    border: Border.all(color: borderColor, width: borderWidth),
     boxShadow: showShadow
         ? [
             const BoxShadow(
@@ -248,39 +247,41 @@ BoxDecoration boxContain({
               offset: Offset(0, 1),
             ),
           ]
-        : [
-            const BoxShadow(color: Colors.transparent),
-          ],
+        : [const BoxShadow(color: Colors.transparent)],
   );
 }
 
-GridView gridviewBuilder(List? items, GridItemBuilder itemBuilder,
-    {ScrollPhysics? physics,
-    EdgeInsets? padding,
-    bool? shrinkWrap,
-    Axis scrollDirection = Axis.vertical,
-    @required int? numberOfColumns,
-    @required double? verticleSpacing,
-    @required double? horizontalSpacing,
-    bool? primary,
-    double? childAspectRatio}) {
+GridView gridviewBuilder(
+  List? items,
+  GridItemBuilder itemBuilder, {
+  ScrollPhysics? physics,
+  EdgeInsets? padding,
+  bool? shrinkWrap,
+  Axis scrollDirection = Axis.vertical,
+  @required int? numberOfColumns,
+  @required double? verticleSpacing,
+  @required double? horizontalSpacing,
+  bool? primary,
+  double? childAspectRatio,
+}) {
   return GridView.builder(
-      itemCount: items!.length,
-      padding: padding,
-      primary: primary,
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: numberOfColumns!,
-        crossAxisSpacing: horizontalSpacing!,
-        mainAxisSpacing: verticleSpacing!,
-        childAspectRatio: childAspectRatio != null ? childAspectRatio : 10 / 10,
-      ),
-      scrollDirection: scrollDirection,
-      shrinkWrap: (shrinkWrap != null) ? shrinkWrap : true,
-      itemBuilder: (BuildContext ctxt, int index) {
-        return index < items.length
-            ? itemBuilder(items[index], index)
-            : SizedBox.shrink();
-      });
+    itemCount: items!.length,
+    padding: padding,
+    primary: primary,
+    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+      crossAxisCount: numberOfColumns!,
+      crossAxisSpacing: horizontalSpacing!,
+      mainAxisSpacing: verticleSpacing!,
+      childAspectRatio: childAspectRatio != null ? childAspectRatio : 10 / 10,
+    ),
+    scrollDirection: scrollDirection,
+    shrinkWrap: (shrinkWrap != null) ? shrinkWrap : true,
+    itemBuilder: (BuildContext ctxt, int index) {
+      return index < items.length
+          ? itemBuilder(items[index], index)
+          : SizedBox.shrink();
+    },
+  );
 }
 
 String capitalize(String string) {
@@ -372,10 +373,7 @@ TextStyle primaryTextStyle1({
 }
 
 Divider view() {
-  return Divider(
-    color: textColorSecondary,
-    height: 0.5,
-  );
+  return Divider(color: textColorSecondary, height: 0.5);
 }
 
 BoxDecoration boxDecoration({
@@ -511,9 +509,10 @@ Widget scaffoldBackgroundImage({
           top: false,
           bottom: false,
           child: Container(
-              padding: padding ?? EdgeInsets.zero,
-              color: Colors.transparent,
-              child: child),
+            padding: padding ?? EdgeInsets.zero,
+            color: Colors.transparent,
+            child: child,
+          ),
         ),
       ),
     ],
@@ -614,11 +613,7 @@ Widget formField(
           ],
         ),
         prefixIcon: prefixIcon != null
-            ? Icon(
-                prefixIcon,
-                color: textColorSecondary,
-                size: 20,
-              )
+            ? Icon(prefixIcon, color: textColorSecondary, size: 20)
             : null,
         suffixIcon: suffixWidget,
       ),
@@ -672,10 +667,12 @@ floatingInput(
       suffixIcon: suffixIcon,
       prefixIcon: prefixIcon,
       counterText: '',
-      enabledBorder:
-          UnderlineInputBorder(borderSide: BorderSide(color: Colors.black12)),
-      focusedBorder:
-          UnderlineInputBorder(borderSide: BorderSide(color: colorPrimary)),
+      enabledBorder: UnderlineInputBorder(
+        borderSide: BorderSide(color: Colors.black12),
+      ),
+      focusedBorder: UnderlineInputBorder(
+        borderSide: BorderSide(color: colorPrimary),
+      ),
     ),
     maxLines: maxLines,
   );
@@ -733,8 +730,13 @@ class CustomButtonState extends State<CustomButton> {
 }
 
 Widget emptyWidget(
-    BuildContext context, String image, String title, String desc,
-    {bool showRetry = false, Function? onRetry}) {
+  BuildContext context,
+  String image,
+  String title,
+  String desc, {
+  bool showRetry = false,
+  Function? onRetry,
+}) {
   return Container(
     color: white,
     constraints: BoxConstraints(maxWidth: 500.0),
@@ -772,31 +774,29 @@ Widget emptyWidget(
                   isCentered: true,
                 ),
                 SizedBox(height: 5),
-                text(
-                  desc,
-                  isCentered: true,
-                  isLongText: true,
-                ),
+                text(desc, isCentered: true, isLongText: true),
               ],
             ),
           ),
-        )
+        ),
       ],
     ),
   );
 }
 
-BoxDecoration gradientBoxDecoration(
-    {double radius = spacing_middle,
-    Color color = Colors.transparent,
-    Color gradientColor2 = white,
-    Color gradientColor1 = white,
-    var showShadow = false}) {
+BoxDecoration gradientBoxDecoration({
+  double radius = spacing_middle,
+  Color color = Colors.transparent,
+  Color gradientColor2 = white,
+  Color gradientColor1 = white,
+  var showShadow = false,
+}) {
   return BoxDecoration(
     gradient: LinearGradient(
-        begin: Alignment.topRight,
-        end: Alignment.bottomLeft,
-        colors: [gradientColor1, gradientColor2]),
+      begin: Alignment.topRight,
+      end: Alignment.bottomLeft,
+      colors: [gradientColor1, gradientColor2],
+    ),
     boxShadow: showShadow
         ? [BoxShadow(color: shadow_color, blurRadius: 10, spreadRadius: 2)]
         : [BoxShadow(color: Colors.transparent)],

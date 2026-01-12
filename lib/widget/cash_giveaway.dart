@@ -25,14 +25,11 @@ class FreeCashGiveaway extends StatelessWidget {
       await file.writeAsBytes(byteData.buffer.asUint8List());
 
       // Share image + message
-      await Share.shareXFiles(
-        [XFile(file.path)],
-        text: message,
-      );
+      await Share.shareXFiles([XFile(file.path)], text: message);
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error sharing image: $e')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Error sharing image: $e')));
     }
   }
 
@@ -42,11 +39,7 @@ class FreeCashGiveaway extends StatelessWidget {
       onTap: () {
         _shareImage(context);
       },
-      child: Image.asset(
-        "assets/images/giveaway.jpeg",
-        width: double.infinity,
-        fit: BoxFit.cover,
-      ),
+      child: Image.asset("assets/images/giveaway.png", fit: BoxFit.contain),
     );
   }
 }
