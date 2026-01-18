@@ -1,11 +1,13 @@
 // main_front_dashboard.dart
 import 'dart:async';
 import 'dart:math';
+
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner_plus/flutter_barcode_scanner_plus.dart';
+// New package for confetti
+import 'package:flutter_confetti/flutter_confetti.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -13,7 +15,6 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:myky_clone/banner_ad_widget.dart';
 import 'package:myky_clone/mlm/account/ProfileScreen.dart';
 import 'package:myky_clone/services/auth.dart';
-import 'package:myky_clone/slider.dart';
 import 'package:myky_clone/utils/en_extensions.dart';
 import 'package:myky_clone/widget/cash_giveaway.dart';
 import 'package:myky_clone/widget/custom_text.dart';
@@ -21,15 +22,11 @@ import 'package:myky_clone/widget/qr_scanner.dart';
 import 'package:unicons/unicons.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-// New package for confetti
-import 'package:flutter_confetti/flutter_confetti.dart';
-
 import 'mlm/wallet/wallet.dart';
 import 'services/api.dart';
 import 'shopping/recharge/recharge_page.dart';
 import 'shopping/reward/reward.dart';
 import 'widget/theme.dart';
-import 'widget/winner_widget.dart';
 
 class MainFrontDashboard extends StatefulWidget {
   @override
@@ -623,20 +620,20 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
 
         Row(
           children: [
-            IconButton(
-              onPressed: () {
-                // TODO: notification action
-              },
-              icon: const Icon(
-                Icons.notifications_none_rounded,
-                color: Colors.white,
-              ),
-            ),
-            const SizedBox(width: 6),
-            const CircleAvatar(
-              radius: 16,
-              backgroundImage: AssetImage("assets/logo/profilePic.png"),
-            ),
+            // IconButton(
+            //   onPressed: () {
+            //     // TODO: notification action
+            //   },
+            //   icon: const Icon(
+            //     Icons.notifications_none_rounded,
+            //     color: Colors.white,
+            //   ),
+            // ),
+            // const SizedBox(width: 6),
+            // const CircleAvatar(
+            //   radius: 16,
+            //   backgroundImage: AssetImage("assets/logo/profilePic.png"),
+            // ),
           ],
         ),
       ],
@@ -644,97 +641,109 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
   }
 
   Widget _buildImageSliderWithMykySymbol() {
-    List<String> imageUrls = [
-      'assets/static-images/01.jpg',
-      'assets/static-images/02.jpg',
-      'assets/static-images/03.jpg',
-      'assets/static-images/04.jpg',
-      'assets/static-images/05.jpg',
-      'assets/static-images/06.jpg',
-    ];
+    // જો sliderImages ખાલી હોય તો placeholder બતાવો
+    if (sliderImages == null || sliderImages!.isEmpty) {
+      return Container(
+        height: MediaQuery.of(context).size.height * 0.8,
+        color: Colors.grey[300],
+        child: const Center(
+          child: Text(
+            'No banners available',
+            style: TextStyle(color: Colors.white, fontSize: 20),
+          ),
+        ),
+      );
+    }
 
     return ClipRRect(
       borderRadius: const BorderRadius.only(
         bottomLeft: Radius.circular(24),
         bottomRight: Radius.circular(24),
       ),
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(24),
-            bottomRight: Radius.circular(24),
-          ),
-        ),
-        height: MediaQuery.of(context).size.height * 0.8,
-        child: Stack(
-          children: [
-            CarouselSlider(
-              options: CarouselOptions(
-                height: MediaQuery.of(context).size.height * 0.8,
-                viewportFraction: 1.0,
-                enlargeCenterPage: false,
-                autoPlay: true,
-                autoPlayInterval: const Duration(seconds: 3),
-              ),
-              items: imageUrls.map((url) {
-                return Builder(
-                  builder: (context) {
-                    return Container(
-                      width: MediaQuery.of(context).size.width,
+      child: Stack(
+        children: [
+          CarouselSlider(
+            options: CarouselOptions(
+              height: MediaQuery.of(context).size.height * 0.8,
+              viewportFraction: 1.0,
+              enlargeCenterPage: false,
+              autoPlay: true,
+              autoPlayInterval: const Duration(seconds: 4), // થોડું વધુ સમય આપો
+              autoPlayCurve: Curves.easeInOut,
+            ),
+            items: sliderImages!.map((banner) {
+              // banner એ Map છે → 'image' key થી URL લો
+              final String imageUrl = banner['image']?.toString() ?? '';
 
-                      child: Stack(
-                        children: [
-                          Image.asset(
-                            url,
-                            width: MediaQuery.of(context).size.width,
-                            height: MediaQuery.of(context).size.height * 0.8,
-                            fit: BoxFit.cover,
-                            errorBuilder: (_, __, ___) => Container(
-                              color: Colors.grey[300],
-                              child: Center(
-                                child: Icon(
-                                  Icons.image_not_supported,
-                                  size: 50,
-                                  color: Colors.grey[600],
-                                ),
+              return Builder(
+                builder: (context) {
+                  return Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      // Network Image with good error & loading handling
+                      Image.network(
+                        imageUrl,
+                        width: double.infinity,
+                        height: double.infinity,
+                        fit: BoxFit.cover,
+                        loadingBuilder: (context, child, loadingProgress) {
+                          if (loadingProgress == null) return child;
+                          return const Center(
+                            child: CircularProgressIndicator(
+                              color: Colors.white,
+                            ),
+                          );
+                        },
+                        errorBuilder: (context, error, stackTrace) {
+                          return Container(
+                            color: Colors.grey[800],
+                            child: const Center(
+                              child: Icon(
+                                Icons.broken_image_rounded,
+                                size: 60,
+                                color: Colors.white70,
                               ),
                             ),
-                          ),
-                          Positioned(
-                            top: 0,
-                            left: 0,
-                            right: 0,
-                            child: Container(
-                              height: 120,
-                              decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                                  begin: Alignment.topCenter,
-                                  end: Alignment.bottomCenter,
-                                  colors: [
-                                    colorPrimary.withOpacity(0.7),
-                                    colorPrimary.withOpacity(0.3),
-                                    Colors.transparent,
-                                  ],
-                                  stops: [0.0, 0.7, 1.0],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
+                          );
+                        },
                       ),
-                    );
-                  },
-                );
-              }).toList(),
-            ),
-            Positioned(
-              top: MediaQuery.of(context).padding.top + 20,
-              left: 20,
-              right: 20,
-              child: _buildMykySymbol(),
-            ),
-          ],
-        ),
+
+                      // Gradient overlay
+                      Positioned(
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        child: Container(
+                          height: 120,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                                colorPrimary.withOpacity(0.7),
+                                colorPrimary.withOpacity(0.3),
+                                Colors.transparent,
+                              ],
+                              stops: const [0.0, 0.7, 1.0],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                },
+              );
+            }).toList(),
+          ),
+
+          // Myky symbol & profile
+          Positioned(
+            top: MediaQuery.of(context).padding.top + 20,
+            left: 20,
+            right: 20,
+            child: _buildMykySymbol(),
+          ),
+        ],
       ),
     );
   }
