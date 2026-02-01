@@ -903,16 +903,8 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
                   child: Column(
                     children: [
                       _buildOfferTile(
-                        height: 180.h,
-                        gradient: const LinearGradient(
-                          colors: [
-                            // Color.fromARGB(255, 162, 157, 254),
-                            Color.fromARGB(255, 255, 255, 255),
-                            Color.fromARGB(255, 255, 255, 255),
-                          ],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        ),
+                        height: 170.h,
+
                         imagePath: "assets/images/grid/offlineStore.png",
                         fit: BoxFit.cover,
                         onTap: () => Get.toNamed('/nearby-offline-store'),
@@ -920,14 +912,9 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
                       SizedBox(height: 10.h),
                       _buildOfferTile(
                         height: 70.h,
-                        gradient: const LinearGradient(
-                          colors: [
-                            Color.fromARGB(255, 255, 255, 255),
-                            Color.fromARGB(255, 255, 206, 255),
-                          ],
-                        ),
+
                         imagePath: "assets/images/grid/map.png",
-                        fit: BoxFit.contain,
+                        fit: BoxFit.cover,
                         onTap: () => Get.toNamed('/near-me-store'),
                       ),
                     ],
@@ -942,30 +929,16 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
                   child: Column(
                     children: [
                       _buildOfferTile(
-                        height: 125.h,
-                        gradient: const LinearGradient(
-                          colors: [
-                            Color.fromARGB(255, 199, 255, 204),
-                            Color.fromARGB(255, 255, 255, 255),
-                          ],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        ),
+                        height: 120.h,
+
                         imagePath: "assets/images/grid/coins.png",
                         fit: BoxFit.cover,
                         onTap: () => Get.toNamed('/coin-wallet'),
                       ),
                       SizedBox(height: 10.h),
                       _buildOfferTile(
-                        height: 125.h,
-                        gradient: const LinearGradient(
-                          colors: [
-                            Color.fromARGB(255, 158, 234, 255),
-                            Color.fromARGB(255, 229, 248, 255),
-                          ],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        ),
+                        height: 120.h,
+
                         imagePath: "assets/images/grid/recharge.png",
                         fit: BoxFit.cover,
                         onTap: () {
@@ -987,7 +960,6 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
 
   Widget _buildOfferTile({
     required double height,
-    required LinearGradient gradient,
     required String imagePath,
     required BoxFit fit,
     required VoidCallback onTap,
@@ -998,13 +970,13 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
         height: height,
         width: double.infinity,
         decoration: BoxDecoration(
-          gradient: gradient,
+          color: Colors.white,
           borderRadius: BorderRadius.circular(20.r),
           boxShadow: const [
             BoxShadow(
               color: Color.fromARGB(102, 0, 0, 0),
-              offset: Offset.zero,
               blurRadius: 12,
+              offset: Offset(0, 6),
             ),
           ],
         ),
@@ -1012,8 +984,8 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
           borderRadius: BorderRadius.circular(20.r),
           child: Image.asset(
             imagePath,
-            height: double.infinity,
             width: double.infinity,
+            height: double.infinity,
             fit: fit,
           ),
         ),
