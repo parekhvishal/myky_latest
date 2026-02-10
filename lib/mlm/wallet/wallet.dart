@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '../../services/api.dart';
@@ -21,10 +22,29 @@ class _WalletState extends State<Wallet> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Wallet Transactions'),
-        automaticallyImplyLeading: type != null ? true : false,
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(56),
+        child: AppBar(
+          elevation: 0,
+          backgroundColor: Colors.white,
+          surfaceTintColor: Colors.transparent,
+
+          systemOverlayStyle: SystemUiOverlayStyle.dark,
+          leading: Padding(
+            padding: const EdgeInsets.only(left: 15),
+            child: Image.asset("assets/images/icon.png"),
+          ),
+          title: const Text(
+            "Wallet Transaction",
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ),
       ),
+
       body: PaginatedList(
         apiFuture: (int page) async {
           return Api.http.get("member/wallet-transaction?page=$page");
@@ -51,10 +71,12 @@ class WalletListCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bool isDebit = wallet['type'] == "Debit";
-    final Color primaryColor =
-    isDebit ? const Color(0xFFFF6B6B) : const Color(0xFF4ECDC4);
-    final Color bgColor =
-    isDebit ? const Color(0xFFFFE5E5) : const Color(0xFFE0F9F7);
+    final Color primaryColor = isDebit
+        ? const Color(0xFFFF6B6B)
+        : const Color(0xFF4ECDC4);
+    final Color bgColor = isDebit
+        ? const Color(0xFFFFE5E5)
+        : const Color(0xFFE0F9F7);
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -97,7 +119,9 @@ class WalletListCard extends StatelessWidget {
                         borderRadius: BorderRadius.circular(14),
                       ),
                       child: Icon(
-                        isDebit ? Icons.arrow_upward_rounded : Icons.arrow_downward_rounded,
+                        isDebit
+                            ? Icons.arrow_upward_rounded
+                            : Icons.arrow_downward_rounded,
                         color: primaryColor,
                         size: 24,
                       ),
@@ -154,10 +178,7 @@ class WalletListCard extends StatelessWidget {
 
                 const SizedBox(height: 20),
                 // Divider
-                Container(
-                  height: 1,
-                  color: const Color(0xFFF0F0F0),
-                ),
+                Container(height: 1, color: const Color(0xFFF0F0F0)),
                 const SizedBox(height: 16),
                 // Amount Details
                 Row(
@@ -231,19 +252,15 @@ class WalletListCard extends StatelessWidget {
   }
 
   Widget _buildAmountInfo(
-      String label,
-      String amount,
-      IconData icon,
-      Color color,
-      ) {
+    String label,
+    String amount,
+    IconData icon,
+    Color color,
+  ) {
     return Expanded(
       child: Column(
         children: [
-          Icon(
-            icon,
-            color: color.withOpacity(0.6),
-            size: 20,
-          ),
+          Icon(icon, color: color.withOpacity(0.6), size: 20),
           const SizedBox(height: 8),
           Text(
             label,

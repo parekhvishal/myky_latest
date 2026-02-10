@@ -1,6 +1,7 @@
 // main_front_dashboard.dart
 import 'dart:async';
 import 'dart:math';
+import 'dart:ui';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -46,6 +47,13 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
   @override
   void initState() {
     super.initState();
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        statusBarIconBrightness: Brightness.light, // white icons
+        statusBarBrightness: Brightness.dark,
+      ),
+    );
     _future = getMainDashboard();
     getSpinList();
   }
@@ -109,13 +117,7 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
         onWillPop: () => _onWillPop(),
         child: Scaffold(
           backgroundColor: Colors.white,
-          body: Column(
-            children: [
-              Expanded(
-                child: _buildTabContent(), // Now has bounded height
-              ),
-            ],
-          ),
+          body: _buildTabContent(),
           bottomNavigationBar: _buildBottomNavigationBar(),
         ),
       ),
@@ -206,12 +208,11 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
-      barrierColor: Colors.black.withOpacity(0.85),
-      enableDrag: false,
+      barrierColor: Colors.transparent, // important
+      enableDrag: true,
       builder: (context) => PendingRewardsBottomSheet(
         pendingRewards: pendingRewards,
         onRedeem: () {
-          // when user redeems from the sheet
           Navigator.pop(context);
           setState(() => _selectedIndex = 5);
         },
@@ -221,57 +222,29 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
 
   // MARK: - Tab Content Switcher
   Widget _buildTabContent() {
-    // Show loading only on Home tab
     if (_selectedIndex == 0 && !_isHomeDataLoaded) {
-      return const Center(
-        child: CircularProgressIndicator(
-          valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-        ),
-      );
+      return const Center(child: CircularProgressIndicator());
     }
 
-    List<Widget> tabs = [
-      _buildHomeTab(), // 0
-      _buildRechargeTab(), // 1
-      _buildWalletTab(), // 2
-      _buildProfileTab(), // 3
-      // 4 - Shop (handled by navigation)
-      Container(),
-      _buildRewardTab(),
-    ];
+    switch (_selectedIndex) {
+      case 0:
+        return _buildHomeTab();
 
-    Widget content = tabs[_selectedIndex];
+      case 1:
+        return const Recharge();
 
-    // Apply padding only to non-home tabs
-    if (_selectedIndex != 0) {
-      content = Padding(padding: const EdgeInsets.all(16.0), child: content);
+      case 2:
+        return Wallet();
+
+      case 3:
+        return ProfileScreen();
+
+      case 5:
+        return const Reward();
+
+      default:
+        return const SizedBox();
     }
-
-    // Always wrap in SingleChildScrollView with Expanded parent
-    return AnimatedSwitcher(
-      duration: const Duration(milliseconds: 300),
-      transitionBuilder: (child, animation) {
-        return FadeTransition(opacity: animation, child: child);
-      },
-      child: Container(
-        key: ValueKey<int>(_selectedIndex),
-        child: SingleChildScrollView(
-          physics: const AlwaysScrollableScrollPhysics(),
-          child: _selectedIndex == 0
-              ? content
-              : ConstrainedBox(
-                  constraints: BoxConstraints(
-                    minHeight:
-                        MediaQuery.of(context).size.height -
-                        kBottomNavigationBarHeight -
-                        MediaQuery.of(context).padding.top -
-                        MediaQuery.of(context).padding.bottom,
-                  ),
-                  child: IntrinsicHeight(child: content),
-                ),
-        ),
-      ),
-    );
   }
 
   // MARK: - Tab 0: Home
@@ -390,11 +363,14 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
           /// ✅ RIGHT: Green shop tab (separate container)
           GestureDetector(
             onTap: () => _onTabTapped(4),
-            child: Container(
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 250),
               height: 50,
               width: 95,
               decoration: BoxDecoration(
-                color: const Color(0xFF2EE6C5),
+                color: _selectedIndex == 4
+                    ? Colors.black
+                    : const Color(0xFF2EE6C5),
                 borderRadius: BorderRadius.circular(10),
                 boxShadow: [
                   BoxShadow(
@@ -407,13 +383,19 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(UniconsLine.store, color: Colors.black, size: 22),
-                  const SizedBox(height: 3),
+                  Icon(
+                    UniconsLine.store,
+                    color: _selectedIndex == 4 ? Colors.white : Colors.black,
+                    size: 22,
+                  ),
+                  const SizedBox(width: 4),
                   CustomText(
                     'Shop',
-                    textColor: Colors.black,
-                    fontWeight: FontWeight.w700,
-                    fontSize: 12.sp,
+                    textColor: _selectedIndex == 4
+                        ? Colors.white
+                        : Colors.black,
+                    fontFamily: fontPoppinsMedium,
+                    fontSize: 16.sp,
                   ),
                 ],
               ),
@@ -427,19 +409,19 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
   Widget _buildIconItem(int index, IconData icon) {
     bool isSelected = _selectedIndex == index;
 
-    return Expanded(
-      child: GestureDetector(
-        onTap: () => _onTabTapped(index),
-        child: Center(
-          child: AnimatedScale(
-            scale: isSelected ? 1.10 : 1.0,
-            duration: const Duration(milliseconds: 200),
-            child: Icon(
-              icon,
-              size: 26,
-              color: Colors.white, // icons should be white like your UI
-            ),
-          ),
+    return GestureDetector(
+      onTap: () => _onTabTapped(index),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 250),
+        padding: const EdgeInsets.all(8),
+        // decoration: BoxDecoration(
+        //   color: isSelected ? Colors.white : Colors.transparent,
+        //   borderRadius: BorderRadius.circular(8),
+        // ),
+        child: Icon(
+          icon,
+          size: 24,
+          color: isSelected ? const Color(0xFF2EE6C5) : Colors.white,
         ),
       ),
     );
@@ -481,13 +463,11 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
       //crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          heading,
+          heading.toUpperCase(),
           style: TextStyle(
             fontFamily: fontPoppinsMedium,
             fontSize: 20.sp,
-            fontWeight: FontWeight.w500,
-
-            color: const Color(0xFF1A1A1A),
+            color: const Color(0xFF000115),
           ),
         ),
 
@@ -505,8 +485,8 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
                 child: Column(
                   children: [
                     Container(
-                      width: 68.w,
-                      height: 68.w,
+                      width: 60.w,
+                      height: 60.w,
                       decoration: const BoxDecoration(
                         color: Color(0xFFF2F4FF),
                         shape: BoxShape.circle,
@@ -515,7 +495,7 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
                         child: SvgPicture.asset(
                           item.svgAssetPath,
                           width: 22.w,
-                          height: 22.w,
+                          height: 16.w,
                           fit: BoxFit.contain,
                         ),
                       ),
@@ -524,10 +504,10 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
                     Text(
                       item.label,
                       style: TextStyle(
-                        fontSize: 13.sp,
-                        fontWeight: FontWeight.w500,
+                        fontSize: 14.sp,
+
                         fontFamily: fontPoppinsMedium,
-                        color: const Color(0xFF1A1A1A),
+                        color: const Color(0xFF000115),
                       ),
                     ),
                   ],
@@ -613,27 +593,55 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
   }
 
   Widget _buildMykySymbol() {
+    final user = Auth.user();
+    final profileImage = user?['profileImage'];
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
+        /// LEFT: Logo
         Image.asset("assets/images/logo copy.png", height: 28),
 
+        /// RIGHT: Notification + Profile
         Row(
           children: [
-            // IconButton(
-            //   onPressed: () {
-            //     // TODO: notification action
-            //   },
-            //   icon: const Icon(
-            //     Icons.notifications_none_rounded,
-            //     color: Colors.white,
-            //   ),
-            // ),
-            // const SizedBox(width: 6),
-            // const CircleAvatar(
-            //   radius: 16,
-            //   backgroundImage: AssetImage("assets/logo/profilePic.png"),
-            // ),
+            /// Notification Icon
+            GestureDetector(
+              onTap: () {
+                Get.toNamed('/notifications'); // change route if needed
+              },
+              child: Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: Colors.black.withOpacity(0.25),
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(
+                  Icons.notifications_none_rounded,
+                  color: Colors.white,
+                  size: 22,
+                ),
+              ),
+            ),
+
+            const SizedBox(width: 10),
+
+            /// Profile Image
+            GestureDetector(
+              onTap: () {
+                setState(() {
+                  _selectedIndex = 3; // Profile tab
+                });
+              },
+              child: CircleAvatar(
+                radius: 18,
+                backgroundColor: Colors.white,
+                backgroundImage: profileImage != null
+                    ? NetworkImage(profileImage)
+                    : const AssetImage("assets/images/no_image.png")
+                          as ImageProvider,
+              ),
+            ),
           ],
         ),
       ],
@@ -720,8 +728,10 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
                               begin: Alignment.topCenter,
                               end: Alignment.bottomCenter,
                               colors: [
-                                colorPrimary.withOpacity(0.7),
-                                colorPrimary.withOpacity(0.3),
+                                Colors.black.withOpacity(
+                                  0.35,
+                                ), // subtle dark for readability
+                                Colors.black.withOpacity(0.15),
                                 Colors.transparent,
                               ],
                               stops: const [0.0, 0.7, 1.0],
@@ -842,7 +852,7 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
           "HOW TO PAY",
           style: TextStyle(
             fontSize: 20,
-            fontWeight: FontWeight.w500,
+
             color: Colors.black,
             fontFamily: fontPoppinsMedium,
           ),
@@ -880,12 +890,10 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Services',
+            'Services'.toUpperCase(),
             style: TextStyle(
-              color: Colors.black,
+              color: Color(0XFF000115),
               fontSize: 20.sp,
-              fontWeight: FontWeight.w500,
-
               fontFamily: fontPoppinsMedium,
             ),
           ),
@@ -1000,10 +1008,10 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Winners",
+            "Winners".toUpperCase(),
             style: TextStyle(
               fontSize: 20,
-              fontWeight: FontWeight.w500,
+              color: Color(0xFF000115),
               fontFamily: fontPoppinsMedium,
             ),
           ),
@@ -1031,11 +1039,10 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
     return Column(
       children: [
         Text(
-          "Online Products",
+          "Online Products".toUpperCase(),
           style: TextStyle(
             fontSize: 20,
-            fontWeight: FontWeight.w500,
-            color: Colors.black,
+            color: Color(0xFF000115),
             fontFamily: fontPoppinsMedium,
           ),
         ),
@@ -1063,8 +1070,8 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
             "WHY PEOPLE LOVE MYKY",
             style: TextStyle(
               fontSize: 20,
-              fontWeight: FontWeight.w700,
-              letterSpacing: 0.5,
+              fontFamily: fontPoppinsMedium,
+              color: Color(0xFF000115),
             ),
           ),
 
@@ -1247,7 +1254,7 @@ class _RewardCard extends StatelessWidget {
       onTap: isTop ? onTapTop : null,
       child: Container(
         width: 320,
-        height: 180,
+        height: 250,
         child: Stack(
           children: [
             // Premium Glassmorphic Card
@@ -1259,19 +1266,6 @@ class _RewardCard extends StatelessWidget {
                   end: Alignment.bottomRight,
                   colors: gradient,
                 ),
-                boxShadow: [
-                  BoxShadow(
-                    color: gradient[0].withOpacity(0.6),
-                    blurRadius: 30,
-                    offset: const Offset(0, 15),
-                    spreadRadius: isTop ? 8 : 2,
-                  ),
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.3),
-                    blurRadius: 20,
-                    offset: const Offset(0, 8),
-                  ),
-                ],
               ),
             ),
 
@@ -1281,10 +1275,6 @@ class _RewardCard extends StatelessWidget {
                 margin: const EdgeInsets.all(4),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(22),
-                  border: Border.all(
-                    color: Colors.white.withOpacity(0.3),
-                    width: 2,
-                  ),
                 ),
               ),
 
@@ -1359,10 +1349,6 @@ class _RewardCard extends StatelessWidget {
             ),
 
             // Subtle particle shine effect on top card
-            if (isTop)
-              Positioned.fill(
-                child: IgnorePointer(child: _CardShineOverlayCompact()),
-              ),
           ],
         ),
       ),
@@ -1407,238 +1393,131 @@ class _PendingRewardsBottomSheetState extends State<PendingRewardsBottomSheet>
 
   @override
   Widget build(BuildContext context) {
-    // height tuned to match your design
-    return Container(
-      height: MediaQuery.of(context).size.height * 0.78,
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            Colors.purple.shade900.withOpacity(0.97),
-            Colors.black.withOpacity(1.0),
-          ],
+    final rewardNumber = widget.pendingRewards.isNotEmpty
+        ? widget.pendingRewards.first['id']
+        : 0;
+
+    final screenWidth = MediaQuery.of(context).size.width;
+
+    return Stack(
+      children: [
+        // ===== BLUR BACKGROUND =====
+        Positioned.fill(
+          child: GestureDetector(
+            onTap: () => Navigator.pop(context),
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
+              child: Container(color: Colors.black.withOpacity(0.25)),
+            ),
+          ),
         ),
-        borderRadius: const BorderRadius.vertical(top: Radius.circular(32)),
-      ),
-      child: Stack(
-        children: [
-          // Background Image
-          Positioned.fill(
-            child: ClipRRect(
-              borderRadius: const BorderRadius.vertical(
-                top: Radius.circular(32),
-              ),
-              child: Image.asset(
-                "assets/images/bottom_sheet_bg.png",
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
 
-          // Foreground gradient overlay (adds premium depth)
-          Positioned.fill(
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: const BorderRadius.vertical(
-                  top: Radius.circular(32),
-                ),
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    Colors.black.withOpacity(0.30),
-                    Colors.black.withOpacity(0.60),
-                    Colors.black.withOpacity(0.95),
-                  ],
-                  stops: const [0.0, 0.4, 1.0],
-                ),
-              ),
-            ),
-          ),
+        // ===== BOTTOM POPUP =====
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: TweenAnimationBuilder<double>(
+            duration: const Duration(milliseconds: 450),
+            curve: Curves.easeOutBack, // spring effect
+            tween: Tween(begin: 1.0, end: 0.0),
+            builder: (context, value, child) {
+              return Transform.translate(
+                offset: Offset(0, value * 220),
+                child: child,
+              );
+            },
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(16, 0, 16, 20),
+              child: Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  // ================= MAIN CONTAINER =================
+                  Container(
+                    padding: const EdgeInsets.fromLTRB(18, 8, 18, 24),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(28),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.35),
+                          blurRadius: 40,
+                          offset: const Offset(0, 14),
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Center(
+                          child: Container(
+                            width: 40,
+                            height: 4,
+                            margin: const EdgeInsets.only(bottom: 12),
+                            decoration: BoxDecoration(
+                              color: Colors.grey.shade300,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                        ),
+                        const Text(
+                          "PENDING REWARDS",
+                          style: TextStyle(
+                            fontSize: 22,
+                            fontFamily: fontLexendMedium,
+                          ),
+                        ),
 
-          // Existing floating particles
-          const Positioned.fill(child: FloatingParticles()),
+                        const SizedBox(height: 40),
 
-          // Subtle premium glow
-          Positioned.fill(
-            child: Container(
-              decoration: BoxDecoration(
-                gradient: RadialGradient(
-                  center: Alignment.topCenter,
-                  radius: 1.2,
-                  colors: [
-                    Colors.pinkAccent.withOpacity(0.15),
-                    Colors.transparent,
-                  ],
-                ),
-              ),
-            ),
-          ),
+                        // ===== STACKED REWARD (FIXED) =====
+                        // ===== PRODUCTION STACKED REWARDS =====
+                        SizedBox(
+                          height: 300,
+                          width: double.infinity,
+                          child: buildRewardStack(widget.pendingRewards),
+                        ),
 
-          // ---- The rest of your content (close button, title, stack, button) ----
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.w),
-            child: Column(
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(top: 12.sp),
-                  child: Align(
-                    alignment: Alignment.centerRight,
+                        const SizedBox(height: 22),
+
+                        // ===== BUTTON WITH PULSE =====
+                        _PulsingRedeemButton(onTap: widget.onRedeem),
+                      ],
+                    ),
+                  ),
+
+                  // ===== CLOSE BUTTON =====
+                  Positioned(
+                    right: 0,
+                    left: 0,
+                    top: -70, // negative to move outside
                     child: GestureDetector(
                       onTap: () => Navigator.pop(context),
                       child: Container(
-                        padding: EdgeInsets.all(8.sp),
+                        padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          gradient: LinearGradient(
-                            colors: [
-                              Colors.black.withOpacity(0.6),
-                              Colors.black.withOpacity(0.3),
-                            ],
-                          ),
-                          border: Border.all(
-                            color: Colors.white.withOpacity(0.5),
-                            width: 1.2,
-                          ),
+                          color: Colors.transparent.withOpacity(0.2),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black.withOpacity(0.5),
-                              blurRadius: 12,
-                              offset: Offset(0, 4),
-                            ),
-                            BoxShadow(
-                              color: Colors.white.withOpacity(0.3),
-                              blurRadius: 4,
-                              offset: Offset(0, -1),
+                              color: Colors.black.withOpacity(0.4),
+                              blurRadius: 10,
+                              offset: const Offset(0, 4),
                             ),
                           ],
                         ),
-                        child: Icon(
-                          Icons.close_rounded,
+                        child: const Icon(
+                          Icons.close,
                           color: Colors.white,
-                          size: 20.sp,
+                          size: 28,
                         ),
                       ),
                     ),
                   ),
-                ),
-
-                60.heightBox,
-
-                // Premium "Pending Rewards" title
-                Text(
-                  "Pending Rewards",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 26.sp,
-                    fontWeight: FontWeight.w800,
-                    letterSpacing: 1.2,
-                    height: 1.1,
-                    shadows: [
-                      Shadow(
-                        color: Colors.pinkAccent.withOpacity(0.7),
-                        blurRadius: 30,
-                        offset: const Offset(0, 6),
-                      ),
-                      Shadow(
-                        color: Colors.black.withOpacity(0.6),
-                        blurRadius: 10,
-                        offset: const Offset(0, 3),
-                      ),
-                    ],
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-
-                70.heightBox,
-
-                // Stacked cards
-                Expanded(
-                  child: Center(child: buildRewardStack(widget.pendingRewards)),
-                ),
-
-                30.heightBox,
-
-                // Pulsing Redeem Button
-                AnimatedBuilder(
-                  animation: _pulseController,
-                  builder: (_, __) {
-                    return Transform.scale(
-                      scale: 1.0 + 0.06 * sin(_pulseController.value * 6.28),
-                      child: Container(
-                        height: 56.h,
-                        width: 220.w,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30),
-                          gradient: LinearGradient(
-                            colors: [Colors.pink, Colors.pinkAccent],
-                          ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.pink.withOpacity(
-                                0.6 + 0.1 * sin(_pulseController.value * 6.28),
-                              ),
-                              blurRadius:
-                                  25 +
-                                  5 * sin(_pulseController.value * 6.28).abs(),
-                              offset: const Offset(0, 8),
-                              spreadRadius: 2,
-                            ),
-                          ],
-                        ),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            Confetti.launch(
-                              context,
-                              options: const ConfettiOptions(
-                                particleCount: 80,
-                                spread: 90,
-                                y: 0.6,
-                              ),
-                            );
-                            // call parent's onRedeem after small delay so confetti is visible
-                            Future.delayed(
-                              const Duration(milliseconds: 300),
-                              () {
-                                widget.onRedeem();
-                              },
-                            );
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.transparent,
-                            shadowColor: Colors.transparent,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30),
-                            ),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              const Icon(Icons.card_giftcard_rounded, size: 24),
-                              12.widthBox,
-                              Text(
-                                "Redeem Now",
-                                style: TextStyle(
-                                  fontSize: 18.sp,
-                                  fontWeight: FontWeight.bold,
-                                  letterSpacing: 0.5,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                ),
-
-                40.heightBox,
-              ],
+                ],
+              ),
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
@@ -1649,73 +1528,143 @@ class _PendingRewardsBottomSheetState extends State<PendingRewardsBottomSheet>
     final topFive = (rewards ?? []).take(5).toList();
 
     final List<List<Color>> gradients = [
-      [Color(0xFF9C27B0), Color(0xFFE91E63)],
-      [Color(0xFFFF5E3A), Color(0xFFFF8A65)],
-      [Color(0xFF00D4AA), Color(0xFF00F5A0)],
-      [Color(0xFF448AFF), Color(0xFF2979FF)],
-      [Color(0xFFFFD700), Color(0xFFFFEA80)],
+      [Color(0xFFFFD9D9), Color(0xFFFFB3B3)], // pink
+      [Color(0xFFD9F4EA), Color(0xFFB2EBD9)], // green
+      [Color(0xFFFFF3CC), Color(0xFFFFE699)], // yellow
+      [Color(0xFFE3D9FF), Color(0xFFCBB8FF)], // purple
+      [Color(0xFF00089E), Color(0xFF00089E)], // blue (top)
     ];
 
-    return Center(
-      child: SizedBox(
-        width: 340,
-        height: 220,
-        child: Stack(
-          clipBehavior: Clip.none,
-          children: List.generate(topFive.length, (index) {
-            final reward = topFive[index];
-            final id = reward['id'];
-            final rank = index + 1;
+    return SizedBox(
+      width: double.infinity,
+      height: 250,
+      child: Center(
+        child: SizedBox(
+          width: 300,
+          height: 250,
+          child: Stack(
+            clipBehavior: Clip.none,
+            children: List.generate(topFive.length, (index) {
+              final reward = topFive[index];
+              final id = reward['id'];
+              final rank = index + 1;
 
-            final reversedIndex = topFive.length - 1 - index;
-            final double offsetY = reversedIndex * 22.0;
-            final double scale = 1.0 - (reversedIndex * 0.06);
-            final double opacity = 1.0 - (reversedIndex * 0.12);
+              // Reverse order → last reward on top
+              final reversedIndex = topFive.length - 1 - index;
 
-            return Positioned(
-              top: -offsetY,
-              left: 0,
-              right: 0,
-              child: TweenAnimationBuilder<double>(
-                duration: Duration(milliseconds: 600 + (index * 150)),
-                curve: Curves.easeOutQuint,
-                tween: Tween(begin: 0.0, end: 1.0),
-                builder: (context, animValue, child) {
-                  return Transform.scale(
-                    scale: 0.8 + (animValue * (scale - 0.8)),
-                    child: Opacity(
-                      opacity: animValue * opacity.clamp(0.6, 1.0),
-                      child: child,
-                    ),
-                  );
-                },
-                child: _RewardCard(
-                  id: id.toString(),
-                  rank: rank,
-                  reversedIndex: reversedIndex,
-                  gradient: gradients[index % gradients.length],
-                  onTapTop: () {
-                    Confetti.launch(
-                      context,
-                      options: ConfettiOptions(
-                        particleCount: 60,
-                        spread: 70,
-                        y: 0.6,
+              // IMPORTANT: negative offset (moves stack upward)
+              final double offsetY = reversedIndex * 18.0;
+
+              // Slight scale for depth
+              final double scale = 1.0 - (reversedIndex * 0.05);
+              final double opacity = 1.0 - (reversedIndex * 0.12);
+
+              return Positioned(
+                top: -offsetY, // ← THIS creates the top-visible stack
+                left: 0,
+                right: 0,
+                child: TweenAnimationBuilder<double>(
+                  duration: Duration(milliseconds: 400 + index * 120),
+                  curve: Curves.easeOut,
+                  tween: Tween(begin: 0.9, end: scale),
+                  builder: (context, animValue, child) {
+                    return Transform.scale(
+                      scale: animValue,
+                      child: Opacity(
+                        opacity: opacity.clamp(0.6, 1.0),
+                        child: child,
                       ),
                     );
-
-                    // navigate to rewards page
-                    Future.delayed(Duration(milliseconds: 300), () {
-                      Navigator.pop(context);
-                      // cannot use setState here in bottom sheet
-                    });
                   },
+                  child: _RewardCard(
+                    id: id.toString(),
+                    rank: rank,
+                    reversedIndex: reversedIndex,
+                    gradient: gradients[index % gradients.length],
+                    onTapTop: () {
+                      Confetti.launch(
+                        context,
+                        options: const ConfettiOptions(
+                          particleCount: 60,
+                          spread: 70,
+                          y: 0.6,
+                        ),
+                      );
+
+                      Future.delayed(const Duration(milliseconds: 300), () {
+                        Navigator.pop(context);
+                      });
+                    },
+                  ),
                 ),
-              ),
-            );
-          }),
+              );
+            }),
+          ),
         ),
       ),
+    );
+  }
+}
+
+class _PulsingRedeemButton extends StatefulWidget {
+  final VoidCallback onTap;
+  const _PulsingRedeemButton({required this.onTap});
+
+  @override
+  State<_PulsingRedeemButton> createState() => _PulsingRedeemButtonState();
+}
+
+class _PulsingRedeemButtonState extends State<_PulsingRedeemButton>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 2),
+    )..repeat(reverse: true);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _controller,
+      builder: (context, child) {
+        final scale = 1 + (_controller.value * 0.04);
+
+        return Transform.scale(
+          scale: scale,
+          child: SizedBox(
+            height: 50,
+            width: 300,
+            child: ElevatedButton.icon(
+              onPressed: widget.onTap,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF00D4C8),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(42),
+                ),
+                elevation: 8,
+              ),
+              icon: const Icon(
+                Icons.card_giftcard,
+                color: Color(0xFF000115),
+                size: 25,
+              ),
+              label: const Text(
+                "REDEEM NOW",
+                style: TextStyle(
+                  fontFamily: fontLexendMedium,
+                  fontSize: 16,
+                  color: Color(0xFF000115),
+                ),
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }
