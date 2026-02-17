@@ -118,7 +118,10 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
         child: Scaffold(
           backgroundColor: Colors.white,
           body: _buildTabContent(),
-          bottomNavigationBar: _buildBottomNavigationBar(),
+          bottomNavigationBar: SafeArea(
+            top: false,
+            child: _buildBottomNavigationBar(),
+          ),
         ),
       ),
     );
@@ -273,6 +276,7 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
             showDebugInfo: true,
             useTestAds: true,
           ),
+          peopleLove(),
           socialMediaContainers(
             heading: "Connect With Us",
             items: const [
@@ -913,7 +917,7 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
                       _buildOfferTile(
                         height: 170.h,
 
-                        imagePath: "assets/images/grid/offlineStore.png",
+                        imagePath: "assets/images/grid/offlineStore1.png",
                         fit: BoxFit.cover,
                         onTap: () => Get.toNamed('/nearby-offline-store'),
                       ),
@@ -921,7 +925,7 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
                       _buildOfferTile(
                         height: 70.h,
 
-                        imagePath: "assets/images/grid/map.png",
+                        imagePath: "assets/images/grid/map2.png",
                         fit: BoxFit.cover,
                         onTap: () => Get.toNamed('/near-me-store'),
                       ),
@@ -939,7 +943,7 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
                       _buildOfferTile(
                         height: 120.h,
 
-                        imagePath: "assets/images/grid/coins.png",
+                        imagePath: "assets/images/grid/coins2.png",
                         fit: BoxFit.cover,
                         onTap: () => Get.toNamed('/coin-wallet'),
                       ),
@@ -947,7 +951,7 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
                       _buildOfferTile(
                         height: 120.h,
 
-                        imagePath: "assets/images/grid/recharge.png",
+                        imagePath: "assets/images/grid/recharge2.png",
                         fit: BoxFit.cover,
                         onTap: () {
                           setState(() {
@@ -1054,11 +1058,11 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
 
   Widget peopleLove() {
     final List<Map<String, String>> people = const [
-      {"image": "assets/images/p1.jpg", "name": "Maneesh Apte"},
-      {"image": "assets/images/p2.jpg", "name": "Samantha Lee"},
-      {"image": "assets/images/p3.jpg", "name": "Rohit Verma"},
-      {"image": "assets/images/p2.jpg", "name": "Andrea Collins"},
-      {"image": "assets/images/p1.jpg", "name": "Daniel Cruz"},
+      {"image": "assets/images/grid/p1.jpg", "name": "Maneesh Apte"},
+      {"image": "assets/images/grid/p2.jpg", "name": "Samantha Lee"},
+      {"image": "assets/images/grid/p3.jpg", "name": "Rohit Verma"},
+      {"image": "assets/images/grid/p2.jpg", "name": "Andrea Collins"},
+      {"image": "assets/images/grid/p1.jpg", "name": "Daniel Cruz"},
     ];
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
@@ -1083,7 +1087,7 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
               padding: const EdgeInsets.symmetric(horizontal: 4),
-              itemCount: 6, // add more cards if needed
+              itemCount: people.length, // add more cards if needed
               separatorBuilder: (_, __) => const SizedBox(width: 12),
               itemBuilder: (context, index) {
                 final person = people[index];

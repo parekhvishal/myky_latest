@@ -740,6 +740,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myky_clone/services/api.dart';
+import 'package:myky_clone/spin-wheel/rewards_controller.dart';
+import 'package:myky_clone/spin-wheel/spin_result_screen.dart';
 import 'package:myky_clone/utils/app_utils.dart';
 import 'package:myky_clone/widget/theme.dart';
 
@@ -862,15 +864,76 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
     _controller.forward();
   }
 
+  // Future<void> _showResult() async {
+  //   // ✅ Visual landing calculation (unchanged)
+  //   final sectionCount = widget.spinItems.length;
+  //   final sweepAngle = 2 * pi / sectionCount; // radians per segment
+
+  //   final finalDegrees = _animation.value % 360.0;
+  //   final rotation = finalDegrees * pi / 180.0;
+
+  //   // pointer at top
+  //   const pointerGlobalAngle = pointerDirection;
+
+  //   double angleAtWheel = pointerGlobalAngle - rotation;
+
+  //   while (angleAtWheel < 0) angleAtWheel += 2 * pi;
+  //   while (angleAtWheel >= 2 * pi) angleAtWheel -= 2 * pi;
+
+  //   int index = (angleAtWheel / sweepAngle).floor() % sectionCount;
+
+  //   if (index < 0) index = 0;
+  //   if (index >= sectionCount) index = sectionCount - 1;
+
+  //   final visualReward = widget.spinItems[index];
+  //   final visualAmount = visualReward['amount'].toString();
+
+  //   debugPrint(
+  //     '🎯 Visual landing: index $index, amount $visualAmount (ignored for real prize)',
+  //   );
+
+  //   setState(() {
+  //     landedReward = visualReward;
+  //   });
+
+  //   // ✅ API call after spin stops (unchanged)
+  //   debugPrint('📡 Calling POST API with spinId: ${widget.spinId}');
+  //   setState(() => isLoadingSpin = true);
+
+  //   try {
+  //     final response = await Api.http.post('shopping/spin/${widget.spinId}');
+  //     debugPrint('📡 API response: ${response.data}');
+
+  //     if (response.data['success'] == true) {
+  //       final wonAmount = response.data['won_amount']?.toString() ?? '0';
+
+  //       debugPrint('✅ Won amount from server: $wonAmount');
+
+  //       setState(() {
+  //         _result = wonAmount;
+  //         isLoadingSpin = false;
+  //       });
+
+  //       _showDialog(wonAmount);
+  //     } else {
+  //       final msg = response.data['message'] ?? 'Something went wrong';
+  //       debugPrint('❌ API failed: $msg');
+  //       setState(() => isLoadingSpin = false);
+  //       AppUtils.showErrorSnackBar(msg);
+  //     }
+  //   } catch (error) {
+  //     debugPrint('💥 API error: $error');
+  //     setState(() => isLoadingSpin = false);
+  //     AppUtils.showErrorSnackBar('Error: $error');
+  //   }
+  // }
   Future<void> _showResult() async {
-    // ✅ Visual landing calculation (unchanged)
     final sectionCount = widget.spinItems.length;
-    final sweepAngle = 2 * pi / sectionCount; // radians per segment
+    final sweepAngle = 2 * pi / sectionCount;
 
     final finalDegrees = _animation.value % 360.0;
     final rotation = finalDegrees * pi / 180.0;
 
-    // pointer at top
     const pointerGlobalAngle = pointerDirection;
 
     double angleAtWheel = pointerGlobalAngle - rotation;
@@ -886,44 +949,18 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
     final visualReward = widget.spinItems[index];
     final visualAmount = visualReward['amount'].toString();
 
-    debugPrint(
-      '🎯 Visual landing: index $index, amount $visualAmount (ignored for real prize)',
-    );
+    debugPrint('🎯 Static Result: $visualAmount');
 
-    setState(() {
-      landedReward = visualReward;
-    });
+    // Navigate to result screen instead of dialog
+    final rewardsController = Get.find<RewardsController>();
 
-    // ✅ API call after spin stops (unchanged)
-    debugPrint('📡 Calling POST API with spinId: ${widget.spinId}');
-    setState(() => isLoadingSpin = true);
+    double amount = double.parse(visualAmount);
 
-    try {
-      final response = await Api.http.post('shopping/spin/${widget.spinId}');
-      debugPrint('📡 API response: ${response.data}');
+    // Add reward to global state
+    rewardsController.addReward(amount);
 
-      if (response.data['success'] == true) {
-        final wonAmount = response.data['won_amount']?.toString() ?? '0';
-
-        debugPrint('✅ Won amount from server: $wonAmount');
-
-        setState(() {
-          _result = wonAmount;
-          isLoadingSpin = false;
-        });
-
-        _showDialog(wonAmount);
-      } else {
-        final msg = response.data['message'] ?? 'Something went wrong';
-        debugPrint('❌ API failed: $msg');
-        setState(() => isLoadingSpin = false);
-        AppUtils.showErrorSnackBar(msg);
-      }
-    } catch (error) {
-      debugPrint('💥 API error: $error');
-      setState(() => isLoadingSpin = false);
-      AppUtils.showErrorSnackBar('Error: $error');
-    }
+    // Navigate to result screen
+    Get.to(() => SpinResultScreen());
   }
 
   // ✅ Dialog is unchanged (your existing one)
