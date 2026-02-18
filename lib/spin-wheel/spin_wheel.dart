@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:myky_clone/MainFrontDashboard.dart';
 import 'package:myky_clone/services/api.dart';
 import 'package:myky_clone/spin-wheel/rewards_controller.dart';
 import 'package:myky_clone/spin-wheel/spin_result_screen.dart';
@@ -427,7 +428,10 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
 
                               rewardsController.addReward(double.parse(amount));
 
-                              Get.off(() => SpinResultScreen());
+                              Get.offAll(
+                                () => MainFrontDashboard(),
+                                arguments: 5,
+                              );
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: primary,

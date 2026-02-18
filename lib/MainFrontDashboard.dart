@@ -16,6 +16,7 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:myky_clone/banner_ad_widget.dart';
 import 'package:myky_clone/mlm/account/ProfileScreen.dart';
 import 'package:myky_clone/services/auth.dart';
+import 'package:myky_clone/spin-wheel/spin_result_screen.dart';
 import 'package:myky_clone/utils/en_extensions.dart';
 import 'package:myky_clone/widget/cash_giveaway.dart';
 import 'package:myky_clone/widget/custom_text.dart';
@@ -47,6 +48,10 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
   @override
   void initState() {
     super.initState();
+    final index = Get.arguments;
+    if (index != null && index is int) {
+      _selectedIndex = index;
+    }
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
@@ -217,7 +222,7 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
         pendingRewards: pendingRewards,
         onRedeem: () {
           Navigator.pop(context);
-          setState(() => _selectedIndex = 5);
+          Get.to(() => const Reward());
         },
       ),
     );
@@ -243,7 +248,7 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
         return ProfileScreen();
 
       case 5:
-        return const Reward();
+        return SpinResultScreen();
 
       default:
         return const SizedBox();
