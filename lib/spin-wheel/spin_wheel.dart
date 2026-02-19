@@ -217,10 +217,17 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
     final visualReward = widget.spinItems[index];
     final visualAmount = visualReward['amount'].toString();
 
-    debugPrint('🎯 Static Result: $visualAmount');
+    debugPrint('🎯 Result: $visualAmount');
 
-    // Navigate to result screen instead of dialog
-    _showDialog(visualAmount);
+    // ✅ Add reward to controller
+    final rewardsController = Get.find<RewardsController>();
+    rewardsController.addReward(double.parse(visualAmount));
+
+    // ✅ Direct navigation to dashboard tab (SpinResultScreen)
+    Get.offAll(
+      () => MainFrontDashboard(),
+      arguments: {"tab": 5, "fromSpin": true},
+    );
   }
 
   // ✅ Dialog is unchanged (your existing one)

@@ -44,13 +44,18 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
   List? youtubeVideos = [];
   bool _isHomeDataLoaded = false;
   bool _hasShownRewardDialog = false; // Prevents showing multiple times
-
+  bool fromSpin = false;
   @override
   void initState() {
     super.initState();
-    final index = Get.arguments;
-    if (index != null && index is int) {
-      _selectedIndex = index;
+    final args = Get.arguments;
+    if (args != null) {
+      if (args is Map) {
+        _selectedIndex = args["tab"] ?? 0;
+        fromSpin = args["fromSpin"] ?? false;
+      } else if (args is int) {
+        _selectedIndex = args;
+      }
     }
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
@@ -248,7 +253,9 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
         return ProfileScreen();
 
       case 5:
-        return SpinResultScreen();
+        final screen = SpinResultScreen(fromSpin: fromSpin);
+        fromSpin = false; // ← VERY IMPORTANT (one-time use)
+        return screen;
 
       default:
         return const SizedBox();

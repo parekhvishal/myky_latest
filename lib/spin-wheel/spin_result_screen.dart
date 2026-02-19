@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 import 'dart:ui' as ui;
 import 'dart:ui';
 import 'package:flutter/material.dart';
@@ -14,14 +15,34 @@ import 'dart:typed_data';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 
-class SpinResultScreen extends StatelessWidget {
-  SpinResultScreen({Key? key}) : super(key: key);
+class SpinResultScreen extends StatefulWidget {
+  final bool fromSpin;
+
+  const SpinResultScreen({Key? key, this.fromSpin = false}) : super(key: key);
+
+  @override
+  State<SpinResultScreen> createState() => _SpinResultScreenState();
+}
+
+class _SpinResultScreenState extends State<SpinResultScreen> {
+  final RewardsController controller = Get.find();
   final GlobalKey _shareKey = GlobalKey();
 
-  final RewardsController controller = Get.find();
+  @override
+  void initState() {
+    super.initState();
+
+    if (widget.fromSpin) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _showConfetti();
+      });
+    }
+  }
 
   final double redeemed = 0.0;
+
   final double onTheWay = 0.0;
+
   Future<void> _shareScreenshot() async {
     try {
       RenderRepaintBoundary boundary =
@@ -44,6 +65,61 @@ class SpinResultScreen extends StatelessWidget {
     } catch (e) {
       debugPrint("Share error: $e");
     }
+  }
+
+  void _showConfetti() {
+    final overlay = Overlay.of(context);
+    final random = Random();
+
+    final colors = [
+      Colors.blue,
+      Colors.green,
+      Colors.orange,
+      Colors.purple,
+      Colors.red,
+      Colors.yellow,
+    ];
+
+    final entries = List.generate(40, (index) {
+      return OverlayEntry(
+        builder: (context) {
+          final delay = random.nextDouble();
+          return TweenAnimationBuilder<double>(
+            tween: Tween(begin: -0.1, end: 2),
+            duration: Duration(milliseconds: (2500 + delay * 1500).toInt()),
+            builder: (context, value, child) {
+              final size = MediaQuery.of(context).size;
+
+              return Positioned(
+                left: size.width * random.nextDouble(),
+                top: value * size.height,
+                child: Opacity(
+                  opacity: (1 - value).clamp(0.0, 1.0),
+                  child: Container(
+                    width: 8 + random.nextDouble() * 6,
+                    height: 8 + random.nextDouble() * 6,
+                    decoration: BoxDecoration(
+                      color: colors[random.nextInt(colors.length)],
+                      shape: BoxShape.rectangle,
+                    ),
+                  ),
+                ),
+              );
+            },
+          );
+        },
+      );
+    });
+
+    for (var e in entries) {
+      overlay.insert(e);
+    }
+
+    Future.delayed(const Duration(seconds: 3), () {
+      for (var e in entries) {
+        e.remove();
+      }
+    });
   }
 
   @override
