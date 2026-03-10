@@ -178,7 +178,9 @@ class RegisterController extends GetxController {
                     selectedFile != null)) &&
             bankCopyImage != null) {
           AppUtils.onLoading(
-              context, "Your documents are\nuploading please wait..");
+            context,
+            "Your documents are\nuploading please wait..",
+          );
 
           if (aadharCardFrontImage != null) {
             aadharCardFront1 = await Vapor.uploadWithoutLoaderRegister(
@@ -288,51 +290,54 @@ class RegisterController extends GetxController {
       "account_type": accountType,
       "bank_branch": branchNameController.text,
       "bank_ifsc": ifscCodeController.text,
+
       // "pan_card_image": allIDImages[0],
       // "aadhaar_card_image": allIDImages[1],
       // "aadhaar_card_back_image": allIDImages[2],
       // "cancel_cheque_image": allIDImages[3],
       // "gst_certificate_image": allIDImages[4],
-
       "aadhaar_card_image": aadharCardFront1,
       "aadhaar_card_back_image": aadharCardBack1,
       "cancel_cheque_image": bankProof1,
       "gst_certificate_image": gst1,
     };
 
-    Api.http.post('member/supplier-register', data: sendData).then((res) async {
-      if (res.data['status']) {
-        showDialog(
-          barrierDismissible: false,
-          context: context,
-          builder: (BuildContext context) => WillPopScope(
-            onWillPop: () {
-              return Future.value(false);
-            },
-            child: SuccessBox(
-              res.data['member_id'].toString(),
-              res.data['password'].toString(),
-            ),
-          ),
-        );
-      } else {
-        GetBar(
-          duration: Duration(seconds: 5),
-          message: res.data['error'],
-          backgroundColor: Colors.red,
-        ).show();
-      }
-    }).catchError((error) {
-      if (error.response.statusCode == 401 ||
-          error.response.statusCode == 403) {
-        AppUtils.showErrorSnackBar(error.response.data['message']);
-      }
-      if (error.response.statusCode == 422) {
-        errors = error.response.data['errors'];
-        validator.setErrors(error.response.data['errors']);
-        update();
-      }
-    });
+    Api.http
+        .post('member/supplier-register', data: sendData)
+        .then((res) async {
+          if (res.data['status']) {
+            showDialog(
+              barrierDismissible: false,
+              context: context,
+              builder: (BuildContext context) => WillPopScope(
+                onWillPop: () {
+                  return Future.value(false);
+                },
+                child: SuccessBox(
+                  res.data['member_id'].toString(),
+                  res.data['password'].toString(),
+                ),
+              ),
+            );
+          } else {
+            GetBar(
+              duration: Duration(seconds: 5),
+              message: res.data['error'],
+              backgroundColor: Colors.red,
+            ).show();
+          }
+        })
+        .catchError((error) {
+          if (error.response.statusCode == 401 ||
+              error.response.statusCode == 403) {
+            AppUtils.showErrorSnackBar(error.response.data['message']);
+          }
+          if (error.response.statusCode == 422) {
+            errors = error.response.data['errors'];
+            validator.setErrors(error.response.data['errors']);
+            update();
+          }
+        });
   }
 
   void bankFetchFromIFSC(String value) {
@@ -340,15 +345,16 @@ class RegisterController extends GetxController {
       Api.httpWithoutBaseUrl
           .get('https://ifsc.razorpay.com/' + ifscCodeController.text)
           .then((res) {
-        bankNameController.text = res.data['BANK'];
-        branchNameController.text = res.data['BRANCH'];
-        update();
-      }).catchError((err) {
-        AppUtils.showErrorSnackBar('IFSC code is invalid');
-        bankNameController.text = '';
-        branchNameController.text = '';
-        update();
-      });
+            bankNameController.text = res.data['BANK'];
+            branchNameController.text = res.data['BRANCH'];
+            update();
+          })
+          .catchError((err) {
+            AppUtils.showErrorSnackBar('IFSC code is invalid');
+            bankNameController.text = '';
+            branchNameController.text = '';
+            update();
+          });
     } else {
       bankNameController.text = '';
       branchNameController.text = '';
@@ -358,17 +364,55 @@ class RegisterController extends GetxController {
 
   void fetchMemberName(String value) {
     if (value.length == 6) {
-      Api.httpWithoutLoader.post('member/member-detail',
-          queryParameters: {"code": sponsorIdController.text}).then((res) {
-        sponsorName = res.data['userName'];
-        update();
-      }).catchError((err) {
-        sponsorName = null;
-        update();
-      });
+      Api.httpWithoutLoader
+          .post(
+            'member/member-detail',
+            queryParameters: {"code": sponsorIdController.text},
+          )
+          .then((res) {
+            sponsorName = res.data['userName'];
+            update();
+          })
+          .catchError((err) {
+            sponsorName = null;
+            update();
+          });
     } else {
       sponsorName = null;
       update();
     }
+  }
+
+  // ===== MULTI STEP CONTROLLER =====
+
+  PageController pageController = PageController();
+  int currentStep = 0;
+
+  void nextStep() {
+    if (supplierRegisterFormKey.currentState!.validate()) {
+      pageController.animateToPage(
+        currentStep + 1,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.easeInOutCubic,
+      );
+      currentStep++;
+      update();
+    }
+  }
+
+  void previousStep() {
+    pageController.animateToPage(
+      currentStep - 1,
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.easeInOutCubic,
+    );
+    currentStep--;
+    update();
+  }
+
+  @override
+  void onClose() {
+    pageController.dispose();
+    super.onClose();
   }
 }

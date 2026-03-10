@@ -1,143 +1,144 @@
-import 'dart:async';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
-import 'package:myky_clone/utils/app_config.dart';
-import 'package:video_player/video_player.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:video_player/video_player.dart';
 
 import '../../services/api.dart';
 import '../../services/auth.dart';
 import '../../services/size_config.dart';
+import '../../utils/app_config.dart';
 
 class SplashLogo extends StatefulWidget {
   @override
   _SplashLogoState createState() => _SplashLogoState();
 }
 
-class _SplashLogoState extends State<SplashLogo>
-    with SingleTickerProviderStateMixin {
-  final int splashDuration = 4;
-  var _visible = true;
-
-  // AnimationController? animationController;
-  // Animation<double>? animation;
-
-  AssetBundle? defaultAssetBundle;
-
+class _SplashLogoState extends State<SplashLogo> {
   late VideoPlayerController _controller;
 
-  startTime() async {
-    Timer(Duration(seconds: splashDuration), () async {
-      PackageInfo packageInfo = await PackageInfo.fromPlatform();
-
-      String version = packageInfo.version;
-
-      final storage = new FlutterSecureStorage();
-
-      String? status;
-      try {
-        status = (await storage.read(key: 'isWellCome'))!;
-      } catch (e) {
-        storage.deleteAll();
-      }
-
-      await Api.httpWithoutLoader
-          .get('member/app-status?appVersion=$version')
-          .then((res) {
-            String key = Platform.isAndroid ? 'android' : 'ios';
-
-            if (res.data[key]['maintenance']) {
-              Get.offAllNamed(
-                '/app-maintenance',
-                arguments: {"message": res.data[key]['maintenanceMessage']},
-              );
-            } else if (res.data[key]['update']) {
-              Map sendData = {};
-
-              if (res.data[key].containsKey('hardUpdate') &&
-                  res.data[key]['hardUpdate']) {
-                // App update from Play store
-                sendData['updateAppUrl'] = AppConfig.playStoreUrl;
-              } else if (res.data.containsKey('webUpdate')) {
-                // App update from web link
-                if (res.data['webUpdate']) {
-                  sendData['updateAppUrl'] = res.data['webUrl'] ?? '';
-                } else {
-                  sendData['updateAppUrl'] = AppConfig.playStoreUrl;
-                }
-              }
-
-              Get.offAllNamed('/app-update', arguments: sendData);
-            } else {
-              // Check if user is logged in
-              if (Auth.check() == true) {
-                // User is already logged in, go to MainDashboard
-                Get.offAllNamed('/main-dashboard');
-              } else if (Auth.isGuestLoggedIn == true &&
-                  Auth.isMLMLoggedIn == false) {
-                Get.offAllNamed('/ecommerce');
-              } else {
-                // User is not logged in, check language video status
-                if (status == null) {
-                  Get.offAllNamed('/language-video');
-                } else {
-                  // Show login screen first
-                  Get.offAllNamed('/login-mlm');
-                }
-              }
-            }
-          }, onError: (err) {});
-    });
-  }
-
-  getVideo() {
-    _controller = VideoPlayerController.asset("assets/video/mykyvideo.mp4")
-      ..initialize().then((_) {
-        _controller.play();
-        // Ensure the first frame is shown after the video is initialized
-        setState(() {});
-      });
-  }
+  /// Splash control variables
+  bool _minTimeCompleted = false;
+  bool _navigationDone = false;
+  String? _nextRoute;
+  dynamic _arguments;
 
   @override
   void initState() {
     super.initState();
-    // animationController = AnimationController(
-    //   vsync: this,
-    //   duration: Duration(seconds: 3),
-    // );
-    // animation = CurvedAnimation(parent: animationController!, curve: Curves.easeOut);
-    //
-    // animation!.addListener(() => this.setState(() {}));
-    // animationController!.forward();
+    _initVideo();
+    _initApp(); // API starts immediately
+    _startMinimumTimer(); // 3 sec timer
+  }
 
-    setState(() {
-      _visible = !_visible;
+  /// ===============================
+  /// VIDEO INIT
+  /// ===============================
+  void _initVideo() {
+    _controller = VideoPlayerController.asset("assets/video/mykyvideo.mp4")
+      ..initialize().then((_) {
+        _controller.setLooping(true);
+        _controller.play();
+        setState(() {});
+      });
+  }
+
+  /// ===============================
+  /// MINIMUM SPLASH TIME (3 sec)
+  /// ===============================
+  void _startMinimumTimer() {
+    Future.delayed(const Duration(seconds: 3), () {
+      _minTimeCompleted = true;
+      _navigateIfReady();
     });
-    startTime();
-    getVideo();
+  }
+
+  /// ===============================
+  /// APP INIT (API + LOGIN FLOW)
+  /// ===============================
+  Future<void> _initApp() async {
+    try {
+      PackageInfo packageInfo = await PackageInfo.fromPlatform();
+      String version = packageInfo.version;
+
+      final res = await Api.httpWithoutLoader.get(
+        'member/app-status?appVersion=$version',
+      );
+
+      String key = Platform.isAndroid ? 'android' : 'ios';
+
+      /// Maintenance
+      if (res.data[key]['maintenance'] == true) {
+        _setNextRoute('/app-maintenance', {
+          "message": res.data[key]['maintenanceMessage'],
+        });
+        return;
+      }
+
+      /// Update
+      if (res.data[key]['update'] == true) {
+        _setNextRoute('/app-update', {'updateAppUrl': AppConfig.playStoreUrl});
+        return;
+      }
+
+      /// Login Flow
+      if (Auth.check() == true) {
+        _setNextRoute('/main-dashboard');
+      } else if (Auth.isGuestLoggedIn == true && Auth.isMLMLoggedIn == false) {
+        _setNextRoute('/ecommerce');
+      } else {
+        _setNextRoute('/login-mlm');
+      }
+    } catch (e) {
+      /// If API fails → allow login
+      _setNextRoute('/login-mlm');
+    }
+  }
+
+  /// ===============================
+  /// STORE NEXT ROUTE
+  /// ===============================
+  void _setNextRoute(String route, [dynamic args]) {
+    _nextRoute = route;
+    _arguments = args;
+    _navigateIfReady();
+  }
+
+  /// ===============================
+  /// NAVIGATE WHEN BOTH READY
+  /// ===============================
+  void _navigateIfReady() {
+    if (_minTimeCompleted && _nextRoute != null && !_navigationDone) {
+      _navigationDone = true;
+      Get.offAllNamed(_nextRoute!, arguments: _arguments);
+    }
   }
 
   @override
   void dispose() {
+    _controller.dispose();
     super.dispose();
-    // animationController!.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    return Material(
-      child: Center(
+
+    return Scaffold(
+      backgroundColor: Colors.black,
+      body: Center(
         child: _controller.value.isInitialized
-            ? AspectRatio(
-                aspectRatio: _controller.value.aspectRatio,
-                child: VideoPlayer(_controller),
+            ? SizedBox.expand(
+                child: FittedBox(
+                  fit: BoxFit.cover,
+                  child: SizedBox(
+                    width: _controller.value.size.width,
+                    height: _controller.value.size.height,
+                    child: VideoPlayer(_controller),
+                  ),
+                ),
               )
-            : Container(),
+            : const SizedBox(),
       ),
     );
   }

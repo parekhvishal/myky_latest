@@ -14,6 +14,9 @@ class Reward extends StatefulWidget {
 }
 
 class _RewardState extends State<Reward> {
+  double _dragPosition = 0;
+  bool _isRedeeming = false;
+
   List<dynamic> spinItems = [];
   List<dynamic> spinList = [];
 
@@ -81,27 +84,32 @@ class _RewardState extends State<Reward> {
 
     if (isRedeemed) return;
 
-    showDialog(
-      context: context,
-      builder: (_) => AlertDialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        title: const Text("Locked Reward"),
-        content: const Text("You need to unlock this reward first."),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text("Close"),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.pop(context);
-              _redeemReward(spinId); // ✅ start navigation
-            },
-            child: const Text("Unlock"),
-          ),
-        ],
-      ),
-    );
+    _redeemReward(spinId); // Directly go to spin screen
+  }
+
+  Future<void> _onRedeemSwipe() async {
+    try {
+      // Example API call
+      // await Api.http.post('shopping/redeem-cashback');
+
+      AppUtils.showSuccessSnackBar("Cashback redeemed successfully");
+
+      // Reset slider
+      setState(() {
+        _dragPosition = 0;
+        _isRedeeming = false;
+      });
+
+      // Refresh rewards if needed
+      getSpinList();
+    } catch (e) {
+      setState(() {
+        _dragPosition = 0;
+        _isRedeeming = false;
+      });
+
+      AppUtils.showErrorSnackBar("Redeem failed");
+    }
   }
 
   @override

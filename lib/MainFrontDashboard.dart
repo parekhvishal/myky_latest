@@ -16,6 +16,7 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:myky_clone/banner_ad_widget.dart';
 import 'package:myky_clone/mlm/account/ProfileScreen.dart';
 import 'package:myky_clone/services/auth.dart';
+import 'package:myky_clone/spin-wheel/spin_result_screen.dart';
 import 'package:myky_clone/utils/en_extensions.dart';
 import 'package:myky_clone/widget/cash_giveaway.dart';
 import 'package:myky_clone/widget/custom_text.dart';
@@ -43,10 +44,19 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
   List? youtubeVideos = [];
   bool _isHomeDataLoaded = false;
   bool _hasShownRewardDialog = false; // Prevents showing multiple times
-
+  bool fromSpin = false;
   @override
   void initState() {
     super.initState();
+    final args = Get.arguments;
+    if (args != null) {
+      if (args is Map) {
+        _selectedIndex = args["tab"] ?? 0;
+        fromSpin = args["fromSpin"] ?? false;
+      } else if (args is int) {
+        _selectedIndex = args;
+      }
+    }
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
@@ -118,7 +128,10 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
         child: Scaffold(
           backgroundColor: Colors.white,
           body: _buildTabContent(),
-          bottomNavigationBar: _buildBottomNavigationBar(),
+          bottomNavigationBar: SafeArea(
+            top: false,
+            child: _buildBottomNavigationBar(),
+          ),
         ),
       ),
     );
@@ -214,7 +227,7 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
         pendingRewards: pendingRewards,
         onRedeem: () {
           Navigator.pop(context);
-          setState(() => _selectedIndex = 5);
+          Get.to(() => const Reward());
         },
       ),
     );
@@ -240,7 +253,9 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
         return ProfileScreen();
 
       case 5:
-        return const Reward();
+        final screen = SpinResultScreen(fromSpin: fromSpin);
+        fromSpin = false; // ← VERY IMPORTANT (one-time use)
+        return screen;
 
       default:
         return const SizedBox();
@@ -273,6 +288,7 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
             showDebugInfo: true,
             useTestAds: true,
           ),
+          peopleLove(),
           socialMediaContainers(
             heading: "Connect With Us",
             items: const [
@@ -913,7 +929,7 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
                       _buildOfferTile(
                         height: 170.h,
 
-                        imagePath: "assets/images/grid/offlineStore.png",
+                        imagePath: "assets/images/grid/offlineStore1.png",
                         fit: BoxFit.cover,
                         onTap: () => Get.toNamed('/nearby-offline-store'),
                       ),
@@ -921,7 +937,7 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
                       _buildOfferTile(
                         height: 70.h,
 
-                        imagePath: "assets/images/grid/map.png",
+                        imagePath: "assets/images/grid/map2.png",
                         fit: BoxFit.cover,
                         onTap: () => Get.toNamed('/near-me-store'),
                       ),
@@ -939,7 +955,7 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
                       _buildOfferTile(
                         height: 120.h,
 
-                        imagePath: "assets/images/grid/coins.png",
+                        imagePath: "assets/images/grid/coins2.png",
                         fit: BoxFit.cover,
                         onTap: () => Get.toNamed('/coin-wallet'),
                       ),
@@ -947,7 +963,7 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
                       _buildOfferTile(
                         height: 120.h,
 
-                        imagePath: "assets/images/grid/recharge.png",
+                        imagePath: "assets/images/grid/recharge2.png",
                         fit: BoxFit.cover,
                         onTap: () {
                           setState(() {
@@ -1054,11 +1070,11 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
 
   Widget peopleLove() {
     final List<Map<String, String>> people = const [
-      {"image": "assets/images/p1.jpg", "name": "Maneesh Apte"},
-      {"image": "assets/images/p2.jpg", "name": "Samantha Lee"},
-      {"image": "assets/images/p3.jpg", "name": "Rohit Verma"},
-      {"image": "assets/images/p2.jpg", "name": "Andrea Collins"},
-      {"image": "assets/images/p1.jpg", "name": "Daniel Cruz"},
+      {"image": "assets/images/grid/p1.jpg", "name": "Maneesh Apte"},
+      {"image": "assets/images/grid/p2.jpg", "name": "Samantha Lee"},
+      {"image": "assets/images/grid/p3.jpg", "name": "Rohit Verma"},
+      {"image": "assets/images/grid/p2.jpg", "name": "Andrea Collins"},
+      {"image": "assets/images/grid/p1.jpg", "name": "Daniel Cruz"},
     ];
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
@@ -1083,7 +1099,7 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
               padding: const EdgeInsets.symmetric(horizontal: 4),
-              itemCount: 6, // add more cards if needed
+              itemCount: people.length, // add more cards if needed
               separatorBuilder: (_, __) => const SizedBox(width: 12),
               itemBuilder: (context, index) {
                 final person = people[index];
