@@ -47,18 +47,17 @@ class _SplashLogoState extends State<SplashLogo>
       await Api.httpWithoutLoader
           .get('member/app-status?appVersion=$version')
           .then((res) {
-            String key = Platform.isAndroid ? 'android' : 'ios';
 
-            if (res.data[key]['maintenance']) {
+            if (res.data['maintenance']) {
               Get.offAllNamed(
                 '/app-maintenance',
-                arguments: {"message": res.data[key]['maintenanceMessage']},
+                arguments: {"message": res.data['maintenanceMessage']},
               );
-            } else if (res.data[key]['update']) {
+            } else if (res.data['update']) {
               Map sendData = {};
 
-              if (res.data[key].containsKey('hardUpdate') &&
-                  res.data[key]['hardUpdate']) {
+              if (res.data.containsKey('hardUpdate') &&
+                  res.data['hardUpdate']) {
                 // App update from Play store
                 sendData['updateAppUrl'] = AppConfig.playStoreUrl;
               } else if (res.data.containsKey('webUpdate')) {
@@ -81,12 +80,8 @@ class _SplashLogoState extends State<SplashLogo>
                 Get.offAllNamed('/ecommerce');
               } else {
                 // User is not logged in, check language video status
-                if (status == null) {
-                  Get.offAllNamed('/language-video');
-                } else {
-                  // Show login screen first
-                  Get.offAllNamed('/login-mlm');
-                }
+                Get.offAllNamed('/login-mlm');
+
               }
             }
           }, onError: (err) {});
