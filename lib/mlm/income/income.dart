@@ -206,7 +206,7 @@ class _IncomesState extends State<Incomes> {
   Widget _promotorSponsorIncomeBuilder(dynamic promoterIncome, int index) {
     return Container(
       width: w(80),
-      decoration: boxDecoration(showShadow: true, bgColor: white, radius: 10.0),
+      decoration: boxDecoration(showShadow: true, bgColor: Colors.white, radius: 10.0),
       margin: const EdgeInsets.symmetric(horizontal: 7.5, vertical: 7.5),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
@@ -226,7 +226,7 @@ class _IncomesState extends State<Incomes> {
                         child: CircleAvatar(
                           backgroundColor: colorPrimary.withOpacity(0.2),
                           radius: 20,
-                          child: Icon(UniconsLine.rupee_sign, color: colorPrimary, size: textSizeXLarge),
+                          child: Icon(UniconsLine.rupee_sign, color: colorPrimary, size: 30),
                         ),
                       ),
                       SizedBox(width: w(4)),
@@ -251,7 +251,7 @@ class _IncomesState extends State<Incomes> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       text("TDS (₹) :", fontFamily: fontBold),
-                      text(promoterIncome['tds'], textColor: textColorSecondary, fontSize: textSizeSMedium),
+                      text(promoterIncome['tds'], textColor: textColorSecondary, fontSize: 14),
                     ],
                   ),
                   Row(

@@ -27,7 +27,7 @@ class _VendorPayoutState extends State<VendorPayout> {
 
   Widget _payoutBuilder(dynamic payout, int index) {
     return Container(
-      decoration: boxDecoration(showShadow: true, bgColor: white, radius: 10.0),
+      decoration: boxDecoration(showShadow: true, bgColor: Colors.white, radius: 10.0),
       margin: EdgeInsets.symmetric(horizontal: 7.5, vertical: 7.5),
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
@@ -47,7 +47,7 @@ class _VendorPayoutState extends State<VendorPayout> {
                           children: [
                             Padding(
                               padding: const EdgeInsets.only(top: 4.0),
-                              child: Icon(UniconsLine.file, color: colorPrimary, size: textSizeXLarge),
+                              child: Icon(UniconsLine.file, color: colorPrimary, size: 30),
                             ),
                             SizedBox(width: w(4)),
                             Expanded(

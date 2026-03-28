@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nb_utils/nb_utils.dart' hide white;
+import 'package:nb_utils/nb_utils.dart';
 import 'package:unicons/unicons.dart';
 
 import '../../../../services/api.dart';
@@ -127,21 +127,21 @@ class _VendorInvoiceState extends State<VendorInvoice> {
               ),
               Row(
                 children: [
-                  text('Member Id: ', textColor: textColorSecondary, fontSize: textSizeSMedium),
+                  text('Member Id: ', textColor: textColorSecondary, fontSize: 14),
                   10.width,
                   text('${item['memberId']}', textColor: green),
                 ],
               ),
               Row(
                 children: [
-                  text('Member Name: ', textColor: textColorSecondary, fontSize: textSizeSMedium),
+                  text('Member Name: ', textColor: textColorSecondary, fontSize: 14),
                   10.width,
                   text('${item['memberName']}', textColor: green),
                 ],
               ),
               Row(
                 children: [
-                  text('Member Mobile: ', textColor: textColorSecondary, fontSize: textSizeSMedium),
+                  text('Member Mobile: ', textColor: textColorSecondary, fontSize: 14),
                   10.width,
                   text('${item['memberMobile']}', textColor: green),
                 ],
@@ -149,44 +149,44 @@ class _VendorInvoiceState extends State<VendorInvoice> {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  text('Order No: ', textColor: textColorSecondary, fontSize: textSizeSMedium),
+                  text('Order No: ', textColor: textColorSecondary, fontSize: 14),
                   10.width,
                   Expanded(child: text('${item['orderNo']}', textColor: green, isLongText: true)),
                 ],
               ),
               Row(
                 children: [
-                  text('Invoice No: ', textColor: textColorSecondary, fontSize: textSizeSMedium),
+                  text('Invoice No: ', textColor: textColorSecondary, fontSize: 14),
                   10.width,
                   text('${item['invoiceNo']}', textColor: green),
                 ],
               ),
               10.height,
-              Divider(height: 3, color: colorPrimary_light.withOpacity(0.5), thickness: 1.2),
+              Divider(height: 3, color: colorLightPrimary.withOpacity(0.5), thickness: 1.2),
               Row(
                 children: [
-                  text('Bill Amount: ', textColor: textColorSecondary, fontSize: textSizeSMedium),
+                  text('Bill Amount: ', textColor: textColorSecondary, fontSize: 14),
                   10.width,
                   text('₹ ${item['amount']}', textColor: green),
                 ],
               ),
               Row(
                 children: [
-                  text('Profit Shared: ', textColor: textColorSecondary, fontSize: textSizeSMedium),
+                  text('Profit Shared: ', textColor: textColorSecondary, fontSize: 14),
                   10.width,
                   text('₹ ${item['companyCharge']}', textColor: green),
                 ],
               ),
               Row(
                 children: [
-                  text('GST Amount: ', textColor: textColorSecondary, fontSize: textSizeSMedium),
+                  text('GST Amount: ', textColor: textColorSecondary, fontSize: 14),
                   10.width,
                   text('₹ ${item['gstAmount']}', textColor: green),
                 ],
               ),
               Row(
                 children: [
-                  text('Payable  Amount: ', textColor: textColorSecondary, fontSize: textSizeSMedium),
+                  text('Payable  Amount: ', textColor: textColorSecondary, fontSize: 14),
                   10.width,
                   text('₹ ${item['total']}', textColor: green),
                 ],

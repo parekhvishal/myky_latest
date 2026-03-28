@@ -7,6 +7,7 @@ import 'package:myky_clone/widget/theme.dart';
 
 import '../../spin-wheel/spin_wheel.dart';
 import '../../utils/app_utils.dart';
+import '../../widget/image.dart';
 
 class Reward extends StatefulWidget {
   const Reward({super.key});

@@ -4,6 +4,7 @@ import '../../../services/api.dart';
 import '../../../widget/paginated_list.dart';
 import '../../../widget/theme.dart';
 import '../../widget/colors.dart';
+import '../../widget/image.dart';
 
 class RechargeSummary extends StatefulWidget {
   const RechargeSummary({Key? key}) : super(key: key);
@@ -29,7 +30,7 @@ class _RechargeSummaryState extends State<RechargeSummary> {
   Widget _rechargeOrderBuilder(dynamic rechargeOrder, int index) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-      decoration: boxDecoration(showShadow: true, bgColor: white_color, radius: 10.0),
+      decoration: boxDecoration(showShadow: true, bgColor: Colors.white, radius: 10.0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -66,7 +67,7 @@ class _RechargeSummaryState extends State<RechargeSummary> {
                   children: [
                     text(rechargeOrder['number'], fontFamily: fontMedium),
                     SizedBox(width: 5.0),
-                    text("(Type : ${rechargeOrder['type']})", fontSize: textSizeSmall, isLongText: true),
+                    text("(Type : ${rechargeOrder['type']})", fontSize: 12, isLongText: true),
                   ],
                 ),
                 SizedBox(height: 8.0),
@@ -98,14 +99,10 @@ class _RechargeSummaryState extends State<RechargeSummary> {
                     children: [
                       text(
                         "Service Charge : ₹ ${rechargeOrder['serviceCharge']}",
-                        fontSize: textSizeSmall,
+                        fontSize: 12,
                         fontFamily: fontMedium,
                       ),
-                      text(
-                        "Amount : ₹ ${rechargeOrder['amount']}",
-                        fontSize: textSizeSmall,
-                        fontFamily: fontMedium,
-                      ),
+                      text("Amount : ₹ ${rechargeOrder['amount']}", fontSize: 12, fontFamily: fontMedium),
                     ],
                   ),
                 ),

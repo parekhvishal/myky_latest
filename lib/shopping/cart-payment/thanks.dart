@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:nb_utils/nb_utils.dart' hide white;
+import 'package:nb_utils/nb_utils.dart';
 import 'package:unicons/unicons.dart';
 
 import '../../services/api.dart';
@@ -148,7 +148,7 @@ class _ThanksState extends State<Thanks> {
                 thanksOrderDetail['orderMessageLabel'],
                 textColor: white,
                 fontFamily: fontBold,
-                fontSize: textSizeLargeMedium,
+                fontSize: 18,
                 isCentered: true,
                 maxLine: 3,
               ),
@@ -158,7 +158,7 @@ class _ThanksState extends State<Thanks> {
                 maxLine: 3,
                 textColor: white,
                 fontFamily: fontRegular,
-                fontSize: textSizeSmall,
+                fontSize: 12,
               ),
             Container(
               margin: EdgeInsets.symmetric(vertical: 12, horizontal: 12),
@@ -209,7 +209,7 @@ class _ThanksState extends State<Thanks> {
                     children: <Widget>[
                       text(
                         '\₹ ${item['selling_price']}',
-                        fontSize: textSizeLargeMedium,
+                        fontSize: 18,
                         fontFamily: fontMedium,
                         textColor: colorPrimaryDark,
                       ),
@@ -218,21 +218,21 @@ class _ThanksState extends State<Thanks> {
                   Flexible(
                     child: text(
                       'Qty : ${item['quantity']}',
-                      fontSize: textSizeSMedium,
+                      fontSize: 14,
                       // textColor: green,
                     ),
                   ),
                   Flexible(
                     child: text(
                       '${item['variationDetail']['type']} : ${item['variationDetail']['name']}',
-                      fontSize: textSizeSMedium,
+                      fontSize: 14,
                       // textColor: green,
                     ),
                   ),
                   Flexible(
                     child: text(
                       'Total : ${item['totalDp']}',
-                      fontSize: textSizeSMedium,
+                      fontSize: 14,
                       // textColor: green,
                     ),
                   ),
@@ -265,11 +265,11 @@ class _ThanksState extends State<Thanks> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              text("Total Amount", textColor: red, fontSize: textSizeLargeMedium),
+              text("Total Amount", textColor: red, fontSize: 18),
               text(
                 "\₹ ${thanksOrderDetail['total']}",
                 textColor: red,
-                fontSize: textSizeLargeMedium,
+                fontSize: 18,
                 fontFamily: fontSemiBold,
               ),
             ],

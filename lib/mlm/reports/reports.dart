@@ -129,7 +129,7 @@ class _ReportsState extends State<Reports> {
                     } else if (snapshot.data['list'].length == 0) {
                       return Center(
                         child: Container(
-                          color: white,
+                          color: Colors.white,
                           constraints: const BoxConstraints(maxWidth: 500.0),
                           height: MediaQuery.of(context).size.height,
                           child: Stack(
@@ -160,7 +160,7 @@ class _ReportsState extends State<Reports> {
                                         'No Data Found in TDS Report',
                                         textColor: colorPrimaryDark,
                                         fontFamily: fontBold,
-                                        fontSize: textSizeLargeMedium,
+                                        fontSize: 18,
                                         maxLine: 2,
                                       ),
                                       const SizedBox(height: 5),

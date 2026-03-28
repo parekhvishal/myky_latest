@@ -105,7 +105,7 @@ class _VendorWalletTransactionNewState extends State<VendorWalletTransactionNew>
                 Container(
                   decoration: boxDecoration(bgColor: colorAccent, radius: 8.r),
                   padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 12.w),
-                  child: text("Apply", fontSize: 14.sp, textColor: white_color),
+                  child: text("Apply", fontSize: 14.sp, textColor: Colors.white),
                 ).onTap(() {
                   vendorWalletBalance = null;
                   vendorWalletTransactionGlobalKey.currentState?.refresh();
@@ -114,7 +114,7 @@ class _VendorWalletTransactionNewState extends State<VendorWalletTransactionNew>
                 Container(
                   decoration: boxDecoration(bgColor: red, radius: 8.r),
                   padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 12.w),
-                  child: text("Reset", fontSize: 14.sp, textColor: white_color),
+                  child: text("Reset", fontSize: 14.sp, textColor: Colors.white),
                 ).onTap(() {
                   setState(() {
                     vendorWalletBalance = null;
@@ -314,7 +314,7 @@ class _VendorWalletTransactionNewState extends State<VendorWalletTransactionNew>
                   bgColor: item['type'].toString().toLowerCase() == "debit" ? Colors.red : Colors.green,
                   radius: 8.r,
                 ),
-                child: text(item['type'], fontSize: 15.0, textColor: white_color, fontFamily: fontBold),
+                child: text(item['type'], fontSize: 15.0, textColor: Colors.white, fontFamily: fontBold),
               ),
             ],
           ).marginSymmetric(horizontal: 12.w),

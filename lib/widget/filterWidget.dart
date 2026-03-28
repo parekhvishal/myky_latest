@@ -10,13 +10,8 @@ class FilterWidget extends StatefulWidget {
   final Function? filterGender;
   final Function? filterData;
 
-  const FilterWidget({
-    Key? key,
-    this.filterSort,
-    this.filterCategory,
-    this.filterGender,
-    this.filterData,
-  }) : super(key: key);
+  const FilterWidget({Key? key, this.filterSort, this.filterCategory, this.filterGender, this.filterData})
+    : super(key: key);
 
   @override
   _FilterWidgetState createState() => _FilterWidgetState();
@@ -42,11 +37,7 @@ class _FilterWidgetState extends State<FilterWidget> {
                     child: Icon(UniconsLine.sort_amount_up, size: 20),
                   ),
                   3.width,
-                  text(
-                    'Sort',
-                    fontFamily: fontBold,
-                    fontSize: textSizeSMedium,
-                  ),
+                  text('Sort', fontFamily: fontBold, fontSize: 14),
                 ],
               ),
             ).onClick(widget.filterSort),
@@ -59,11 +50,7 @@ class _FilterWidgetState extends State<FilterWidget> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  text(
-                    'Category',
-                    fontFamily: fontBold,
-                    fontSize: textSizeSMedium,
-                  ),
+                  text('Category', fontFamily: fontBold, fontSize: 14),
                   3.width,
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10),
@@ -81,11 +68,7 @@ class _FilterWidgetState extends State<FilterWidget> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  text(
-                    'Gender',
-                    fontFamily: fontBold,
-                    fontSize: textSizeSMedium,
-                  ),
+                  text('Gender', fontFamily: fontBold, fontSize: 14),
                   3.width,
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10),
@@ -108,11 +91,7 @@ class _FilterWidgetState extends State<FilterWidget> {
                     child: Icon(UniconsLine.filter, size: 18),
                   ),
                   3.width,
-                  text(
-                    'Filters',
-                    fontFamily: fontBold,
-                    fontSize: textSizeSMedium,
-                  ),
+                  text('Filters', fontFamily: fontBold, fontSize: 14),
                 ],
               ),
             ).onClick(widget.filterData),

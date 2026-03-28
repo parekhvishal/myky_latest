@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:nb_utils/nb_utils.dart' hide white;
+import 'package:nb_utils/nb_utils.dart';
 
 import '../../services/api.dart';
 import '../../services/auth.dart';
@@ -330,7 +330,7 @@ class _MyReturnOrdersState extends State<MyReturnOrders> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        text(title, textColor: textColorSecondary, fontSize: textSizeSMedium),
+        text(title, textColor: textColorSecondary, fontSize: 14),
         10.width,
         text(result, textColor: green),
       ],

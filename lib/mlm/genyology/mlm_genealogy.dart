@@ -327,7 +327,7 @@ class _MLMGenealogyState extends State<MLMGenealogy> {
   Widget memberInfoWidget(node) {
     return Container(
       width: w(90),
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(20), color: white),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(20), color: Colors.white),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [

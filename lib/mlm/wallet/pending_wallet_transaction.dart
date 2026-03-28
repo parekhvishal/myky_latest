@@ -82,7 +82,7 @@ class _PendingWalletState extends State<PendingWallet> {
   //                 textColor: white,
   //                 textAllCaps: true,
   //                 fontFamily: fontSemiBold,
-  //                 fontSize: textSizeSMedium,
+  //                 fontSize: 14,
   //               ),
   //             ),
   //           ],
@@ -97,7 +97,7 @@ class _PendingWalletState extends State<PendingWallet> {
   //                 text(
   //                   "Total Amount",
   //                   fontFamily: fontSemiBold,
-  //                   fontSize: textSizeSMedium,
+  //                   fontSize: 14,
   //                 ),
   //                 Row(
   //                   children: [
@@ -117,7 +117,7 @@ class _PendingWalletState extends State<PendingWallet> {
   //                 text(
   //                   "Net Amount",
   //                   fontFamily: fontSemiBold,
-  //                   fontSize: textSizeSMedium,
+  //                   fontSize: 14,
   //                 ),
   //                 Row(
   //                   children: [
@@ -142,7 +142,7 @@ class _PendingWalletState extends State<PendingWallet> {
   //                 text(
   //                   "Admin Charge",
   //                   fontFamily: fontSemiBold,
-  //                   fontSize: textSizeSMedium,
+  //                   fontSize: 14,
   //                 ),
   //                 text(
   //                   '₹ ${item['adminCharge']}'.toString(),
@@ -162,7 +162,7 @@ class _PendingWalletState extends State<PendingWallet> {
   //         //           TextSpan(
   //         //             text: 'Remark : ',
   //         //             style: TextStyle(
-  //         //               fontSize: textSizeSMedium,
+  //         //               fontSize: 14,
   //         //               color: colorPrimary,
   //         //               fontFamily: fontSemiBold,
   //         //             ),
@@ -170,7 +170,7 @@ class _PendingWalletState extends State<PendingWallet> {
   //         //           TextSpan(
   //         //             text: item['remark'],
   //         //             style: TextStyle(
-  //         //               fontSize: textSizeSMedium,
+  //         //               fontSize: 14,
   //         //               color: textColorSecondary,
   //         //             ),
   //         //           )

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 import '../../services/api.dart';
 import '../../widget/paginated_list.dart';
@@ -32,7 +31,7 @@ class _TopUpViewState extends State<TopUpView> {
       //   ),
       //   icon: Icon(
       //     UniconsLine.plus,
-      //     color: white,
+      //     color:Colors.white,
       //   ),
       //   backgroundColor: colorPrimary,
       // ),
@@ -62,17 +61,10 @@ class _TopUpViewState extends State<TopUpView> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Text(
-                      "Invoice Number",
-                      style: TextStyle(color: Colors.black54, fontSize: 14),
-                    ),
+                    Text("Invoice Number", style: TextStyle(color: Colors.black54, fontSize: 14)),
                     Text(
                       item['invoiceNo'] ?? "N/A",
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                      ),
+                      style: TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.w600),
                     ),
                   ],
                 ),
@@ -80,17 +72,10 @@ class _TopUpViewState extends State<TopUpView> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Text(
-                      "Pin",
-                      style: TextStyle(color: Colors.black54, fontSize: 14),
-                    ),
+                    Text("Pin", style: TextStyle(color: Colors.black54, fontSize: 14)),
                     Text(
                       item['pin']['code'],
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                      ),
+                      style: TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.w600),
                     ),
                   ],
                 ),
@@ -98,17 +83,10 @@ class _TopUpViewState extends State<TopUpView> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Text(
-                      "Package Name",
-                      style: TextStyle(color: Colors.black54, fontSize: 14),
-                    ),
+                    Text("Package Name", style: TextStyle(color: Colors.black54, fontSize: 14)),
                     Text(
                       item['package']['name'],
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                      ),
+                      style: TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.w600),
                     ),
                   ],
                 ),
@@ -116,17 +94,10 @@ class _TopUpViewState extends State<TopUpView> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Text(
-                      "Package Amount",
-                      style: TextStyle(color: Colors.black54, fontSize: 14),
-                    ),
+                    Text("Package Amount", style: TextStyle(color: Colors.black54, fontSize: 14)),
                     Text(
                       item['amount'],
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                      ),
+                      style: TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.w600),
                     ),
                   ],
                 ),
@@ -134,17 +105,10 @@ class _TopUpViewState extends State<TopUpView> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Text(
-                      "GST Amount",
-                      style: TextStyle(color: Colors.black54, fontSize: 14),
-                    ),
+                    Text("GST Amount", style: TextStyle(color: Colors.black54, fontSize: 14)),
                     Text(
                       item['gstAmount'],
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                      ),
+                      style: TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.w600),
                     ),
                   ],
                 ),

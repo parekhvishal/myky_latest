@@ -101,11 +101,11 @@ class _PlanScreenState extends State<PlanScreen> {
                 children: [
                   TextSpan(
                     text: 'Description : ',
-                    style: TextStyle(fontSize: textSizeMedium, color: colorPrimary, fontFamily: fontSemiBold),
+                    style: TextStyle(fontSize: 16, color: colorPrimary, fontFamily: fontSemiBold),
                   ),
                   TextSpan(
                     text: res['recharge_desc'],
-                    style: TextStyle(fontSize: textSizeSMedium, color: textColorSecondary),
+                    style: TextStyle(fontSize: 14, color: textColorSecondary),
                   ),
                 ],
               ),

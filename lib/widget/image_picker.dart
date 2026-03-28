@@ -59,7 +59,7 @@ class ImagePickerGC {
               contentPadding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 10.w),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(25.r))),
               content: InnerShadowContainer(
-                color: white,
+                color: Colors.white,
                 borderColor: colorAccent,
                 offset: const Offset(0, 5),
                 child: Column(

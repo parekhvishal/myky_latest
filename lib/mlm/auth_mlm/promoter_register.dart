@@ -14,7 +14,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:myky_clone/utils/en_extensions.dart';
-import 'package:nb_utils/nb_utils.dart' hide white;
+import 'package:nb_utils/nb_utils.dart';
 import 'package:unicons/unicons.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -253,7 +253,7 @@ class PromoterRegisterState extends State<PromoterRegister> {
     var width = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      backgroundColor: whiteColor,
+      backgroundColor: Colors.white,
       appBar: AppBar(title: text('PROMOTER SIGNUP')),
       body: (permission != null)
           ? (permission == LocationPermission.whileInUse || permission == LocationPermission.always)
@@ -558,7 +558,7 @@ class PromoterRegisterState extends State<PromoterRegister> {
                                         Card(
                                           semanticContainer: true,
                                           clipBehavior: Clip.antiAliasWithSaveLayer,
-                                          margin: const EdgeInsets.all(spacing_control),
+                                          margin: const EdgeInsets.all(4),
                                           shape: RoundedRectangleBorder(
                                             borderRadius: BorderRadius.circular(10.0),
                                           ),
@@ -591,11 +591,11 @@ class PromoterRegisterState extends State<PromoterRegister> {
                                           ),
                                         ),
                                         Container(
-                                          padding: const EdgeInsets.all(spacing_control),
+                                          padding: const EdgeInsets.all(4),
                                           margin: const EdgeInsets.only(top: 15, right: 10),
                                           decoration: BoxDecoration(
                                             shape: BoxShape.circle,
-                                            color: white_color,
+                                            color: Colors.white,
                                             border: Border.all(color: colorPrimary),
                                           ),
                                           child: GestureDetector(
@@ -703,10 +703,7 @@ class PromoterRegisterState extends State<PromoterRegister> {
                                                   isExpanded: true,
                                                   hint: const Text(
                                                     'Select up to 3 category',
-                                                    style: TextStyle(
-                                                      fontSize: textSizeMedium,
-                                                      color: textColorSecondary,
-                                                    ),
+                                                    style: TextStyle(fontSize: 16, color: textColorSecondary),
                                                   ),
                                                   onChanged: (newValue) {
                                                     _onDropdownChanged(newValue!);
@@ -829,7 +826,7 @@ class PromoterRegisterState extends State<PromoterRegister> {
                                                 Card(
                                                   semanticContainer: true,
                                                   clipBehavior: Clip.antiAliasWithSaveLayer,
-                                                  margin: const EdgeInsets.all(spacing_control),
+                                                  margin: const EdgeInsets.all(4),
                                                   shape: RoundedRectangleBorder(
                                                     borderRadius: BorderRadius.circular(10.0),
                                                   ),
@@ -862,11 +859,11 @@ class PromoterRegisterState extends State<PromoterRegister> {
                                                   ),
                                                 ),
                                                 Container(
-                                                  padding: const EdgeInsets.all(spacing_control),
+                                                  padding: const EdgeInsets.all(4),
                                                   margin: const EdgeInsets.only(top: 15, right: 10),
                                                   decoration: BoxDecoration(
                                                     shape: BoxShape.circle,
-                                                    color: white_color,
+                                                    color: Colors.white,
                                                     border: Border.all(color: colorPrimary),
                                                   ),
                                                   child: GestureDetector(
@@ -897,7 +894,7 @@ class PromoterRegisterState extends State<PromoterRegister> {
                                                 Card(
                                                   semanticContainer: true,
                                                   clipBehavior: Clip.antiAliasWithSaveLayer,
-                                                  margin: const EdgeInsets.all(spacing_control),
+                                                  margin: const EdgeInsets.all(4),
                                                   shape: RoundedRectangleBorder(
                                                     borderRadius: BorderRadius.circular(10.0),
                                                   ),
@@ -930,11 +927,11 @@ class PromoterRegisterState extends State<PromoterRegister> {
                                                   ),
                                                 ),
                                                 Container(
-                                                  padding: const EdgeInsets.all(spacing_control),
+                                                  padding: const EdgeInsets.all(4),
                                                   margin: const EdgeInsets.only(top: 15, right: 10),
                                                   decoration: BoxDecoration(
                                                     shape: BoxShape.circle,
-                                                    color: white_color,
+                                                    color: Colors.white,
                                                     border: Border.all(color: colorPrimary),
                                                   ),
                                                   child: GestureDetector(
@@ -971,7 +968,7 @@ class PromoterRegisterState extends State<PromoterRegister> {
                                                 Card(
                                                   semanticContainer: true,
                                                   clipBehavior: Clip.antiAliasWithSaveLayer,
-                                                  margin: const EdgeInsets.all(spacing_control),
+                                                  margin: const EdgeInsets.all(4),
                                                   shape: RoundedRectangleBorder(
                                                     borderRadius: BorderRadius.circular(10.0),
                                                   ),
@@ -1004,11 +1001,11 @@ class PromoterRegisterState extends State<PromoterRegister> {
                                                   ),
                                                 ),
                                                 Container(
-                                                  padding: const EdgeInsets.all(spacing_control),
+                                                  padding: const EdgeInsets.all(4),
                                                   margin: const EdgeInsets.only(top: 15, right: 10),
                                                   decoration: BoxDecoration(
                                                     shape: BoxShape.circle,
-                                                    color: white_color,
+                                                    color: Colors.white,
                                                     border: Border.all(color: colorPrimary),
                                                   ),
                                                   child: GestureDetector(
@@ -1039,7 +1036,7 @@ class PromoterRegisterState extends State<PromoterRegister> {
                                                 Card(
                                                   semanticContainer: true,
                                                   clipBehavior: Clip.antiAliasWithSaveLayer,
-                                                  margin: const EdgeInsets.all(spacing_control),
+                                                  margin: const EdgeInsets.all(4),
                                                   shape: RoundedRectangleBorder(
                                                     borderRadius: BorderRadius.circular(10.0),
                                                   ),
@@ -1072,11 +1069,11 @@ class PromoterRegisterState extends State<PromoterRegister> {
                                                   ),
                                                 ),
                                                 Container(
-                                                  padding: const EdgeInsets.all(spacing_control),
+                                                  padding: const EdgeInsets.all(4),
                                                   margin: const EdgeInsets.only(top: 15, right: 10),
                                                   decoration: BoxDecoration(
                                                     shape: BoxShape.circle,
-                                                    color: white_color,
+                                                    color: Colors.white,
                                                     border: Border.all(color: colorPrimary),
                                                   ),
                                                   child: GestureDetector(
@@ -1403,12 +1400,12 @@ class PromoterRegisterState extends State<PromoterRegister> {
         alignment: Alignment.bottomRight,
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.all(spacing_standard_new),
+            padding: const EdgeInsets.all(16),
             child: Card(
               semanticContainer: true,
               clipBehavior: Clip.antiAliasWithSaveLayer,
-              elevation: spacing_standard,
-              margin: const EdgeInsets.all(spacing_control),
+              elevation: 8,
+              margin: const EdgeInsets.all(4),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100.0)),
               child: CircleAvatar(
                 radius: 50,
@@ -1442,11 +1439,11 @@ class PromoterRegisterState extends State<PromoterRegister> {
             ),
           ),
           Container(
-            padding: const EdgeInsets.all(spacing_control),
+            padding: const EdgeInsets.all(4),
             margin: const EdgeInsets.only(bottom: 30, right: 15),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: white,
+              color: Colors.white,
               border: Border.all(color: colorPrimary, width: 1),
             ),
             child: GestureDetector(
@@ -1625,23 +1622,23 @@ class PromoterRegisterState extends State<PromoterRegister> {
           }
           return null;
         },
-        hint: text('Select State', fontSize: textSizeMedium, textColor: textColorSecondary),
+        hint: text('Select State', fontSize: 16, textColor: textColorSecondary),
         decoration: InputDecoration(
           prefixIcon: const Icon(Icons.add_location_alt, color: textColorSecondary, size: 20),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
-            borderSide: const BorderSide(color: whiteColor, width: 0.0),
+            borderSide: const BorderSide(color: Colors.white, width: 0.0),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
-            borderSide: const BorderSide(color: whiteColor, width: 0.0),
+            borderSide: const BorderSide(color: Colors.white, width: 0.0),
           ),
           border: const UnderlineInputBorder(borderSide: BorderSide(color: Colors.black12)),
           contentPadding: const EdgeInsets.symmetric(vertical: 15),
           // hintText: 'Select State',
           filled: true,
           fillColor: const Color(0xFFf7f7f7),
-          hintStyle: const TextStyle(fontSize: textSizeMedium, color: Colors.black),
+          hintStyle: const TextStyle(fontSize: 16, color: Colors.black),
         ),
         value: myShopStateSelection,
         iconSize: 20,
@@ -1678,7 +1675,7 @@ class PromoterRegisterState extends State<PromoterRegister> {
       ),
       hint: text(
         'Select Vendor Percentage',
-        fontSize: textSizeMedium,
+        fontSize: 16,
         textColor: textColorPrimary.withOpacity(0.7),
         fontFamily: fontMedium,
       ),
@@ -1713,23 +1710,23 @@ class PromoterRegisterState extends State<PromoterRegister> {
           }
           return null;
         },
-        hint: text('Select City', fontSize: textSizeMedium, textColor: textColorSecondary),
+        hint: text('Select City', fontSize: 16, textColor: textColorSecondary),
         decoration: InputDecoration(
           prefixIcon: const Icon(Icons.add_location_alt, color: textColorSecondary, size: 20),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
-            borderSide: const BorderSide(color: whiteColor, width: 0.0),
+            borderSide: const BorderSide(color: Colors.white, width: 0.0),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
-            borderSide: const BorderSide(color: whiteColor, width: 0.0),
+            borderSide: const BorderSide(color: Colors.white, width: 0.0),
           ),
           border: const UnderlineInputBorder(borderSide: BorderSide(color: Colors.black12)),
           contentPadding: const EdgeInsets.symmetric(vertical: 15),
           filled: true,
           fillColor: const Color(0xFFf7f7f7),
           // hintText: 'Select City',
-          hintStyle: const TextStyle(fontSize: textSizeMedium, color: Colors.black),
+          hintStyle: const TextStyle(fontSize: 16, color: Colors.black),
         ),
         value: myShopCitySelection,
         iconSize: 20,
@@ -1776,18 +1773,18 @@ class PromoterRegisterState extends State<PromoterRegister> {
         decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
-            borderSide: const BorderSide(color: white, width: 0.0),
+            borderSide: const BorderSide(color: Colors.white, width: 0.0),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
-            borderSide: const BorderSide(color: white, width: 0.0),
+            borderSide: const BorderSide(color: Colors.white, width: 0.0),
           ),
           border: const UnderlineInputBorder(borderSide: BorderSide(color: Colors.black12)),
           contentPadding: const EdgeInsets.symmetric(vertical: 15),
           // hintText: 'Select State',
           filled: true,
           fillColor: const Color(0xFFf7f7f7),
-          hintStyle: const TextStyle(fontSize: textSizeMedium, color: Colors.black),
+          hintStyle: const TextStyle(fontSize: 16, color: Colors.black),
         ),
         value: myStateSelection,
         iconSize: 20,
@@ -1845,18 +1842,18 @@ class PromoterRegisterState extends State<PromoterRegister> {
         decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
-            borderSide: const BorderSide(color: white, width: 0.0),
+            borderSide: const BorderSide(color: Colors.white, width: 0.0),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
-            borderSide: const BorderSide(color: white, width: 0.0),
+            borderSide: const BorderSide(color: Colors.white, width: 0.0),
           ),
           border: const UnderlineInputBorder(borderSide: BorderSide(color: Colors.black12)),
           contentPadding: const EdgeInsets.symmetric(vertical: 15),
           filled: true,
           fillColor: const Color(0xFFf7f7f7),
           // hintText: 'Select City',
-          hintStyle: const TextStyle(fontSize: textSizeMedium, color: Colors.black),
+          hintStyle: const TextStyle(fontSize: 16, color: Colors.black),
         ),
         value: myCitySelection,
         iconSize: 20,
@@ -2005,12 +2002,7 @@ Widget termsCondition(BuildContext context, term) {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               15.widthBox,
-              text(
-                'Terms & Conditions',
-                textColor: colorAccent,
-                fontFamily: fontBold,
-                fontSize: textSizeNormal,
-              ).expand(),
+              text('Terms & Conditions', textColor: colorAccent, fontFamily: fontBold, fontSize: 20).expand(),
               GestureDetector(
                 onTap: () {
                   Navigator.pop(context);
@@ -2069,15 +2061,10 @@ Widget successBox(BuildContext context, String memberId, String password) {
           width: 45,
           height: 45,
           decoration: const BoxDecoration(shape: BoxShape.circle, color: green),
-          child: const Icon(Icons.done, color: white),
+          child: const Icon(Icons.done, color: Colors.white),
         ),
         const SizedBox(height: 24),
-        text(
-          'Register Successfully',
-          textColor: textColorPrimary,
-          fontFamily: fontBold,
-          fontSize: textSizeNormal,
-        ),
+        text('Register Successfully', textColor: textColorPrimary, fontFamily: fontBold, fontSize: 20),
         Padding(
           padding: const EdgeInsets.only(left: 30, right: 30, bottom: 16, top: 10),
           child: Column(
@@ -2087,14 +2074,14 @@ Widget successBox(BuildContext context, String memberId, String password) {
                 'Member ID : $memberId',
                 textColor: textColorSecondary,
                 fontFamily: fontMedium,
-                fontSize: textSizeMedium,
+                fontSize: 16,
                 isLongText: true,
               ),
               text(
                 'Password : $password',
                 textColor: textColorSecondary,
                 fontFamily: fontMedium,
-                fontSize: textSizeMedium,
+                fontSize: 16,
                 isLongText: true,
               ),
               Align(

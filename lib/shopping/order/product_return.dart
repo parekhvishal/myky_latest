@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:nb_utils/nb_utils.dart' hide white;
+import 'package:nb_utils/nb_utils.dart';
 import 'package:path/path.dart' as path;
 import 'package:unicons/unicons.dart';
 
@@ -135,7 +135,7 @@ class _ProductReturnState extends State<ProductReturn> {
                 Card(
                   semanticContainer: true,
                   clipBehavior: Clip.antiAliasWithSaveLayer,
-                  margin: EdgeInsets.all(spacing_control),
+                  margin: EdgeInsets.all(4),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
                   child: Column(
                     children: <Widget>[
@@ -154,11 +154,11 @@ class _ProductReturnState extends State<ProductReturn> {
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.all(spacing_control),
+                  padding: EdgeInsets.all(4),
                   margin: EdgeInsets.only(top: 15, right: 10),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: white_color,
+                    color: Colors.white,
                     border: Border.all(color: colorPrimary),
                   ),
                   child: GestureDetector(
@@ -190,7 +190,7 @@ class _ProductReturnState extends State<ProductReturn> {
             Card(
               semanticContainer: true,
               clipBehavior: Clip.antiAliasWithSaveLayer,
-              margin: EdgeInsets.all(spacing_control),
+              margin: EdgeInsets.all(4),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
               child: Column(
                 children: <Widget>[
@@ -220,11 +220,11 @@ class _ProductReturnState extends State<ProductReturn> {
               ),
             ),
             Container(
-              padding: EdgeInsets.all(spacing_control),
+              padding: EdgeInsets.all(4),
               margin: EdgeInsets.only(top: 15, right: 10),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: white_color,
+                color: Colors.white,
                 border: Border.all(color: colorPrimary),
               ),
               child: GestureDetector(
@@ -248,7 +248,7 @@ class _ProductReturnState extends State<ProductReturn> {
             Card(
               semanticContainer: true,
               clipBehavior: Clip.antiAliasWithSaveLayer,
-              margin: EdgeInsets.all(spacing_control),
+              margin: EdgeInsets.all(4),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
               child: Column(
                 children: <Widget>[
@@ -278,11 +278,11 @@ class _ProductReturnState extends State<ProductReturn> {
               ),
             ),
             Container(
-              padding: EdgeInsets.all(spacing_control),
+              padding: EdgeInsets.all(4),
               margin: EdgeInsets.only(top: 15, right: 10),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: white_color,
+                color: Colors.white,
                 border: Border.all(color: colorPrimary),
               ),
               child: GestureDetector(
@@ -316,18 +316,18 @@ class _ProductReturnState extends State<ProductReturn> {
       value: reasonType,
       decoration: InputDecoration(
         focusedBorder: UnderlineInputBorder(
-          borderRadius: BorderRadius.circular(spacing_standard),
+          borderRadius: BorderRadius.circular(8),
           borderSide: BorderSide(color: Colors.transparent),
         ),
         enabledBorder: UnderlineInputBorder(
-          borderRadius: BorderRadius.circular(spacing_standard),
+          borderRadius: BorderRadius.circular(8),
           borderSide: BorderSide(color: Colors.transparent),
         ),
         contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
         filled: true,
         fillColor: Color(0xFFf7f7f7),
         hintText: 'Select',
-        hintStyle: TextStyle(fontSize: textSizeMedium, color: Colors.grey[300]),
+        hintStyle: TextStyle(fontSize: 16, color: Colors.grey[300]),
       ),
       onChanged: (String? newValue) {
         setState(() {

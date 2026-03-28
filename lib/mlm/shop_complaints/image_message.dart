@@ -6,12 +6,13 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart' hide FormData, MultipartFile;
 import 'package:image_picker/image_picker.dart';
-import 'package:nb_utils/nb_utils.dart' hide white;
+import 'package:nb_utils/nb_utils.dart';
 
 import '../../services/Vapor.dart';
 import '../../services/api.dart';
 import '../../services/validator_x.dart';
 import '../../widget/colors.dart';
+import '../../widget/image.dart';
 import '../../widget/image_picker.dart';
 import '../../widget/theme.dart';
 

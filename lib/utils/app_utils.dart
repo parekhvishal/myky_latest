@@ -261,7 +261,7 @@ class AppUtils {
 
   static void showInfoSnackBar(String message, {Color? color}) {
     GetBar(
-      backgroundColor: color == null ? primary : color,
+      backgroundColor: color ?? colorPrimary,
       duration: Duration(seconds: 3),
       messageText: Center(child: text(message, textColor: Colors.white, fontSize: 14.0, isLongText: true)),
       snackPosition: SnackPosition.TOP,

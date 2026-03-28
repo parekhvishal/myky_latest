@@ -12,7 +12,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:myky_clone/utils/app_utils.dart';
 import 'package:myky_clone/widget/confirmation_dialog.dart';
-import 'package:nb_utils/nb_utils.dart' hide white;
+import 'package:nb_utils/nb_utils.dart';
 import 'package:unicons/unicons.dart';
 
 import '../../../../services/auth.dart';
@@ -21,6 +21,7 @@ import '../../services/api.dart';
 import '../../services/getImage_service.dart';
 import '../../services/validator_x.dart';
 import '../../widget/colors.dart';
+import '../../widget/image.dart';
 import '../../widget/image_picker.dart';
 import '../../widget/network_image.dart';
 import '../../widget/theme.dart';
@@ -405,11 +406,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           },
                           decoration: InputDecoration(
                             focusedBorder: UnderlineInputBorder(
-                              borderRadius: BorderRadius.circular(spacing_standard),
+                              borderRadius: BorderRadius.circular(8),
                               borderSide: const BorderSide(color: Colors.transparent),
                             ),
                             enabledBorder: UnderlineInputBorder(
-                              borderRadius: BorderRadius.circular(spacing_standard),
+                              borderRadius: BorderRadius.circular(8),
                               borderSide: const BorderSide(color: Colors.transparent),
                             ),
                             contentPadding: const EdgeInsets.symmetric(vertical: 15),
@@ -417,7 +418,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             filled: true,
                             fillColor: const Color(0xFFf7f7f7),
                             hintText: 'Date of birth',
-                            hintStyle: const TextStyle(fontSize: textSizeMedium, color: textColorSecondary),
+                            hintStyle: const TextStyle(fontSize: 16, color: textColorSecondary),
                             prefixIcon: const Icon(Icons.date_range, color: textColorSecondary, size: 20),
                           ),
                           format: format,
@@ -649,7 +650,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   Card(
                                     semanticContainer: true,
                                     clipBehavior: Clip.antiAliasWithSaveLayer,
-                                    margin: const EdgeInsets.all(spacing_control),
+                                    margin: const EdgeInsets.all(4),
                                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
                                     child: Column(
                                       children: <Widget>[
@@ -691,11 +692,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     ),
                                   ),
                                   Container(
-                                    padding: const EdgeInsets.all(spacing_control),
+                                    padding: const EdgeInsets.all(4),
                                     margin: const EdgeInsets.only(top: 15, right: 10),
                                     decoration: BoxDecoration(
                                       shape: BoxShape.circle,
-                                      color: white_color,
+                                      color: Colors.white,
                                       border: Border.all(color: colorPrimary),
                                     ),
                                     child: GestureDetector(
@@ -720,7 +721,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   Card(
                                     semanticContainer: true,
                                     clipBehavior: Clip.antiAliasWithSaveLayer,
-                                    margin: const EdgeInsets.all(spacing_control),
+                                    margin: const EdgeInsets.all(4),
                                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
                                     child: Column(
                                       children: <Widget>[
@@ -763,11 +764,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     ),
                                   ),
                                   Container(
-                                    padding: const EdgeInsets.all(spacing_control),
+                                    padding: const EdgeInsets.all(4),
                                     margin: const EdgeInsets.only(top: 15, right: 10),
                                     decoration: BoxDecoration(
                                       shape: BoxShape.circle,
-                                      color: white_color,
+                                      color: Colors.white,
                                       border: Border.all(color: colorPrimary),
                                     ),
                                     child: GestureDetector(
@@ -799,7 +800,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   Card(
                                     semanticContainer: true,
                                     clipBehavior: Clip.antiAliasWithSaveLayer,
-                                    margin: const EdgeInsets.all(spacing_control),
+                                    margin: const EdgeInsets.all(4),
                                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
                                     child: Column(
                                       children: <Widget>[
@@ -842,11 +843,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     ),
                                   ),
                                   Container(
-                                    padding: const EdgeInsets.all(spacing_control),
+                                    padding: const EdgeInsets.all(4),
                                     margin: const EdgeInsets.only(top: 15, right: 10),
                                     decoration: BoxDecoration(
                                       shape: BoxShape.circle,
-                                      color: white_color,
+                                      color: Colors.white,
                                       border: Border.all(color: colorPrimary),
                                     ),
                                     child: GestureDetector(
@@ -872,7 +873,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   Card(
                                     semanticContainer: true,
                                     clipBehavior: Clip.antiAliasWithSaveLayer,
-                                    margin: const EdgeInsets.all(spacing_control),
+                                    margin: const EdgeInsets.all(4),
                                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
                                     child: Column(
                                       children: <Widget>[
@@ -915,11 +916,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     ),
                                   ),
                                   Container(
-                                    padding: const EdgeInsets.all(spacing_control),
+                                    padding: const EdgeInsets.all(4),
                                     margin: const EdgeInsets.only(top: 15, right: 10),
                                     decoration: BoxDecoration(
                                       shape: BoxShape.circle,
-                                      color: white_color,
+                                      color: Colors.white,
                                       border: Border.all(color: colorPrimary),
                                     ),
                                     child: GestureDetector(
@@ -954,7 +955,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               Container(
                                 decoration: boxDecoration(bgColor: colorAccent, radius: 8.r),
                                 padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 12.w),
-                                child: text("Update", fontSize: 14.sp, textColor: white_color),
+                                child: text("Update", fontSize: 14.sp, textColor: Colors.white),
                               ).onTap(() {
                                 // showDialog(
                                 //     context: context,
@@ -1215,12 +1216,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
         alignment: Alignment.bottomRight,
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.all(spacing_standard_new),
+            padding: const EdgeInsets.all(16),
             child: Card(
               semanticContainer: true,
               clipBehavior: Clip.antiAliasWithSaveLayer,
-              elevation: spacing_standard,
-              margin: const EdgeInsets.all(spacing_control),
+              elevation: 8,
+              margin: const EdgeInsets.all(4),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100.0)),
               child: CircleAvatar(
                 radius: 50,
@@ -1260,11 +1261,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
           ),
           Container(
-            padding: const EdgeInsets.all(spacing_control),
+            padding: const EdgeInsets.all(4),
             margin: const EdgeInsets.only(bottom: 30, right: 15),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: white,
+              color: Colors.white,
               border: Border.all(color: colorPrimary, width: 1),
             ),
             child: GestureDetector(
@@ -1297,23 +1298,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
           }
           return null;
         },
-        hint: text('Select State', fontSize: textSizeMedium, textColor: textColorSecondary),
+        hint: text('Select State', fontSize: 16, textColor: textColorSecondary),
         decoration: InputDecoration(
           prefixIcon: const Icon(Icons.add_location_alt, color: textColorSecondary, size: 20),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
-            borderSide: BorderSide(color: whiteColor, width: 0.0),
+            borderSide: BorderSide(color: Colors.white, width: 0.0),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
-            borderSide: BorderSide(color: whiteColor, width: 0.0),
+            borderSide: BorderSide(color: Colors.white, width: 0.0),
           ),
           border: UnderlineInputBorder(borderSide: BorderSide(color: Colors.black12)),
           contentPadding: EdgeInsets.symmetric(vertical: 15),
           // hintText: 'Select State',
           filled: true,
           fillColor: Color(0xFFf7f7f7),
-          hintStyle: TextStyle(fontSize: textSizeMedium, color: Colors.black),
+          hintStyle: TextStyle(fontSize: 16, color: Colors.black),
         ),
         value: myShopStateSelection,
         iconSize: 20,
@@ -1352,23 +1353,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
           }
           return null;
         },
-        hint: text('Select City', fontSize: textSizeMedium, textColor: textColorSecondary),
+        hint: text('Select City', fontSize: 16, textColor: textColorSecondary),
         decoration: InputDecoration(
           prefixIcon: Icon(Icons.add_location_alt, color: textColorSecondary, size: 20),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
-            borderSide: BorderSide(color: whiteColor, width: 0.0),
+            borderSide: BorderSide(color: Colors.white, width: 0.0),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
-            borderSide: BorderSide(color: whiteColor, width: 0.0),
+            borderSide: BorderSide(color: Colors.white, width: 0.0),
           ),
           border: UnderlineInputBorder(borderSide: BorderSide(color: Colors.black12)),
           contentPadding: EdgeInsets.symmetric(vertical: 15),
           filled: true,
           fillColor: Color(0xFFf7f7f7),
           // hintText: 'Select City',
-          hintStyle: TextStyle(fontSize: textSizeMedium, color: Colors.black),
+          hintStyle: TextStyle(fontSize: 16, color: Colors.black),
         ),
         value: myShopCitySelection,
         iconSize: 20,
@@ -1404,11 +1405,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
       decoration: InputDecoration(
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(color: white, width: 0.0),
+          borderSide: const BorderSide(color: Colors.white, width: 0.0),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(color: white, width: 0.0),
+          borderSide: const BorderSide(color: Colors.white, width: 0.0),
         ),
         border: const UnderlineInputBorder(borderSide: BorderSide(color: Colors.black12)),
         contentPadding: const EdgeInsets.symmetric(vertical: 15),
@@ -1416,7 +1417,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         filled: true,
         fillColor: const Color(0xFFf7f7f7),
         prefixIcon: const Icon(Icons.location_city),
-        hintStyle: const TextStyle(fontSize: textSizeMedium, color: Colors.black),
+        hintStyle: const TextStyle(fontSize: 16, color: Colors.black),
       ),
       value: myStateSelection,
       iconSize: 20,
@@ -1458,11 +1459,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
         decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
-            borderSide: const BorderSide(color: white, width: 0.0),
+            borderSide: const BorderSide(color: Colors.white, width: 0.0),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
-            borderSide: const BorderSide(color: white, width: 0.0),
+            borderSide: const BorderSide(color: Colors.white, width: 0.0),
           ),
           border: const UnderlineInputBorder(borderSide: BorderSide(color: Colors.black12)),
           contentPadding: const EdgeInsets.symmetric(vertical: 15),
@@ -1470,7 +1471,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           fillColor: const Color(0xFFf7f7f7),
           prefixIcon: const Icon(Icons.location_city),
           // hintText: 'Select City',
-          hintStyle: const TextStyle(fontSize: textSizeMedium, color: Colors.black),
+          hintStyle: const TextStyle(fontSize: 16, color: Colors.black),
         ),
         value: myCitySelection,
         iconSize: 20,

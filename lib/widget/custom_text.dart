@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
+import 'theme.dart';
+
 class CustomText extends StatelessWidget {
   final String text;
   final double? fontSize;
@@ -53,8 +55,7 @@ class CustomText extends StatelessWidget {
       style: TextStyle(
         fontFamily: fontFamily,
         fontSize: fontSize,
-        // color: textColor ?? (themeController.isDarkMode.value ? white : black),
-        color: textColor ?? black,
+        color: textColor ?? (themeController.isDarkMode.value ? white : black),
         height: height,
         decoration: decoration,
         fontWeight: fontWeight,

@@ -66,7 +66,7 @@ class _SelfExplanatoryVideoState extends State<SelfExplanatoryVideo> {
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         // border: Border.all(
-                        //   color: whiteColor.withOpacity(0.5),
+                        //   color: Colors.white.withOpacity(0.5),
                         //   width: 2.5,
                         // ),
                       ),

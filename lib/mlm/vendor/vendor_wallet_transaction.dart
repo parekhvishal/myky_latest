@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nb_utils/nb_utils.dart' hide white;
+import 'package:nb_utils/nb_utils.dart';
 
 import '../../../../services/api.dart';
 import '../../../../widget/paginated_list.dart';
@@ -49,37 +49,37 @@ class VendorWalletTransactionOldState extends State<VendorWalletTransactionOld> 
                       textColor: white,
                       textAllCaps: true,
                       fontFamily: fontSemiBold,
-                      fontSize: textSizeSMedium,
+                      fontSize: 14,
                     ),
                   ),
                 ],
               ),
               10.height,
-              Divider(height: 3, color: colorPrimary_light.withOpacity(0.5), thickness: 1.2),
+              Divider(height: 3, color: colorLightPrimary.withOpacity(0.5), thickness: 1.2),
               Row(
                 children: [
-                  text('Amount: ', textColor: textColorSecondary, fontSize: textSizeSMedium),
+                  text('Amount: ', textColor: textColorSecondary, fontSize: 14),
                   10.width,
                   text('\₹ ${item['amount']}', textColor: green),
                 ],
               ),
               Row(
                 children: [
-                  text('Profit Shared: ', textColor: textColorSecondary, fontSize: textSizeSMedium),
+                  text('Profit Shared: ', textColor: textColorSecondary, fontSize: 14),
                   10.width,
                   text('\₹ ${item['companyCharge']}', textColor: green),
                 ],
               ),
               Row(
                 children: [
-                  text('GST Amount: ', textColor: textColorSecondary, fontSize: textSizeSMedium),
+                  text('GST Amount: ', textColor: textColorSecondary, fontSize: 14),
                   10.width,
                   text('\₹ ${item['gstAmount']}', textColor: green),
                 ],
               ),
               Row(
                 children: [
-                  text('Payable Amount: ', textColor: textColorSecondary, fontSize: textSizeSMedium),
+                  text('Payable Amount: ', textColor: textColorSecondary, fontSize: 14),
                   10.width,
                   text('\₹ ${item['total']}', textColor: green),
                 ],
@@ -91,7 +91,7 @@ class VendorWalletTransactionOldState extends State<VendorWalletTransactionOld> 
               //     text(
               //       'Remark: ',
               //       textColor: textColorSecondary,
-              //       fontSize: textSizeSMedium,
+              //       fontSize: 14,
               //     ),
               //     10.width,
               //     Expanded(

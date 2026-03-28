@@ -248,7 +248,7 @@ class _ProductDetailState extends State<ProductDetail> {
           text(
             productData!['name'],
             textColor: colorPrimaryDark,
-            fontSize: textSizeLargeMedium,
+            fontSize: 18,
             fontFamily: fontSemiBold,
             isLongText: true,
           ),
@@ -305,9 +305,9 @@ class _ProductDetailState extends State<ProductDetail> {
                   padding: const EdgeInsets.all(5),
                   child: Row(
                     children: [
-                      const Icon(Icons.share, size: 15, color: white),
+                      const Icon(Icons.share, size: 15, color: Colors.white),
                       5.width,
-                      text('Share & Earn', textColor: white),
+                      text('Share & Earn', textColor: Colors.white),
                     ],
                   ),
                 ).onTap(() {
@@ -857,7 +857,7 @@ class _ProductDetailState extends State<ProductDetail> {
                                 topRight: Radius.circular(20.0),
                                 topLeft: Radius.circular(20.0),
                               ),
-                              color: white,
+                              color: Colors.white,
                             ),
                             child: Padding(
                               padding: EdgeInsets.symmetric(horizontal: 18, vertical: 8),
@@ -930,7 +930,7 @@ class _ProductDetailState extends State<ProductDetail> {
                                               'Login as a myky member',
                                               style: TextStyle(
                                                 fontFamily: fontBold,
-                                                color: white,
+                                                color: Colors.white,
                                                 fontSize: 16,
                                               ),
                                             ),
@@ -964,7 +964,7 @@ class _ProductDetailState extends State<ProductDetail> {
               ),
               child: Text(
                 outOfStock ? 'Out Of Stock' : 'Add to Cart',
-                style: boldTextStyle(color: white_color),
+                style: boldTextStyle(color: Colors.white),
               ),
             ),
           ).expand(flex: 6),

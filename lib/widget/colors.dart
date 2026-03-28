@@ -5,6 +5,7 @@ const appLightBackground = Color(0XFFFFFFFF);
 
 const colorPrimary = Color(0xFF00089E);
 const colorLightPrimary = Color(0XFFE9E9E9);
+const colorPrimaryDark = Color(0XFF212121);
 const colorAccent = Color(0xffF2B34A);
 const colorTertiary = Color(0XFF3D9E38);
 const colorQuaternary = Color(0XFF44B7AA);

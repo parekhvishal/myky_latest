@@ -310,7 +310,7 @@ class _QRViewState extends State<QRView> with TickerProviderStateMixin {
                                     ),
                                     child: text(
                                       'Pay',
-                                      textColor: whiteColor,
+                                      textColor: Colors.white,
                                       fontFamily: fontBold,
                                       fontSize: 15.sp,
                                     ),

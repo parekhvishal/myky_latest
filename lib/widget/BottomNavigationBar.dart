@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'theme.dart';
-
 class CurvedNavigationBar extends StatefulWidget {
   final List<Widget>? items;
   final int? initialIndex;
@@ -25,17 +23,16 @@ class CurvedNavigationBar extends StatefulWidget {
     this.animationCurve = Curves.easeOut,
     this.animationDuration = const Duration(milliseconds: 600),
     this.currentIndex,
-  })  : assert(items != null),
-        assert(items!.length >= 2),
-        assert(0 <= initialIndex! && initialIndex < items!.length),
-        super(key: key);
+  }) : assert(items != null),
+       assert(items!.length >= 2),
+       assert(0 <= initialIndex! && initialIndex < items!.length),
+       super(key: key);
 
   @override
   _CurvedNavigationBarState createState() => _CurvedNavigationBarState();
 }
 
-class _CurvedNavigationBarState extends State<CurvedNavigationBar>
-    with SingleTickerProviderStateMixin {
+class _CurvedNavigationBarState extends State<CurvedNavigationBar> with SingleTickerProviderStateMixin {
   double? _startingPos;
   int? _endingIndex = 0;
   double? _pos;
@@ -81,19 +78,13 @@ class _CurvedNavigationBarState extends State<CurvedNavigationBar>
             width: size.width / _length!,
             child: Center(
               child: Transform.translate(
-                offset: Offset(
-                  0,
-                  -(1 - _buttonHide!) * 80,
-                ),
+                offset: Offset(0, -(1 - _buttonHide!) * 80),
                 child: Material(
                   color: widget.buttonBackgroundColor ?? widget.color,
                   type: MaterialType.circle,
-                  shadowColor: shadow_color,
+                  shadowColor: Color(0X95E9EBF0),
                   elevation: 4,
-                  child: Padding(
-                    padding: const EdgeInsets.all(14.0),
-                    child: _icon,
-                  ),
+                  child: Padding(padding: const EdgeInsets.all(14.0), child: _icon),
                 ),
               ),
             ),
@@ -102,17 +93,15 @@ class _CurvedNavigationBarState extends State<CurvedNavigationBar>
             alignment: Alignment.bottomCenter,
             child: CustomPaint(
               painter: NavCustomPainter(_pos!, _length!, widget.color),
-              child: Container(
-                height: 75.0,
-              ),
+              child: Container(height: 75.0),
             ),
           ),
           Align(
             alignment: Alignment.bottomCenter,
             child: SizedBox(
-                height: 100.0,
-                child: Row(
-                    children: widget.items!.map((item) {
+              height: 100.0,
+              child: Row(
+                children: widget.items!.map((item) {
                   return NavButton(
                     onTap: _buttonTap,
                     position: _pos!,
@@ -120,7 +109,9 @@ class _CurvedNavigationBarState extends State<CurvedNavigationBar>
                     index: widget.items!.indexOf(item),
                     child: item,
                   );
-                }).toList())),
+                }).toList(),
+              ),
+            ),
           ),
         ],
       ),
@@ -135,8 +126,11 @@ class _CurvedNavigationBarState extends State<CurvedNavigationBar>
     setState(() {
       _startingPos = _pos;
       _endingIndex = index;
-      _animationController!.animateTo(newPosition,
-          duration: widget.animationDuration, curve: widget.animationCurve!);
+      _animationController!.animateTo(
+        newPosition,
+        duration: widget.animationDuration,
+        curve: widget.animationCurve!,
+      );
     });
   }
 }
@@ -162,12 +156,12 @@ class NavButton extends StatelessWidget {
           onTap!(index!);
         },
         child: Container(
-            height: 75.0,
-            child: Transform.translate(
-              offset: Offset(0, difference < 1.0 / length! ? verticalAlignment * 40 : 0),
-              child:
-                  Opacity(opacity: difference < 1.0 / length! * 0.99 ? opacity : 1.0, child: child),
-            )),
+          height: 75.0,
+          child: Transform.translate(
+            offset: Offset(0, difference < 1.0 / length! ? verticalAlignment * 40 : 0),
+            child: Opacity(opacity: difference < 1.0 / length! * 0.99 ? opacity : 1.0, child: child),
+          ),
+        ),
       ),
     );
   }

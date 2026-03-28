@@ -192,7 +192,7 @@ class _UpgradePromoterState extends State<UpgradePromoter> {
         Card(
           semanticContainer: true,
           clipBehavior: Clip.antiAliasWithSaveLayer,
-          margin: const EdgeInsets.all(spacing_control),
+          margin: const EdgeInsets.all(4),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
           child: Column(
             children: <Widget>[
@@ -215,11 +215,11 @@ class _UpgradePromoterState extends State<UpgradePromoter> {
           ),
         ),
         Container(
-          padding: const EdgeInsets.all(spacing_control),
+          padding: const EdgeInsets.all(4),
           margin: const EdgeInsets.only(top: 15, right: 10),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: white_color,
+            color: Colors.white,
             border: Border.all(color: colorPrimary),
           ),
           child: GestureDetector(

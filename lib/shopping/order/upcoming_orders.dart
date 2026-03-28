@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../widget/colors.dart';
+import '../../widget/image.dart';
 import '../../widget/theme.dart';
 import 'guest_orders_detail.dart';
 
@@ -49,16 +50,11 @@ class _UpcomingOrderState extends State<UpcomingOrder> {
                             children: [
                               text(
                                 "Booking ID",
-                                fontSize: textSizeSmall,
+                                fontSize: 12,
                                 fontFamily: fontMedium,
                                 textColor: textColorPrimary,
                               ),
-                              text(
-                                "123",
-                                fontSize: textSizeSmall,
-                                fontFamily: fontBold,
-                                textColor: textColorPrimary,
-                              ),
+                              text("123", fontSize: 12, fontFamily: fontBold, textColor: textColorPrimary),
                             ],
                           ),
                           SizedBox(height: 2),
@@ -68,13 +64,13 @@ class _UpcomingOrderState extends State<UpcomingOrder> {
                             children: [
                               text(
                                 "Booking For",
-                                fontSize: textSizeSmall,
+                                fontSize: 12,
                                 fontFamily: fontMedium,
                                 textColor: textColorPrimary,
                               ),
                               text(
                                 "04 Apr 2023,10:42 am",
-                                fontSize: textSizeSmall,
+                                fontSize: 12,
                                 fontFamily: fontBold,
                                 textColor: textColorPrimary,
                               ),
@@ -87,13 +83,13 @@ class _UpcomingOrderState extends State<UpcomingOrder> {
                             children: [
                               text(
                                 "Delivery Date",
-                                fontSize: textSizeSmall,
+                                fontSize: 12,
                                 fontFamily: fontMedium,
                                 textColor: textColorPrimary,
                               ),
                               text(
                                 "12 Apr 2023,05:00 pm",
-                                fontSize: textSizeSmall,
+                                fontSize: 12,
                                 fontFamily: fontBold,
                                 textColor: textColorPrimary,
                               ),
@@ -106,7 +102,7 @@ class _UpcomingOrderState extends State<UpcomingOrder> {
                             children: [
                               text(
                                 "Payment Mode",
-                                fontSize: textSizeSmall,
+                                fontSize: 12,
                                 fontFamily: fontMedium,
                                 textColor: textColorPrimary,
                               ),
@@ -118,7 +114,7 @@ class _UpcomingOrderState extends State<UpcomingOrder> {
                                 ),
                                 child: text(
                                   "COD",
-                                  fontSize: textSizeSmall,
+                                  fontSize: 12,
                                   fontFamily: fontBold,
                                   textColor: textColorPrimary,
                                 ),
@@ -132,13 +128,13 @@ class _UpcomingOrderState extends State<UpcomingOrder> {
                             children: [
                               text(
                                 "Amount",
-                                fontSize: textSizeSmall,
+                                fontSize: 12,
                                 fontFamily: fontMedium,
                                 textColor: textColorPrimary,
                               ),
                               text(
                                 "Rs. 4000",
-                                fontSize: textSizeSmall,
+                                fontSize: 12,
                                 fontFamily: fontBold,
                                 textColor: textColorPrimary,
                               ),
@@ -166,7 +162,7 @@ class _UpcomingOrderState extends State<UpcomingOrder> {
                         ),
                         child: text(
                           "Track Order",
-                          fontSize: textSizeSmall,
+                          fontSize: 12,
                           fontFamily: fontBold,
                           textColor: textColorPrimary,
                         ),
@@ -191,7 +187,7 @@ class _UpcomingOrderState extends State<UpcomingOrder> {
                           ),
                           child: text(
                             "View Detail",
-                            fontSize: textSizeSmall,
+                            fontSize: 12,
                             fontFamily: fontBold,
                             textColor: greenColor,
                           ),

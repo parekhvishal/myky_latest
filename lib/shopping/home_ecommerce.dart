@@ -136,7 +136,7 @@ class _HomeECommerceState extends State<HomeECommerce> {
                     'Are you sure?\n Do you want to exit an App',
                     textColor: textColorPrimary,
                     fontFamily: fontBold,
-                    fontSize: textSizeLargeMedium,
+                    fontSize: 18,
                     isCentered: true,
                     isLongText: true,
                   ),
@@ -145,23 +145,13 @@ class _HomeECommerceState extends State<HomeECommerce> {
                     children: [
                       TextButton(
                         onPressed: () => Navigator.of(context).pop(false),
-                        child: text(
-                          'No',
-                          fontSize: textSizeLargeMedium,
-                          fontFamily: fontBold,
-                          textColor: green,
-                        ),
+                        child: text('No', fontSize: 18, fontFamily: fontBold, textColor: green),
                       ),
                       TextButton(
                         onPressed: () async {
                           SystemNavigator.pop();
                         },
-                        child: text(
-                          'Yes',
-                          fontSize: textSizeLargeMedium,
-                          fontFamily: fontBold,
-                          textColor: red,
-                        ),
+                        child: text('Yes', fontSize: 18, fontFamily: fontBold, textColor: red),
                       ),
                     ],
                   ),
@@ -251,7 +241,7 @@ class _HomeECommerceState extends State<HomeECommerce> {
                   topRight: Radius.circular(20.0),
                   topLeft: Radius.circular(20.0),
                 ),
-                color: white,
+                color: Colors.white,
               ),
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
@@ -322,7 +312,7 @@ class _HomeECommerceState extends State<HomeECommerce> {
                               10.width,
                               const Text(
                                 'Login as a myky member',
-                                style: TextStyle(fontFamily: fontBold, color: white, fontSize: 16),
+                                style: TextStyle(fontFamily: fontBold, color: Colors.white, fontSize: 16),
                               ),
                             ],
                           ),
@@ -1106,7 +1096,7 @@ class _EcommerceState extends State<Ecommerce> {
               padding: EdgeInsets.all(10.sp),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12.r),
-                color: white,
+                color: Colors.white,
                 boxShadow: const [
                   BoxShadow(
                     color: Colors.grey,

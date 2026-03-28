@@ -53,7 +53,7 @@ class _CancelRequestState extends State<CancelRequest> {
                           isLongText: true,
                           textColor: colorPrimaryDark,
                           fontFamily: fontSemiBold,
-                          fontSize: textSizeLargeMedium,
+                          fontSize: 18,
                         ),
                         SizedBox(height: 20),
                         TextFormField(
@@ -106,7 +106,7 @@ class _CancelRequestState extends State<CancelRequest> {
       child: MaterialButton(
         color: colorPrimary,
         padding: EdgeInsets.all(15),
-        child: text('Submit', textColor: white, fontFamily: fontBold, textAllCaps: true),
+        child: text('Submit', textColor: Colors.white, fontFamily: fontBold, textAllCaps: true),
         onPressed: () {
           if (_requestFormKey.currentState!.validate()) {
             FocusScope.of(context).requestFocus(FocusNode());

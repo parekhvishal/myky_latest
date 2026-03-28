@@ -466,7 +466,7 @@ class _FilterPageState extends State<FilterPage> {
             padding: const EdgeInsets.all(10.0),
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
             color: colorPrimary,
-            child: text('Done', textColor: white, textAllCaps: true, fontFamily: fontSemiBold),
+            child: text('Done', textColor: Colors.white, textAllCaps: true, fontFamily: fontSemiBold),
             //
             // Row(
             //   children: [
@@ -530,7 +530,7 @@ class _FilterPageState extends State<FilterPage> {
               child: Container(
                 width: w(100),
                 padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
-                decoration: BoxDecoration(color: selectedIndex == filter[index] ? white : null),
+                decoration: BoxDecoration(color: selectedIndex == filter[index] ? Colors.white : null),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -562,7 +562,7 @@ class _FilterPageState extends State<FilterPage> {
                       padding: const EdgeInsets.all(2.0),
                       child: filterType == "chip"
                           ? ChoiceChip(
-                              backgroundColor: white,
+                              backgroundColor: Colors.white,
                               elevation: 5.0,
                               label: text(
                                 subFilter[i]['name'].toString(),

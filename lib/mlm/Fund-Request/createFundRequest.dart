@@ -76,16 +76,11 @@ class _CreateFundRequestState extends State<CreateFundRequest> {
               Container(
                 padding: const EdgeInsets.only(left: 15, right: 10),
                 margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                decoration: boxDecoration(showShadow: true, bgColor: white, radius: 10.0),
+                decoration: boxDecoration(showShadow: true, bgColor: Colors.white, radius: 10.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    text(
-                      'Fund Request',
-                      fontSize: textSizeLargeMedium,
-                      fontFamily: fontBold,
-                      textColor: textColorPrimary,
-                    ),
+                    text('Fund Request', fontSize: 18, fontFamily: fontBold, textColor: textColorPrimary),
                     SizedBox(height: 15),
                     floatingInput(
                       'Amount',
@@ -107,13 +102,13 @@ class _CreateFundRequestState extends State<CreateFundRequest> {
               Container(
                 padding: const EdgeInsets.only(left: 15, right: 10),
                 margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                decoration: boxDecoration(showShadow: true, bgColor: white, radius: 10.0),
+                decoration: boxDecoration(showShadow: true, bgColor: Colors.white, radius: 10.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     text(
                       'Select Banking Details',
-                      fontSize: textSizeLargeMedium,
+                      fontSize: 18,
                       fontFamily: fontBold,
                       textColor: textColorPrimary,
                     ),
@@ -128,7 +123,7 @@ class _CreateFundRequestState extends State<CreateFundRequest> {
                         ),
                         hint: text(
                           'Select Payment Method',
-                          fontSize: textSizeMedium,
+                          fontSize: 16,
                           textColor: textColorPrimary.withOpacity(0.7),
                           fontFamily: fontMedium,
                         ),
@@ -170,7 +165,7 @@ class _CreateFundRequestState extends State<CreateFundRequest> {
                         ),
                         hint: text(
                           'Select Bank',
-                          fontSize: textSizeMedium,
+                          fontSize: 16,
                           textColor: textColorPrimary.withOpacity(0.7),
                           fontFamily: fontMedium,
                         ),
@@ -198,13 +193,13 @@ class _CreateFundRequestState extends State<CreateFundRequest> {
               Container(
                 padding: const EdgeInsets.only(left: 15, right: 10),
                 margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                decoration: boxDecoration(showShadow: true, bgColor: white, radius: 10.0),
+                decoration: boxDecoration(showShadow: true, bgColor: Colors.white, radius: 10.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     text(
                       'Select Deposit Date-Time And Receipt',
-                      fontSize: textSizeLargeMedium,
+                      fontSize: 18,
                       fontFamily: fontBold,
                       textColor: textColorPrimary,
                     ),
@@ -353,12 +348,7 @@ class _CreateFundRequestState extends State<CreateFundRequest> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          text(
-            'Upload Receipt',
-            fontSize: textSizeLargeMedium,
-            fontFamily: fontSemiBold,
-            textColor: textColorPrimary,
-          ),
+          text('Upload Receipt', fontSize: 18, fontFamily: fontSemiBold, textColor: textColorPrimary),
           SizedBox(height: 15),
           Stack(
             alignment: Alignment.topRight,
@@ -366,7 +356,7 @@ class _CreateFundRequestState extends State<CreateFundRequest> {
               Card(
                 semanticContainer: true,
                 clipBehavior: Clip.antiAliasWithSaveLayer,
-                margin: EdgeInsets.all(spacing_control),
+                margin: EdgeInsets.all(4),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
                 child: Column(
                   children: <Widget>[
@@ -391,11 +381,11 @@ class _CreateFundRequestState extends State<CreateFundRequest> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.all(spacing_control),
+                padding: EdgeInsets.all(4),
                 margin: EdgeInsets.only(top: 15, right: 10),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: white,
+                  color: Colors.white,
                   border: Border.all(color: colorPrimary),
                 ),
                 child: GestureDetector(

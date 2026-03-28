@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:nb_utils/nb_utils.dart' hide white;
+import 'package:nb_utils/nb_utils.dart';
 import 'package:unicons/unicons.dart';
 
 import '../../../services/auth.dart';
@@ -452,7 +452,7 @@ Widget buildMLMCart(context, {Function? funAfterBack, bool isHomePage = false}) 
           );
         }
       },
-      radius: spacing_standard_new,
+      radius: 16,
       child: Stack(
         clipBehavior: Clip.none,
         alignment: Alignment.center,
@@ -460,8 +460,8 @@ Widget buildMLMCart(context, {Function? funAfterBack, bool isHomePage = false}) 
           Container(
             width: 40,
             height: 40,
-            margin: EdgeInsets.only(right: spacing_middle),
-            padding: EdgeInsets.all(spacing_standard),
+            margin: EdgeInsets.only(right: 10),
+            padding: EdgeInsets.all(8),
             child: Icon(UniconsLine.shopping_bag, size: 18.sp),
           ),
           Positioned(
@@ -478,11 +478,7 @@ Widget buildMLMCart(context, {Function? funAfterBack, bool isHomePage = false}) 
 
               child: Center(
                 child: Obx(
-                  () => text(
-                    Cart.instance.cartCount.value.toString(),
-                    textColor: white,
-                    fontSize: textSizeSmall,
-                  ),
+                  () => text(Cart.instance.cartCount.value.toString(), textColor: white, fontSize: 12),
                 ),
               ),
             ),

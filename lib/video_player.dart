@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -23,10 +22,7 @@ class _VideoPlayerState extends State<VideoPlayer> {
     // ]);
     _controller = YoutubePlayerController(
       initialVideoId: Get.arguments,
-      flags: const YoutubePlayerFlags(
-        mute: false,
-        autoPlay: true,
-      ),
+      flags: const YoutubePlayerFlags(mute: false, autoPlay: true),
     );
     _controller.toggleFullScreenMode();
   }
@@ -85,20 +81,13 @@ class _VideoPlayerState extends State<VideoPlayer> {
             Expanded(
               child: Text(
                 _controller.metadata.title,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 18.0,
-                ),
+                style: const TextStyle(color: Colors.white, fontSize: 18.0),
                 overflow: TextOverflow.ellipsis,
                 maxLines: 1,
               ),
             ),
             IconButton(
-              icon: const Icon(
-                Icons.settings,
-                color: Colors.white,
-                size: 25.0,
-              ),
+              icon: const Icon(Icons.settings, color: Colors.white, size: 25.0),
               onPressed: () {
                 // log('Settings Tapped!');
               },
@@ -110,28 +99,23 @@ class _VideoPlayerState extends State<VideoPlayer> {
             ProgressBar(isExpanded: true),
             const SizedBox(width: 10.0),
             RemainingDuration(),
-            InkWell(
-              child: FullScreenButton(),
-              onTap: () {},
-            ),
+            InkWell(child: FullScreenButton(), onTap: () {}),
           ],
         ),
-        builder: (context, player) => Scaffold(
-          body: player,
-        ),
+        builder: (context, player) => Scaffold(body: player),
       ),
     );
   }
 
-// @override
-// dispose() {
-//   controller!.dispose();
-//   SystemChrome.setPreferredOrientations([
-//     DeviceOrientation.landscapeRight,
-//     DeviceOrientation.landscapeLeft,
-//     DeviceOrientation.portraitUp,
-//     DeviceOrientation.portraitDown,
-//   ]);
-//   super.dispose();
-// }
+  // @override
+  // dispose() {
+  //   controller!.dispose();
+  //   SystemChrome.setPreferredOrientations([
+  //     DeviceOrientation.landscapeRight,
+  //     DeviceOrientation.landscapeLeft,
+  //     DeviceOrientation.portraitUp,
+  //     DeviceOrientation.portraitDown,
+  //   ]);
+  //   super.dispose();
+  // }
 }

@@ -4,16 +4,12 @@ import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:nb_utils/nb_utils.dart';
 
+import '../controllers/theme_controller.dart';
 import 'colors.dart';
 import 'custom_text.dart';
-
-// type for litview Builder
-typedef Widget ListItemBuilder(dynamic itemData, int index);
-
-//type for Gridview Builder
-typedef Widget GridItemBuilder(dynamic itemData, int index);
 
 const fontExtraLight = 'ExtraLight';
 const fontLight = 'Light';
@@ -22,76 +18,9 @@ const fontMedium = 'Medium';
 const fontSemiBold = 'SemiBold';
 const fontBold = 'Bold';
 
-/* font sizes*/
-const textSizeSmall = 12.0;
-const textSizeSMedium = 14.0;
-const textSizeMedium = 16.0;
-const textSizeLargeMedium = 18.0;
-const textSizeNormal = 20.0;
-const textSizeXLarge = 30.0;
-
-/* margin */
-const spacing_control_half = 2.0;
-const spacing_control = 4.0;
-const spacing_standard = 8.0;
-const spacing_middle = 10.0;
-const spacing_standard_new = 16.0;
-
-const colorPrimary_light = Color(0XFFE9E9E9);
-const colorPrimaryDark = Color(0XFF212121);
-
-const view_color = Color(0XFFDADADA);
-
-const app_background = Color(0XFFE9E9E9);
-const icon_color = Color(0XFF747474);
-const selected_tab = Color(0XFFFCE9E9);
-const primary = Color(0Xff0047ba);
-
-const edit_text_background = Color(0XFFE8E8E8);
-const shadow = Color(0X70E2E2E5);
-const shadow_color = Color(0X95E9EBF0);
-const color_primary_light = Color(0XFFFCE8E8);
-const bg_bottom_sheet = Color(0XFFFFF1F1);
-const white = Color(0XFFffffff);
-const white_color = Color(0XFFffffff);
-
-const profileImage = 'assets/images/users.png';
-const attach = 'assets/images/icon_attach.svg';
-
-const logo = "assets/images/myky_new_logo_1.png";
-const bg = "assets/images/bg.jpeg";
-const loginImage = "assets/images/bags.jpeg";
-const logo1 = "assets/images/logo1.png";
-const noImage = "assets/images/placeholder.png";
-const rocket = "assets/images/rocket.gif";
-// const login_bg = 'assets/images/login_bg.svg';
-const menu = "assets/images/menu.svg";
-const cart = "assets/images/cart.svg";
-
 int cartCount = 0;
 
-ListView listviewBuilder(
-  ListItemBuilder itemBuilder, {
-  @required List? items,
-  EdgeInsets? padding,
-  int? itemCount,
-  bool? shrinkWrap,
-  Axis scrollDirection = Axis.vertical,
-  ScrollPhysics? scrollPhysics,
-}) {
-  return ListView.builder(
-    itemCount: (items != null) ? items.length : itemCount,
-    padding: padding,
-    scrollDirection: scrollDirection,
-    shrinkWrap: (shrinkWrap != null) ? shrinkWrap : true,
-    itemBuilder: (BuildContext ctxt, int index) {
-      return index < items!.length ? itemBuilder(items[index], index) : SizedBox.shrink();
-    },
-    physics: scrollPhysics,
-  );
-}
-
-// final ThemeController themeController = Get.find();
+final ThemeController themeController = Get.find();
 
 ThemeData buildLightThemeData() {
   return ThemeData(
@@ -335,37 +264,6 @@ BoxDecoration boxContain({
   );
 }
 
-GridView gridviewBuilder(
-  List? items,
-  GridItemBuilder itemBuilder, {
-  ScrollPhysics? physics,
-  EdgeInsets? padding,
-  bool? shrinkWrap,
-  Axis scrollDirection = Axis.vertical,
-  @required int? numberOfColumns,
-  @required double? verticleSpacing,
-  @required double? horizontalSpacing,
-  bool? primary,
-  double? childAspectRatio,
-}) {
-  return GridView.builder(
-    itemCount: items!.length,
-    padding: padding,
-    primary: primary,
-    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-      crossAxisCount: numberOfColumns!,
-      crossAxisSpacing: horizontalSpacing!,
-      mainAxisSpacing: verticleSpacing!,
-      childAspectRatio: childAspectRatio != null ? childAspectRatio : 10 / 10,
-    ),
-    scrollDirection: scrollDirection,
-    shrinkWrap: (shrinkWrap != null) ? shrinkWrap : true,
-    itemBuilder: (BuildContext ctxt, int index) {
-      return index < items.length ? itemBuilder(items[index], index) : SizedBox.shrink();
-    },
-  );
-}
-
 String capitalize(String string) {
   if (string == null) {
     throw ArgumentError("string: $string");
@@ -380,7 +278,7 @@ String capitalize(String string) {
 
 Widget text(
   String text, {
-  var fontSize = textSizeMedium,
+  var fontSize = 16,
   textColor = black,
   var fontFamily = fontRegular,
   var isCentered = false,
@@ -416,7 +314,7 @@ Widget rowHeading(var label, var subLabel) {
       children: <Widget>[
         text(
           label,
-          textColor: primary,
+          textColor: colorPrimary,
           fontFamily: fontMedium,
           fontSize: 14.0,
           isLongText: true,
@@ -430,22 +328,6 @@ Widget rowHeading(var label, var subLabel) {
         ),
       ],
     ),
-  );
-}
-
-TextStyle primaryTextStyle1({
-  double? fontSize,
-  Color color = textColorPrimary,
-  FontWeight weight = FontWeight.normal,
-  String? fontFamily,
-  double? letterSpacing,
-}) {
-  return TextStyle(
-    fontSize: fontSize,
-    color: color,
-    fontWeight: weight,
-    fontFamily: fontFamily,
-    letterSpacing: letterSpacing,
   );
 }
 
@@ -570,7 +452,7 @@ Widget formFieldOld(
   return Container(
     decoration: BoxDecoration(
       color: Colors.white,
-      borderRadius: BorderRadius.circular(spacing_standard),
+      borderRadius: BorderRadius.circular(8),
       boxShadow: [
         BoxShadow(color: Colors.black.withOpacity(0.2), offset: Offset(3, 3), blurRadius: 5, spreadRadius: 1),
         BoxShadow(
@@ -603,11 +485,11 @@ Widget formFieldOld(
       },
       decoration: InputDecoration(
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(spacing_standard),
+          borderRadius: BorderRadius.circular(8),
           borderSide: BorderSide(color: colorPrimary),
         ),
         enabledBorder: UnderlineInputBorder(
-          borderRadius: BorderRadius.circular(spacing_standard),
+          borderRadius: BorderRadius.circular(8),
           borderSide: BorderSide(color: borderSideColor ?? Colors.transparent),
         ),
         contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
@@ -616,7 +498,7 @@ Widget formFieldOld(
         fillColor: Colors.white,
         hintText: hint,
         hintStyle: TextStyle(
-          fontSize: textSizeMedium,
+          fontSize: 16,
           color: textColorSecondary.withOpacity(0.7),
           shadows: [Shadow(blurRadius: 2.0, color: Colors.black.withOpacity(0.1), offset: Offset(1, 1))],
         ),
@@ -624,7 +506,7 @@ Widget formFieldOld(
         suffixIcon: suffixWidget,
       ),
       style: TextStyle(
-        fontSize: textSizeLargeMedium,
+        fontSize: 18,
         color: isDummy ? Colors.transparent : colorPrimaryDark,
         fontFamily: fontRegular,
       ),
@@ -664,11 +546,7 @@ floatingInput(
     decoration: InputDecoration(
       labelText: hintText,
       isDense: true,
-      labelStyle: primaryTextStyle1(
-        fontSize: 16,
-        color: textColorPrimary.withOpacity(0.7),
-        fontFamily: fontMedium,
-      ),
+      labelStyle: TextStyle(fontSize: 16, color: textColorPrimary.withOpacity(0.7), fontFamily: fontMedium),
       // prefixIcon: prefixIcon,
       suffixIcon: suffixIcon,
       prefixIcon: prefixIcon,
@@ -763,7 +641,7 @@ Widget emptyWidget(
                   title,
                   textColor: colorPrimaryDark,
                   fontFamily: fontBold,
-                  fontSize: textSizeLargeMedium,
+                  fontSize: 18,
                   maxLine: 2,
                   isCentered: true,
                 ),
@@ -779,7 +657,7 @@ Widget emptyWidget(
 }
 
 BoxDecoration gradientBoxDecoration({
-  double radius = spacing_middle,
+  double radius = 10,
   Color color = Colors.transparent,
   Color gradientColor2 = white,
   Color gradientColor1 = white,
@@ -792,7 +670,7 @@ BoxDecoration gradientBoxDecoration({
       colors: [gradientColor1, gradientColor2],
     ),
     boxShadow: showShadow
-        ? [BoxShadow(color: shadow_color, blurRadius: 10, spreadRadius: 2)]
+        ? [BoxShadow(color: Color(0X95E9EBF0), blurRadius: 10, spreadRadius: 2)]
         : [BoxShadow(color: Colors.transparent)],
     border: Border.all(color: color),
     borderRadius: BorderRadius.all(Radius.circular(radius)),

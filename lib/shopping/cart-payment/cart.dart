@@ -77,7 +77,7 @@ class _CartPageState extends State<CartPage> {
                   'Your cart is empty!',
                   textColor: colorPrimaryDark,
                   fontFamily: fontBold,
-                  fontSize: textSizeLargeMedium,
+                  fontSize: 18,
                   maxLine: 2,
                 ),
                 SizedBox(height: 5),
@@ -209,7 +209,7 @@ class _CartPageState extends State<CartPage> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             GestureDetector(
-              child: Icon(Icons.remove, size: 20, color: white),
+              child: Icon(Icons.remove, size: 20, color: Colors.white),
               onTap: () async {
                 int updatedQuantity = _setupQuantity(product['selected_qty'], 'subtract');
                 if (updatedQuantity > 0) {
@@ -228,10 +228,10 @@ class _CartPageState extends State<CartPage> {
               behavior: HitTestBehavior.opaque,
             ),
             SizedBox(width: 8),
-            text('${product['selected_qty']}', textColor: white),
+            text('${product['selected_qty']}', textColor: Colors.white),
             SizedBox(width: 8),
             GestureDetector(
-              child: Icon(Icons.add, size: 20, color: white),
+              child: Icon(Icons.add, size: 20, color: Colors.white),
               onTap: () async {
                 // _debouncer.run(() async {
                 await Cart.instance.add(context, product['id'].toString(), Auth.check()! ? 1 : 2);
@@ -258,13 +258,7 @@ class _CartPageState extends State<CartPage> {
         children: [
           Icon(UniconsLine.shopping_cart, size: 16, color: red),
           SizedBox(width: 10),
-          text(
-            'OUT OF STOCK',
-            textColor: red,
-            textAllCaps: true,
-            fontFamily: fontSemiBold,
-            fontSize: textSizeSMedium,
-          ),
+          text('OUT OF STOCK', textColor: red, textAllCaps: true, fontFamily: fontSemiBold, fontSize: 14),
         ],
       ),
     );
@@ -295,19 +289,19 @@ class _CartPageState extends State<CartPage> {
             Row(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                text("CHECKOUT", fontSize: textSizeLargeMedium, fontFamily: fontBold, textColor: white),
+                text("CHECKOUT", fontSize: 18, fontFamily: fontBold, textColor: Colors.white),
                 Container(
                   padding: const EdgeInsets.all(8.0),
-                  child: Icon(Icons.arrow_forward_ios, color: white, size: textSizeMedium),
+                  child: Icon(Icons.arrow_forward_ios, color: Colors.white, size: 16),
                 ),
               ],
             ),
             Spacer(),
             text(
               "\₹ ${total.toStringAsFixed(2)}",
-              fontSize: textSizeLargeMedium,
+              fontSize: 18,
               fontFamily: fontBold,
-              textColor: white,
+              textColor: Colors.white,
             ),
           ],
         ),
@@ -344,11 +338,11 @@ class _CartPageState extends State<CartPage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              text("By using coin", textColor: goldenRod, fontSize: textSizeLargeMedium),
+              text("By using coin", textColor: goldenRod, fontSize: 18),
               text(
                 "${useCoin.toStringAsFixed(2)}",
                 textColor: goldenRod,
-                fontSize: textSizeLargeMedium,
+                fontSize: 18,
                 fontFamily: fontSemiBold,
               ),
             ],
@@ -357,11 +351,11 @@ class _CartPageState extends State<CartPage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              text("Total Amount", textColor: green, fontSize: textSizeLargeMedium),
+              text("Total Amount", textColor: green, fontSize: 18),
               text(
                 "\₹ ${total.toStringAsFixed(2)}",
                 textColor: green,
-                fontSize: textSizeLargeMedium,
+                fontSize: 18,
                 fontFamily: fontSemiBold,
               ),
             ],

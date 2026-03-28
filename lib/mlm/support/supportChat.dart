@@ -129,7 +129,7 @@ class _SupportChatState extends State<SupportChat> {
                       padding: EdgeInsets.all(9),
                       child: Text(
                         ticketStatus!['statusMessage'],
-                        style: TextStyle(fontSize: textSizeLargeMedium, color: white),
+                        style: TextStyle(fontSize: 18, color: Colors.white),
                       ),
                     ),
                   ),
@@ -153,7 +153,7 @@ class _SupportChatState extends State<SupportChat> {
                 margin: BubbleEdges.only(top: 10),
                 alignment: Alignment.center,
                 nip: BubbleNip.no,
-                color: primary.withOpacity(0.6),
+                color: colorPrimary.withOpacity(0.6),
                 child: Text(
                   DateTime.now().difference(DateTime.parse(detail['newDate'])).inDays == 0
                       ? ("Today")
@@ -161,7 +161,7 @@ class _SupportChatState extends State<SupportChat> {
                       ? ("Yesterday")
                       : detail['date'],
                   textAlign: TextAlign.center,
-                  style: TextStyle(color: white, fontSize: 11.0),
+                  style: TextStyle(color: Colors.white, fontSize: 11.0),
                 ),
               ),
             ),
@@ -189,7 +189,7 @@ class _SupportChatState extends State<SupportChat> {
           padding: const EdgeInsets.all(8.0),
           decoration: BoxDecoration(
             boxShadow: [BoxShadow(blurRadius: .5, spreadRadius: 1.0, color: Colors.black.withOpacity(.12))],
-            color: isAdmin! ? colorPrimary : white,
+            color: isAdmin! ? colorPrimary : Colors.white,
             borderRadius: BorderRadius.only(
               topRight: Radius.circular(5.0),
               bottomLeft: Radius.circular(10.0),

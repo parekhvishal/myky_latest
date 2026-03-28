@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:nb_utils/nb_utils.dart' hide white;
+import 'package:nb_utils/nb_utils.dart';
 
 import '../../../widget/customWidget.dart';
 import '../../services/api.dart';
@@ -140,7 +140,7 @@ class _MyOrdersState extends State<MyOrders> {
             ),
             // Divider(
             //   height: 3,
-            //   color: colorPrimary_light.withOpacity(0.5),
+            //   color: colorLightPrimary.withOpacity(0.5),
             //   thickness: 1.2,
             // ),
             10.height,
@@ -172,7 +172,7 @@ class _MyOrdersState extends State<MyOrders> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        text(title, textColor: textColorSecondary, fontSize: textSizeSMedium),
+        text(title, textColor: textColorSecondary, fontSize: 14),
         10.width,
         text(result, textColor: green),
       ],

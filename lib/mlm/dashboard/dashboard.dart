@@ -68,7 +68,7 @@ class _DashboardState extends State<Dashboard> {
           int? cIndex = snapshot.data as int?;
           return CurvedNavigationBar(
             currentIndex: cIndex,
-            backgroundColor: app_background,
+            backgroundColor: appBackground,
             color: Colors.white,
             initialIndex: 0,
             items: const <Widget>[Icon(UniconsLine.home), Icon(UniconsLine.wallet), Icon(UniconsLine.file)],
@@ -281,7 +281,7 @@ class _MainDashboardState extends State<MainDashboard> {
           //                 'Are you sure you want to logout ?',
           //                 textColor: textColorPrimary,
           //                 fontFamily: fontBold,
-          //                 fontSize: textSizeLargeMedium,
+          //                 fontSize: 18,
           //                 isCentered: true,
           //                 isLongText: true,
           //               ),
@@ -292,7 +292,7 @@ class _MainDashboardState extends State<MainDashboard> {
           //                     onPressed: () => Navigator.pop(context),
           //                     child: text(
           //                       'No',
-          //                       fontSize: textSizeLargeMedium,
+          //                       fontSize: 18,
           //                       fontFamily: fontBold,
           //                       textColor: green,
           //                     ),
@@ -301,7 +301,7 @@ class _MainDashboardState extends State<MainDashboard> {
           //                     onPressed: () => logoutUser(),
           //                     child: text(
           //                       'Yes',
-          //                       fontSize: textSizeLargeMedium,
+          //                       fontSize: 18,
           //                       fontFamily: fontBold,
           //                       textColor: red,
           //                     ),
@@ -366,7 +366,7 @@ class _MainDashboardState extends State<MainDashboard> {
                           padding: const EdgeInsets.only(top: 60),
                           alignment: Alignment.topCenter,
                           decoration: const BoxDecoration(
-                            color: app_background,
+                            color: appBackground,
                             borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(24),
                               topRight: Radius.circular(24),
@@ -542,7 +542,7 @@ class _MainDashboardState extends State<MainDashboard> {
       child: Column(
         children: <Widget>[
           ExpansionTile(
-            title: text("Member Info", fontFamily: fontSemiBold, fontSize: textSizeLargeMedium),
+            title: text("Member Info", fontFamily: fontSemiBold, fontSize: 18),
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
@@ -614,9 +614,9 @@ class _MainDashboardState extends State<MainDashboard> {
           dashboardDetail['member']['name'],
           textColor: textColorPrimary,
           fontFamily: fontMedium,
-          fontSize: textSizeNormal,
+          fontSize: 20,
         ),
-        text(dashboardDetail['member']['code'], fontSize: textSizeLargeMedium),
+        text(dashboardDetail['member']['code'], fontSize: 18),
       ],
     );
   }
@@ -632,7 +632,7 @@ class _MainDashboardState extends State<MainDashboard> {
               margin: const EdgeInsets.only(left: 16),
               child: text(
                 'Banking Partners',
-                fontSize: textSizeLargeMedium,
+                fontSize: 18,
                 fontFamily: fontBold,
                 textColor: textColorPrimary,
               ),
@@ -677,7 +677,7 @@ class _MainDashboardState extends State<MainDashboard> {
                                   child: Row(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Icon(Icons.domain, color: colorPrimary, size: textSizeXLarge),
+                                      Icon(Icons.domain, color: colorPrimary, size: 30),
                                       SizedBox(width: w(2)),
                                       Expanded(
                                         child: Column(
@@ -975,12 +975,7 @@ class _MainDashboardState extends State<MainDashboard> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            text(
-              'Your Referral Link',
-              fontSize: textSizeLargeMedium,
-              fontFamily: fontBold,
-              textColor: textColorPrimary,
-            ),
+            text('Your Referral Link', fontSize: 18, fontFamily: fontBold, textColor: textColorPrimary),
             10.heightBox,
             TextField(
               readOnly: true,

@@ -14,6 +14,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../services/getImage_service.dart';
 import '../../services/validator_x.dart';
 import '../../widget/colors.dart';
+import '../../widget/image.dart';
 import '../../widget/image_picker.dart';
 import '../../widget/theme.dart';
 import 'register.dart';
@@ -29,7 +30,7 @@ class SupplierRegister extends GetView<RegisterController> {
       builder: (GetxController ctrl) {
         return SafeArea(
           child: Scaffold(
-            backgroundColor: whiteColor,
+            backgroundColor: Colors.white,
             appBar: AppBar(title: text('SUPPLIER SIGN UP')),
             body: Stack(
               children: [
@@ -582,11 +583,11 @@ class SupplierRegister extends GetView<RegisterController> {
       },
       decoration: InputDecoration(
         focusedBorder: UnderlineInputBorder(
-          borderRadius: BorderRadius.circular(spacing_standard),
+          borderRadius: BorderRadius.circular(8),
           borderSide: BorderSide(color: Colors.transparent),
         ),
         enabledBorder: UnderlineInputBorder(
-          borderRadius: BorderRadius.circular(spacing_standard),
+          borderRadius: BorderRadius.circular(8),
           borderSide: BorderSide(color: Colors.transparent),
         ),
         contentPadding: EdgeInsets.symmetric(vertical: 15),
@@ -594,7 +595,7 @@ class SupplierRegister extends GetView<RegisterController> {
         filled: true,
         fillColor: Color(0xFFf7f7f7),
         hintText: 'Date of birth (Only 18+ can join)',
-        hintStyle: TextStyle(fontSize: textSizeMedium, color: textColorSecondary),
+        hintStyle: TextStyle(fontSize: 16, color: textColorSecondary),
         prefixIcon: Icon(Icons.date_range, color: textColorSecondary, size: 20),
       ),
       format: format,
@@ -868,7 +869,7 @@ class SupplierRegister extends GetView<RegisterController> {
                   Card(
                     semanticContainer: true,
                     clipBehavior: Clip.antiAliasWithSaveLayer,
-                    margin: EdgeInsets.all(spacing_control),
+                    margin: EdgeInsets.all(4),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
                     child: Column(
                       children: <Widget>[
@@ -903,11 +904,11 @@ class SupplierRegister extends GetView<RegisterController> {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.all(spacing_control),
+                    padding: EdgeInsets.all(4),
                     margin: EdgeInsets.only(top: 15, right: 10),
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: whiteColor,
+                      color: Colors.white,
                       border: Border.all(color: colorPrimary),
                     ),
                     child: GestureDetector(
@@ -967,7 +968,7 @@ class SupplierRegister extends GetView<RegisterController> {
               Card(
                 semanticContainer: true,
                 clipBehavior: Clip.antiAliasWithSaveLayer,
-                margin: EdgeInsets.all(spacing_control),
+                margin: EdgeInsets.all(4),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
                 child: Column(
                   children: <Widget>[
@@ -1002,11 +1003,11 @@ class SupplierRegister extends GetView<RegisterController> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.all(spacing_control),
+                padding: EdgeInsets.all(4),
                 margin: EdgeInsets.only(top: 15, right: 10),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: whiteColor,
+                  color: Colors.white,
                   border: Border.all(color: colorPrimary),
                 ),
                 child: GestureDetector(
@@ -1062,7 +1063,7 @@ class SupplierRegister extends GetView<RegisterController> {
               Card(
                 semanticContainer: true,
                 clipBehavior: Clip.antiAliasWithSaveLayer,
-                margin: EdgeInsets.all(spacing_control),
+                margin: EdgeInsets.all(4),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
                 child: Column(
                   children: <Widget>[
@@ -1097,11 +1098,11 @@ class SupplierRegister extends GetView<RegisterController> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.all(spacing_control),
+                padding: EdgeInsets.all(4),
                 margin: EdgeInsets.only(top: 15, right: 10),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: whiteColor,
+                  color: Colors.white,
                   border: Border.all(color: colorPrimary),
                 ),
                 child: GestureDetector(
@@ -1155,7 +1156,7 @@ class SupplierRegister extends GetView<RegisterController> {
               Card(
                 semanticContainer: true,
                 clipBehavior: Clip.antiAliasWithSaveLayer,
-                margin: EdgeInsets.all(spacing_control),
+                margin: EdgeInsets.all(4),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
                 child: Column(
                   children: <Widget>[
@@ -1190,11 +1191,11 @@ class SupplierRegister extends GetView<RegisterController> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.all(spacing_control),
+                padding: EdgeInsets.all(4),
                 margin: EdgeInsets.only(top: 15, right: 10),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: whiteColor,
+                  color: Colors.white,
                   border: Border.all(color: colorPrimary),
                 ),
                 child: GestureDetector(
@@ -1243,23 +1244,23 @@ class SupplierRegister extends GetView<RegisterController> {
           }
           return null;
         },
-        hint: text('Select State', fontSize: textSizeMedium, textColor: textColorSecondary),
+        hint: text('Select State', fontSize: 16, textColor: textColorSecondary),
         decoration: InputDecoration(
           prefixIcon: const Icon(Icons.add_location_alt, color: textColorSecondary, size: 20),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
-            borderSide: BorderSide(color: whiteColor, width: 0.0),
+            borderSide: BorderSide(color: Colors.white, width: 0.0),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
-            borderSide: BorderSide(color: whiteColor, width: 0.0),
+            borderSide: BorderSide(color: Colors.white, width: 0.0),
           ),
           border: UnderlineInputBorder(borderSide: BorderSide(color: Colors.black12)),
           contentPadding: EdgeInsets.symmetric(vertical: 15),
           // hintText: 'Select State',
           filled: true,
           fillColor: Color(0xFFf7f7f7),
-          hintStyle: TextStyle(fontSize: textSizeMedium, color: Colors.black),
+          hintStyle: TextStyle(fontSize: 16, color: Colors.black),
         ),
         value: controller.myPickUpStateSelection,
         iconSize: 20,
@@ -1297,23 +1298,23 @@ class SupplierRegister extends GetView<RegisterController> {
           }
           return null;
         },
-        hint: text('Select State', fontSize: textSizeMedium, textColor: textColorSecondary),
+        hint: text('Select State', fontSize: 16, textColor: textColorSecondary),
         decoration: InputDecoration(
           prefixIcon: Icon(Icons.add_location_alt, color: textColorSecondary, size: 20),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
-            borderSide: BorderSide(color: whiteColor, width: 0.0),
+            borderSide: BorderSide(color: Colors.white, width: 0.0),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
-            borderSide: BorderSide(color: whiteColor, width: 0.0),
+            borderSide: BorderSide(color: Colors.white, width: 0.0),
           ),
           border: UnderlineInputBorder(borderSide: BorderSide(color: Colors.black12)),
           contentPadding: EdgeInsets.symmetric(vertical: 15),
           // hintText: 'Select State',
           filled: true,
           fillColor: Color(0xFFf7f7f7),
-          hintStyle: TextStyle(fontSize: textSizeMedium, color: Colors.black),
+          hintStyle: TextStyle(fontSize: 16, color: Colors.black),
         ),
         value: controller.myStateSelection,
         iconSize: 20,
@@ -1351,23 +1352,23 @@ class SupplierRegister extends GetView<RegisterController> {
           }
           return null;
         },
-        hint: text('Select City', fontSize: textSizeMedium, textColor: textColorSecondary),
+        hint: text('Select City', fontSize: 16, textColor: textColorSecondary),
         decoration: InputDecoration(
           prefixIcon: Icon(Icons.add_location_alt, color: textColorSecondary, size: 20),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
-            borderSide: BorderSide(color: whiteColor, width: 0.0),
+            borderSide: BorderSide(color: Colors.white, width: 0.0),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
-            borderSide: BorderSide(color: whiteColor, width: 0.0),
+            borderSide: BorderSide(color: Colors.white, width: 0.0),
           ),
           border: UnderlineInputBorder(borderSide: BorderSide(color: Colors.black12)),
           contentPadding: EdgeInsets.symmetric(vertical: 15),
           filled: true,
           fillColor: Color(0xFFf7f7f7),
           // hintText: 'Select City',
-          hintStyle: TextStyle(fontSize: textSizeMedium, color: Colors.black),
+          hintStyle: TextStyle(fontSize: 16, color: Colors.black),
         ),
         value: controller.myPickUpCitySelection,
         iconSize: 20,
@@ -1400,23 +1401,23 @@ class SupplierRegister extends GetView<RegisterController> {
           }
           return null;
         },
-        hint: text('Select City', fontSize: textSizeMedium, textColor: textColorSecondary),
+        hint: text('Select City', fontSize: 16, textColor: textColorSecondary),
         decoration: InputDecoration(
           prefixIcon: Icon(Icons.add_location_alt, color: textColorSecondary, size: 20),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
-            borderSide: BorderSide(color: whiteColor, width: 0.0),
+            borderSide: BorderSide(color: Colors.white, width: 0.0),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
-            borderSide: BorderSide(color: whiteColor, width: 0.0),
+            borderSide: BorderSide(color: Colors.white, width: 0.0),
           ),
           border: UnderlineInputBorder(borderSide: BorderSide(color: Colors.black12)),
           contentPadding: EdgeInsets.symmetric(vertical: 15),
           filled: true,
           fillColor: Color(0xFFf7f7f7),
           // hintText: 'Select City',
-          hintStyle: TextStyle(fontSize: textSizeMedium, color: Colors.black),
+          hintStyle: TextStyle(fontSize: 16, color: Colors.black),
         ),
         value: controller.myCitySelection,
         iconSize: 20,
@@ -1450,18 +1451,18 @@ class SupplierRegister extends GetView<RegisterController> {
       decoration: InputDecoration(
         prefixIcon: Icon(UniconsLine.building),
         focusedBorder: UnderlineInputBorder(
-          borderRadius: BorderRadius.circular(spacing_standard),
+          borderRadius: BorderRadius.circular(8),
           borderSide: BorderSide(color: Colors.transparent),
         ),
         enabledBorder: UnderlineInputBorder(
-          borderRadius: BorderRadius.circular(spacing_standard),
+          borderRadius: BorderRadius.circular(8),
           borderSide: BorderSide(color: Colors.transparent),
         ),
         contentPadding: EdgeInsets.symmetric(vertical: 15),
         filled: true,
         fillColor: Color(0xFFf7f7f7),
         hintText: 'Select Type',
-        hintStyle: TextStyle(fontSize: textSizeMedium, color: Colors.grey[300]),
+        hintStyle: TextStyle(fontSize: 16, color: Colors.grey[300]),
       ),
       onChanged: (String? newValue) {
         controller.accountType = newValue!;

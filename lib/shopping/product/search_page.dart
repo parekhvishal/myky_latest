@@ -39,7 +39,7 @@ class _SearchPageState extends State<SearchPage> {
                     height: 45,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
-                      color: whiteColor,
+                      color: Colors.white,
                       borderRadius: BorderRadius.all(Radius.circular(20)),
                       border: Border.all(color: Colors.white, width: 1),
                     ),
@@ -49,7 +49,7 @@ class _SearchPageState extends State<SearchPage> {
                         border: InputBorder.none,
                         hintText: "Search Products",
                         hintStyle: TextStyle(
-                          fontSize: textSizeMedium,
+                          fontSize: 16,
                           fontFamily: fontRegular,
                           color: textColorSecondary,
                         ),

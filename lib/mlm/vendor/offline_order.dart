@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:nb_utils/nb_utils.dart' hide white;
+import 'package:nb_utils/nb_utils.dart';
 import 'package:unicons/unicons.dart';
 
 import '../../../../utils/app_utils.dart';
@@ -65,7 +65,7 @@ class OffLineOrdersState extends State<OffLineOrders> {
   Widget _offLinOrderListBuilder(dynamic item, int index) {
     return Card(
       child: Container(
-        color: white,
+        color: Colors.white,
         margin: EdgeInsets.only(bottom: 5),
         child: Padding(
           padding: const EdgeInsets.all(10.0),
@@ -98,34 +98,34 @@ class OffLineOrdersState extends State<OffLineOrders> {
               10.height,
               Row(
                 children: [
-                  text('Invoice :', textColor: textColorSecondary, fontSize: textSizeSMedium),
+                  text('Invoice :', textColor: textColorSecondary, fontSize: 14),
                   10.width,
                   text('${item['invoiceNo']}'),
                 ],
               ),
               10.height,
-              Divider(height: 3, color: colorPrimary_light.withOpacity(0.5), thickness: 1.2),
+              Divider(height: 3, color: colorLightPrimary.withOpacity(0.5), thickness: 1.2),
               Row(
                 children: [
-                  text('Bill Amount :', textColor: textColorSecondary, fontSize: textSizeSMedium),
+                  text('Bill Amount :', textColor: textColorSecondary, fontSize: 14),
                   10.width,
                   text('₹ ${item['amount']}', textColor: green),
                 ],
               ),
               10.height,
-              Divider(height: 3, color: colorPrimary_light.withOpacity(0.5), thickness: 1.2),
+              Divider(height: 3, color: colorLightPrimary.withOpacity(0.5), thickness: 1.2),
               Row(
                 children: [
-                  text('Point :', textColor: textColorSecondary, fontSize: textSizeSMedium),
+                  text('Point :', textColor: textColorSecondary, fontSize: 14),
                   10.width,
                   text('${item['point']}', textColor: green),
                 ],
               ),
               10.height,
-              Divider(height: 3, color: colorPrimary_light.withOpacity(0.5), thickness: 1.2),
+              Divider(height: 3, color: colorLightPrimary.withOpacity(0.5), thickness: 1.2),
               Row(
                 children: [
-                  text('Payment Type :', textColor: textColorSecondary, fontSize: textSizeSMedium),
+                  text('Payment Type :', textColor: textColorSecondary, fontSize: 14),
                   10.width,
                   text(
                     item['paymentType'] != null ? '${item['paymentType']['name']}' : 'N/A',
@@ -136,10 +136,10 @@ class OffLineOrdersState extends State<OffLineOrders> {
                 ],
               ),
               10.height,
-              Divider(height: 3, color: colorPrimary_light.withOpacity(0.5), thickness: 1.2),
+              Divider(height: 3, color: colorLightPrimary.withOpacity(0.5), thickness: 1.2),
               Row(
                 children: [
-                  text('Myky Payment Status :', textColor: textColorSecondary, fontSize: textSizeSMedium),
+                  text('Myky Payment Status :', textColor: textColorSecondary, fontSize: 14),
                   10.width,
                   text(
                     item['paymentStatus'] != null ? '${item['paymentStatus']['name']}' : 'N/A',
@@ -150,10 +150,10 @@ class OffLineOrdersState extends State<OffLineOrders> {
                 ],
               ),
               10.height,
-              Divider(height: 3, color: colorPrimary_light.withOpacity(0.5), thickness: 1.2),
+              Divider(height: 3, color: colorLightPrimary.withOpacity(0.5), thickness: 1.2),
               Row(
                 children: [
-                  text('Vendor Payment Status :', textColor: textColorSecondary, fontSize: textSizeSMedium),
+                  text('Vendor Payment Status :', textColor: textColorSecondary, fontSize: 14),
                   10.width,
                   text(
                     item['step2paymentStatus'] != null ? '${item['step2paymentStatus']['name']}' : 'N/A',
@@ -165,7 +165,7 @@ class OffLineOrdersState extends State<OffLineOrders> {
               ),
               if (item['resumeStatus'] == true) ...[
                 10.height,
-                Divider(height: 3, color: colorPrimary_light.withOpacity(0.5), thickness: 1.2),
+                Divider(height: 3, color: colorLightPrimary.withOpacity(0.5), thickness: 1.2),
                 Center(
                   child: CustomButtonOld(
                     textContent: 'Resume',

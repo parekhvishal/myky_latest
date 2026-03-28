@@ -20,7 +20,7 @@ class _SomethingWentWrongState extends State<SomethingWentWrong> {
       },
       child: Scaffold(
         body: Container(
-          color: white,
+          color: Colors.white,
           constraints: BoxConstraints(maxWidth: 500.0),
           height: MediaQuery.of(context).size.height,
           child: Stack(

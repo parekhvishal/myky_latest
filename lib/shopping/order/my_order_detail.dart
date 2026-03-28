@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:nb_utils/nb_utils.dart' hide white;
+import 'package:nb_utils/nb_utils.dart';
 import 'package:unicons/unicons.dart';
 
 import '../../services/api.dart';
@@ -597,13 +597,8 @@ class _MyOrderDetailState extends State<MyOrderDetail> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              text("Total Amount : ", textColor: red, fontSize: textSizeLargeMedium),
-              text(
-                "\₹ " + orderData!['total'],
-                textColor: redColor,
-                fontSize: textSizeLargeMedium,
-                fontFamily: fontSemiBold,
-              ),
+              text("Total Amount : ", textColor: red, fontSize: 18),
+              text("\₹ " + orderData!['total'], textColor: redColor, fontSize: 18, fontFamily: fontSemiBold),
             ],
           ),
         ],

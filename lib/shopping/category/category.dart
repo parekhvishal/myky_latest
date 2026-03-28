@@ -80,7 +80,7 @@ class _CategoryState extends State<Category> {
                       flex: 8,
                       child: Container(
                         padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 5),
-                        decoration: boxDecoration(showShadow: false, bgColor: white),
+                        decoration: boxDecoration(showShadow: false, bgColor: Colors.white),
                         child: Column(
                           children: [
                             if (selectedIndex != null)

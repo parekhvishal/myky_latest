@@ -148,7 +148,7 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
                     'Are you sure?\n Do you want to exit an App',
                     textColor: textColorPrimary,
                     fontFamily: fontBold,
-                    fontSize: textSizeLargeMedium,
+                    fontSize: 18,
                     isCentered: true,
                     isLongText: true,
                   ),
@@ -157,23 +157,13 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
                     children: [
                       TextButton(
                         onPressed: () => Navigator.of(context).pop(false),
-                        child: text(
-                          'No',
-                          fontSize: textSizeLargeMedium,
-                          fontFamily: fontBold,
-                          textColor: green,
-                        ),
+                        child: text('No', fontSize: 18, fontFamily: fontBold, textColor: green),
                       ),
                       TextButton(
                         onPressed: () async {
                           SystemNavigator.pop();
                         },
-                        child: text(
-                          'Yes',
-                          fontSize: textSizeLargeMedium,
-                          fontFamily: fontBold,
-                          textColor: red,
-                        ),
+                        child: text('Yes', fontSize: 18, fontFamily: fontBold, textColor: red),
                       ),
                     ],
                   ),

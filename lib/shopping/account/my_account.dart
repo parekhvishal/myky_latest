@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myky_clone/widget/custom_text.dart';
-import 'package:nb_utils/nb_utils.dart' hide white;
+import 'package:nb_utils/nb_utils.dart';
 import 'package:unicons/unicons.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -193,14 +193,10 @@ class MyAccountState extends State<MyAccount> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    CustomText(Auth.user()!['name'], fontSize: textSizeLargeMedium, fontFamily: fontBold),
+                    CustomText(Auth.user()!['name'], fontSize: 18, fontFamily: fontBold),
                     const SizedBox(width: 10),
-                    CustomText(Auth.user()!['code'], fontSize: textSizeLargeMedium, fontFamily: fontBold),
-                    text(
-                      Auth.user()!['email'] ?? "",
-                      fontSize: textSizeMedium,
-                      textColor: textColorSecondary,
-                    ),
+                    CustomText(Auth.user()!['code'], fontSize: 18, fontFamily: fontBold),
+                    text(Auth.user()!['email'] ?? "", fontSize: 16, textColor: textColorSecondary),
                   ],
                 ),
               ),
@@ -347,7 +343,7 @@ class MyAccountState extends State<MyAccount> {
                 SizedBox(width: w(4)),
                 text(
                   Auth.userGuest()!['phone'] ?? "N/A",
-                  fontSize: textSizeLargeMedium,
+                  fontSize: 18,
                   fontFamily: fontBold,
                   textColor: textColorPrimary,
                 ),
@@ -426,7 +422,7 @@ class MyAccountState extends State<MyAccount> {
                   'Are you sure you want to logout ?',
                   textColor: textColorPrimary,
                   fontFamily: fontBold,
-                  fontSize: textSizeLargeMedium,
+                  fontSize: 18,
                   isCentered: true,
                   isLongText: true,
                 ),
@@ -435,12 +431,7 @@ class MyAccountState extends State<MyAccount> {
                   children: [
                     TextButton(
                       onPressed: () => Navigator.pop(context),
-                      child: text(
-                        'No',
-                        fontSize: textSizeLargeMedium,
-                        fontFamily: fontBold,
-                        textColor: green,
-                      ),
+                      child: text('No', fontSize: 18, fontFamily: fontBold, textColor: green),
                     ),
                     TextButton(
                       onPressed: () async {
@@ -452,7 +443,7 @@ class MyAccountState extends State<MyAccount> {
                           Get.offAllNamed('/ecommerce');
                         }
                       },
-                      child: text('Yes', fontSize: textSizeLargeMedium, fontFamily: fontBold, textColor: red),
+                      child: text('Yes', fontSize: 18, fontFamily: fontBold, textColor: red),
                     ),
                   ],
                 ),
@@ -515,7 +506,7 @@ class MyAccountState extends State<MyAccount> {
                     child: Icon(icon, color: textColorPrimary),
                   ),
                   const SizedBox(width: 5),
-                  text(heading, fontFamily: fontMedium, fontSize: textSizeMedium),
+                  text(heading, fontFamily: fontMedium, fontSize: 16),
                   const SizedBox(width: 10),
                   if (isInfoShow == true)
                     const Icon(Icons.info, color: textColorSecondary).onTap(() {

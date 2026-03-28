@@ -173,7 +173,7 @@
 //                                           flex: 73,
 //                                           child: text(
 //                                             '$path',
-//                                             textColor: whiteColor,
+//                                             textColor: Colors.white,
 //                                             fontFamily: fontMedium,
 //                                             fontSize: 17.0,
 //                                           ),
@@ -186,13 +186,13 @@
 //                                     decoration: BoxDecoration(
 //                                       borderRadius: BorderRadius.circular(10),
 //                                       border: Border.all(
-//                                         color: colorPrimary_light.withOpacity(0.15),
+//                                         color: colorLightPrimary.withOpacity(0.15),
 //                                         width: 2.5,
 //                                       ),
 //                                     ),
 //                                     child: text(
 //                                       'Open',
-//                                       textColor: whiteColor,
+//                                       textColor: Colors.white,
 //                                       fontFamily: fontBold,
 //                                     ).paddingSymmetric(
 //                                       vertical: 2,

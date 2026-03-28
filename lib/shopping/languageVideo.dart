@@ -50,7 +50,7 @@ class _LanguageVideoState extends State<LanguageVideo> {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Scaffold(
-      backgroundColor: white,
+      backgroundColor: Colors.white,
       body: FutureBuilder(
         future: _future,
         builder: (context, AsyncSnapshot? snapshot) {
@@ -214,9 +214,9 @@ class _VideoWatchState extends State<VideoWatch> {
                 Center(
                   child: text(
                     'Continue',
-                    textColor: white,
+                    textColor: Colors.white,
                     fontFamily: fontBold,
-                    fontSize: textSizeLargeMedium,
+                    fontSize: 18,
                     textAllCaps: true,
                   ),
                 ).onClick(() {

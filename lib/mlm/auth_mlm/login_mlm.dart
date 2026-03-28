@@ -12,6 +12,7 @@ import '../../services/validator_x.dart';
 import '../../widget/colors.dart';
 import '../../widget/custom_button.dart';
 import '../../widget/guest_login_service.dart';
+import '../../widget/image.dart';
 import '../../widget/theme.dart';
 
 class LoginMLM extends StatefulWidget {
@@ -87,7 +88,7 @@ class _LoginMLMState extends State<LoginMLM> {
               children: <Widget>[
                 Center(
                   child: Container(
-                    margin: EdgeInsets.all(spacing_standard_new),
+                    margin: EdgeInsets.all(16),
                     child: SingleChildScrollView(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,

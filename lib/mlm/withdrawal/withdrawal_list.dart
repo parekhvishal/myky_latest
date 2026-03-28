@@ -29,8 +29,8 @@ class _WithdrawalListState extends State<WithdrawalList> {
         onPressed: () {
           Get.toNamed('/withdrawal-request')!.then((value) => withdrawalListKey.currentState!.refresh());
         },
-        label: text('Request'.toUpperCase(), textColor: white, fontFamily: fontBold),
-        icon: Icon(UniconsLine.plus, color: white),
+        label: text('Request'.toUpperCase(), textColor: Colors.white, fontFamily: fontBold),
+        icon: Icon(UniconsLine.plus, color: Colors.white),
         backgroundColor: colorPrimary,
       ),
     );
@@ -39,7 +39,7 @@ class _WithdrawalListState extends State<WithdrawalList> {
   Widget _upgradeTopUpsBuilder(dynamic withdrawal, int index) {
     return Container(
       width: w(80),
-      decoration: boxDecoration(showShadow: true, bgColor: white, radius: 10.0),
+      decoration: boxDecoration(showShadow: true, bgColor: Colors.white, radius: 10.0),
       margin: EdgeInsets.symmetric(horizontal: 7.5, vertical: 7.5),
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
@@ -57,13 +57,9 @@ class _WithdrawalListState extends State<WithdrawalList> {
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Icon(UniconsLine.bolt, color: colorPrimary, size: textSizeXLarge),
+                            Icon(UniconsLine.bolt, color: colorPrimary, size: 30),
                             SizedBox(width: w(4)),
-                            text(
-                              withdrawal['createdAt'],
-                              textColor: textColorSecondary,
-                              fontSize: textSizeSMedium,
-                            ),
+                            text(withdrawal['createdAt'], textColor: textColorSecondary, fontSize: 14),
                           ],
                         ),
                       ),
@@ -79,10 +75,10 @@ class _WithdrawalListState extends State<WithdrawalList> {
                         ),
                         child: text(
                           withdrawal['status']['name'],
-                          textColor: white,
+                          textColor: Colors.white,
                           textAllCaps: true,
                           fontFamily: fontSemiBold,
-                          fontSize: textSizeMedium,
+                          fontSize: 16,
                         ),
                       ),
                     ],

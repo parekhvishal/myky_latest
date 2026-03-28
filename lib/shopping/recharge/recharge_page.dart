@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:myky_clone/utils/app_utils.dart';
-import 'package:nb_utils/nb_utils.dart';
 
 import '../../../services/api.dart';
 import '../../../widget/theme.dart';
@@ -80,7 +79,7 @@ class _RechargeState extends State<Recharge> {
       children: [
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-          decoration: boxDecoration(showShadow: false, bgColor: whiteColor),
+          decoration: boxDecoration(showShadow: false, bgColor: Colors.white),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -147,7 +146,7 @@ class _RechargeState extends State<Recharge> {
                               category['name'],
                               fontFamily: fontMedium,
                               isLongText: true,
-                              fontSize: textSizeSMedium,
+                              fontSize: 14,
                             ),
                           ),
                         ],

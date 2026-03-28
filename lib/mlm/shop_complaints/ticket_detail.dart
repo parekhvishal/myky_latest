@@ -8,7 +8,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart' hide FormData, MultipartFile;
 import 'package:image_cropper/image_cropper.dart';
 import 'package:myky_clone/utils/en_extensions.dart';
-import 'package:nb_utils/nb_utils.dart' hide white;
+import 'package:nb_utils/nb_utils.dart';
 import 'package:unicons/unicons.dart';
 
 import '../../../services/api.dart';
@@ -16,6 +16,7 @@ import '../../services/Vapor.dart';
 import '../../services/getImage_service.dart';
 import '../../utils/app_utils.dart';
 import '../../widget/colors.dart';
+import '../../widget/image.dart';
 import '../../widget/image_picker.dart';
 import '../../widget/image_popup.dart';
 import '../../widget/network_image.dart';

@@ -86,18 +86,18 @@ class _KycDetailsState extends State<KycDetails> {
       value: accountType,
       decoration: InputDecoration(
         focusedBorder: UnderlineInputBorder(
-          borderRadius: BorderRadius.circular(spacing_standard),
+          borderRadius: BorderRadius.circular(8),
           borderSide: const BorderSide(color: Colors.transparent),
         ),
         enabledBorder: UnderlineInputBorder(
-          borderRadius: BorderRadius.circular(spacing_standard),
+          borderRadius: BorderRadius.circular(8),
           borderSide: const BorderSide(color: Colors.transparent),
         ),
         contentPadding: const EdgeInsets.symmetric(vertical: 15),
         filled: true,
         fillColor: const Color(0xFFf7f7f7),
         hintText: 'Select',
-        hintStyle: TextStyle(fontSize: textSizeMedium, color: Colors.grey[300]),
+        hintStyle: TextStyle(fontSize: 16, color: Colors.grey[300]),
       ),
       onChanged: (String? newValue) {
         setState(() {
@@ -147,7 +147,7 @@ class _KycDetailsState extends State<KycDetails> {
             children: [
               Container(
                 padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-                decoration: boxDecoration(showShadow: true, bgColor: white_color),
+                decoration: boxDecoration(showShadow: true, bgColor: Colors.white),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -169,13 +169,13 @@ class _KycDetailsState extends State<KycDetails> {
               const SizedBox(height: 10),
               Container(
                 padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-                decoration: boxDecoration(showShadow: true, bgColor: white_color),
+                decoration: boxDecoration(showShadow: true, bgColor: Colors.white),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     text(
                       'Update your banking details',
-                      fontSize: textSizeLargeMedium,
+                      fontSize: 18,
                       fontFamily: fontBold,
                       textColor: textColorPrimary,
                     ),
@@ -314,7 +314,7 @@ class _KycDetailsState extends State<KycDetails> {
               const SizedBox(height: 10),
               Container(
                 padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-                decoration: boxDecoration(showShadow: true, bgColor: white_color),
+                decoration: boxDecoration(showShadow: true, bgColor: Colors.white),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -437,7 +437,7 @@ class _KycDetailsState extends State<KycDetails> {
         children: [
           text(
             'Upload Bank PassBook Front Page',
-            fontSize: textSizeLargeMedium,
+            fontSize: 18,
             fontFamily: fontSemiBold,
             textColor: textColorPrimary,
             isLongText: true,
@@ -448,7 +448,7 @@ class _KycDetailsState extends State<KycDetails> {
               Card(
                 semanticContainer: true,
                 clipBehavior: Clip.antiAliasWithSaveLayer,
-                margin: const EdgeInsets.all(spacing_control),
+                margin: const EdgeInsets.all(4),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
                 child: Column(
                   children: <Widget>[
@@ -485,11 +485,11 @@ class _KycDetailsState extends State<KycDetails> {
                 ),
               ),
               Container(
-                padding: const EdgeInsets.all(spacing_control),
+                padding: const EdgeInsets.all(4),
                 margin: const EdgeInsets.only(top: 15, right: 10),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: white_color,
+                  color: Colors.white,
                   border: Border.all(color: colorPrimary),
                 ),
                 child: GestureDetector(

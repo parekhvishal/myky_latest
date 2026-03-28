@@ -174,7 +174,7 @@ class _PinListState extends State<PinList> {
                   padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 2.0),
                   child: text(
                     item['status']['name'].toString().toUpperCase(),
-                    textColor: white,
+                    textColor: Colors.white,
                     fontFamily: fontSemiBold,
                   ),
                 ),
@@ -213,7 +213,7 @@ class _PinListState extends State<PinList> {
                           text(
                             item['pin'],
                             textColor: red,
-                            fontSize: textSizeMedium,
+                            fontSize: 16,
                             fontFamily: fontBold,
                             // latterSpacing: 0.8,
                           ),
@@ -240,14 +240,14 @@ class _PinListState extends State<PinList> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                text('Used By', fontSize: textSizeMedium, fontFamily: fontSemiBold),
+                text('Used By', fontSize: 16, fontFamily: fontSemiBold),
                 SizedBox(width: 10),
                 Expanded(
                   child: Column(
                     children: <Widget>[
                       text(
                         " ${item['usedBy']['name']} | ${item['usedBy']['code']}",
-                        fontSize: textSizeMedium,
+                        fontSize: 16,
                         maxLine: 4,
                         isLongText: true,
                       ),
@@ -267,7 +267,7 @@ class _PinListState extends State<PinList> {
                       arguments: item['pin'],
                     )!.then((value) => pinsPaginatedListKey.currentState!.refresh());
                   },
-                  child: text('TopUp', textColor: white),
+                  child: text('TopUp', textColor: Colors.white),
                   color: colorPrimary,
                 ),
               ],

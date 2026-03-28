@@ -30,7 +30,7 @@ class _BankingPartnerState extends State<BankingPartner> {
   Widget _bankDetailsBuilder(dynamic bank, int index) {
     return Container(
       width: w(80),
-      decoration: boxDecoration(showShadow: true, bgColor: white, radius: 10.0),
+      decoration: boxDecoration(showShadow: true, bgColor: Colors.white, radius: 10.0),
       margin: EdgeInsets.symmetric(horizontal: 7.5, vertical: 7.5),
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
@@ -48,7 +48,7 @@ class _BankingPartnerState extends State<BankingPartner> {
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Icon(Icons.domain, color: colorPrimary, size: textSizeXLarge),
+                            Icon(Icons.domain, color: colorPrimary, size: 30),
                             SizedBox(width: w(2)),
                             Expanded(
                               child: Column(
@@ -58,7 +58,7 @@ class _BankingPartnerState extends State<BankingPartner> {
                                   // text(
                                   //   bank['branchName'],
                                   //   textColor: textColorSecondary,
-                                  //   fontSize: textSizeSMedium,
+                                  //   fontSize: 14,
                                   //   isLongText: true,
                                   // ),
                                 ],
@@ -77,10 +77,10 @@ class _BankingPartnerState extends State<BankingPartner> {
                       //   ),
                       //   child: text(
                       //     bank['acType'],
-                      //     textColor: white,
+                      //     textColor:  Colors.white,
                       //     textAllCaps: true,
                       //     fontFamily: fontSemiBold,
-                      //     fontSize: textSizeSMedium,
+                      //     fontSize: 14,
                       //   ),
                       // )
                     ],

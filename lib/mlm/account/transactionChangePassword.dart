@@ -25,7 +25,7 @@ class _TransactionChangePasswordState extends State<TransactionChangePassword> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: white,
+      backgroundColor: Colors.white,
       appBar: AppBar(elevation: 2.0, title: Text('Change Transaction Password')),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),

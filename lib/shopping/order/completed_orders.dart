@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../widget/colors.dart';
+import '../../widget/image.dart';
 import '../../widget/theme.dart';
 
 class GuestCompletedOrder extends StatefulWidget {
@@ -48,16 +49,11 @@ class _GuestCompletedOrderState extends State<GuestCompletedOrder> {
                             children: [
                               text(
                                 "Booking ID",
-                                fontSize: textSizeSmall,
+                                fontSize: 12,
                                 fontFamily: fontMedium,
                                 textColor: textColorPrimary,
                               ),
-                              text(
-                                "123",
-                                fontSize: textSizeSmall,
-                                fontFamily: fontBold,
-                                textColor: textColorPrimary,
-                              ),
+                              text("123", fontSize: 12, fontFamily: fontBold, textColor: textColorPrimary),
                             ],
                           ),
                           SizedBox(height: 2),
@@ -67,13 +63,13 @@ class _GuestCompletedOrderState extends State<GuestCompletedOrder> {
                             children: [
                               text(
                                 "Delivery Date",
-                                fontSize: textSizeSmall,
+                                fontSize: 12,
                                 fontFamily: fontMedium,
                                 textColor: textColorPrimary,
                               ),
                               text(
                                 "12 Apr 2023,05:00 pm",
-                                fontSize: textSizeSmall,
+                                fontSize: 12,
                                 fontFamily: fontBold,
                                 textColor: textColorPrimary,
                               ),
@@ -86,7 +82,7 @@ class _GuestCompletedOrderState extends State<GuestCompletedOrder> {
                             children: [
                               text(
                                 "Payment Mode",
-                                fontSize: textSizeSmall,
+                                fontSize: 12,
                                 fontFamily: fontMedium,
                                 textColor: textColorPrimary,
                               ),
@@ -98,7 +94,7 @@ class _GuestCompletedOrderState extends State<GuestCompletedOrder> {
                                 ),
                                 child: text(
                                   "COD",
-                                  fontSize: textSizeSmall,
+                                  fontSize: 12,
                                   fontFamily: fontBold,
                                   textColor: textColorPrimary,
                                 ),
@@ -112,13 +108,13 @@ class _GuestCompletedOrderState extends State<GuestCompletedOrder> {
                             children: [
                               text(
                                 "Amount",
-                                fontSize: textSizeSmall,
+                                fontSize: 12,
                                 fontFamily: fontMedium,
                                 textColor: textColorPrimary,
                               ),
                               text(
                                 "Rs. 4000",
-                                fontSize: textSizeSmall,
+                                fontSize: 12,
                                 fontFamily: fontBold,
                                 textColor: textColorPrimary,
                               ),
@@ -137,12 +133,7 @@ class _GuestCompletedOrderState extends State<GuestCompletedOrder> {
                     borderRadius: BorderRadius.circular(8),
                     color: Colors.green.shade100,
                   ),
-                  child: text(
-                    "View Detail",
-                    fontSize: textSizeSmall,
-                    fontFamily: fontBold,
-                    textColor: greenColor,
-                  ),
+                  child: text("View Detail", fontSize: 12, fontFamily: fontBold, textColor: greenColor),
                 ),
               ],
             ),

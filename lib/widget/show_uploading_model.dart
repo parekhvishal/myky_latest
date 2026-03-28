@@ -17,7 +17,7 @@ void showUploadingDialog(BuildContext context, indexController) {
           initialData: 0,
           builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
             return InnerShadowContainer(
-              color: white,
+              color: Colors.white,
               borderColor: colorAccent,
               offset: const Offset(0, 5),
               padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 10.w),

@@ -29,8 +29,8 @@ class _PinRequestListState extends State<PinRequestList> {
         onPressed: () {
           Get.toNamed('/pin-request')!.then((value) => pinRequestPaginatedListKey.currentState!.refresh());
         },
-        label: text('Create'.toUpperCase(), textColor: white, fontFamily: fontBold),
-        icon: Icon(UniconsLine.plus, color: white),
+        label: text('Create'.toUpperCase(), textColor: Colors.white, fontFamily: fontBold),
+        icon: Icon(UniconsLine.plus, color: Colors.white),
         backgroundColor: colorPrimary,
       ),
     );
@@ -39,7 +39,7 @@ class _PinRequestListState extends State<PinRequestList> {
   Widget _pinRequestBuilder(dynamic pinRequest, int index) {
     return Container(
       width: w(80),
-      decoration: boxDecoration(showShadow: true, bgColor: white, radius: 10.0),
+      decoration: boxDecoration(showShadow: true, bgColor: Colors.white, radius: 10.0),
       margin: EdgeInsets.symmetric(horizontal: 7.5, vertical: 7.5),
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
@@ -59,7 +59,7 @@ class _PinRequestListState extends State<PinRequestList> {
                           children: [
                             Padding(
                               padding: const EdgeInsets.only(top: 4.0),
-                              child: Icon(UniconsLine.slack, color: colorPrimary, size: textSizeXLarge),
+                              child: Icon(UniconsLine.slack, color: colorPrimary, size: 30),
                             ),
                             SizedBox(width: w(4)),
                             Expanded(
@@ -70,7 +70,7 @@ class _PinRequestListState extends State<PinRequestList> {
                                   text(
                                     pinRequest['createdAt'],
                                     textColor: textColorSecondary,
-                                    fontSize: textSizeSMedium,
+                                    fontSize: 14,
                                     isLongText: true,
                                   ),
                                 ],
@@ -87,10 +87,10 @@ class _PinRequestListState extends State<PinRequestList> {
                         ),
                         child: text(
                           pinRequest['noPins'].toString(),
-                          textColor: white,
+                          textColor: Colors.white,
                           textAllCaps: true,
                           fontFamily: fontSemiBold,
-                          fontSize: textSizeSMedium,
+                          fontSize: 14,
                         ),
                       ),
                       SizedBox(width: w(2)),
@@ -106,10 +106,10 @@ class _PinRequestListState extends State<PinRequestList> {
                         ),
                         child: text(
                           pinRequest['status'],
-                          textColor: white,
+                          textColor: Colors.white,
                           textAllCaps: true,
                           fontFamily: fontSemiBold,
-                          fontSize: textSizeMedium,
+                          fontSize: 16,
                         ),
                       ),
                     ],

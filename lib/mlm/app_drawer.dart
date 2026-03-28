@@ -156,7 +156,7 @@ class _EntryItemState extends State<EntryItem> {
           title: text(
             root.title,
             isLongText: true,
-            fontSize: textSizeMedium,
+            fontSize: 16,
             fontFamily: fontMedium,
             textColor: colorPrimaryDark,
           ),
@@ -166,12 +166,7 @@ class _EntryItemState extends State<EntryItem> {
 
     return ExpansionTile(
       key: PageStorageKey<Entry>(root),
-      title: text(
-        root.title,
-        fontSize: textSizeLargeMedium,
-        fontFamily: fontMedium,
-        textColor: colorPrimaryDark,
-      ),
+      title: text(root.title, fontSize: 18, fontFamily: fontMedium, textColor: colorPrimaryDark),
       initiallyExpanded: _expanded,
       children: root.children.map((child) {
         return _buildTiles(child, depth: depth + 1);

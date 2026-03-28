@@ -29,12 +29,7 @@ class _OrderDetailState extends State<OrderDetail> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(height: 15),
-                    text(
-                      "Order Details",
-                      fontSize: textSizeLargeMedium,
-                      fontFamily: fontBold,
-                      textColor: textColorPrimary,
-                    ),
+                    text("Order Details", fontSize: 18, fontFamily: fontBold, textColor: textColorPrimary),
                     SizedBox(height: 15),
                     Container(
                       width: double.infinity,
@@ -58,12 +53,7 @@ class _OrderDetailState extends State<OrderDetail> {
                       ),
                     ),
                     SizedBox(height: 15),
-                    text(
-                      "Payment Summary",
-                      fontSize: textSizeLargeMedium,
-                      fontFamily: fontBold,
-                      textColor: textColorPrimary,
-                    ),
+                    text("Payment Summary", fontSize: 18, fontFamily: fontBold, textColor: textColorPrimary),
                     SizedBox(height: 15),
                     Container(
                       width: double.infinity,
@@ -82,18 +72,8 @@ class _OrderDetailState extends State<OrderDetail> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              text(
-                                "Total",
-                                fontSize: textSizeMedium,
-                                fontFamily: fontBold,
-                                textColor: textColorPrimary,
-                              ),
-                              text(
-                                '\$110',
-                                fontSize: textSizeMedium,
-                                fontFamily: fontBold,
-                                textColor: textColorPrimary,
-                              ),
+                              text("Total", fontSize: 16, fontFamily: fontBold, textColor: textColorPrimary),
+                              text('\$110', fontSize: 16, fontFamily: fontBold, textColor: textColorPrimary),
                             ],
                           ),
                         ],
@@ -121,7 +101,7 @@ class _OrderDetailState extends State<OrderDetail> {
                       ),
                       child: text(
                         "Pin this Order",
-                        fontSize: textSizeSmall,
+                        fontSize: 12,
                         fontFamily: fontBold,
                         textColor: textColorPrimary,
                       ),
@@ -147,7 +127,7 @@ class _OrderDetailState extends State<OrderDetail> {
                         ),
                         child: text(
                           "Repeat Order",
-                          fontSize: textSizeSmall,
+                          fontSize: 12,
                           fontFamily: fontBold,
                           textColor: greenColor,
                         ),
@@ -167,9 +147,9 @@ class _OrderDetailState extends State<OrderDetail> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        text(priceTitle, fontSize: textSizeSmall, fontFamily: fontMedium, textColor: textColorSecondary),
+        text(priceTitle, fontSize: 12, fontFamily: fontMedium, textColor: textColorSecondary),
         SizedBox(height: 2),
-        text(total, fontSize: textSizeSmall, fontFamily: fontBold, textColor: textColorSecondary),
+        text(total, fontSize: 12, fontFamily: fontBold, textColor: textColorSecondary),
       ],
     );
   }
@@ -179,9 +159,9 @@ class _OrderDetailState extends State<OrderDetail> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        text(title, fontSize: textSizeSmall, fontFamily: fontMedium, textColor: textColorPrimary),
+        text(title, fontSize: 12, fontFamily: fontMedium, textColor: textColorPrimary),
         SizedBox(height: 2),
-        text(subTitle, fontSize: textSizeSmall, fontFamily: fontBold, textColor: textColorPrimary),
+        text(subTitle, fontSize: 12, fontFamily: fontBold, textColor: textColorPrimary),
       ],
     );
   }

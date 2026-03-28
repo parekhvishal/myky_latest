@@ -7,6 +7,7 @@ import '../../services/api.dart';
 import '../../services/validator_x.dart';
 import '../../utils/app_utils.dart';
 import '../../widget/colors.dart';
+import '../../widget/image.dart';
 import '../../widget/theme.dart';
 
 class ForgotPassword extends StatefulWidget {

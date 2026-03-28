@@ -741,24 +741,20 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myky_clone/services/api.dart';
 import 'package:myky_clone/utils/app_utils.dart';
-import 'package:myky_clone/widget/theme.dart';
+
+import '../widget/colors.dart';
 
 class SpinWheelScreen extends StatefulWidget {
   final List<dynamic> spinItems; // from API
   final int spinId; // from spinList in reward.dart
 
-  const SpinWheelScreen({
-    Key? key,
-    required this.spinItems,
-    required this.spinId,
-  }) : super(key: key);
+  const SpinWheelScreen({Key? key, required this.spinItems, required this.spinId}) : super(key: key);
 
   @override
   _SpinWheelScreenState createState() => _SpinWheelScreenState();
 }
 
-class _SpinWheelScreenState extends State<SpinWheelScreen>
-    with SingleTickerProviderStateMixin {
+class _SpinWheelScreenState extends State<SpinWheelScreen> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
 
@@ -776,10 +772,7 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
   void initState() {
     super.initState();
 
-    _controller = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 5),
-    );
+    _controller = AnimationController(vsync: this, duration: const Duration(seconds: 5));
 
     _animation = Tween<double>(begin: 0, end: 0).animate(_controller);
 
@@ -847,9 +840,7 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
 
     _randomEndAngle = spins * 360.0 + raw;
 
-    debugPrint(
-      "🎯 chosenIndex=$chosenIndex desiredMidAngle=$desiredMidAngle raw=$raw end=$_randomEndAngle",
-    );
+    debugPrint("🎯 chosenIndex=$chosenIndex desiredMidAngle=$desiredMidAngle raw=$raw end=$_randomEndAngle");
 
     _controller.reset();
     _animation =
@@ -886,9 +877,7 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
     final visualReward = widget.spinItems[index];
     final visualAmount = visualReward['amount'].toString();
 
-    debugPrint(
-      '🎯 Visual landing: index $index, amount $visualAmount (ignored for real prize)',
-    );
+    debugPrint('🎯 Visual landing: index $index, amount $visualAmount (ignored for real prize)');
 
     setState(() {
       landedReward = visualReward;
@@ -975,10 +964,7 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
             curve: Curves.easeIn,
             builder: (cxt, v, child) {
               double startOffset = (delayMs / durMs).clamp(0.0, 0.85);
-              double progress = ((v - startOffset) / (1 - startOffset)).clamp(
-                0.0,
-                1.0,
-              );
+              double progress = ((v - startOffset) / (1 - startOffset)).clamp(0.0, 1.0);
 
               final xFrac = (spec['x'] as double);
               final dx = (spec['dx'] as double);
@@ -1003,12 +989,7 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
                       decoration: BoxDecoration(
                         color: c,
                         borderRadius: BorderRadius.circular(2.r),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.22),
-                            blurRadius: 4,
-                          ),
-                        ],
+                        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.22), blurRadius: 4)],
                       ),
                     ),
                   ),
@@ -1043,10 +1024,7 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
                           gradient: RadialGradient(
                             center: const Alignment(0.0, -0.3),
                             radius: 0.9,
-                            colors: [
-                              const Color(0xFFFFD700).withOpacity(0.16),
-                              Colors.transparent,
-                            ],
+                            colors: [const Color(0xFFFFD700).withOpacity(0.16), Colors.transparent],
                           ),
                         ),
                       ),
@@ -1054,33 +1032,21 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
                   ),
                   Center(
                     child: Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 18.w,
-                        vertical: 28.h,
-                      ),
+                      padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 28.h),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(28.r),
                         child: BackdropFilter(
                           filter: ImageFilter.blur(sigmaX: 12.0, sigmaY: 12.0),
                           child: Container(
                             width: size.width,
-                            constraints: BoxConstraints(
-                              maxWidth: 820.w,
-                              maxHeight: size.height * 0.92,
-                            ),
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 28.w,
-                              vertical: 26.h,
-                            ),
+                            constraints: BoxConstraints(maxWidth: 820.w, maxHeight: size.height * 0.92),
+                            padding: EdgeInsets.symmetric(horizontal: 28.w, vertical: 26.h),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(28.r),
                               gradient: LinearGradient(
                                 begin: Alignment.topLeft,
                                 end: Alignment.bottomRight,
-                                colors: [
-                                  Colors.white.withOpacity(0.03),
-                                  Colors.white.withOpacity(0.01),
-                                ],
+                                colors: [Colors.white.withOpacity(0.03), Colors.white.withOpacity(0.01)],
                               ),
                               boxShadow: [
                                 BoxShadow(
@@ -1100,11 +1066,7 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(12.r),
                                     gradient: const LinearGradient(
-                                      colors: [
-                                        Color(0xFFFFD700),
-                                        Color(0xFFFFF3C4),
-                                        Color(0xFFFFD700),
-                                      ],
+                                      colors: [Color(0xFFFFD700), Color(0xFFFFF3C4), Color(0xFFFFD700)],
                                     ),
                                   ),
                                 ),
@@ -1115,21 +1077,12 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
                                     gradient: const RadialGradient(
-                                      colors: [
-                                        Color(0xFFFFF9EA),
-                                        Color(0xFFFFE082),
-                                      ],
+                                      colors: [Color(0xFFFFF9EA), Color(0xFFFFE082)],
                                     ),
-                                    border: Border.all(
-                                      color: const Color(0xFFFFC700),
-                                      width: 2.8.w,
-                                    ),
+                                    border: Border.all(color: const Color(0xFFFFC700), width: 2.8.w),
                                   ),
                                   child: ClipOval(
-                                    child: Image.asset(
-                                      'assets/images/gift_box.png',
-                                      fit: BoxFit.cover,
-                                    ),
+                                    child: Image.asset('assets/images/gift_box.png', fit: BoxFit.cover),
                                   ),
                                 ),
                                 SizedBox(height: 18.h),
@@ -1145,13 +1098,9 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
                                 ),
                                 SizedBox(height: 18.h),
                                 ShaderMask(
-                                  shaderCallback: (bounds) =>
-                                      const LinearGradient(
-                                        colors: [
-                                          Color(0xFFFFD700),
-                                          Color(0xFFFFE9A6),
-                                        ],
-                                      ).createShader(bounds),
+                                  shaderCallback: (bounds) => const LinearGradient(
+                                    colors: [Color(0xFFFFD700), Color(0xFFFFE9A6)],
+                                  ).createShader(bounds),
                                   child: Text(
                                     amount,
                                     style: TextStyle(
@@ -1174,27 +1123,19 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
                                       backgroundColor: const Color(0xFFFFD700),
                                       foregroundColor: Colors.black,
                                       shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(
-                                          14.r,
-                                        ),
+                                        borderRadius: BorderRadius.circular(14.r),
                                       ),
                                     ),
                                     child: Text(
                                       'GREAT!',
-                                      style: TextStyle(
-                                        fontSize: 18.sp,
-                                        fontWeight: FontWeight.bold,
-                                      ),
+                                      style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
                                     ),
                                   ),
                                 ),
                                 SizedBox(height: 12.h),
                                 Text(
                                   'Reward added to your account.',
-                                  style: TextStyle(
-                                    fontSize: 12.sp,
-                                    color: Colors.white54,
-                                  ),
+                                  style: TextStyle(fontSize: 12.sp, color: Colors.white54),
                                 ),
                               ],
                             ),
@@ -1228,7 +1169,7 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
     final wheelSize = min(size.width, size.height) * 0.78;
 
     return Scaffold(
-      backgroundColor: primary,
+      backgroundColor: colorPrimary,
       extendBodyBehindAppBar: true,
 
       // ✅ CRED appbar image
@@ -1242,12 +1183,7 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
       body: Stack(
         children: [
           // rays background
-          Positioned.fill(
-            child: Image.asset(
-              "assets/images/spin/rays.png",
-              fit: BoxFit.cover,
-            ),
-          ),
+          Positioned.fill(child: Image.asset("assets/images/spin/rays.png", fit: BoxFit.cover)),
 
           // main body
           Center(
@@ -1256,11 +1192,7 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
               children: [
                 Text(
                   "SPIN TO WIN",
-                  style: TextStyle(
-                    fontSize: 28.sp,
-                    fontWeight: FontWeight.w800,
-                    color: Colors.white,
-                  ),
+                  style: TextStyle(fontSize: 28.sp, fontWeight: FontWeight.w800, color: Colors.white),
                 ),
 
                 SizedBox(height: 70.h),
@@ -1311,10 +1243,7 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
                       top: -wheelSize * 0.3,
                       child: Transform.translate(
                         offset: Offset(0, wheelSize * 0.018),
-                        child: Image.asset(
-                          "assets/images/spin/pointer.png",
-                          width: wheelSize * 0.18,
-                        ),
+                        child: Image.asset("assets/images/spin/pointer.png", width: wheelSize * 0.18),
                       ),
                     ),
 
@@ -1363,26 +1292,17 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
           Positioned(
             left: -20,
             bottom: 0,
-            child: Image.asset(
-              "assets/images/spin/giftLeft.png",
-              height: 120.h,
-            ),
+            child: Image.asset("assets/images/spin/giftLeft.png", height: 120.h),
           ),
           Positioned(
             left: -10,
             bottom: -10,
-            child: Image.asset(
-              "assets/images/spin/giftLeft2.png",
-              height: 120.h,
-            ),
+            child: Image.asset("assets/images/spin/giftLeft2.png", height: 120.h),
           ),
           Positioned(
             right: -10,
             bottom: -10,
-            child: Image.asset(
-              "assets/images/spin/giftRight.png",
-              height: 120.h,
-            ),
+            child: Image.asset("assets/images/spin/giftRight.png", height: 120.h),
           ),
         ],
       ),
@@ -1469,10 +1389,7 @@ class CredStyleWheelPainter extends CustomPainter {
       final angle = i * sectionAngle;
       canvas.drawLine(
         center,
-        Offset(
-          center.dx + radius * cos(angle),
-          center.dy + radius * sin(angle),
-        ),
+        Offset(center.dx + radius * cos(angle), center.dy + radius * sin(angle)),
         sepPaint,
       );
     }
@@ -1501,12 +1418,7 @@ class CredStyleWheelPainter extends CustomPainter {
 
         canvas.drawImageRect(
           giftImage,
-          Rect.fromLTWH(
-            0,
-            0,
-            giftImage.width.toDouble(),
-            giftImage.height.toDouble(),
-          ),
+          Rect.fromLTWH(0, 0, giftImage.width.toDouble(), giftImage.height.toDouble()),
           Rect.fromLTWH(imageOffset.dx, imageOffset.dy, imageSize, imageSize),
           Paint(),
         );
@@ -1525,11 +1437,7 @@ class CredStyleWheelPainter extends CustomPainter {
         final tp = TextPainter(
           text: TextSpan(
             text: text,
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.w900,
-              fontSize: radius * 0.2,
-            ),
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.w900, fontSize: radius * 0.2),
           ),
           textDirection: TextDirection.ltr,
         )..layout(maxWidth: radius * 0.62);

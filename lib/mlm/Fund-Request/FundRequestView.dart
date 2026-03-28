@@ -30,8 +30,8 @@ class _FundRequestViewState extends State<FundRequestView> {
         onPressed: () {
           Get.toNamed('/fund-request')!.then((value) => fundRequestPaginatedListKey.currentState!.refresh());
         },
-        label: text('Create'.toUpperCase(), textColor: white, fontFamily: fontBold),
-        icon: Icon(UniconsLine.plus, color: white),
+        label: text('Create'.toUpperCase(), textColor: Colors.white, fontFamily: fontBold),
+        icon: Icon(UniconsLine.plus, color: Colors.white),
         backgroundColor: colorPrimary,
       ),
     );
@@ -40,7 +40,7 @@ class _FundRequestViewState extends State<FundRequestView> {
   Widget _fundRequestBuilder(dynamic fundRequest, int index) {
     return Container(
       width: w(80),
-      decoration: boxDecoration(showShadow: true, bgColor: white, radius: 10.0),
+      decoration: boxDecoration(showShadow: true, bgColor: Colors.white, radius: 10.0),
       margin: EdgeInsets.symmetric(horizontal: 7.5, vertical: 7.5),
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
@@ -60,7 +60,7 @@ class _FundRequestViewState extends State<FundRequestView> {
                           children: [
                             Padding(
                               padding: const EdgeInsets.only(top: 4.0),
-                              child: Icon(UniconsLine.slack, color: colorPrimary, size: textSizeXLarge),
+                              child: Icon(UniconsLine.slack, color: colorPrimary, size: 30),
                             ),
                             SizedBox(width: w(4)),
                             Expanded(
@@ -75,7 +75,7 @@ class _FundRequestViewState extends State<FundRequestView> {
                                   text(
                                     fundRequest['date'],
                                     textColor: textColorSecondary,
-                                    fontSize: textSizeSMedium,
+                                    fontSize: 14,
                                     isLongText: true,
                                   ),
                                 ],
@@ -94,10 +94,10 @@ class _FundRequestViewState extends State<FundRequestView> {
                       //   ),
                       //   child: text(
                       //     fundRequest['noPins'].toString(),
-                      //     textColor: white,
+                      //     textColor:  Colors.white,
                       //     textAllCaps: true,
                       //     fontFamily: fontSemiBold,
-                      //     fontSize: textSizeSMedium,
+                      //     fontSize: 14,
                       //   ),
                       // ),
                       SizedBox(width: w(2)),
@@ -113,10 +113,10 @@ class _FundRequestViewState extends State<FundRequestView> {
                         ),
                         child: text(
                           fundRequest['status']['name'],
-                          textColor: white,
+                          textColor: Colors.white,
                           textAllCaps: true,
                           fontFamily: fontSemiBold,
-                          fontSize: textSizeMedium,
+                          fontSize: 16,
                         ),
                       ),
                     ],
@@ -202,10 +202,10 @@ class _FundRequestViewState extends State<FundRequestView> {
                               ),
                               child: text(
                                 fundRequest['status']['name'],
-                                textColor: white,
+                                textColor: Colors.white,
                                 textAllCaps: true,
                                 fontFamily: fontSemiBold,
-                                fontSize: textSizeMedium,
+                                fontSize: 16,
                               ),
                             ),
                           ],
@@ -231,10 +231,10 @@ class _FundRequestViewState extends State<FundRequestView> {
                               ),
                               child: text(
                                 "View Receipt".toUpperCase(),
-                                textColor: white,
+                                textColor: Colors.white,
                                 textAllCaps: true,
                                 fontFamily: fontSemiBold,
-                                fontSize: textSizeSMedium,
+                                fontSize: 14,
                               ),
                             ),
                           ),

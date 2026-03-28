@@ -70,18 +70,18 @@ class _BankDetailsState extends State<BankDetails> {
       value: accountType,
       decoration: InputDecoration(
         focusedBorder: UnderlineInputBorder(
-          borderRadius: BorderRadius.circular(spacing_standard),
+          borderRadius: BorderRadius.circular(8),
           borderSide: BorderSide(color: Colors.transparent),
         ),
         enabledBorder: UnderlineInputBorder(
-          borderRadius: BorderRadius.circular(spacing_standard),
+          borderRadius: BorderRadius.circular(8),
           borderSide: BorderSide(color: Colors.transparent),
         ),
         contentPadding: EdgeInsets.symmetric(vertical: 15),
         filled: true,
         fillColor: Color(0xFFf7f7f7),
         hintText: 'Select',
-        hintStyle: TextStyle(fontSize: textSizeMedium, color: Colors.grey[300]),
+        hintStyle: TextStyle(fontSize: 16, color: Colors.grey[300]),
       ),
       onChanged: (String? newValue) {
         setState(() {

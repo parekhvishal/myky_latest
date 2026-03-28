@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 // import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:get/get.dart';
-import 'package:nb_utils/nb_utils.dart' hide white;
+import 'package:nb_utils/nb_utils.dart';
 import 'package:unicons/unicons.dart';
 
 import '../../../services/validator_x.dart';
@@ -100,7 +100,7 @@ class _PaymentsState extends State<Payments> {
             children: [
               Icon(UniconsLine.map_pin_alt, color: textColorSecondary, size: 20),
               SizedBox(width: 10),
-              text('Select State', fontSize: textSizeMedium, textColor: textColorSecondary),
+              text('Select State', fontSize: 16, textColor: textColorSecondary),
             ],
           ),
         ),
@@ -118,7 +118,7 @@ class _PaymentsState extends State<Payments> {
           // hintText: 'Select State',
           filled: true,
           fillColor: Color(0xFFf7f7f7),
-          hintStyle: TextStyle(fontSize: textSizeMedium, color: textColorSecondary),
+          hintStyle: TextStyle(fontSize: 16, color: textColorSecondary),
         ),
         value: myStateSelection,
         iconSize: 20,
@@ -144,11 +144,7 @@ class _PaymentsState extends State<Payments> {
                   SizedBox(width: 10),
                   Text(
                     state['name'].toString(),
-                    style: TextStyle(
-                      fontSize: textSizeLargeMedium,
-                      color: colorPrimaryDark,
-                      fontFamily: fontRegular,
-                    ),
+                    style: TextStyle(fontSize: 18, color: colorPrimaryDark, fontFamily: fontRegular),
                   ),
                 ],
               ),
@@ -179,7 +175,7 @@ class _PaymentsState extends State<Payments> {
             children: [
               Icon(UniconsLine.map_pin_alt, color: textColorSecondary, size: 20),
               SizedBox(width: 10),
-              text('Select City', fontSize: textSizeMedium, textColor: textColorSecondary),
+              text('Select City', fontSize: 16, textColor: textColorSecondary),
             ],
           ),
         ),
@@ -197,7 +193,7 @@ class _PaymentsState extends State<Payments> {
           filled: true,
           fillColor: Color(0xFFf7f7f7),
           // hintText: 'Select City',
-          hintStyle: TextStyle(fontSize: textSizeMedium, color: Colors.black),
+          hintStyle: TextStyle(fontSize: 16, color: Colors.black),
         ),
         value: myCitySelection,
         iconSize: 20,
@@ -221,11 +217,7 @@ class _PaymentsState extends State<Payments> {
                   SizedBox(width: 10),
                   Text(
                     city['name'].toString(),
-                    style: TextStyle(
-                      fontSize: textSizeLargeMedium,
-                      color: colorPrimaryDark,
-                      fontFamily: fontRegular,
-                    ),
+                    style: TextStyle(fontSize: 18, color: colorPrimaryDark, fontFamily: fontRegular),
                   ),
                 ],
               ),
@@ -282,7 +274,7 @@ class _PaymentsState extends State<Payments> {
             child: Column(
               children: <Widget>[
                 ExpansionTile(
-                  title: text("Shopping Items", fontFamily: fontSemiBold, fontSize: textSizeLargeMedium),
+                  title: text("Shopping Items", fontFamily: fontSemiBold, fontSize: 18),
                   children: <Widget>[
                     for (Map cartItem in cartProducts!)
                       if (cartItem.isNotEmpty) _buildCartItem(cartItem),
@@ -320,7 +312,7 @@ class _PaymentsState extends State<Payments> {
                           overflow: TextOverflow.ellipsis,
                           maxLine: 2,
                           fontFamily: fontRegular,
-                          fontSize: textSizeMedium,
+                          fontSize: 16,
                         ),
                       ),
                     ],
@@ -330,13 +322,13 @@ class _PaymentsState extends State<Payments> {
                     children: <Widget>[
                       text(
                         '\₹ ${cartItem['selling_price']}',
-                        fontSize: textSizeLargeMedium,
+                        fontSize: 18,
                         fontFamily: fontMedium,
                         textColor: colorPrimaryDark,
                       ),
                     ],
                   ),
-                  text('Qty : ${cartItem['selected_qty']}', fontSize: textSizeSMedium, textColor: green),
+                  text('Qty : ${cartItem['selected_qty']}', fontSize: 14, textColor: green),
                 ],
               ),
             ),
@@ -375,11 +367,11 @@ class _PaymentsState extends State<Payments> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              text("By using coin", textColor: goldenRod, fontSize: textSizeLargeMedium),
+              text("By using coin", textColor: goldenRod, fontSize: 18),
               text(
                 "${useCoin.toStringAsFixed(2)}",
                 textColor: goldenRod,
-                fontSize: textSizeLargeMedium,
+                fontSize: 18,
                 fontFamily: fontSemiBold,
               ),
             ],
@@ -388,11 +380,11 @@ class _PaymentsState extends State<Payments> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              text("Total Amount", textColor: green, fontSize: textSizeLargeMedium),
+              text("Total Amount", textColor: green, fontSize: 18),
               text(
                 "\₹ ${total.toStringAsFixed(2)}",
                 textColor: green,
-                fontSize: textSizeLargeMedium,
+                fontSize: 18,
                 fontFamily: fontSemiBold,
               ),
             ],
@@ -532,7 +524,7 @@ class _PaymentsState extends State<Payments> {
             children: [
               Icon(UniconsLine.transaction, color: textColorSecondary, size: 20),
               SizedBox(width: 10),
-              text('Select Payment Method', fontSize: textSizeMedium, textColor: textColorSecondary),
+              text('Select Payment Method', fontSize: 16, textColor: textColorSecondary),
             ],
           ),
         ),
@@ -551,7 +543,7 @@ class _PaymentsState extends State<Payments> {
           // hintText: 'Select State',
           filled: true,
           fillColor: Color(0xFFf7f7f7),
-          hintStyle: TextStyle(fontSize: textSizeMedium, color: Colors.black),
+          hintStyle: TextStyle(fontSize: 16, color: Colors.black),
         ),
         onChanged: (String? newValue) {
           validator.clearErrorsAt('payment_type');
@@ -571,11 +563,7 @@ class _PaymentsState extends State<Payments> {
                   SizedBox(width: 10),
                   Text(
                     paymentMode['name'],
-                    style: TextStyle(
-                      fontSize: textSizeLargeMedium,
-                      color: colorPrimaryDark,
-                      fontFamily: fontRegular,
-                    ),
+                    style: TextStyle(fontSize: 18, color: colorPrimaryDark, fontFamily: fontRegular),
                   ),
                 ],
               ),
@@ -596,12 +584,7 @@ class _PaymentsState extends State<Payments> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          text(
-            "\₹ ${total.toStringAsFixed(2)}",
-            fontSize: textSizeLargeMedium,
-            textColor: white,
-            fontFamily: fontBold,
-          ),
+          text("\₹ ${total.toStringAsFixed(2)}", fontSize: 18, textColor: white, fontFamily: fontBold),
           MaterialButton(
             padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
@@ -618,7 +601,7 @@ class _PaymentsState extends State<Payments> {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  text('Pay', fontSize: textSizeLargeMedium, textColor: white, fontFamily: fontBold),
+                  text('Pay', fontSize: 18, textColor: white, fontFamily: fontBold),
                   // 5.width,
                   // Icon(
                   //   Icons.arrow_forward_ios,

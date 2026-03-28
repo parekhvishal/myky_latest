@@ -66,7 +66,7 @@ class _AudioSettingsState extends State<AudioSettings> {
               'Change Your Settings Here...',
               textColor: colorAccent,
               fontFamily: fontBold,
-              fontSize: textSizeNormal,
+              fontSize: 20,
               maxLine: 2,
             ),
             25.height,
@@ -74,7 +74,7 @@ class _AudioSettingsState extends State<AudioSettings> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                text('Your current Setting', fontFamily: fontMedium, fontSize: textSizeLargeMedium),
+                text('Your current Setting', fontFamily: fontMedium, fontSize: 18),
                 Transform.scale(
                   scale: 1.5,
                   child: Switch(

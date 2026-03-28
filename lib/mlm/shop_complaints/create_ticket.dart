@@ -9,7 +9,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
-import 'package:nb_utils/nb_utils.dart' hide white;
+import 'package:nb_utils/nb_utils.dart';
 import 'package:search_choices/search_choices.dart';
 import 'package:unicons/unicons.dart';
 
@@ -21,6 +21,7 @@ import '../../utils/app_utils.dart';
 import '../../utils/en_extensions.dart';
 import '../../widget/colors.dart';
 import '../../widget/custom_container.dart';
+import '../../widget/image.dart';
 import '../../widget/image_picker.dart';
 import '../../widget/show_uploading_model.dart';
 import '../../widget/theme.dart';

@@ -34,7 +34,7 @@ class _CustomerToVendorState extends State<CustomerToVendor> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Promoter-Vendor')),
-      backgroundColor: whiteColor,
+      backgroundColor: Colors.white,
       body: FutureBuilder(
         future: _future,
         builder: (context, AsyncSnapshot? snapshot) {
@@ -74,7 +74,7 @@ class _CustomerToVendorState extends State<CustomerToVendor> {
           CircleAvatar(
             radius: 50,
             backgroundColor: colorPrimary.withOpacity(0.65),
-            child: text(item['language'], fontFamily: fontBold, textColor: whiteColor, isCentered: true),
+            child: text(item['language'], fontFamily: fontBold, textColor: Colors.white, isCentered: true),
           ).onTap(() {
             if (item['link'] != null) {
               Get.toNamed('/pdf-viewer', arguments: item['link']);
