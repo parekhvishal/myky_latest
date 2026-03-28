@@ -21,18 +21,8 @@ class _RechargeState extends State<Recharge> {
   List circles = [];
 
   final List<Map> services = [
-    {
-      'name': 'Mobile Recharge',
-      'icon': 'assets/images/mobile.png',
-      'page': 'mobile',
-      'bgColor': 0xFF8D7AEE,
-    },
-    {
-      'name': 'DTH Recharge',
-      'icon': 'assets/images/dth.png',
-      'page': "dth",
-      'bgColor': 0xFFF369B7,
-    },
+    {'name': 'Mobile Recharge', 'icon': 'assets/images/mobile.png', 'page': 'mobile', 'bgColor': 0xFF8D7AEE},
+    {'name': 'DTH Recharge', 'icon': 'assets/images/dth.png', 'page': "dth", 'bgColor': 0xFFF369B7},
     // {
     //   'name': 'Electricity Bill',
     //   'icon': 'assets/images/electricity.png',
@@ -64,12 +54,7 @@ class _RechargeState extends State<Recharge> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: Text(
-          'Recharge & Bill Payment'.toUpperCase(),
-        ),
-      ),
+      appBar: AppBar(automaticallyImplyLeading: false, title: Text('Recharge & Bill Payment'.toUpperCase())),
       body: FutureBuilder(
         future: operatorFuture,
         builder: (context, AsyncSnapshot? snapshot) {
@@ -95,10 +80,7 @@ class _RechargeState extends State<Recharge> {
       children: [
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-          decoration: boxDecoration(
-            showShadow: false,
-            bgColor: whiteColor,
-          ),
+          decoration: boxDecoration(showShadow: false, bgColor: whiteColor),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -155,11 +137,7 @@ class _RechargeState extends State<Recharge> {
                                 color: Color(category['bgColor']),
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
-                              child: Image.asset(
-                                category['icon'],
-                                color: Colors.white,
-                                fit: BoxFit.contain,
-                              ),
+                              child: Image.asset(category['icon'], color: Colors.white, fit: BoxFit.contain),
                               height: 80,
                             ),
                           ),
@@ -171,7 +149,7 @@ class _RechargeState extends State<Recharge> {
                               isLongText: true,
                               fontSize: textSizeSMedium,
                             ),
-                          )
+                          ),
                         ],
                       ),
                     ],
@@ -199,7 +177,7 @@ class _RechargeState extends State<Recharge> {
         //       children: [
         //         text(
         //           'Recharge History',
-        //           fontFamily: fontSemibold,
+        //           fontFamily: fontSemiBold,
         //           textColor: greenColor,
         //         ),
         //         Icon(

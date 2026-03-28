@@ -12,6 +12,7 @@ import '../../services/Vapor.dart';
 import '../../services/api.dart';
 import '../../services/getImage_service.dart';
 import '../../services/validator_x.dart';
+import '../../widget/colors.dart';
 import '../../widget/image_picker.dart';
 import '../../widget/theme.dart';
 
@@ -67,11 +68,14 @@ class _PinRequestState extends State<PinRequest> {
   }
 
   void getPinData() async {
-    Api.http.get('member/pin-requests/create').then((response) {
-      setState(() {
-        pinData = response.data;
-      });
-    }).catchError((error) {});
+    Api.http
+        .get('member/pin-requests/create')
+        .then((response) {
+          setState(() {
+            pinData = response.data;
+          });
+        })
+        .catchError((error) {});
   }
 
   @override
@@ -91,16 +95,9 @@ class _PinRequestState extends State<PinRequest> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                padding: const EdgeInsets.only(
-                  left: 15,
-                  right: 10,
-                ),
+                padding: const EdgeInsets.only(left: 15, right: 10),
                 margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                decoration: boxDecoration(
-                  showShadow: true,
-                  bgColor: white,
-                  radius: 10.0,
-                ),
+                decoration: boxDecoration(showShadow: true, bgColor: white, radius: 10.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -117,9 +114,7 @@ class _PinRequestState extends State<PinRequest> {
                         isExpanded: true,
                         validator: validator.add(
                           key: 'package_id',
-                          rules: [
-                            ValidatorX.mandatory(message: "Select Your Package"),
-                          ],
+                          rules: [ValidatorX.mandatory(message: "Select Your Package")],
                         ),
                         hint: text(
                           'Select Package',
@@ -129,8 +124,7 @@ class _PinRequestState extends State<PinRequest> {
                         ),
                         value: myPackageSelection,
                         decoration: InputDecoration(
-                          border:
-                              UnderlineInputBorder(borderSide: BorderSide(color: Colors.black12)),
+                          border: UnderlineInputBorder(borderSide: BorderSide(color: Colors.black12)),
                         ),
                         onChanged: (String? newValue) {
                           validator.clearErrorsAt('package_id');
@@ -141,8 +135,7 @@ class _PinRequestState extends State<PinRequest> {
                         items: pinData!['packages'].map<DropdownMenuItem<String>>((packages) {
                           return DropdownMenuItem<String>(
                             value: packages['id'].toString(),
-                            child:
-                                Text(packages['name'].toString() + " (" + packages['amount'] + ")"),
+                            child: Text(packages['name'].toString() + " (" + packages['amount'] + ")"),
                           );
                         }).toList(),
                       ),
@@ -154,9 +147,7 @@ class _PinRequestState extends State<PinRequest> {
                       inputFormatters: [FilteringTextInputFormatter.deny(RegExp(r'^[- .,0]'))],
                       validator: validator.add(
                         key: 'no_pins',
-                        rules: [
-                          ValidatorX.mandatory(message: "Pin Quantity field is required"),
-                        ],
+                        rules: [ValidatorX.mandatory(message: "Pin Quantity field is required")],
                       ),
                       onChanged: (String value) {
                         validator.clearErrorsAt("no_pins");
@@ -167,16 +158,9 @@ class _PinRequestState extends State<PinRequest> {
                 ),
               ),
               Container(
-                padding: const EdgeInsets.only(
-                  left: 15,
-                  right: 10,
-                ),
+                padding: const EdgeInsets.only(left: 15, right: 10),
                 margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                decoration: boxDecoration(
-                  showShadow: true,
-                  bgColor: white,
-                  radius: 10.0,
-                ),
+                decoration: boxDecoration(showShadow: true, bgColor: white, radius: 10.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -193,9 +177,7 @@ class _PinRequestState extends State<PinRequest> {
                         isExpanded: true,
                         validator: validator.add(
                           key: 'payment_mode',
-                          rules: [
-                            ValidatorX.mandatory(message: "Select Your Payment Method"),
-                          ],
+                          rules: [ValidatorX.mandatory(message: "Select Your Payment Method")],
                         ),
                         hint: text(
                           'Select Payment Method',
@@ -205,8 +187,7 @@ class _PinRequestState extends State<PinRequest> {
                         ),
                         value: myPaymentSelection,
                         decoration: InputDecoration(
-                          border:
-                              UnderlineInputBorder(borderSide: BorderSide(color: Colors.black12)),
+                          border: UnderlineInputBorder(borderSide: BorderSide(color: Colors.black12)),
                         ),
                         onChanged: (String? newValue) {
                           validator.clearErrorsAt('payment_mode');
@@ -228,9 +209,7 @@ class _PinRequestState extends State<PinRequest> {
                       controller: _referenceController,
                       validator: validator.add(
                         key: 'bank_name',
-                        rules: [
-                          ValidatorX.mandatory(message: "Reference number field is required"),
-                        ],
+                        rules: [ValidatorX.mandatory(message: "Reference number field is required")],
                       ),
                     ),
                     SizedBox(height: 15),
@@ -240,9 +219,7 @@ class _PinRequestState extends State<PinRequest> {
                         isExpanded: true,
                         validator: validator.add(
                           key: 'bank_name',
-                          rules: [
-                            ValidatorX.mandatory(message: "Select Your Bank"),
-                          ],
+                          rules: [ValidatorX.mandatory(message: "Select Your Bank")],
                         ),
                         hint: text(
                           'Select Bank',
@@ -252,8 +229,7 @@ class _PinRequestState extends State<PinRequest> {
                         ),
                         value: myBankSelection,
                         decoration: InputDecoration(
-                          border:
-                              UnderlineInputBorder(borderSide: BorderSide(color: Colors.black12)),
+                          border: UnderlineInputBorder(borderSide: BorderSide(color: Colors.black12)),
                         ),
                         onChanged: (String? newValue) {
                           validator.clearErrorsAt('bank_name');
@@ -264,9 +240,7 @@ class _PinRequestState extends State<PinRequest> {
                         items: pinData!['bankDetails'].map<DropdownMenuItem<String>>((bank) {
                           return DropdownMenuItem<String>(
                             value: bank['id'].toString(),
-                            child: Text(
-                              bank['name'].toString(),
-                            ),
+                            child: Text(bank['name'].toString()),
                           );
                         }).toList(),
                       ),
@@ -274,16 +248,9 @@ class _PinRequestState extends State<PinRequest> {
                 ),
               ),
               Container(
-                padding: const EdgeInsets.only(
-                  left: 15,
-                  right: 10,
-                ),
+                padding: const EdgeInsets.only(left: 15, right: 10),
                 margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                decoration: boxDecoration(
-                  showShadow: true,
-                  bgColor: white,
-                  radius: 10.0,
-                ),
+                decoration: boxDecoration(showShadow: true, bgColor: white, radius: 10.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -299,9 +266,7 @@ class _PinRequestState extends State<PinRequest> {
                       controller: _depositDateController,
                       validator: validator.add(
                         key: 'date',
-                        rules: [
-                          ValidatorX.mandatory(message: "Deposit date field is required"),
-                        ],
+                        rules: [ValidatorX.mandatory(message: "Deposit date field is required")],
                       ),
                       onChanged: (value) {
                         validator.clearErrorsAt('date');
@@ -326,9 +291,7 @@ class _PinRequestState extends State<PinRequest> {
                       controller: _depositTimeController,
                       validator: validator.add(
                         key: 'time',
-                        rules: [
-                          ValidatorX.mandatory(message: "Deposit time field is required"),
-                        ],
+                        rules: [ValidatorX.mandatory(message: "Deposit time field is required")],
                       ),
                       onChanged: (value) {
                         validator.clearErrorsAt('time');
@@ -338,9 +301,7 @@ class _PinRequestState extends State<PinRequest> {
 
                         time = await showTimePicker(
                           context: context,
-                          initialTime: TimeOfDay.fromDateTime(
-                            DateTime.now(),
-                          ),
+                          initialTime: TimeOfDay.fromDateTime(DateTime.now()),
                         );
                         if (time != null) {
                           _depositTimeController.text = time!.format(context);
@@ -355,7 +316,7 @@ class _PinRequestState extends State<PinRequest> {
               isSubmit != true
                   ? Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: CustomButton(
+                      child: CustomButtonOld(
                         textContent: 'Submit',
                         onPressed: () async {
                           if (_pinFormKey.currentState!.validate()) {
@@ -368,8 +329,7 @@ class _PinRequestState extends State<PinRequest> {
                                 progressCallback: (int? completed, int? total) {
                                   setState(() {
                                     uploading = true;
-                                    progressString =
-                                        ((completed! / total!) * 100).toStringAsFixed(0) + "%";
+                                    progressString = ((completed! / total!) * 100).toStringAsFixed(0) + "%";
                                   });
                                 },
                               );
@@ -387,42 +347,41 @@ class _PinRequestState extends State<PinRequest> {
                               'no_pins': _pinQtyController.text,
                               'package_id': myPackageSelection,
                             };
-                            Api.http.post('member/pin-requests', data: sendData).then((res) async {
-                              if (res.data['status']) {
-                                GetBar(
-                                  duration: Duration(seconds: 3),
-                                  message: res.data['message'],
-                                  backgroundColor: Colors.green,
-                                ).show();
-                                Timer(
-                                  Duration(seconds: 3),
-                                  () {
-                                    Get.back(result: res.data);
-                                  },
-                                );
-                              } else {
-                                GetBar(
-                                  duration: Duration(seconds: 5),
-                                  message: res.data['error'],
-                                  backgroundColor: Colors.red,
-                                ).show();
-                              }
-                            }).catchError((error) {
-                              if (error.response.statusCode == 401 ||
-                                  error.response.statusCode == 403) {
-                                GetBar(
-                                  backgroundColor: Colors.red,
-                                  duration: Duration(seconds: 5),
-                                  message: error.response.data['message'],
-                                ).show();
-                              }
-                              if (error.response.statusCode == 422) {
-                                setState(() {
-                                  validator.setErrors(error.response.data['errors']);
-                                  _errors = error.response.data['errors'];
+                            Api.http
+                                .post('member/pin-requests', data: sendData)
+                                .then((res) async {
+                                  if (res.data['status']) {
+                                    GetBar(
+                                      duration: Duration(seconds: 3),
+                                      message: res.data['message'],
+                                      backgroundColor: Colors.green,
+                                    ).show();
+                                    Timer(Duration(seconds: 3), () {
+                                      Get.back(result: res.data);
+                                    });
+                                  } else {
+                                    GetBar(
+                                      duration: Duration(seconds: 5),
+                                      message: res.data['error'],
+                                      backgroundColor: Colors.red,
+                                    ).show();
+                                  }
+                                })
+                                .catchError((error) {
+                                  if (error.response.statusCode == 401 || error.response.statusCode == 403) {
+                                    GetBar(
+                                      backgroundColor: Colors.red,
+                                      duration: Duration(seconds: 5),
+                                      message: error.response.data['message'],
+                                    ).show();
+                                  }
+                                  if (error.response.statusCode == 422) {
+                                    setState(() {
+                                      validator.setErrors(error.response.data['errors']);
+                                      _errors = error.response.data['errors'];
+                                    });
+                                  }
                                 });
-                              }
-                            });
                           }
                         },
                       ),
@@ -444,7 +403,7 @@ class _PinRequestState extends State<PinRequest> {
           text(
             'Upload Deposit Image',
             fontSize: textSizeLargeMedium,
-            fontFamily: fontSemibold,
+            fontFamily: fontSemiBold,
             textColor: textColorPrimary,
           ),
           SizedBox(height: 15),
@@ -452,50 +411,45 @@ class _PinRequestState extends State<PinRequest> {
             alignment: Alignment.topRight,
             children: <Widget>[
               Card(
-                  semanticContainer: true,
-                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                  margin: EdgeInsets.all(spacing_control),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  child: Column(
-                    children: <Widget>[
-                      if (!uploading)
-                        _image != null
-                            ? Image.file(
-                                _image!,
-                                width: double.infinity,
-                                height: 200,
-                                fit: BoxFit.contain,
-                              )
-                            : Image.asset(
-                                'assets/images/placeholder.png',
-                                width: double.infinity,
-                                height: 200,
-                                fit: BoxFit.contain,
-                              ),
-                      if (uploading)
-                        Container(
-                          height: 200.0,
-                          width: double.infinity,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              CircularProgressIndicator(),
-                              SizedBox(height: 20.0),
-                              Text(
-                                "Uploading Image: $progressString",
-                              )
-                            ],
-                          ),
-                        )
-                    ],
-                  )),
+                semanticContainer: true,
+                clipBehavior: Clip.antiAliasWithSaveLayer,
+                margin: EdgeInsets.all(spacing_control),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+                child: Column(
+                  children: <Widget>[
+                    if (!uploading)
+                      _image != null
+                          ? Image.file(_image!, width: double.infinity, height: 200, fit: BoxFit.contain)
+                          : Image.asset(
+                              'assets/images/placeholder.png',
+                              width: double.infinity,
+                              height: 200,
+                              fit: BoxFit.contain,
+                            ),
+                    if (uploading)
+                      Container(
+                        height: 200.0,
+                        width: double.infinity,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            CircularProgressIndicator(),
+                            SizedBox(height: 20.0),
+                            Text("Uploading Image: $progressString"),
+                          ],
+                        ),
+                      ),
+                  ],
+                ),
+              ),
               Container(
                 padding: EdgeInsets.all(spacing_control),
                 margin: EdgeInsets.only(top: 15, right: 10),
                 decoration: BoxDecoration(
-                    shape: BoxShape.circle, color: white, border: Border.all(color: colorPrimary)),
+                  shape: BoxShape.circle,
+                  color: white,
+                  border: Border.all(color: colorPrimary),
+                ),
                 child: GestureDetector(
                   onTap: () {
                     GetImageFromDevice.instance.getImage(ImgSource.both, context).then((file) {
@@ -505,24 +459,16 @@ class _PinRequestState extends State<PinRequest> {
                       }
                     });
                   },
-                  child: Icon(
-                    Icons.camera_alt,
-                    color: colorPrimary,
-                    size: 20,
-                  ),
+                  child: Icon(Icons.camera_alt, color: colorPrimary, size: 20),
                 ),
               ),
             ],
           ),
-          if (_errors != null && _image == null && _errors!.containsKey('receipt'))
-            SizedBox(height: 5),
+          if (_errors != null && _image == null && _errors!.containsKey('receipt')) SizedBox(height: 5),
           if (_errors != null && _image == null && _errors!.containsKey('receipt'))
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Text(
-                _errors!['receipt'][0],
-                style: TextStyle(color: Colors.red),
-              ),
+              child: Text(_errors!['receipt'][0], style: TextStyle(color: Colors.red)),
             ),
         ],
       ),

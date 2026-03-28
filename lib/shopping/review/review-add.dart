@@ -45,10 +45,7 @@ class _ReviewAddState extends State<ReviewAdd> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: text(
-          product!['editType'] ? 'Edit Review' : 'Add Review',
-          textColor: Colors.black,
-        ),
+        title: text(product!['editType'] ? 'Edit Review' : 'Add Review', textColor: Colors.black),
       ),
       body: review(),
     );
@@ -67,33 +64,23 @@ class _ReviewAddState extends State<ReviewAdd> {
             children: <Widget>[
               Center(
                 child: RatingBar(
-                    itemSize: 45,
-                    initialRating: rating.toDouble(),
-                    glowColor: Colors.transparent,
-                    direction: Axis.horizontal,
-                    allowHalfRating: false,
-                    itemCount: 5,
-                    ratingWidget: RatingWidget(
-                        full: Icon(
-                          Icons.star,
-                          size: 5.sp,
-                          color: Colors.orange,
-                        ),
-                        half: Icon(
-                          Icons.star,
-                          size: 5.sp,
-                          color: Colors.orange,
-                        ),
-                        empty: Icon(
-                          Icons.star_border,
-                          size: 5.sp,
-                          color: gray,
-                        )),
-                    onRatingUpdate: (value) {
-                      setState(() {
-                        rating = value;
-                      });
-                    }),
+                  itemSize: 45,
+                  initialRating: rating.toDouble(),
+                  glowColor: Colors.transparent,
+                  direction: Axis.horizontal,
+                  allowHalfRating: false,
+                  itemCount: 5,
+                  ratingWidget: RatingWidget(
+                    full: Icon(Icons.star, size: 5.sp, color: Colors.orange),
+                    half: Icon(Icons.star, size: 5.sp, color: Colors.orange),
+                    empty: Icon(Icons.star_border, size: 5.sp, color: gray),
+                  ),
+                  onRatingUpdate: (value) {
+                    setState(() {
+                      rating = value;
+                    });
+                  },
+                ),
                 // SmoothStarRating(
                 //   rating: rating.toDouble(),
                 //   isReadOnly: false,
@@ -116,12 +103,7 @@ class _ReviewAddState extends State<ReviewAdd> {
                 inputFormatters: [FilteringTextInputFormatter.deny(RegExp(r'^[ ,-]'))],
                 controller: _commentController,
                 maxLines: 6,
-                validator: validator.add(
-                  key: 'review',
-                  rules: [
-                    ValidatorX.mandatory(),
-                  ],
-                ),
+                validator: validator.add(key: 'review', rules: [ValidatorX.mandatory()]),
                 onChanged: (value) {
                   validator.clearErrorsAt('review');
                 },
@@ -133,7 +115,7 @@ class _ReviewAddState extends State<ReviewAdd> {
               ),
               SizedBox(height: 12),
               submit != true
-                  ? CustomButton(
+                  ? CustomButtonOld(
                       textContent: product!['editType'] ? 'Update' : 'Submit',
                       onPressed: () {
                         if (_addReviewFormKey.currentState!.validate()) {
@@ -149,40 +131,34 @@ class _ReviewAddState extends State<ReviewAdd> {
                           if (rating > 0) {
                             Api.http
                                 .post(
-                                    product!['editType']
-                                        ? 'shopping/review/update'
-                                        : 'shopping/review/store',
-                                    data: sendData)
+                                  product!['editType'] ? 'shopping/review/update' : 'shopping/review/store',
+                                  data: sendData,
+                                )
                                 .then((response) {
-                              GetBar(
-                                backgroundColor:
-                                    response.data['status'] ? Colors.green : Colors.red,
-                                duration: Duration(seconds: 3),
-                                message: response.data['message'],
-                              ).show();
+                                  GetBar(
+                                    backgroundColor: response.data['status'] ? Colors.green : Colors.red,
+                                    duration: Duration(seconds: 3),
+                                    message: response.data['message'],
+                                  ).show();
 
-                              if (response.data['status']) {
-                                Timer(
-                                  Duration(seconds: 3),
-                                  () {
-                                    Get.back();
-                                  },
-                                );
-                              } else {
-                                setState(() {
-                                  submit = false;
+                                  if (response.data['status']) {
+                                    Timer(Duration(seconds: 3), () {
+                                      Get.back();
+                                    });
+                                  } else {
+                                    setState(() {
+                                      submit = false;
+                                    });
+                                  }
+                                })
+                                .catchError((error) {
+                                  setState(() {
+                                    submit = false;
+                                  });
+                                  if (error.response.statusCode == 422) {
+                                    validator.setErrors(error.response.data['errors']);
+                                  }
                                 });
-                              }
-                            }).catchError(
-                              (error) {
-                                setState(() {
-                                  submit = false;
-                                });
-                                if (error.response.statusCode == 422) {
-                                  validator.setErrors(error.response.data['errors']);
-                                }
-                              },
-                            );
                           } else {
                             AppUtils.showErrorSnackBar("Select Rating");
                           }

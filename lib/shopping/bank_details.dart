@@ -7,6 +7,7 @@ import '../../services/api.dart';
 import '../../services/validator_x.dart';
 import '../../utils/app_utils.dart';
 import '../../widget/theme.dart';
+import '../widget/colors.dart';
 
 class BankDetails extends StatefulWidget {
   const BankDetails({Key? key}) : super(key: key);
@@ -63,9 +64,7 @@ class _BankDetailsState extends State<BankDetails> {
       isExpanded: true,
       validator: validator.add(
         key: 'account_type',
-        rules: [
-          ValidatorX.mandatory(message: "Select Your Account Type"),
-        ],
+        rules: [ValidatorX.mandatory(message: "Select Your Account Type")],
       ),
       hint: Text('Select Account Type'),
       value: accountType,
@@ -91,10 +90,7 @@ class _BankDetailsState extends State<BankDetails> {
         validator.clearErrorsAt('accountType');
       },
       items: _accountTypes.map<DropdownMenuItem<String>>((type) {
-        return DropdownMenuItem<String>(
-          child: Text(type['type']),
-          value: type['value'].toString(),
-        );
+        return DropdownMenuItem<String>(child: Text(type['type']), value: type['value'].toString());
       }).toList(),
     );
   }
@@ -102,9 +98,7 @@ class _BankDetailsState extends State<BankDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: text('Bank Details'),
-      ),
+      appBar: AppBar(title: text('Bank Details')),
       body: SingleChildScrollView(
         child: Container(
           color: Colors.white,
@@ -126,9 +120,7 @@ class _BankDetailsState extends State<BankDetails> {
                         inputFormatters: [FilteringTextInputFormatter.deny(RegExp(r'^[ -.,]'))],
                         validator: validator.add(
                           key: 'accountName',
-                          rules: [
-                            ValidatorX.mandatory(message: 'Account holder name field is required'),
-                          ],
+                          rules: [ValidatorX.mandatory(message: 'Account holder name field is required')],
                         ),
                         onChanged: (String value) {
                           validator.clearErrorsAt('accountName');
@@ -144,7 +136,10 @@ class _BankDetailsState extends State<BankDetails> {
                           key: 'accountNumber',
                           rules: [
                             ValidatorX.mandatory(message: 'Account number field is required'),
-                            ValidatorX.minLength(length: 9, message: 'The account number must be between 9 and 18 digits')
+                            ValidatorX.minLength(
+                              length: 9,
+                              message: 'The account number must be between 9 and 18 digits',
+                            ),
                           ],
                         ),
                         onChanged: (String value) {
@@ -157,9 +152,7 @@ class _BankDetailsState extends State<BankDetails> {
                         isExpanded: true,
                         validator: validator.add(
                           key: 'accountType',
-                          rules: [
-                            ValidatorX.mandatory(message: "Select your account type"),
-                          ],
+                          rules: [ValidatorX.mandatory(message: "Select your account type")],
                         ),
                         hint: Text('Select Account Type'),
                         value: accountType,
@@ -195,19 +188,22 @@ class _BankDetailsState extends State<BankDetails> {
                         onChanged: (value) {
                           validator.clearErrorsAt('bankIfsc');
                           if (value.length == 11) {
-                            Api.httpWithoutBaseUrl.get('https://ifsc.razorpay.com/' + _ifscCodeController.text).then((res) {
-                              setState(() {
-                                _bankNameController.text = res.data['BANK'];
-                                _bankBranchController.text = res.data['BRANCH'];
-                              });
-                            }).catchError((err) {
-                              AppUtils.showErrorSnackBar('The IFSC code is invalid');
+                            Api.httpWithoutBaseUrl
+                                .get('https://ifsc.razorpay.com/' + _ifscCodeController.text)
+                                .then((res) {
+                                  setState(() {
+                                    _bankNameController.text = res.data['BANK'];
+                                    _bankBranchController.text = res.data['BRANCH'];
+                                  });
+                                })
+                                .catchError((err) {
+                                  AppUtils.showErrorSnackBar('The IFSC code is invalid');
 
-                              setState(() {
-                                _bankNameController.text = '';
-                                _bankBranchController.text = '';
-                              });
-                            });
+                                  setState(() {
+                                    _bankNameController.text = '';
+                                    _bankBranchController.text = '';
+                                  });
+                                });
                           } else {
                             setState(() {
                               _bankNameController.text = '';
@@ -217,9 +213,7 @@ class _BankDetailsState extends State<BankDetails> {
                         },
                         validator: validator.add(
                           key: 'bankIfsc',
-                          rules: [
-                            ValidatorX.mandatory(message: 'IFSC code is required'),
-                          ],
+                          rules: [ValidatorX.mandatory(message: 'IFSC code is required')],
                         ),
                       ),
                       10.height,
@@ -228,9 +222,7 @@ class _BankDetailsState extends State<BankDetails> {
                         controller: _bankNameController,
                         validator: validator.add(
                           key: 'bankName',
-                          rules: [
-                            ValidatorX.mandatory(message: 'Bank name field is required'),
-                          ],
+                          rules: [ValidatorX.mandatory(message: 'Bank name field is required')],
                         ),
                         onChanged: (String value) {
                           validator.clearErrorsAt('bankName');
@@ -242,9 +234,7 @@ class _BankDetailsState extends State<BankDetails> {
                         controller: _bankBranchController,
                         validator: validator.add(
                           key: 'bankBranch',
-                          rules: [
-                            ValidatorX.mandatory(message: 'Bank branch field is required'),
-                          ],
+                          rules: [ValidatorX.mandatory(message: 'Bank branch field is required')],
                         ),
                         onChanged: (String value) {
                           validator.clearErrorsAt('bankBranch');
@@ -256,7 +246,7 @@ class _BankDetailsState extends State<BankDetails> {
                   20.height,
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: CustomButton(
+                    child: CustomButtonOld(
                       textContent: 'Submit',
                       onPressed: () async {
                         if (_kycFormKey.currentState!.validate()) {
@@ -272,23 +262,26 @@ class _BankDetailsState extends State<BankDetails> {
                             'accountName': _accountNameController.text,
                             'accountNumber': _accountNumberController.text,
                           };
-                          Api.http.post('shopping/guest/bank-detail', data: sendData).then((response) async {
-                            if (response.data['status']) {
-                              Get.back();
-                              AppUtils.showSuccessSnackBar(response.data['message']);
-                            } else {
-                              AppUtils.showErrorSnackBar(response.data['message']);
-                            }
-                          }).catchError((error) {
-                            if (error.response.statusCode == 401 || error.response.statusCode == 403) {
-                              AppUtils.showErrorSnackBar(error.response.data['message']);
-                            }
-                            if (error.response.statusCode == 422) {
-                              setState(() {
-                                validator.setErrors(error.response.data['errors']);
+                          Api.http
+                              .post('shopping/guest/bank-detail', data: sendData)
+                              .then((response) async {
+                                if (response.data['status']) {
+                                  Get.back();
+                                  AppUtils.showSuccessSnackBar(response.data['message']);
+                                } else {
+                                  AppUtils.showErrorSnackBar(response.data['message']);
+                                }
+                              })
+                              .catchError((error) {
+                                if (error.response.statusCode == 401 || error.response.statusCode == 403) {
+                                  AppUtils.showErrorSnackBar(error.response.data['message']);
+                                }
+                                if (error.response.statusCode == 422) {
+                                  setState(() {
+                                    validator.setErrors(error.response.data['errors']);
+                                  });
+                                }
                               });
-                            }
-                          });
                         }
                       },
                     ),

@@ -5,8 +5,8 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../widget/colors.dart';
 import '../../widget/confirmation_dialog.dart';
-import '../../widget/theme.dart';
 
 class PaymentWebView extends StatefulWidget {
   @override

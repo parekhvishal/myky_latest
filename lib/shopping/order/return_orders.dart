@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
-import '../../services/auth.dart';
-import '../../utils/app_utils.dart';
-import '../../widget/network_image.dart';
 import 'package:nb_utils/nb_utils.dart' hide white;
 
 import '../../services/api.dart';
+import '../../services/auth.dart';
+import '../../utils/app_utils.dart';
+import '../../widget/colors.dart';
+import '../../widget/network_image.dart';
 import '../../widget/paginated_list.dart';
 import '../../widget/theme.dart';
 
@@ -45,11 +45,7 @@ class _MyReturnOrdersState extends State<MyReturnOrders> {
       },
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-        margin: EdgeInsets.only(
-          bottom: 15,
-          left: 15,
-          right: 15,
-        ),
+        margin: EdgeInsets.only(bottom: 15, left: 15, right: 15),
         decoration: boxDecorationWithShadow(
           backgroundColor: Colors.white,
           borderRadius: BorderRadius.circular(8),
@@ -61,17 +57,9 @@ class _MyReturnOrdersState extends State<MyReturnOrders> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            text(
-              item['createdAt'],
-              isLongText: true,
-              fontSize: 13.0,
-            ),
+            text(item['createdAt'], isLongText: true, fontSize: 13.0),
             10.height,
-            text(
-              item['subOrderNo'],
-              isLongText: true,
-              fontSize: 13.0,
-            ),
+            text(item['subOrderNo'], isLongText: true, fontSize: 13.0),
             10.height,
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -79,14 +67,7 @@ class _MyReturnOrdersState extends State<MyReturnOrders> {
               children: [
                 Container(
                   width: 100,
-                  child: Stack(
-                    children: <Widget>[
-                      if (item['url'] != null)
-                        PNetworkImage(
-                          item['url'],
-                        ),
-                    ],
-                  ),
+                  child: Stack(children: <Widget>[if (item['url'] != null) PNetworkImage(item['url'])]),
                 ),
                 12.width,
                 Column(
@@ -111,19 +92,12 @@ class _MyReturnOrdersState extends State<MyReturnOrders> {
                           fontweight: FontWeight.w600,
                         ),
                         SizedBox(width: 6),
-                        text(
-                          '\₹ ${item['mrp']}',
-                          decoration: TextDecoration.lineThrough,
-                          fontSize: 13.0,
-                        )
+                        text('\₹ ${item['mrp']}', decoration: TextDecoration.lineThrough, fontSize: 13.0),
                       ],
                     ),
-                    text(
-                      'Quantity' + ' : ' + item['quantity'].toString(),
-                      fontSize: 13.0,
-                    ),
+                    text('Quantity' + ' : ' + item['quantity'].toString(), fontSize: 13.0),
                   ],
-                ).expand()
+                ).expand(),
               ],
             ),
             10.height,
@@ -132,31 +106,33 @@ class _MyReturnOrdersState extends State<MyReturnOrders> {
               children: [
                 Container(
                   padding: EdgeInsets.symmetric(vertical: 5, horizontal: 8),
-                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), border: Border.all(color: Colors.black.withOpacity(0.6), width: 1)),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: Colors.black.withOpacity(0.6), width: 1),
+                  ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       Center(
-                          child: Text(
-                        'Delivery\n Status',
-                        style: TextStyle(fontSize: 14.0),
-                        textAlign: TextAlign.center,
-                      )),
+                        child: Text(
+                          'Delivery\n Status',
+                          style: TextStyle(fontSize: 14.0),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
                       5.height,
                       Container(
                         padding: EdgeInsets.symmetric(horizontal: 10, vertical: 3),
                         decoration: BoxDecoration(
                           color: AppUtils.setStatusColor(item['deliveryStatus']['name']),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(8),
-                          ),
+                          borderRadius: BorderRadius.all(Radius.circular(8)),
                         ),
                         child: text(
                           item['deliveryStatus']['name'],
                           textColor: white,
                           textAllCaps: true,
-                          fontFamily: fontSemibold,
+                          fontFamily: fontSemiBold,
                           fontSize: 9.0,
                         ),
                       ),
@@ -165,31 +141,33 @@ class _MyReturnOrdersState extends State<MyReturnOrders> {
                 ),
                 Container(
                   padding: EdgeInsets.symmetric(vertical: 5, horizontal: 8),
-                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), border: Border.all(color: Colors.black.withOpacity(0.6), width: 1)),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: Colors.black.withOpacity(0.6), width: 1),
+                  ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       Center(
-                          child: Text(
-                        'Return\n Status',
-                        style: TextStyle(fontSize: 14.0),
-                        textAlign: TextAlign.center,
-                      )),
+                        child: Text(
+                          'Return\n Status',
+                          style: TextStyle(fontSize: 14.0),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
                       5.height,
                       Container(
                         padding: EdgeInsets.symmetric(horizontal: 10, vertical: 3),
                         decoration: BoxDecoration(
                           color: AppUtils.setStatusColor(item['returnStatusDetail']['name']),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(8),
-                          ),
+                          borderRadius: BorderRadius.all(Radius.circular(8)),
                         ),
                         child: text(
                           item['returnStatusDetail']['name'],
                           textColor: white,
                           textAllCaps: true,
-                          fontFamily: fontSemibold,
+                          fontFamily: fontSemiBold,
                           fontSize: 9.0,
                         ),
                       ),
@@ -303,12 +281,7 @@ class _MyReturnOrdersState extends State<MyReturnOrders> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               mainAxisSize: MainAxisSize.max,
               children: [
-                text(
-                  'Total : ',
-                  fontSize: 13.0,
-                  fontFamily: fontBold,
-                  fontweight: FontWeight.w600,
-                ),
+                text('Total : ', fontSize: 13.0, fontFamily: fontBold, fontweight: FontWeight.w600),
                 text(
                   '\₹ ${item['total']}',
                   fontSize: 13.0,
@@ -322,42 +295,30 @@ class _MyReturnOrdersState extends State<MyReturnOrders> {
               Row(
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  text(
-                    'Reject Reason : ',
-                    fontSize: 13.0,
-                    fontFamily: fontBold,
-                    fontweight: FontWeight.w600,
-                  ),
-                  Flexible(
-                    child: text(
-                      '${item['returnRejectReason']}',
-                      fontSize: 13.0,
-                      isLongText: true,
-                    ),
-                  ),
+                  text('Reject Reason : ', fontSize: 13.0, fontFamily: fontBold, fontweight: FontWeight.w600),
+                  Flexible(child: text('${item['returnRejectReason']}', fontSize: 13.0, isLongText: true)),
                 ],
               ),
             ],
             10.height,
             Center(
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                decoration: BoxDecoration(
-                  color: greenColor,
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(8),
-                  ),
-                ),
-                child: text(
-                  'View',
-                  textColor: white,
-                  textAllCaps: true,
-                  fontFamily: fontSemibold,
-                  fontSize: 13.0,
-                ),
-              ).onTap(() {
-                Get.toNamed('/view-return-order', arguments: item);
-              }),
+              child:
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                    decoration: BoxDecoration(
+                      color: greenColor,
+                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                    ),
+                    child: text(
+                      'View',
+                      textColor: white,
+                      textAllCaps: true,
+                      fontFamily: fontSemiBold,
+                      fontSize: 13.0,
+                    ),
+                  ).onTap(() {
+                    Get.toNamed('/view-return-order', arguments: item);
+                  }),
             ),
           ],
         ),
@@ -369,22 +330,18 @@ class _MyReturnOrdersState extends State<MyReturnOrders> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        text(
-          title,
-          textColor: textColorSecondary,
-          fontSize: textSizeSMedium,
-        ),
+        text(title, textColor: textColorSecondary, fontSize: textSizeSMedium),
         10.width,
-        text(
-          result,
-          textColor: green,
-        ),
+        text(result, textColor: green),
       ],
     );
   }
 
   Future _fetchOrderListFromServer(int page) async {
-    var response = await Api.http.get('shopping/return-order?page=$page', queryParameters: {"user_type": Auth.check()! ? 1 : 2});
+    var response = await Api.http.get(
+      'shopping/return-order?page=$page',
+      queryParameters: {"user_type": Auth.check()! ? 1 : 2},
+    );
     return response;
   }
 }

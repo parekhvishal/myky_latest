@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -25,11 +24,14 @@ class _WithdrawalCreateState extends State<WithdrawalCreate> {
 
   Map? walletBalanceData;
   void getFundData() async {
-    Api.http.get('member/withdrawal-request/create').then((response) {
-      setState(() {
-        fundData = response.data;
-      });
-    }).catchError((error) {});
+    Api.http
+        .get('member/withdrawal-request/create')
+        .then((response) {
+          setState(() {
+            fundData = response.data;
+          });
+        })
+        .catchError((error) {});
   }
 
   void walletBalance() {
@@ -55,25 +57,28 @@ class _WithdrawalCreateState extends State<WithdrawalCreate> {
       backgroundColor: Color(0xFFfafafa),
       appBar: AppBar(title: Text('Withdrawal Request')),
       body: Form(
-          key: _withdrawalRequestFormkey,
-          autovalidateMode: AutovalidateMode.onUserInteraction,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 25),
-            child: ListView(
-              children: <Widget>[
-                _buildAmount(),
-                SizedBox(height: 20),
-                walletTypeBuild(),
-                SizedBox(height: 20),
-                _buildButton(),
-              ],
-            ),
-          )),
+        key: _withdrawalRequestFormkey,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 25),
+          child: ListView(
+            children: <Widget>[
+              _buildAmount(),
+              SizedBox(height: 20),
+              walletTypeBuild(),
+              SizedBox(height: 20),
+              _buildButton(),
+            ],
+          ),
+        ),
+      ),
     );
   }
 
   Widget walletTypeBuild() {
-    return walletBalanceData != null ? text('Your wallet balance ${walletBalanceData!['wallet_balance']}') : SizedBox.shrink();
+    return walletBalanceData != null
+        ? text('Your wallet balance ${walletBalanceData!['wallet_balance']}')
+        : SizedBox.shrink();
   }
 
   Widget _buildAmount() {
@@ -88,54 +93,48 @@ class _WithdrawalCreateState extends State<WithdrawalCreate> {
           controller: _amountController,
           validator: validator.add(
             key: 'amount',
-            rules: [
-              ValidatorX.mandatory(message: 'The amount field is required '),
-            ],
+            rules: [ValidatorX.mandatory(message: 'The amount field is required ')],
           ),
           onChanged: (String value) {
             validator.clearErrorsAt('amount');
           },
           cursorColor: Colors.deepOrange,
-          decoration: InputDecoration(
-            hintText: "Amount",
-            labelText: "Amount",
-            border: OutlineInputBorder(),
-          ),
-        )
+          decoration: InputDecoration(hintText: "Amount", labelText: "Amount", border: OutlineInputBorder()),
+        ),
       ],
     );
   }
 
   Widget _buildButton() {
-    return CustomButton(
+    return CustomButtonOld(
       textContent: 'Submit',
       onPressed: () {
-        Map sendData = {
-          'amount': _amountController.text,
-          'wallet': "1",
-        };
+        Map sendData = {'amount': _amountController.text, 'wallet': "1"};
         if (_withdrawalRequestFormkey.currentState!.validate()) {
           FocusScope.of(context).requestFocus(FocusNode());
-          Api.http.post("member/withdrawal-request/store", data: sendData).then((response) {
-            GetBar(
-              backgroundColor: response.data['status'] ? Colors.green : Colors.red,
-              duration: Duration(seconds: 3),
-              message: response.data['status'] ? response.data['message'] : response.data['message'],
-            ).show();
+          Api.http
+              .post("member/withdrawal-request/store", data: sendData)
+              .then((response) {
+                GetBar(
+                  backgroundColor: response.data['status'] ? Colors.green : Colors.red,
+                  duration: Duration(seconds: 3),
+                  message: response.data['status'] ? response.data['message'] : response.data['message'],
+                ).show();
 
-            Future.delayed(Duration(seconds: 3), () => Get.back());
-          }).catchError((error) {
-            if (error.response.statusCode == 401 || error.response.statusCode == 403) {
-              GetBar(
-                backgroundColor: Colors.red,
-                duration: Duration(seconds: 5),
-                message: error.response.data['message'],
-              ).show();
-            }
-            if (error.response.statusCode == 422) {
-              validator.setErrors(error.response.data['errors']);
-            }
-          });
+                Future.delayed(Duration(seconds: 3), () => Get.back());
+              })
+              .catchError((error) {
+                if (error.response.statusCode == 401 || error.response.statusCode == 403) {
+                  GetBar(
+                    backgroundColor: Colors.red,
+                    duration: Duration(seconds: 5),
+                    message: error.response.data['message'],
+                  ).show();
+                }
+                if (error.response.statusCode == 422) {
+                  validator.setErrors(error.response.data['errors']);
+                }
+              });
         }
       },
     );

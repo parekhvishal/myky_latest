@@ -6,6 +6,7 @@ import 'package:nb_utils/nb_utils.dart';
 import '../../../services/api.dart';
 import '../../utils/app_utils.dart';
 import '../../utils/en_extensions.dart';
+import '../../widget/colors.dart';
 import '../../widget/paginated_list.dart';
 import '../../widget/theme.dart';
 
@@ -22,9 +23,7 @@ class HelpCenterListState extends State<HelpCenterList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Offline shop Complaints"),
-      ),
+      appBar: AppBar(title: const Text("Offline shop Complaints")),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Get.toNamed('/create-ticket')!.then((value) {
@@ -49,11 +48,7 @@ class HelpCenterListState extends State<HelpCenterList> {
   }
 
   Widget _helpCenterTicketBuilder(data, index) {
-    return Column(
-      children: <Widget>[
-        _ticketContent(data),
-      ],
-    );
+    return Column(children: <Widget>[_ticketContent(data)]);
   }
 
   Widget _statusButton(data) {
@@ -62,20 +57,15 @@ class HelpCenterListState extends State<HelpCenterList> {
       clipBehavior: Clip.none,
       children: [
         Container(
-          padding: EdgeInsets.symmetric(
-            horizontal: 10.w,
-            vertical: 6.h,
-          ),
+          padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 6.h),
           decoration: BoxDecoration(
             color: AppUtils.setStatusColor(data['status']['name']).withOpacity(0.2),
-            borderRadius: BorderRadius.all(
-              Radius.circular(8.r),
-            ),
+            borderRadius: BorderRadius.all(Radius.circular(8.r)),
           ),
           child: text(
             data['status']['name'],
             fontSize: 12.sp,
-            fontFamily: fontSemibold,
+            fontFamily: fontSemiBold,
             textColor: AppUtils.setStatusColor(data['status']['name']),
           ),
         ),
@@ -87,10 +77,7 @@ class HelpCenterListState extends State<HelpCenterList> {
               alignment: Alignment.center,
               height: 18.sp,
               width: 18.sp,
-              decoration: const BoxDecoration(
-                color: Colors.redAccent,
-                shape: BoxShape.circle,
-              ),
+              decoration: const BoxDecoration(color: Colors.redAccent, shape: BoxShape.circle),
               child: text(
                 '${data['unreadCount']}',
                 textColor: Colors.white,
@@ -99,7 +86,7 @@ class HelpCenterListState extends State<HelpCenterList> {
               ),
             ),
           ),
-        ]
+        ],
       ],
     );
   }
@@ -108,82 +95,71 @@ class HelpCenterListState extends State<HelpCenterList> {
     return Container(
       margin: EdgeInsets.only(bottom: 12.h),
       decoration: boxContain(),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            mainAxisSize: MainAxisSize.max,
+      child:
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              text(
-                data['createdAt'],
-                fontSize: 14.sp,
-                // textColor: white,
-                fontFamily: fontBold,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  text(
+                    data['createdAt'],
+                    fontSize: 14.sp,
+                    // textColor: white,
+                    fontFamily: fontBold,
+                  ),
+                  _statusButton(data),
+                ],
               ),
-              _statusButton(data),
-            ],
-          ),
-          5.heightBox,
-          dottedLine(),
-          8.heightBox,
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              text(
-                "Issue Type : ",
-                fontSize: 13.sp,
-                textColor: Colors.grey,
+              5.heightBox,
+              dottedLine(),
+              8.heightBox,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  text("Issue Type : ", fontSize: 13.sp, textColor: Colors.grey),
+                  text(
+                    data['complaintType']['name'],
+                    fontSize: 13.sp,
+                    textColor: colorAccent,
+                    fontFamily: fontSemiBold,
+                  ),
+                ],
               ),
-              text(
-                data['complaintType']['name'],
-                fontSize: 13.sp,
-                textColor: colorAccent,
-                fontFamily: fontSemibold,
+              8.heightBox,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  text("Vendor Name : ", fontSize: 13.sp, textColor: Colors.grey),
+                  text(
+                    data['vendorName'] ?? 'N/A',
+                    fontSize: 13.sp,
+                    textColor: colorAccent,
+                    fontFamily: fontSemiBold,
+                  ),
+                ],
               ),
-            ],
-          ),
-          8.heightBox,
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              text(
-                "Vendor Name : ",
-                fontSize: 13.sp,
-                textColor: Colors.grey,
-              ),
-              text(
-                data['vendorName'] ?? 'N/A',
-                fontSize: 13.sp,
-                textColor: colorAccent,
-                fontFamily: fontSemibold,
-              ),
-            ],
-          ),
-          8.heightBox,
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              text(
-                "Vendor ID : ",
-                fontSize: 13.sp,
-                textColor: Colors.grey,
-              ),
-              text(
-                data['vendorCode'].toString(),
-                fontSize: 13.sp,
-                textColor: colorAccent,
-                fontFamily: fontSemibold,
+              8.heightBox,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  text("Vendor ID : ", fontSize: 13.sp, textColor: Colors.grey),
+                  text(
+                    data['vendorCode'].toString(),
+                    fontSize: 13.sp,
+                    textColor: colorAccent,
+                    fontFamily: fontSemiBold,
+                  ),
+                ],
               ),
             ],
-          ),
-        ],
-      ).appPadding().onTap(() {
-        Get.toNamed('/ticket-detail', arguments: data);
-      }),
+          ).appPadding().onTap(() {
+            Get.toNamed('/ticket-detail', arguments: data);
+          }),
     );
   }
 }

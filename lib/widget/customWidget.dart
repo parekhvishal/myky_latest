@@ -9,12 +9,12 @@ import '../../../utils/app_utils.dart';
 import '../../../widget/theme.dart';
 import '../services/cart_service.dart';
 import '../widget/paginated_list.dart';
+import 'colors.dart';
 import 'guest_login_service.dart';
 
 final BottomSheetService bottomSheetService = BottomSheetService();
 
-void showDialogSingleButton(BuildContext context, Map data,
-    {GlobalKey<PaginatedListState>? customCode}) {
+void showDialogSingleButton(BuildContext context, Map data, {GlobalKey<PaginatedListState>? customCode}) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -57,9 +57,7 @@ void showDialogSingleButton(BuildContext context, Map data,
                         style: Theme.of(context).textTheme.titleMedium,
                       ),
                       SizedBox(height: 10.0),
-                      Flexible(
-                        child: Text(data['msg']),
-                      ),
+                      Flexible(child: Text(data['msg'])),
                       SizedBox(height: 10.0),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
@@ -74,14 +72,13 @@ void showDialogSingleButton(BuildContext context, Map data,
                                 customCode.currentState!.refresh();
                               }
                             },
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20.0)),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
                           ),
                         ],
-                      )
+                      ),
                     ],
                   ),
-                )
+                ),
               ],
             ),
           ),
@@ -97,10 +94,7 @@ Widget buildWishList(context, {Function? funAfterBack}) {
     height: 35.sp,
     decoration: BoxDecoration(
       color: const Color(0xFF658D28).withOpacity(0.1),
-      border: Border.all(
-        color: const Color(0xFF658D28).withOpacity(0.1),
-        width: 0.6,
-      ),
+      border: Border.all(color: const Color(0xFF658D28).withOpacity(0.1), width: 0.6),
       shape: BoxShape.circle,
       boxShadow: [
         BoxShadow(
@@ -117,129 +111,103 @@ Widget buildWishList(context, {Function? funAfterBack}) {
           AppUtils.redirect('/wishlist', callWhileBack: funAfterBack);
         } else {
           Get.bottomSheet(
-            StatefulBuilder(builder: (BuildContext context,
-                void Function(void Function()) setDialogState) {
-              return Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
+            StatefulBuilder(
+              builder: (BuildContext context, void Function(void Function()) setDialogState) {
+                return Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
                       topRight: Radius.circular(20.0),
-                      topLeft: Radius.circular(20.0)),
-                  color: white,
-                ),
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 18, vertical: 8),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      SizedBox(
-                        height: 12,
-                      ),
-                      Align(
-                        alignment: Alignment.topRight,
-                        child: Icon(
-                          UniconsLine.times_circle,
-                          color: Colors.grey,
-                        ).onTap(() {
-                          Get.back();
-                        }),
-                      ),
-                      20.height,
-                      AppButton(
-                        shapeBorder:
-                            RoundedRectangleBorder(borderRadius: radius(10)),
-                        elevation: 30,
-                        width: double.infinity,
-                        color: const Color(0xff9afdcd),
-                        padding: EdgeInsets.symmetric(
-                          vertical: 15,
-                          horizontal: 20,
-                        ),
-                        onTap: () {
-                          Get.back();
-                          bottomSheetService
-                              .showBottomSheet(context)
-                              .then((value) {
-                            if (value != null && value) {
-                              AppUtils.redirect('/wishlist',
-                                  callWhileBack: funAfterBack);
-                            }
-                          });
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              children: [
-                                Icon(UniconsLine.user),
-                                10.width,
-                                Text(
-                                  'Login as a guest',
-                                  style: TextStyle(
-                                    fontFamily: fontBold,
-                                    color: black,
-                                    fontSize: 16,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const Icon(Icons.chevron_right_rounded),
-                          ],
-                        ),
-                      ),
-                      20.height,
-                      AppButton(
-                        shapeBorder:
-                            RoundedRectangleBorder(borderRadius: radius(10)),
-                        elevation: 30,
-                        width: double.infinity,
-                        color: const Color(0xff6153d3),
-                        padding:
-                            EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-                        onTap: () {
-                          Get.back();
-                          AppUtils.redirect(
-                            'login-mlm',
-                            pageToRedirectAfterLogin: '/wishlist',
-                            callWhileBack: funAfterBack,
-                          );
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              children: [
-                                const Icon(
-                                  UniconsLine.user_arrows,
-                                  color: Colors.white,
-                                ),
-                                10.width,
-                                Text(
-                                  'Login as a myky member',
-                                  style: TextStyle(
-                                    fontFamily: fontBold,
-                                    color: white,
-                                    fontSize: 16,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const Icon(
-                              Icons.chevron_right_rounded,
-                              color: Colors.white,
-                            ),
-                          ],
-                        ),
-                      ),
-                      20.height,
-                    ],
+                      topLeft: Radius.circular(20.0),
+                    ),
+                    color: white,
                   ),
-                ),
-              );
-            }),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 18, vertical: 8),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        SizedBox(height: 12),
+                        Align(
+                          alignment: Alignment.topRight,
+                          child: Icon(UniconsLine.times_circle, color: Colors.grey).onTap(() {
+                            Get.back();
+                          }),
+                        ),
+                        20.height,
+                        AppButton(
+                          shapeBorder: RoundedRectangleBorder(borderRadius: radius(10)),
+                          elevation: 30,
+                          width: double.infinity,
+                          color: const Color(0xff9afdcd),
+                          padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                          onTap: () {
+                            Get.back();
+                            bottomSheetService.showBottomSheet(context).then((value) {
+                              if (value != null && value) {
+                                AppUtils.redirect('/wishlist', callWhileBack: funAfterBack);
+                              }
+                            });
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: [
+                                  Icon(UniconsLine.user),
+                                  10.width,
+                                  Text(
+                                    'Login as a guest',
+                                    style: TextStyle(fontFamily: fontBold, color: black, fontSize: 16),
+                                  ),
+                                ],
+                              ),
+                              const Icon(Icons.chevron_right_rounded),
+                            ],
+                          ),
+                        ),
+                        20.height,
+                        AppButton(
+                          shapeBorder: RoundedRectangleBorder(borderRadius: radius(10)),
+                          elevation: 30,
+                          width: double.infinity,
+                          color: const Color(0xff6153d3),
+                          padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                          onTap: () {
+                            Get.back();
+                            AppUtils.redirect(
+                              'login-mlm',
+                              pageToRedirectAfterLogin: '/wishlist',
+                              callWhileBack: funAfterBack,
+                            );
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: [
+                                  const Icon(UniconsLine.user_arrows, color: Colors.white),
+                                  10.width,
+                                  Text(
+                                    'Login as a myky member',
+                                    style: TextStyle(fontFamily: fontBold, color: white, fontSize: 16),
+                                  ),
+                                ],
+                              ),
+                              const Icon(Icons.chevron_right_rounded, color: Colors.white),
+                            ],
+                          ),
+                        ),
+                        20.height,
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
           );
         }
       },
-      icon: Icon(UniconsLine.heart, size: 18.sp,),
+      icon: Icon(UniconsLine.heart, size: 18.sp),
     ),
   );
 }
@@ -248,10 +216,7 @@ Widget buildNotification(context, {Function? funAfterBack}) {
   return Container(
     decoration: BoxDecoration(
       color: const Color(0xFF658D28).withOpacity(0.1),
-      border: Border.all(
-        color: const Color(0xFF658D28).withOpacity(0.1),
-        width: 0.6,
-      ),
+      border: Border.all(color: const Color(0xFF658D28).withOpacity(0.1), width: 0.6),
       shape: BoxShape.circle,
       boxShadow: [
         BoxShadow(
@@ -268,125 +233,99 @@ Widget buildNotification(context, {Function? funAfterBack}) {
           AppUtils.redirect('/notification', callWhileBack: funAfterBack);
         } else {
           Get.bottomSheet(
-            StatefulBuilder(builder: (BuildContext context,
-                void Function(void Function()) setDialogState) {
-              return Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
+            StatefulBuilder(
+              builder: (BuildContext context, void Function(void Function()) setDialogState) {
+                return Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
                       topRight: Radius.circular(20.0),
-                      topLeft: Radius.circular(20.0)),
-                  color: white,
-                ),
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 18, vertical: 8),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      SizedBox(
-                        height: 12,
-                      ),
-                      Align(
-                        alignment: Alignment.topRight,
-                        child: Icon(
-                          UniconsLine.times_circle,
-                          color: Colors.grey,
-                        ).onTap(() {
-                          Get.back();
-                        }),
-                      ),
-                      20.height,
-                      AppButton(
-                        shapeBorder:
-                            RoundedRectangleBorder(borderRadius: radius(10)),
-                        elevation: 30,
-                        width: double.infinity,
-                        color: const Color(0xff9afdcd),
-                        padding: EdgeInsets.symmetric(
-                          vertical: 15,
-                          horizontal: 20,
-                        ),
-                        onTap: () {
-                          Get.back();
-                          bottomSheetService
-                              .showBottomSheet(context)
-                              .then((value) {
-                            if (value != null && value) {
-                              AppUtils.redirect('/notification',
-                                  callWhileBack: funAfterBack);
-                            }
-                          });
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              children: [
-                                Icon(UniconsLine.user),
-                                10.width,
-                                Text(
-                                  'Login as a guest',
-                                  style: TextStyle(
-                                    fontFamily: fontBold,
-                                    color: black,
-                                    fontSize: 16,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const Icon(Icons.chevron_right_rounded),
-                          ],
-                        ),
-                      ),
-                      20.height,
-                      AppButton(
-                        shapeBorder:
-                            RoundedRectangleBorder(borderRadius: radius(10)),
-                        elevation: 30,
-                        width: double.infinity,
-                        color: const Color(0xff6153d3),
-                        padding:
-                            EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-                        onTap: () {
-                          Get.back();
-                          AppUtils.redirect(
-                            'login-mlm',
-                            pageToRedirectAfterLogin: '/notification',
-                            callWhileBack: funAfterBack,
-                          );
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              children: [
-                                const Icon(
-                                  UniconsLine.user_arrows,
-                                  color: Colors.white,
-                                ),
-                                10.width,
-                                Text(
-                                  'Login as a myky member',
-                                  style: TextStyle(
-                                    fontFamily: fontBold,
-                                    color: white,
-                                    fontSize: 16,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const Icon(
-                              Icons.chevron_right_rounded,
-                              color: Colors.white,
-                            ),
-                          ],
-                        ),
-                      ),
-                      20.height,
-                    ],
+                      topLeft: Radius.circular(20.0),
+                    ),
+                    color: white,
                   ),
-                ),
-              );
-            }),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 18, vertical: 8),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        SizedBox(height: 12),
+                        Align(
+                          alignment: Alignment.topRight,
+                          child: Icon(UniconsLine.times_circle, color: Colors.grey).onTap(() {
+                            Get.back();
+                          }),
+                        ),
+                        20.height,
+                        AppButton(
+                          shapeBorder: RoundedRectangleBorder(borderRadius: radius(10)),
+                          elevation: 30,
+                          width: double.infinity,
+                          color: const Color(0xff9afdcd),
+                          padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                          onTap: () {
+                            Get.back();
+                            bottomSheetService.showBottomSheet(context).then((value) {
+                              if (value != null && value) {
+                                AppUtils.redirect('/notification', callWhileBack: funAfterBack);
+                              }
+                            });
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: [
+                                  Icon(UniconsLine.user),
+                                  10.width,
+                                  Text(
+                                    'Login as a guest',
+                                    style: TextStyle(fontFamily: fontBold, color: black, fontSize: 16),
+                                  ),
+                                ],
+                              ),
+                              const Icon(Icons.chevron_right_rounded),
+                            ],
+                          ),
+                        ),
+                        20.height,
+                        AppButton(
+                          shapeBorder: RoundedRectangleBorder(borderRadius: radius(10)),
+                          elevation: 30,
+                          width: double.infinity,
+                          color: const Color(0xff6153d3),
+                          padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                          onTap: () {
+                            Get.back();
+                            AppUtils.redirect(
+                              'login-mlm',
+                              pageToRedirectAfterLogin: '/notification',
+                              callWhileBack: funAfterBack,
+                            );
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: [
+                                  const Icon(UniconsLine.user_arrows, color: Colors.white),
+                                  10.width,
+                                  Text(
+                                    'Login as a myky member',
+                                    style: TextStyle(fontFamily: fontBold, color: white, fontSize: 16),
+                                  ),
+                                ],
+                              ),
+                              const Icon(Icons.chevron_right_rounded, color: Colors.white),
+                            ],
+                          ),
+                        ),
+                        20.height,
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
           );
         }
       },
@@ -395,17 +334,13 @@ Widget buildNotification(context, {Function? funAfterBack}) {
   );
 }
 
-Widget buildMLMCart(context,
-    {Function? funAfterBack, bool isHomePage = false}) {
+Widget buildMLMCart(context, {Function? funAfterBack, bool isHomePage = false}) {
   return Container(
     width: 35.sp,
     height: 35.sp,
     decoration: BoxDecoration(
       color: const Color(0xFF658D28).withOpacity(0.1),
-      border: Border.all(
-        color: const Color(0xFF658D28).withOpacity(0.1),
-        width: 0.6,
-      ),
+      border: Border.all(color: const Color(0xFF658D28).withOpacity(0.1), width: 0.6),
       shape: BoxShape.circle,
       boxShadow: [
         BoxShadow(
@@ -416,6 +351,108 @@ Widget buildMLMCart(context,
       ],
     ),
     child: InkWell(
+      onTap: () {
+        if (Auth.check()! || Auth.isGuestLoggedIn!) {
+          AppUtils.redirect('/cart', callWhileBack: funAfterBack);
+        } else {
+          Get.bottomSheet(
+            StatefulBuilder(
+              builder: (BuildContext context, void Function(void Function()) setDialogState) {
+                return Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(20.0),
+                      topLeft: Radius.circular(20.0),
+                    ),
+                    color: white,
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 18, vertical: 8),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        SizedBox(height: 12),
+                        Align(
+                          alignment: Alignment.topRight,
+                          child: Icon(UniconsLine.times_circle, color: Colors.grey).onTap(() {
+                            Get.back();
+                          }),
+                        ),
+                        20.height,
+                        AppButton(
+                          shapeBorder: RoundedRectangleBorder(borderRadius: radius(10)),
+                          elevation: 30,
+                          width: double.infinity,
+                          color: const Color(0xff9afdcd),
+                          padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                          onTap: () {
+                            Get.back();
+                            bottomSheetService.showBottomSheet(context).then((value) {
+                              if (value != null && value) {
+                                AppUtils.redirect('/cart', callWhileBack: funAfterBack);
+                              }
+                            });
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: [
+                                  Icon(UniconsLine.user),
+                                  10.width,
+                                  Text(
+                                    'Login as a guest',
+                                    style: TextStyle(fontFamily: fontBold, color: black, fontSize: 16),
+                                  ),
+                                ],
+                              ),
+                              const Icon(Icons.chevron_right_rounded),
+                            ],
+                          ),
+                        ),
+                        20.height,
+                        AppButton(
+                          shapeBorder: RoundedRectangleBorder(borderRadius: radius(10)),
+                          elevation: 30,
+                          width: double.infinity,
+                          color: const Color(0xff6153d3),
+                          padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                          onTap: () {
+                            Get.back();
+                            AppUtils.redirect(
+                              'login-mlm',
+                              pageToRedirectAfterLogin: '/cart',
+                              callWhileBack: funAfterBack,
+                            );
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: [
+                                  const Icon(UniconsLine.user_arrows, color: Colors.white),
+                                  10.width,
+                                  Text(
+                                    'Login as a myky member',
+                                    style: TextStyle(fontFamily: fontBold, color: white, fontSize: 16),
+                                  ),
+                                ],
+                              ),
+                              const Icon(Icons.chevron_right_rounded, color: Colors.white),
+                            ],
+                          ),
+                        ),
+                        20.height,
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
+          );
+        }
+      },
+      radius: spacing_standard_new,
       child: Stack(
         clipBehavior: Clip.none,
         alignment: Alignment.center,
@@ -425,10 +462,7 @@ Widget buildMLMCart(context,
             height: 40,
             margin: EdgeInsets.only(right: spacing_middle),
             padding: EdgeInsets.all(spacing_standard),
-            child: Icon(
-              UniconsLine.shopping_bag,
-              size: 18.sp,
-            ),
+            child: Icon(UniconsLine.shopping_bag, size: 18.sp),
           ),
           Positioned(
             right: -2,
@@ -455,134 +489,6 @@ Widget buildMLMCart(context,
           ),
         ],
       ),
-      onTap: () {
-        if (Auth.check()! || Auth.isGuestLoggedIn!) {
-          AppUtils.redirect('/cart', callWhileBack: funAfterBack);
-        } else {
-          Get.bottomSheet(
-            StatefulBuilder(builder: (BuildContext context,
-                void Function(void Function()) setDialogState) {
-              return Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(20.0),
-                      topLeft: Radius.circular(20.0)),
-                  color: white,
-                ),
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 18, vertical: 8),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      SizedBox(
-                        height: 12,
-                      ),
-                      Align(
-                        alignment: Alignment.topRight,
-                        child: Icon(
-                          UniconsLine.times_circle,
-                          color: Colors.grey,
-                        ).onTap(() {
-                          Get.back();
-                        }),
-                      ),
-                      20.height,
-                      AppButton(
-                        shapeBorder:
-                            RoundedRectangleBorder(borderRadius: radius(10)),
-                        elevation: 30,
-                        width: double.infinity,
-                        color: const Color(0xff9afdcd),
-                        padding: EdgeInsets.symmetric(
-                          vertical: 15,
-                          horizontal: 20,
-                        ),
-                        onTap: () {
-                          Get.back();
-                          bottomSheetService
-                              .showBottomSheet(context)
-                              .then((value) {
-                            if (value != null && value) {
-                              AppUtils.redirect('/cart',
-                                  callWhileBack: funAfterBack);
-                            }
-                          });
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              children: [
-                                Icon(UniconsLine.user),
-                                10.width,
-                                Text(
-                                  'Login as a guest',
-                                  style: TextStyle(
-                                    fontFamily: fontBold,
-                                    color: black,
-                                    fontSize: 16,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const Icon(Icons.chevron_right_rounded),
-                          ],
-                        ),
-                      ),
-                      20.height,
-                      AppButton(
-                        shapeBorder:
-                            RoundedRectangleBorder(borderRadius: radius(10)),
-                        elevation: 30,
-                        width: double.infinity,
-                        color: const Color(0xff6153d3),
-                        padding:
-                            EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-                        onTap: () {
-                          Get.back();
-                          AppUtils.redirect(
-                            'login-mlm',
-                            pageToRedirectAfterLogin: '/cart',
-                            callWhileBack: funAfterBack,
-                          );
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              children: [
-                                const Icon(
-                                  UniconsLine.user_arrows,
-                                  color: Colors.white,
-                                ),
-                                10.width,
-                                Text(
-                                  'Login as a myky member',
-                                  style: TextStyle(
-                                    fontFamily: fontBold,
-                                    color: white,
-                                    fontSize: 16,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const Icon(
-                              Icons.chevron_right_rounded,
-                              color: Colors.white,
-                            ),
-                          ],
-                        ),
-                      ),
-                      20.height,
-                    ],
-                  ),
-                ),
-              );
-            }),
-          );
-        }
-      },
-      radius: spacing_standard_new,
     ),
   );
 }

@@ -4,19 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:myky_clone/utils/en_extensions.dart';
 import 'package:unicons/unicons.dart';
 
 import '../../services/api.dart';
 import '../../services/auth.dart';
 import '../../services/validator_x.dart';
+import '../../widget/colors.dart';
+import '../../widget/custom_button.dart';
 import '../../widget/guest_login_service.dart';
 import '../../widget/theme.dart';
 
 class LoginMLM extends StatefulWidget {
-  LoginMLM({
-    Key? key,
-  }) : super(key: key);
+  LoginMLM({Key? key}) : super(key: key);
 
   @override
   _LoginMLMState createState() => _LoginMLMState();
@@ -96,90 +95,75 @@ class _LoginMLMState extends State<LoginMLM> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           buildTopWidget(),
-                          20.heightBox,
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 10, horizontal: 10),
+                                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                                 child: formField(
-                                  context,
                                   "Member ID",
-                                  borderSideColor: Colors.grey.shade400,
-                                  prefixIcon: UniconsLine.tag,
+                                  prefixIcon: Icon(UniconsLine.tag),
                                   focusNode: memberIDFocus,
-                                  textCapitalization:
-                                      TextCapitalization.characters,
+                                  textCapitalization: TextCapitalization.characters,
                                   textInputAction: TextInputAction.next,
-                                  nextFocus: passwordFocus,
+                                  // nextFocus: passwordFocus,
                                   controller: _codeController,
-                                  inputFormatters: [
-                                    FilteringTextInputFormatter.deny(
-                                        RegExp(r'[ -.,]'))
-                                  ],
+                                  inputFormatters: [FilteringTextInputFormatter.deny(RegExp(r'[ -.,]'))],
                                   onChanged: (String? value) {
                                     validator.clearErrorsAt('code');
                                   },
                                   validator: validator.add(
                                     key: 'code',
-                                    rules: [
-                                      ValidatorX.mandatory(
-                                          message:
-                                              'The member ID field is required')
-                                    ],
+                                    rules: [ValidatorX.mandatory(message: 'The member ID field is required')],
                                   ),
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.only(
-                                    top: 10, left: 10, right: 10),
+                                padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
                                 child: formField(
-                                  context,
                                   "Password",
-                                  prefixIcon: UniconsLine.lock,
+                                  prefixIcon: Icon(UniconsLine.lock),
                                   isPassword: true,
-                                  isPasswordVisible: passwordVisible,
                                   focusNode: passwordFocus,
                                   // borderSideColor: colorPrimary,
                                   textInputAction: TextInputAction.done,
                                   controller: _passwordController,
-                                  inputFormatters: [
-                                    FilteringTextInputFormatter.deny(
-                                        RegExp(r'^[ -.,]'))
-                                  ],
+                                  inputFormatters: [FilteringTextInputFormatter.deny(RegExp(r'^[ -.,]'))],
                                   onChanged: (String? value) {
                                     validator.clearErrorsAt('password');
                                   },
-                                  validator: validator.add(
-                                    key: 'password',
-                                    rules: [
-                                      ValidatorX.mandatory(),
-                                    ],
+                                  validator: validator.add(key: 'password', rules: [ValidatorX.mandatory()]),
+                                  suffixIcon: GestureDetector(
+                                    onTap: () {
+                                      // controller.showPasswordField();
+                                    },
+                                    child: Container(
+                                      margin: EdgeInsets.only(right: 15.w),
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Icon(
+                                            // controller.showPassword ? UniconsLine.eye_slash : UniconsLine.eye,
+                                            UniconsLine.eye_slash,
+                                            size: 20.sp,
+                                            color: bodyColor.withValues(alpha: 0.5),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                                   ),
-                                  suffixIconSelector: () {
-                                    setState(() {
-                                      passwordVisible = !passwordVisible;
-                                    });
-                                  },
-                                  suffixIcon: passwordVisible
-                                      ? Icon(Icons.visibility_off)
-                                      : Icon(Icons.visibility),
                                 ),
                               ),
                             ],
                           ),
-                          SizedBox(
-                            height: 15,
-                          ),
+                          SizedBox(height: 15),
                           GestureDetector(
                             behavior: HitTestBehavior.opaque,
                             onTap: () {
                               Get.toNamed('/forget-password-mlm');
                             },
                             child: Padding(
-                              padding:
-                                  const EdgeInsets.only(right: 10, bottom: 15),
+                              padding: const EdgeInsets.only(right: 10, bottom: 15),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: <Widget>[
@@ -188,74 +172,74 @@ class _LoginMLMState extends State<LoginMLM> {
                                     fontFamily: fontBold,
                                     fontSize: 15.sp,
                                     textColor: colorAccent,
-                                  )
+                                  ),
                                 ],
                               ),
                             ),
                           ),
                           Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 8.0),
+                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
                             child: SizedBox(
                               width: double.infinity,
                               child: CustomButton(
-                                textContent: 'Sign In',
+                                label: 'Sign In',
                                 onPressed: () {
                                   if (_loginFormKey.currentState!.validate()) {
-                                    FocusScope.of(context)
-                                        .requestFocus(FocusNode());
+                                    FocusScope.of(context).requestFocus(FocusNode());
 
-                                    Api.http.post('member/login', data: {
-                                      'code':_codeController.text,
-                                      // 100001,
-                                      'password': _passwordController.text,
-                                      // 1,
-                                      'deviceId': deviceId,
-                                      'fcmToken': fcmToken,
-                                    }).then((response) async {
-                                      if (response.data['status']) {
-                                        await checkGuestLogin();
-                                        await Auth.login(
-                                          token: response.data['token'],
-                                          user: response.data['member'],
-                                          isVendor: response.data['member']
-                                              ['isVendor'],
-                                        );
+                                    Api.http
+                                        .post(
+                                          'member/login',
+                                          data: {
+                                            'code': _codeController.text,
+                                            // 100001,
+                                            'password': _passwordController.text,
+                                            // 1,
+                                            'deviceId': deviceId,
+                                            'fcmToken': fcmToken,
+                                          },
+                                        )
+                                        .then((response) async {
+                                          if (response.data['status']) {
+                                            await checkGuestLogin();
+                                            await Auth.login(
+                                              token: response.data['token'],
+                                              user: response.data['member'],
+                                              isVendor: response.data['member']['isVendor'],
+                                            );
 
-                                        if (arg != null && arg == 'justBack') {
-                                          Get.back(result: true);
-                                        } else {
-                                          Get.offAllNamed('/main-dashboard');
-                                        }
-                                      } else {
-                                        GetBar(
-                                          backgroundColor: Colors.red,
-                                          duration: Duration(seconds: 3),
-                                          message: response.data['message'],
-                                        ).show();
-                                      }
-                                    }).catchError((error) {
-                                      if (error.response.statusCode == 422) {
-                                        GetBar(
-                                          message: error.response.data['errors']
-                                              ['code'][0],
-                                          duration: Duration(seconds: 3),
-                                          backgroundColor: Colors.red,
-                                        ).show();
-                                        // setState(() {
-                                        //   validator.setErrors(
-                                        //       error.response.data['errors']);
-                                        // });
-                                      } else if (error.response.statusCode ==
-                                          401) {
-                                        GetBar(
-                                          message:
-                                              error.response.data['message'],
-                                          duration: Duration(seconds: 3),
-                                          backgroundColor: Colors.red,
-                                        ).show();
-                                      }
-                                    });
+                                            if (arg != null && arg == 'justBack') {
+                                              Get.back(result: true);
+                                            } else {
+                                              Get.offAllNamed('/main-dashboard');
+                                            }
+                                          } else {
+                                            GetBar(
+                                              backgroundColor: Colors.red,
+                                              duration: Duration(seconds: 3),
+                                              message: response.data['message'],
+                                            ).show();
+                                          }
+                                        })
+                                        .catchError((error) {
+                                          if (error.response.statusCode == 422) {
+                                            GetBar(
+                                              message: error.response.data['errors']['code'][0],
+                                              duration: Duration(seconds: 3),
+                                              backgroundColor: Colors.red,
+                                            ).show();
+                                            // setState(() {
+                                            //   validator.setErrors(
+                                            //       error.response.data['errors']);
+                                            // });
+                                          } else if (error.response.statusCode == 401) {
+                                            GetBar(
+                                              message: error.response.data['message'],
+                                              duration: Duration(seconds: 3),
+                                              backgroundColor: Colors.red,
+                                            ).show();
+                                          }
+                                        });
                                   }
                                   // Get.offAllNamed("/home");
                                 },
@@ -300,14 +284,14 @@ class _LoginMLMState extends State<LoginMLM> {
                                 style: TextStyle(
                                   color: Colors.black,
                                   height: 1.5,
-                                  fontSize: 12,
+                                  fontSize: 12.sp,
                                   fontFamily: fontRegular,
                                 ),
                                 children: [
                                   TextSpan(
                                     text: 'Sign Up',
                                     style: TextStyle(
-                                      fontSize: 12,
+                                      fontSize: 14.sp,
                                       color: colorAccent,
                                       fontFamily: fontBold,
                                     ),
@@ -327,14 +311,14 @@ class _LoginMLMState extends State<LoginMLM> {
                                 style: TextStyle(
                                   color: Colors.black,
                                   height: 1.5,
-                                  fontSize: 12,
+                                  fontSize: 12.sp,
                                   fontFamily: fontRegular,
                                 ),
                                 children: [
                                   TextSpan(
                                     text: 'Sign Up',
                                     style: TextStyle(
-                                      fontSize: 12,
+                                      fontSize: 14.sp,
                                       color: colorAccent,
                                       fontFamily: fontBold,
                                     ),
@@ -354,14 +338,14 @@ class _LoginMLMState extends State<LoginMLM> {
                                 style: TextStyle(
                                   color: Colors.black,
                                   height: 1.5,
-                                  fontSize: 12,
+                                  fontSize: 12.sp,
                                   fontFamily: fontRegular,
                                 ),
                                 children: [
                                   TextSpan(
                                     text: 'Guest?',
                                     style: TextStyle(
-                                      fontSize: 12,
+                                      fontSize: 14.sp,
                                       color: colorAccent,
                                       fontFamily: fontBold,
                                     ),
@@ -390,26 +374,9 @@ class _LoginMLMState extends State<LoginMLM> {
       children: [
         Container(
           alignment: Alignment.centerLeft,
-          child: Image.asset(logo, height: 80.h, width: 80.w),
-        ),
-        20.heightBox,
-        Text(
-          'Hi there!\nWelcome back',
-          style: TextStyle(fontFamily: fontBold, fontSize: 30.sp),
+          child: Image.asset(logo, height: 150.h, width: 150.w),
         ),
       ],
     );
   }
-
-  // Container buildTopWidget() {
-  //   return Container(
-  //     alignment: Alignment.center,
-  //     child: Image.asset(
-  //       logo,
-  //       width: 200,
-  //       height: 200,
-  //       // width: width / 1.3,
-  //     ),
-  //   );
-  // }
 }

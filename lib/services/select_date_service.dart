@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:ntp/ntp.dart';
 
-import '../widget/theme.dart';
+import '../widget/colors.dart';
 
 class SelectDateFromCalender {
   String? date;

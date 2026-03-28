@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:myky_clone/widget/theme.dart';
 
+import 'colors.dart';
 import 'inner_shadow.dart';
 
 void showUploadingDialog(BuildContext context, indexController) {
@@ -23,21 +24,14 @@ void showUploadingDialog(BuildContext context, indexController) {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  text(
-                    'Uploading... ${snapshot.data}%',
-                    textColor: colorPrimary,
-                  ),
-                  SizedBox(
-                    height: 20.h,
-                  ),
+                  text('Uploading... ${snapshot.data}%', textColor: colorPrimary),
+                  SizedBox(height: 20.h),
                   Container(
                     padding: const EdgeInsets.all(1),
                     width: 150.w,
                     height: 15.h,
                     child: ClipRRect(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(20.r),
-                      ),
+                      borderRadius: BorderRadius.all(Radius.circular(20.r)),
                       child: LinearProgressIndicator(
                         value: (snapshot.hasData && snapshot.data! < 100)
                             ? convertToDecimal(snapshot.data)

@@ -23,9 +23,7 @@ class _SupportListState extends State<SupportList> {
             onTap: () {
               supportChatKey.currentState!.refresh();
             },
-            child: Icon(
-              Icons.refresh,
-            ),
+            child: Icon(Icons.refresh),
           ),
         ),
       ],
@@ -49,8 +47,7 @@ class _SupportListState extends State<SupportList> {
   Widget _supportListBuilder(item, int index) {
     return GestureDetector(
       onTap: () {
-        Get.toNamed('support-chat', arguments: item)!
-            .then((value) => supportChatKey.currentState!.refresh());
+        Get.toNamed('support-chat', arguments: item)!.then((value) => supportChatKey.currentState!.refresh());
       },
       child: Card(
         child: Container(
@@ -65,15 +62,13 @@ class _SupportListState extends State<SupportList> {
                     padding: EdgeInsets.symmetric(horizontal: 10, vertical: 2),
                     decoration: BoxDecoration(
                       color: item['status']['id'] == 1 ? Colors.green : Colors.red,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(5),
-                      ),
+                      borderRadius: BorderRadius.all(Radius.circular(5)),
                     ),
                     child: text(
                       item['status']['name'],
                       textColor: white,
                       textAllCaps: true,
-                      fontFamily: fontSemibold,
+                      fontFamily: fontSemiBold,
                       fontSize: textSizeSMedium,
                     ),
                   ),
@@ -87,11 +82,7 @@ class _SupportListState extends State<SupportList> {
                     flex: 75,
                     child: Text(
                       item['subject'],
-                      style: TextStyle(
-                        color: Colors.black54,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 20,
-                      ),
+                      style: TextStyle(color: Colors.black54, fontWeight: FontWeight.w400, fontSize: 20),
                     ),
                   ),
                   if (item['status']['unreadCount'] > 0)
@@ -99,15 +90,13 @@ class _SupportListState extends State<SupportList> {
                       padding: EdgeInsets.symmetric(horizontal: 10, vertical: 2),
                       decoration: BoxDecoration(
                         color: Colors.red,
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(5),
-                        ),
+                        borderRadius: BorderRadius.all(Radius.circular(5)),
                       ),
                       child: text(
                         item['status']['unreadCount'].toString(),
                         textColor: white,
                         textAllCaps: true,
-                        fontFamily: fontSemibold,
+                        fontFamily: fontSemiBold,
                         fontSize: textSizeSMedium,
                       ),
                     ),
@@ -140,7 +129,7 @@ class _SupportListState extends State<SupportList> {
               //           item['status']['unreadCount'].toString(),
               //           textColor: white,
               //           textAllCaps: true,
-              //           fontFamily: fontSemibold,
+              //           fontFamily: fontSemiBold,
               //           fontSize: textSizeSMedium,
               //         ),
               //       ),

@@ -12,6 +12,7 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:unicons/unicons.dart';
 
 import '../../services/api.dart';
+import '../../widget/colors.dart';
 import '../../widget/custom_container.dart';
 import '../../widget/network_image.dart';
 import '../../widget/theme.dart';
@@ -48,40 +49,36 @@ class _NearByOfflineStoreListState extends State<NearByOfflineStoreList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Near By Offline Store"),
-      ),
+      appBar: AppBar(title: const Text("Near By Offline Store")),
       backgroundColor: Colors.white,
       body: CustomContainer(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if (vendorCategories.isNotEmpty) ...[
-              buildDropdown(),
-              15.heightBox,
-            ],
+            if (vendorCategories.isNotEmpty) ...[buildDropdown(), 15.heightBox],
             buildPincodeField(context),
             15.heightBox,
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                CustomButton(
+                CustomButtonOld(
                   textContent: 'Apply',
                   onPressed: () {
                     nearByOfflineStoreGlobalKey.currentState?.refresh();
                   },
                 ),
-                CustomButton(
-                    textContent: 'Reset',
-                    customColor: red,
-                    onPressed: () {
-                      setState(() {
-                        selectedCategoryID = null;
-                        pinCodeController.clear();
-                      });
-                      nearByOfflineStoreGlobalKey.currentState?.refresh();
-                    }),
+                CustomButtonOld(
+                  textContent: 'Reset',
+                  customColor: red,
+                  onPressed: () {
+                    setState(() {
+                      selectedCategoryID = null;
+                      pinCodeController.clear();
+                    });
+                    nearByOfflineStoreGlobalKey.currentState?.refresh();
+                  },
+                ),
               ],
             ),
             15.heightBox,
@@ -93,10 +90,7 @@ class _NearByOfflineStoreListState extends State<NearByOfflineStoreList> {
                 apiFuture: (int page) async {
                   return Api.http.get(
                     'member/near-by-store?page=$page',
-                    queryParameters: {
-                      "categoryId": selectedCategoryID,
-                      "pincode": pinCodeController.text,
-                    },
+                    queryParameters: {"categoryId": selectedCategoryID, "pincode": pinCodeController.text},
                   );
                 },
                 listItemBuilder: _nearByOfflineStoreViewBuilder,
@@ -114,34 +108,25 @@ class _NearByOfflineStoreListState extends State<NearByOfflineStoreList> {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(14.r),
-        border: Border.all(
-          color: gray,
-          width: 1.w,
-        ),
+        border: Border.all(color: gray, width: 1.w),
       ),
       child: DropdownButtonHideUnderline(
         child: DropdownButton2(
           isExpanded: true,
           hint: Text(
             "Select Category",
-            style: TextStyle(
-              fontSize: 12.sp,
-              color: Colors.black,
-              fontFamily: fontMedium,
-            ),
+            style: TextStyle(fontSize: 12.sp, color: Colors.black, fontFamily: fontMedium),
           ),
           items: vendorCategories
-              .map((item) => DropdownMenuItem<String>(
-                    value: item['id'].toString(),
-                    child: Text(
-                      item['name'],
-                      style: TextStyle(
-                        fontSize: 13.sp,
-                        color: Colors.black,
-                        fontFamily: fontBold,
-                      ),
-                    ),
-                  ))
+              .map(
+                (item) => DropdownMenuItem<String>(
+                  value: item['id'].toString(),
+                  child: Text(
+                    item['name'],
+                    style: TextStyle(fontSize: 13.sp, color: Colors.black, fontFamily: fontBold),
+                  ),
+                ),
+              )
               .toList(),
           value: selectedCategoryID,
           onChanged: (value) {
@@ -155,7 +140,7 @@ class _NearByOfflineStoreListState extends State<NearByOfflineStoreList> {
   }
 
   Widget buildPincodeField(BuildContext context) {
-    return formField(
+    return formFieldOld(
       context,
       "Pincode",
       controller: pinCodeController,
@@ -165,8 +150,7 @@ class _NearByOfflineStoreListState extends State<NearByOfflineStoreList> {
       inputFormatters: [FilteringTextInputFormatter.deny(RegExp(r'[ -.,]'))],
       keyboardType: TextInputType.number,
       validator: (value) {
-        if (pinCodeController.text.length < 6 &&
-            pinCodeController.text.isNotEmpty) {
+        if (pinCodeController.text.length < 6 && pinCodeController.text.isNotEmpty) {
           return 'The Pincode must be 6 digit';
         } else {
           return null;
@@ -196,12 +180,7 @@ class _NearByOfflineStoreListState extends State<NearByOfflineStoreList> {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(12.r),
-                child: PNetworkImage(
-                  item['image'],
-                  width: 100.sp,
-                  height: 100.sp,
-                  fit: BoxFit.cover,
-                ),
+                child: PNetworkImage(item['image'], width: 100.sp, height: 100.sp, fit: BoxFit.cover),
               ).onTap(() {
                 if (item['vendorShopImage'].length > 0) {
                   showAllImages(context, item['vendorShopImage']);
@@ -223,11 +202,7 @@ class _NearByOfflineStoreListState extends State<NearByOfflineStoreList> {
                       ),
                     ),
                     4.heightBox,
-                    text(
-                      item['date'],
-                      fontSize: 14.sp,
-                      textColor: Colors.grey,
-                    ),
+                    text(item['date'], fontSize: 14.sp, textColor: Colors.grey),
                   ],
                 ),
               ),
@@ -244,74 +219,44 @@ class _NearByOfflineStoreListState extends State<NearByOfflineStoreList> {
                   children: [
                     StarWithPercentage(
                       percentage: discountPercentage,
-                      size: 100.sp,  // Increased size for better visibility
+                      size: 100.sp, // Increased size for better visibility
                     ),
                   ],
                 ),
                 20.heightBox,
-                rowHeading(
-                  "Category Name",
-                  item['categoryName'],
-                ),
+                rowHeading("Category Name", item['categoryName']),
                 8.heightBox,
-                rowHeading(
-                  "Vendor Name",
-                  item['vendorName'],
-                ),
+                rowHeading("Vendor Name", item['vendorName']),
                 8.heightBox,
-                rowHeading(
-                  "Vendor Mobile",
-                  item['vendorMobile'],
-                ),
+                rowHeading("Vendor Mobile", item['vendorMobile']),
                 8.heightBox,
-                rowHeading(
-                  "Shop Name",
-                  item['shopName'],
-                ),
+                rowHeading("Shop Name", item['shopName']),
                 8.heightBox,
                 // Star-shaped discount display
-                rowHeading(
-                  "Address",
-                  '',
-                ),
+                rowHeading("Address", ''),
                 Padding(
                   padding: EdgeInsets.only(left: 10.w, top: 4.h),
-                  child: text(
-                    item['address'],
-                    fontSize: 15.sp,
-                    textColor: Colors.black54,
-                    isLongText: true,
-                  ),
+                  child: text(item['address'], fontSize: 15.sp, textColor: Colors.black54, isLongText: true),
                 ),
                 8.heightBox,
-                rowHeading(
-                  "State",
-                  item['state'],
-                ),
+                rowHeading("State", item['state']),
                 8.heightBox,
-                rowHeading(
-                  "City",
-                  item['city'],
-                ),
+                rowHeading("City", item['city']),
                 8.heightBox,
-                rowHeading(
-                  "PIN Code",
-                  item['pincode'].toString(),
-                ),
+                rowHeading("PIN Code", item['pincode'].toString()),
                 8.heightBox,
-                rowHeading(
-                  "GST No",
-                  item['gstNo'],
-                ),
+                rowHeading("GST No", item['gstNo']),
                 12.heightBox,
                 Center(
-                  child: CustomButton(
+                  child: CustomButtonOld(
                     textContent: 'Direction',
                     onPressed: () async {
                       final availableMaps = await MapLauncher.installedMaps;
                       await availableMaps.first.showMarker(
-                        coords: Coords(num.parse(item['latitude']).toDouble(),
-                            num.parse(item['longitude']).toDouble()),
+                        coords: Coords(
+                          num.parse(item['latitude']).toDouble(),
+                          num.parse(item['longitude']).toDouble(),
+                        ),
                         title: "${item['shopName']}",
                       );
                     },
@@ -331,9 +276,7 @@ class _NearByOfflineStoreListState extends State<NearByOfflineStoreList> {
       barrierDismissible: true,
       builder: (context) {
         return Dialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16.r),
-          ),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.r)),
           insetPadding: const EdgeInsets.all(24),
           clipBehavior: Clip.antiAliasWithSaveLayer,
           backgroundColor: Colors.white,
@@ -363,10 +306,7 @@ class _NearByOfflineStoreListState extends State<NearByOfflineStoreList> {
                           ),
                         ),
                       ).onTap(() {
-                        Get.toNamed(
-                          'image-preview',
-                          arguments: images[index]['fileName'],
-                        );
+                        Get.toNamed('image-preview', arguments: images[index]['fileName']);
                       });
                     },
                   ),
@@ -402,10 +342,7 @@ class StarWithPercentage extends StatelessWidget {
     return LinearGradient(
       begin: Alignment.topCenter,
       end: Alignment.bottomCenter,
-      colors: [
-        baseColor,
-        baseColor.withOpacity(0.8),
-      ],
+      colors: [baseColor, baseColor.withOpacity(0.8)],
     );
   }
 
@@ -427,25 +364,22 @@ class StarWithPercentage extends StatelessWidget {
           width: size,
           height: size,
           decoration: BoxDecoration(
-              // boxShadow: [
-              //   BoxShadow(
-              //     color: _getStarColor().withOpacity(0.3),
-              //     blurRadius: 15,
-              //     offset: const Offset(0, 5),
-              //     spreadRadius: 2,
-              //   ),
-              // ],
-              ),
+            // boxShadow: [
+            //   BoxShadow(
+            //     color: _getStarColor().withOpacity(0.3),
+            //     blurRadius: 15,
+            //     offset: const Offset(0, 5),
+            //     spreadRadius: 2,
+            //   ),
+            // ],
+          ),
           child: Stack(
             alignment: Alignment.center,
             children: [
               // Star background with gradient - custom painted shape
               CustomPaint(
                 size: Size(size, size),
-                painter: StarBadgePainter(
-                  color: _getStarColor(),
-                  gradient: _getGradient(),
-                ),
+                painter: StarBadgePainter(color: _getStarColor(), gradient: _getGradient()),
               ),
               // Content in center of star
               Container(
@@ -463,9 +397,9 @@ class StarWithPercentage extends StatelessWidget {
                             _formatPercentage(percentage),
                             style: TextStyle(
                               color: Colors.white,
-                              fontSize: size * 0.30,  // Even bigger size for percentage text
-                              fontWeight: FontWeight.w900,  // Extra bold for fat/wide appearance
-                              letterSpacing: 2.0,  // Increased letter spacing for wider look
+                              fontSize: size * 0.30, // Even bigger size for percentage text
+                              fontWeight: FontWeight.w900, // Extra bold for fat/wide appearance
+                              letterSpacing: 2.0, // Increased letter spacing for wider look
                               height: 0.85,
                               shadows: [
                                 Shadow(
@@ -486,9 +420,9 @@ class StarWithPercentage extends StatelessWidget {
                       "OFF",
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: size * 0.14,  // Slightly bigger for balance
-                        fontWeight: FontWeight.w900,  // Extra bold for consistency
-                        letterSpacing: 2.0,  // Increased letter spacing for wider look
+                        fontSize: size * 0.14, // Slightly bigger for balance
+                        fontWeight: FontWeight.w900, // Extra bold for consistency
+                        letterSpacing: 2.0, // Increased letter spacing for wider look
                         height: 0.8,
                         shadows: [
                           Shadow(
@@ -532,8 +466,7 @@ class StarBadgePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..shader =
-          gradient.createShader(Rect.fromLTWH(0, 0, size.width, size.height))
+      ..shader = gradient.createShader(Rect.fromLTWH(0, 0, size.width, size.height))
       ..style = PaintingStyle.fill;
 
     final borderPaint = Paint()

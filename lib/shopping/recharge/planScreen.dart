@@ -3,8 +3,10 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Response;
-import '../../widget/theme.dart';
 import 'package:nb_utils/src/extensions/widget_extensions.dart';
+
+import '../../widget/colors.dart';
+import '../../widget/theme.dart';
 
 class PlanScreen extends StatefulWidget {
   final Map data;
@@ -44,8 +46,8 @@ class _PlanScreenState extends State<PlanScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      text('Plan Details')
-//                            Text('Col'),
+                      text('Plan Details'),
+                      //                            Text('Col'),
                     ],
                   ),
                 ),
@@ -54,16 +56,14 @@ class _PlanScreenState extends State<PlanScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: colorAccent,
-                          ),
-                          onPressed: () {},
-                          child: Text('₹ ${res['recharge_amount']}'),
-                        )
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(backgroundColor: colorAccent),
+                        onPressed: () {},
+                        child: Text('₹ ${res['recharge_amount']}'),
+                      ),
                     ],
                   ),
-                )
+                ),
               ],
             ),
             Row(
@@ -73,13 +73,8 @@ class _PlanScreenState extends State<PlanScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text(
-                        'Talktime',
-                        style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15.0),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
+                      Text('Talktime', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15.0)),
+                      SizedBox(height: 10),
                       Text(
                         res['recharge_talktime'],
                         softWrap: true,
@@ -93,16 +88,8 @@ class _PlanScreenState extends State<PlanScreen> {
                   flex: 2,
                   child: Column(
                     children: <Widget>[
-                      Text(
-                        'Validity',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 15.0,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
+                      Text('Validity', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15.0)),
+                      SizedBox(height: 10),
                       Text(res['recharge_validity'] + '\n'),
                     ],
                   ),
@@ -114,19 +101,12 @@ class _PlanScreenState extends State<PlanScreen> {
                 children: [
                   TextSpan(
                     text: 'Description : ',
-                    style: TextStyle(
-                      fontSize: textSizeMedium,
-                      color: colorPrimary,
-                      fontFamily: fontSemibold,
-                    ),
+                    style: TextStyle(fontSize: textSizeMedium, color: colorPrimary, fontFamily: fontSemiBold),
                   ),
                   TextSpan(
                     text: res['recharge_desc'],
-                    style: TextStyle(
-                      fontSize: textSizeSMedium,
-                      color: textColorSecondary,
-                    ),
-                  )
+                    style: TextStyle(fontSize: textSizeSMedium, color: textColorSecondary),
+                  ),
                 ],
               ),
             ),
@@ -149,15 +129,9 @@ class _PlanScreenState extends State<PlanScreen> {
             primaryColor: primaryColor,
             appBarTheme: AppBarTheme(
               color: Colors.white,
-              titleTextStyle: TextStyle(
-                color: secondaryColor,
-                fontSize: 20.0,
-                fontWeight: FontWeight.bold,
-              ),
+              titleTextStyle: TextStyle(color: secondaryColor, fontSize: 20.0, fontWeight: FontWeight.bold),
               iconTheme: IconThemeData(color: secondaryColor),
-              actionsIconTheme: IconThemeData(
-                color: secondaryColor,
-              ),
+              actionsIconTheme: IconThemeData(color: secondaryColor),
             ),
           ),
           child: Scaffold(
@@ -172,10 +146,7 @@ class _PlanScreenState extends State<PlanScreen> {
                 unselectedLabelColor: secondaryColor,
                 tabs: <Widget>[
                   for (var res in widget.data['categories'])
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(res['name']),
-                    ),
+                    Padding(padding: const EdgeInsets.all(8.0), child: Text(res['name'])),
                 ],
               ),
             ),
@@ -187,7 +158,7 @@ class _PlanScreenState extends State<PlanScreen> {
                       return planItem(res['items'][index]);
                     },
                     itemCount: res['items'].length,
-                  )
+                  ),
               ],
             ),
           ),
@@ -198,7 +169,9 @@ class _PlanScreenState extends State<PlanScreen> {
 
   void populateList() {
     for (var category in widget.data['categories']) {
-      List temp = widget.data['newplans'].where((element) => element['recharge_category'] == category['recharge_category']).toList();
+      List temp = widget.data['newplans']
+          .where((element) => element['recharge_category'] == category['recharge_category'])
+          .toList();
       category['items'] = temp;
     }
     log(widget.data.toString());

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:nb_utils/nb_utils.dart';
-
 
 class CustomText extends StatelessWidget {
   final String text;
@@ -45,15 +43,17 @@ class CustomText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // final ThemeController themeController = Get.find();
     return Text(
       text.toString().isNotEmpty
           ? textAllCaps
-              ? text.toUpperCase()
-              : text
+                ? text.toUpperCase()
+                : text
           : '',
       style: TextStyle(
         fontFamily: fontFamily,
         fontSize: fontSize,
+        // color: textColor ?? (themeController.isDarkMode.value ? white : black),
         color: textColor ?? black,
         height: height,
         decoration: decoration,
@@ -65,12 +65,11 @@ class CustomText extends StatelessWidget {
       textScaler: const TextScaler.linear(0.9),
       overflow: overflow,
       softWrap: softWrap,
-      textAlign:
-          isCentered
-              ? TextAlign.center
-              : (textAlign == null)
-              ? TextAlign.start
-              : textAlign,
+      textAlign: isCentered
+          ? TextAlign.center
+          : (textAlign == null)
+          ? TextAlign.start
+          : textAlign,
       maxLines: isLongText ? null : maxLine,
     );
   }

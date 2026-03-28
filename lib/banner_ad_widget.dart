@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:myky_clone/utils/app_config.dart';
-import 'package:myky_clone/widget/theme.dart';
+import 'package:myky_clone/widget/colors.dart';
 
 class BannerAdWidget extends StatefulWidget {
   final String adUnitId;
@@ -82,8 +82,7 @@ class _BannerAdWidgetState extends State<BannerAdWidget> {
           }
         },
         onAdFailedToLoad: (Ad ad, LoadAdError error) {
-          debugPrint(
-              'Banner ad failed to load (attempt ${_retryCount + 1}/$maxRetries): $error');
+          debugPrint('Banner ad failed to load (attempt ${_retryCount + 1}/$maxRetries): $error');
           ad.dispose();
           if (mounted) {
             setState(() {
@@ -95,10 +94,8 @@ class _BannerAdWidgetState extends State<BannerAdWidget> {
 
             // Retry with exponential backoff if we haven't exceeded max retries
             if (_retryCount < maxRetries) {
-              final retryDelay =
-                  Duration(seconds: (5 * (_retryCount + 1)).clamp(5, 30));
-              debugPrint(
-                  'Retrying banner ad load after ${retryDelay.inSeconds} seconds...');
+              final retryDelay = Duration(seconds: (5 * (_retryCount + 1)).clamp(5, 30));
+              debugPrint('Retrying banner ad load after ${retryDelay.inSeconds} seconds...');
 
               Future.delayed(retryDelay, () {
                 if (mounted && !_isLoaded) {
@@ -136,8 +133,7 @@ class _BannerAdWidgetState extends State<BannerAdWidget> {
   Widget build(BuildContext context) {
     // Show debug error information in debug mode
     if (_hasError && !_isLoading) {
-      if (widget.showDebugInfo ||
-          (kDebugMode && AppConfig.appDebugMode == true)) {
+      if (widget.showDebugInfo || (kDebugMode && AppConfig.appDebugMode == true)) {
         return Container(
           margin: widget.margin ?? EdgeInsets.symmetric(vertical: 8.h),
           padding: EdgeInsets.all(12.w),
@@ -149,38 +145,24 @@ class _BannerAdWidgetState extends State<BannerAdWidget> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(
-                Icons.error_outline,
-                color: Colors.red,
-                size: 20.w,
-              ),
+              Icon(Icons.error_outline, color: Colors.red, size: 20.w),
               SizedBox(height: 4.h),
               Text(
                 'Ad Failed to Load',
-                style: TextStyle(
-                  fontSize: 12.sp,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.red,
-                ),
+                style: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.bold, color: Colors.red),
               ),
               if (_errorMessage != null) ...[
                 SizedBox(height: 4.h),
                 Text(
                   _errorMessage!,
-                  style: TextStyle(
-                    fontSize: 10.sp,
-                    color: Colors.red.shade700,
-                  ),
+                  style: TextStyle(fontSize: 10.sp, color: Colors.red.shade700),
                   textAlign: TextAlign.center,
                 ),
               ],
               SizedBox(height: 4.h),
               Text(
                 'Retries: $_retryCount/$maxRetries',
-                style: TextStyle(
-                  fontSize: 9.sp,
-                  color: Colors.grey.shade600,
-                ),
+                style: TextStyle(fontSize: 9.sp, color: Colors.grey.shade600),
               ),
             ],
           ),
@@ -216,10 +198,7 @@ class _BannerAdWidgetState extends State<BannerAdWidget> {
                 SizedBox(width: 8.w),
                 Text(
                   'Loading ad...',
-                  style: TextStyle(
-                    fontSize: 12.sp,
-                    color: Colors.grey.shade600,
-                  ),
+                  style: TextStyle(fontSize: 12.sp, color: Colors.grey.shade600),
                 ),
               ],
             ),

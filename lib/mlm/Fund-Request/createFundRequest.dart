@@ -10,6 +10,7 @@ import '../../services/Vapor.dart';
 import '../../services/api.dart';
 import '../../services/getImage_service.dart';
 import '../../services/validator_x.dart';
+import '../../widget/colors.dart';
 import '../../widget/image_picker.dart';
 import '../../widget/theme.dart';
 
@@ -51,11 +52,14 @@ class _CreateFundRequestState extends State<CreateFundRequest> {
   }
 
   void getFundData() async {
-    Api.http.get('member/fund-request/create').then((response) {
-      setState(() {
-        fundData = response.data;
-      });
-    }).catchError((error) {});
+    Api.http
+        .get('member/fund-request/create')
+        .then((response) {
+          setState(() {
+            fundData = response.data;
+          });
+        })
+        .catchError((error) {});
   }
 
   @override
@@ -70,16 +74,9 @@ class _CreateFundRequestState extends State<CreateFundRequest> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                padding: const EdgeInsets.only(
-                  left: 15,
-                  right: 10,
-                ),
+                padding: const EdgeInsets.only(left: 15, right: 10),
                 margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                decoration: boxDecoration(
-                  showShadow: true,
-                  bgColor: white,
-                  radius: 10.0,
-                ),
+                decoration: boxDecoration(showShadow: true, bgColor: white, radius: 10.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -97,9 +94,7 @@ class _CreateFundRequestState extends State<CreateFundRequest> {
                       inputFormatters: [FilteringTextInputFormatter.deny(RegExp(r'^[- .,0]'))],
                       validator: validator.add(
                         key: 'amount',
-                        rules: [
-                          ValidatorX.mandatory(message: "Amount field is required"),
-                        ],
+                        rules: [ValidatorX.mandatory(message: "Amount field is required")],
                       ),
                       onChanged: (String value) {
                         validator.clearErrorsAt("amount");
@@ -110,16 +105,9 @@ class _CreateFundRequestState extends State<CreateFundRequest> {
                 ),
               ),
               Container(
-                padding: const EdgeInsets.only(
-                  left: 15,
-                  right: 10,
-                ),
+                padding: const EdgeInsets.only(left: 15, right: 10),
                 margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                decoration: boxDecoration(
-                  showShadow: true,
-                  bgColor: white,
-                  radius: 10.0,
-                ),
+                decoration: boxDecoration(showShadow: true, bgColor: white, radius: 10.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -136,9 +124,7 @@ class _CreateFundRequestState extends State<CreateFundRequest> {
                         isExpanded: true,
                         validator: validator.add(
                           key: 'payment_mode',
-                          rules: [
-                            ValidatorX.mandatory(message: "Select Your Payment Method"),
-                          ],
+                          rules: [ValidatorX.mandatory(message: "Select Your Payment Method")],
                         ),
                         hint: text(
                           'Select Payment Method',
@@ -148,8 +134,7 @@ class _CreateFundRequestState extends State<CreateFundRequest> {
                         ),
                         value: myPaymentSelection,
                         decoration: InputDecoration(
-                          border:
-                              UnderlineInputBorder(borderSide: BorderSide(color: Colors.black12)),
+                          border: UnderlineInputBorder(borderSide: BorderSide(color: Colors.black12)),
                         ),
                         onChanged: (String? newValue) {
                           validator.clearErrorsAt('payment_mode');
@@ -157,8 +142,7 @@ class _CreateFundRequestState extends State<CreateFundRequest> {
                             myPaymentSelection = newValue!;
                           });
                         },
-                        items:
-                            fundData!['paymentMode'].map<DropdownMenuItem<String>>((paymentMode) {
+                        items: fundData!['paymentMode'].map<DropdownMenuItem<String>>((paymentMode) {
                           return DropdownMenuItem<String>(
                             value: paymentMode['id'].toString(),
                             child: Text(paymentMode['name']),
@@ -172,9 +156,7 @@ class _CreateFundRequestState extends State<CreateFundRequest> {
                       keyboardType: TextInputType.text,
                       validator: validator.add(
                         key: 'bank_name',
-                        rules: [
-                          ValidatorX.mandatory(message: "Reference number field is required"),
-                        ],
+                        rules: [ValidatorX.mandatory(message: "Reference number field is required")],
                       ),
                     ),
                     SizedBox(height: 15),
@@ -184,9 +166,7 @@ class _CreateFundRequestState extends State<CreateFundRequest> {
                         isExpanded: true,
                         validator: validator.add(
                           key: 'bank_name',
-                          rules: [
-                            ValidatorX.mandatory(message: "Select Your Bank"),
-                          ],
+                          rules: [ValidatorX.mandatory(message: "Select Your Bank")],
                         ),
                         hint: text(
                           'Select Bank',
@@ -196,8 +176,7 @@ class _CreateFundRequestState extends State<CreateFundRequest> {
                         ),
                         value: myBankSelection,
                         decoration: InputDecoration(
-                          border:
-                              UnderlineInputBorder(borderSide: BorderSide(color: Colors.black12)),
+                          border: UnderlineInputBorder(borderSide: BorderSide(color: Colors.black12)),
                         ),
                         onChanged: (String? newValue) {
                           validator.clearErrorsAt('bank_name');
@@ -208,9 +187,7 @@ class _CreateFundRequestState extends State<CreateFundRequest> {
                         items: fundData!['bankDetails'].map<DropdownMenuItem<String>>((bank) {
                           return DropdownMenuItem<String>(
                             value: bank['id'].toString(),
-                            child: Text(
-                              bank['name'].toString(),
-                            ),
+                            child: Text(bank['name'].toString()),
                           );
                         }).toList(),
                       ),
@@ -219,16 +196,9 @@ class _CreateFundRequestState extends State<CreateFundRequest> {
                 ),
               ),
               Container(
-                padding: const EdgeInsets.only(
-                  left: 15,
-                  right: 10,
-                ),
+                padding: const EdgeInsets.only(left: 15, right: 10),
                 margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                decoration: boxDecoration(
-                  showShadow: true,
-                  bgColor: white,
-                  radius: 10.0,
-                ),
+                decoration: boxDecoration(showShadow: true, bgColor: white, radius: 10.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -244,9 +214,7 @@ class _CreateFundRequestState extends State<CreateFundRequest> {
                       controller: _depositDateController,
                       validator: validator.add(
                         key: 'date',
-                        rules: [
-                          ValidatorX.mandatory(message: "Deposit date field is required"),
-                        ],
+                        rules: [ValidatorX.mandatory(message: "Deposit date field is required")],
                       ),
                       onChanged: (value) {
                         validator.clearErrorsAt('date');
@@ -271,9 +239,7 @@ class _CreateFundRequestState extends State<CreateFundRequest> {
                       controller: _depositTimeController,
                       validator: validator.add(
                         key: 'time',
-                        rules: [
-                          ValidatorX.mandatory(message: "Deposit time field is required"),
-                        ],
+                        rules: [ValidatorX.mandatory(message: "Deposit time field is required")],
                       ),
                       onChanged: (value) {
                         validator.clearErrorsAt('time');
@@ -283,9 +249,7 @@ class _CreateFundRequestState extends State<CreateFundRequest> {
 
                         time = await showTimePicker(
                           context: context,
-                          initialTime: TimeOfDay.fromDateTime(
-                            DateTime.now(),
-                          ),
+                          initialTime: TimeOfDay.fromDateTime(DateTime.now()),
                         );
                         if (time != null) {
                           _depositTimeController.text = time!.format(context);
@@ -298,85 +262,84 @@ class _CreateFundRequestState extends State<CreateFundRequest> {
                 ),
               ),
               Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: CustomButton(
-                    textContent: 'Submit',
-                    onPressed: () async {
-                      if (_fundFormKey.currentState!.validate()) {
-                        FocusScope.of(context).requestFocus(FocusNode());
-                        dynamic receiptImage;
-                        if (_image != null) {
-                          receiptImage = await Vapor.upload(
-                            _image!,
-                            // progressCallback: (int? completed, int? total) {
-                            //   setState(() {
-                            //     uploading = true;
-                            //     progressString = ((completed / total) * 100)
-                            //             .toStringAsFixed(0) +
-                            //         "%";
-                            //   });
-                            // },
-                          );
-                        }
-                        setState(() {
-                          uploading = false;
-                        });
-
-                        Map bankSendData = {
-                          'amount': _amountController.text,
-                          'receipt': receiptImage,
-                          'paymentMode': myPaymentSelection,
-                          'date': _depositDateController.text,
-                          'time': _depositTimeController.text,
-                          'reference_no': _referenceController.text,
-                          'bankName': myBankSelection
-                        };
-
-                        Api.http
-                            .post('member/fund-request/store', data: bankSendData)
-                            .then((res) async {
-                          if (res.data['status']) {
-                            GetBar(
-                              backgroundColor: Colors.green,
-                              duration: Duration(seconds: 3),
-                              message: res.data['message'],
-                            ).show();
-                            setState(() {
-                              _codeController.clear();
-                              _amountController.clear();
-                              _referenceController.clear();
-                              _depositTimeController.clear();
-                              _depositDateController.clear();
-                              myBankSelection = null;
-                              myPaymentSelection = null;
-                              _image = null;
-                            });
-                            Timer(
-                              Duration(seconds: 3),
-                              () {
-                                Get.back(result: res.data);
-                              },
-                            );
-                          } else {
-                            GetBar(
-                              duration: Duration(seconds: 3),
-                              message: res.data['error'],
-                              backgroundColor: Colors.red,
-                            ).show();
-                          }
-                        }).catchError((errors) {
-                          if (errors.response.statusCode == 422) {
-                            validator.setErrors(errors.response.data['errors']);
-                            GetBar(
-                              backgroundColor: Colors.red,
-                              duration: Duration(seconds: 3),
-                              message: errors.response.data['errors']['image'][0],
-                            ).show();
-                          }
-                        });
+                padding: const EdgeInsets.all(8.0),
+                child: CustomButtonOld(
+                  textContent: 'Submit',
+                  onPressed: () async {
+                    if (_fundFormKey.currentState!.validate()) {
+                      FocusScope.of(context).requestFocus(FocusNode());
+                      dynamic receiptImage;
+                      if (_image != null) {
+                        receiptImage = await Vapor.upload(
+                          _image!,
+                          // progressCallback: (int? completed, int? total) {
+                          //   setState(() {
+                          //     uploading = true;
+                          //     progressString = ((completed / total) * 100)
+                          //             .toStringAsFixed(0) +
+                          //         "%";
+                          //   });
+                          // },
+                        );
                       }
-                    },
-                  )),
+                      setState(() {
+                        uploading = false;
+                      });
+
+                      Map bankSendData = {
+                        'amount': _amountController.text,
+                        'receipt': receiptImage,
+                        'paymentMode': myPaymentSelection,
+                        'date': _depositDateController.text,
+                        'time': _depositTimeController.text,
+                        'reference_no': _referenceController.text,
+                        'bankName': myBankSelection,
+                      };
+
+                      Api.http
+                          .post('member/fund-request/store', data: bankSendData)
+                          .then((res) async {
+                            if (res.data['status']) {
+                              GetBar(
+                                backgroundColor: Colors.green,
+                                duration: Duration(seconds: 3),
+                                message: res.data['message'],
+                              ).show();
+                              setState(() {
+                                _codeController.clear();
+                                _amountController.clear();
+                                _referenceController.clear();
+                                _depositTimeController.clear();
+                                _depositDateController.clear();
+                                myBankSelection = null;
+                                myPaymentSelection = null;
+                                _image = null;
+                              });
+                              Timer(Duration(seconds: 3), () {
+                                Get.back(result: res.data);
+                              });
+                            } else {
+                              GetBar(
+                                duration: Duration(seconds: 3),
+                                message: res.data['error'],
+                                backgroundColor: Colors.red,
+                              ).show();
+                            }
+                          })
+                          .catchError((errors) {
+                            if (errors.response.statusCode == 422) {
+                              validator.setErrors(errors.response.data['errors']);
+                              GetBar(
+                                backgroundColor: Colors.red,
+                                duration: Duration(seconds: 3),
+                                message: errors.response.data['errors']['image'][0],
+                              ).show();
+                            }
+                          });
+                    }
+                  },
+                ),
+              ),
               SizedBox(height: 10),
             ],
           ),
@@ -393,7 +356,7 @@ class _CreateFundRequestState extends State<CreateFundRequest> {
           text(
             'Upload Receipt',
             fontSize: textSizeLargeMedium,
-            fontFamily: fontSemibold,
+            fontFamily: fontSemiBold,
             textColor: textColorPrimary,
           ),
           SizedBox(height: 15),
@@ -401,46 +364,40 @@ class _CreateFundRequestState extends State<CreateFundRequest> {
             alignment: Alignment.topRight,
             children: <Widget>[
               Card(
-                  semanticContainer: true,
-                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                  margin: EdgeInsets.all(spacing_control),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  child: Column(
-                    children: <Widget>[
-                      if (!uploading)
-                        _image != null
-                            ? Image.file(
-                                _image!,
-                                width: double.infinity,
-                                height: 200,
-                                fit: BoxFit.contain,
-                              )
-                            : Image.asset(
-                                'assets/images/no_image.png',
-                                width: double.infinity,
-                                height: 200,
-                                fit: BoxFit.contain,
-                              ),
-                      if (uploading)
-                        Container(
-                          height: 85.0,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Text(progressString),
-                              CircularProgressIndicator(),
-                            ],
-                          ),
-                        )
-                    ],
-                  )),
+                semanticContainer: true,
+                clipBehavior: Clip.antiAliasWithSaveLayer,
+                margin: EdgeInsets.all(spacing_control),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+                child: Column(
+                  children: <Widget>[
+                    if (!uploading)
+                      _image != null
+                          ? Image.file(_image!, width: double.infinity, height: 200, fit: BoxFit.contain)
+                          : Image.asset(
+                              'assets/images/no_image.png',
+                              width: double.infinity,
+                              height: 200,
+                              fit: BoxFit.contain,
+                            ),
+                    if (uploading)
+                      Container(
+                        height: 85.0,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[Text(progressString), CircularProgressIndicator()],
+                        ),
+                      ),
+                  ],
+                ),
+              ),
               Container(
                 padding: EdgeInsets.all(spacing_control),
                 margin: EdgeInsets.only(top: 15, right: 10),
                 decoration: BoxDecoration(
-                    shape: BoxShape.circle, color: white, border: Border.all(color: colorPrimary)),
+                  shape: BoxShape.circle,
+                  color: white,
+                  border: Border.all(color: colorPrimary),
+                ),
                 child: GestureDetector(
                   onTap: () {
                     GetImageFromDevice.instance.getImage(ImgSource.both, context).then((file) {
@@ -450,24 +407,16 @@ class _CreateFundRequestState extends State<CreateFundRequest> {
                       }
                     });
                   },
-                  child: Icon(
-                    Icons.camera_alt,
-                    color: colorPrimary,
-                    size: 20,
-                  ),
+                  child: Icon(Icons.camera_alt, color: colorPrimary, size: 20),
                 ),
               ),
             ],
           ),
-          if (_errors != null && _image == null && _errors!.containsKey('image'))
-            SizedBox(height: 5),
+          if (_errors != null && _image == null && _errors!.containsKey('image')) SizedBox(height: 5),
           if (_errors != null && _image == null && _errors!.containsKey('image'))
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Text(
-                _errors!['image'][0],
-                style: TextStyle(color: Colors.red),
-              ),
+              child: Text(_errors!['image'][0], style: TextStyle(color: Colors.red)),
             ),
         ],
       ),

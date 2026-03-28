@@ -8,22 +8,24 @@ import 'package:image_picker/image_picker.dart';
 import 'package:myky_clone/widget/theme.dart';
 import 'package:unicons/unicons.dart';
 
+import 'colors.dart';
 import 'inner_shadow.dart';
 
 class ImagePickerGC {
-  static Future pickImage(
-      {required BuildContext context,
-      required ImgSource source,
-      bool? enableCloseButton,
-      double? maxWidth,
-      double? maxHeight,
-      Icon? cameraIcon,
-      Icon? galleryIcon,
-      Widget? cameraText,
-      Widget? galleryText,
-      bool barrierDismissible = false,
-      Icon? closeIcon,
-      int? imageQuality}) async {
+  static Future pickImage({
+    required BuildContext context,
+    required ImgSource source,
+    bool? enableCloseButton,
+    double? maxWidth,
+    double? maxHeight,
+    Icon? cameraIcon,
+    Icon? galleryIcon,
+    Widget? cameraText,
+    Widget? galleryText,
+    bool barrierDismissible = false,
+    Icon? closeIcon,
+    int? imageQuality,
+  }) async {
     assert(imageQuality == null || (imageQuality >= 0 && imageQuality <= 100));
 
     if (maxWidth != null && maxWidth < 0) {
@@ -36,11 +38,17 @@ class ImagePickerGC {
 
     switch (source) {
       case ImgSource.camera:
-        return await ImagePicker()
-            .pickImage(source: ImageSource.camera, maxWidth: maxWidth, maxHeight: maxHeight);
+        return await ImagePicker().pickImage(
+          source: ImageSource.camera,
+          maxWidth: maxWidth,
+          maxHeight: maxHeight,
+        );
       case ImgSource.gallery:
-        return await ImagePicker()
-            .pickImage(source: ImageSource.gallery, maxWidth: maxWidth, maxHeight: maxHeight);
+        return await ImagePicker().pickImage(
+          source: ImageSource.gallery,
+          maxWidth: maxWidth,
+          maxHeight: maxHeight,
+        );
       case ImgSource.both:
         return await showDialog<void>(
           context: context,
@@ -64,11 +72,7 @@ class ImagePickerGC {
                             },
                             child: Align(
                               alignment: Alignment.topRight,
-                              child: closeIcon ??
-                                  const Icon(
-                                    Icons.close,
-                                    size: 14,
-                                  ),
+                              child: closeIcon ?? const Icon(Icons.close, size: 14),
                             ),
                           )
                         : Container(),
@@ -76,59 +80,38 @@ class ImagePickerGC {
                       onTap: () async {
                         ImagePicker()
                             .pickImage(
-                                source: ImageSource.gallery,
-                                maxWidth: maxWidth,
-                                maxHeight: maxHeight,
-                                imageQuality: imageQuality)
+                              source: ImageSource.gallery,
+                              maxWidth: maxWidth,
+                              maxHeight: maxHeight,
+                              imageQuality: imageQuality,
+                            )
                             .then((image) {
-                          Navigator.pop(context, image);
-                        });
+                              Navigator.pop(context, image);
+                            });
                       },
                       child: ListTile(
-                        title: galleryText ??
-                            text(
-                              "From Gallery",
-                              fontFamily: fontBold,
-                              textColor: colorPrimary,
-                            ),
+                        title:
+                            galleryText ??
+                            text("From Gallery", fontFamily: fontBold, textColor: colorPrimary),
                         leading: galleryIcon != null
-                            ? Icon(
-                                UniconsLine.image_plus,
-                                color: colorAccent,
-                              )
-                            : Icon(
-                                UniconsLine.image_plus,
-                                color: colorAccent,
-                              ),
+                            ? Icon(UniconsLine.image_plus, color: colorAccent)
+                            : Icon(UniconsLine.image_plus, color: colorAccent),
                       ),
                     ),
                     InkWell(
                       onTap: () async {
                         ImagePicker()
-                            .pickImage(
-                                source: ImageSource.camera,
-                                maxWidth: maxWidth,
-                                maxHeight: maxHeight)
+                            .pickImage(source: ImageSource.camera, maxWidth: maxWidth, maxHeight: maxHeight)
                             .then((image) {
-                          Navigator.pop(context, image);
-                        });
+                              Navigator.pop(context, image);
+                            });
                       },
                       child: ListTile(
-                        title: cameraText ??
-                            text(
-                              "From Camera",
-                              fontFamily: fontBold,
-                              textColor: colorPrimary,
-                            ),
+                        title:
+                            cameraText ?? text("From Camera", fontFamily: fontBold, textColor: colorPrimary),
                         leading: cameraIcon != null
-                            ? Icon(
-                                UniconsLine.camera_plus,
-                                color: colorAccent,
-                              )
-                            : Icon(
-                                UniconsLine.camera_plus,
-                                color: colorAccent,
-                              ),
+                            ? Icon(UniconsLine.camera_plus, color: colorAccent)
+                            : Icon(UniconsLine.camera_plus, color: colorAccent),
                       ),
                     ),
                   ],

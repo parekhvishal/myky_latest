@@ -10,6 +10,7 @@ import '../../../services/validator_x.dart';
 import '../../services/api.dart';
 import '../../services/auth.dart';
 import '../../utils/app_utils.dart';
+import '../../widget/colors.dart';
 import '../../widget/network_image.dart';
 import '../../widget/theme.dart';
 
@@ -47,20 +48,13 @@ class _PaymentsState extends State<Payments> {
   Future getProfileData() async {
     Api.http.get('member/profile').then((response) async {
       setState(() {
-        _nameController.text =
-            response.data['name'] != null ? response.data['name'] : "";
-        _phoneController.text =
-            response.data['phone'] != null ? response.data['phone'] : "";
-        _emailController.text =
-            response.data['email'] != null ? response.data['email'] : "";
-        _addressController.text =
-            response.data['address'] != null ? response.data['address'] : "";
-        _pinCodeController.text = response.data['pincode'] != null
-            ? response.data['pincode'].toString()
-            : "";
+        _nameController.text = response.data['name'] != null ? response.data['name'] : "";
+        _phoneController.text = response.data['phone'] != null ? response.data['phone'] : "";
+        _emailController.text = response.data['email'] != null ? response.data['email'] : "";
+        _addressController.text = response.data['address'] != null ? response.data['address'] : "";
+        _pinCodeController.text = response.data['pincode'] != null ? response.data['pincode'].toString() : "";
 
-        if (response.data['state'] != null)
-          myStateSelection = response.data['state']['id'].toString();
+        if (response.data['state'] != null) myStateSelection = response.data['state']['id'].toString();
         if (response.data['city'] != null) {
           cityId = response.data['city']['id'].toString();
           getCity(myStateSelection!, isLoad: true);
@@ -104,16 +98,9 @@ class _PaymentsState extends State<Payments> {
             mainAxisAlignment: MainAxisAlignment.start,
             mainAxisSize: MainAxisSize.max,
             children: [
-              Icon(
-                UniconsLine.map_pin_alt,
-                color: textColorSecondary,
-                size: 20,
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              text('Select State',
-                  fontSize: textSizeMedium, textColor: textColorSecondary),
+              Icon(UniconsLine.map_pin_alt, color: textColorSecondary, size: 20),
+              SizedBox(width: 10),
+              text('Select State', fontSize: textSizeMedium, textColor: textColorSecondary),
             ],
           ),
         ),
@@ -126,14 +113,12 @@ class _PaymentsState extends State<Payments> {
             borderRadius: BorderRadius.circular(8),
             borderSide: const BorderSide(color: white, width: 0.0),
           ),
-          border: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.black12)),
+          border: UnderlineInputBorder(borderSide: BorderSide(color: Colors.black12)),
           contentPadding: EdgeInsets.symmetric(vertical: 15),
           // hintText: 'Select State',
           filled: true,
           fillColor: Color(0xFFf7f7f7),
-          hintStyle:
-              TextStyle(fontSize: textSizeMedium, color: textColorSecondary),
+          hintStyle: TextStyle(fontSize: textSizeMedium, color: textColorSecondary),
         ),
         value: myStateSelection,
         iconSize: 20,
@@ -146,8 +131,7 @@ class _PaymentsState extends State<Payments> {
           setState(() {
             myStateSelection = newValue;
           });
-          _fetchShippingInformation(Auth.check()! ? 1 : 2,
-              myStateSelection: myStateSelection);
+          _fetchShippingInformation(Auth.check()! ? 1 : 2, myStateSelection: myStateSelection);
         },
         items: stateData!['states'].map<DropdownMenuItem<String>>((state) {
           return DropdownMenuItem<String>(
@@ -156,14 +140,8 @@ class _PaymentsState extends State<Payments> {
               padding: const EdgeInsets.symmetric(horizontal: 15.0),
               child: Row(
                 children: [
-                  Icon(
-                    UniconsLine.map_pin_alt,
-                    color: textColorSecondary,
-                    size: 20,
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
+                  Icon(UniconsLine.map_pin_alt, color: textColorSecondary, size: 20),
+                  SizedBox(width: 10),
                   Text(
                     state['name'].toString(),
                     style: TextStyle(
@@ -199,16 +177,9 @@ class _PaymentsState extends State<Payments> {
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Icon(
-                UniconsLine.map_pin_alt,
-                color: textColorSecondary,
-                size: 20,
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              text('Select City',
-                  fontSize: textSizeMedium, textColor: textColorSecondary),
+              Icon(UniconsLine.map_pin_alt, color: textColorSecondary, size: 20),
+              SizedBox(width: 10),
+              text('Select City', fontSize: textSizeMedium, textColor: textColorSecondary),
             ],
           ),
         ),
@@ -221,8 +192,7 @@ class _PaymentsState extends State<Payments> {
             borderRadius: BorderRadius.circular(8),
             borderSide: const BorderSide(color: white, width: 0.0),
           ),
-          border: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.black12)),
+          border: UnderlineInputBorder(borderSide: BorderSide(color: Colors.black12)),
           contentPadding: EdgeInsets.symmetric(vertical: 15),
           filled: true,
           fillColor: Color(0xFFf7f7f7),
@@ -247,14 +217,8 @@ class _PaymentsState extends State<Payments> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  Icon(
-                    UniconsLine.map_pin_alt,
-                    color: textColorSecondary,
-                    size: 20,
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
+                  Icon(UniconsLine.map_pin_alt, color: textColorSecondary, size: 20),
+                  SizedBox(width: 10),
                   Text(
                     city['name'].toString(),
                     style: TextStyle(
@@ -311,28 +275,22 @@ class _PaymentsState extends State<Payments> {
   Widget _buildProductDetail(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(left: 10, top: 10, right: 10),
-      decoration: boxDecoration(
-        radius: 10,
-        showShadow: true,
-      ),
+      decoration: boxDecoration(radius: 10, showShadow: true),
       child: Column(
         children: <Widget>[
           Container(
-              child: Column(
-            children: <Widget>[
-              ExpansionTile(
-                title: text(
-                  "Shopping Items",
-                  fontFamily: fontSemibold,
-                  fontSize: textSizeLargeMedium,
+            child: Column(
+              children: <Widget>[
+                ExpansionTile(
+                  title: text("Shopping Items", fontFamily: fontSemiBold, fontSize: textSizeLargeMedium),
+                  children: <Widget>[
+                    for (Map cartItem in cartProducts!)
+                      if (cartItem.isNotEmpty) _buildCartItem(cartItem),
+                  ],
                 ),
-                children: <Widget>[
-                  for (Map cartItem in cartProducts!)
-                    if (cartItem.isNotEmpty) _buildCartItem(cartItem),
-                ],
-              ),
-            ],
-          ))
+              ],
+            ),
+          ),
         ],
       ),
     );
@@ -345,14 +303,7 @@ class _PaymentsState extends State<Payments> {
         children: <Widget>[
           Container(
             width: 120,
-            child: Stack(
-              fit: StackFit.expand,
-              children: <Widget>[
-                PNetworkImage(
-                  cartItem['imageUrl'],
-                ),
-              ],
-            ),
+            child: Stack(fit: StackFit.expand, children: <Widget>[PNetworkImage(cartItem['imageUrl'])]),
           ),
           Flexible(
             child: Padding(
@@ -385,11 +336,7 @@ class _PaymentsState extends State<Payments> {
                       ),
                     ],
                   ),
-                  text(
-                    'Qty : ${cartItem['selected_qty']}',
-                    fontSize: textSizeSMedium,
-                    textColor: green,
-                  )
+                  text('Qty : ${cartItem['selected_qty']}', fontSize: textSizeSMedium, textColor: green),
                 ],
               ),
             ),
@@ -403,22 +350,12 @@ class _PaymentsState extends State<Payments> {
     return Container(
       margin: EdgeInsets.only(left: 10, top: 10, right: 10),
       padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-      decoration: boxDecoration(
-        radius: 10,
-        showShadow: true,
-      ),
+      decoration: boxDecoration(radius: 10, showShadow: true),
       child: Column(
         children: <Widget>[
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              text(
-                "Sub Total",
-              ),
-              text(
-                "\₹ ${amount.toStringAsFixed(2)}",
-              ),
-            ],
+            children: <Widget>[text("Sub Total"), text("\₹ ${amount.toStringAsFixed(2)}")],
           ),
           Divider(),
           Row(
@@ -428,32 +365,22 @@ class _PaymentsState extends State<Payments> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   text("Delivery Charge"),
-                  text(
-                    "(It might be differ on state)",
-                    fontSize: 11.sp,
-                    textColor: blue,
-                  ),
+                  text("(It might be differ on state)", fontSize: 11.sp, textColor: blue),
                 ],
               ),
-              text(
-                "\₹ ${convenienceFee.toStringAsFixed(2)}",
-              ),
+              text("\₹ ${convenienceFee.toStringAsFixed(2)}"),
             ],
           ),
           Divider(),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              text(
-                "By using coin",
-                textColor: goldenRod,
-                fontSize: textSizeLargeMedium,
-              ),
+              text("By using coin", textColor: goldenRod, fontSize: textSizeLargeMedium),
               text(
                 "${useCoin.toStringAsFixed(2)}",
                 textColor: goldenRod,
                 fontSize: textSizeLargeMedium,
-                fontFamily: fontSemibold,
+                fontFamily: fontSemiBold,
               ),
             ],
           ),
@@ -461,16 +388,12 @@ class _PaymentsState extends State<Payments> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              text(
-                "Total Amount",
-                textColor: green,
-                fontSize: textSizeLargeMedium,
-              ),
+              text("Total Amount", textColor: green, fontSize: textSizeLargeMedium),
               text(
                 "\₹ ${total.toStringAsFixed(2)}",
                 textColor: green,
                 fontSize: textSizeLargeMedium,
-                fontFamily: fontSemibold,
+                fontFamily: fontSemiBold,
               ),
             ],
           ),
@@ -483,10 +406,7 @@ class _PaymentsState extends State<Payments> {
     return Container(
       margin: EdgeInsets.only(left: 10, top: 10, right: 10, bottom: 10),
       padding: EdgeInsets.symmetric(horizontal: 10, vertical: 3),
-      decoration: boxDecoration(
-        radius: 10,
-        showShadow: true,
-      ),
+      decoration: boxDecoration(radius: 10, showShadow: true),
       child: Form(
         key: _addressFormKey,
         autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -495,35 +415,26 @@ class _PaymentsState extends State<Payments> {
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: text(
-                'Address',
-                textColor: Colors.black,
-                fontSize: 18.0,
-                fontweight: FontWeight.w600,
-              ),
+              child: text('Address', textColor: Colors.black, fontSize: 18.0, fontweight: FontWeight.w600),
             ),
             SizedBox(height: 10.0),
-            formField(
+            formFieldOld(
               context,
               'Name',
               prefixIcon: UniconsLine.user,
               controller: _nameController,
               textInputAction: TextInputAction.next,
-              inputFormatters: [
-                FilteringTextInputFormatter.deny(RegExp(r'^[ -.,]'))
-              ],
+              inputFormatters: [FilteringTextInputFormatter.deny(RegExp(r'^[ -.,]'))],
               validator: validator.add(
                 key: 'name',
-                rules: [
-                  ValidatorX.mandatory(message: "Name field is required"),
-                ],
+                rules: [ValidatorX.mandatory(message: "Name field is required")],
               ),
               onChanged: (value) {
                 validator.clearErrorsAt('name');
               },
             ),
             SizedBox(height: 10.0),
-            formField(
+            formFieldOld(
               context,
               'Mobile',
               prefixIcon: UniconsLine.phone,
@@ -531,17 +442,12 @@ class _PaymentsState extends State<Payments> {
               maxLength: 10,
               textInputAction: TextInputAction.next,
               keyboardType: TextInputType.number,
-              inputFormatters: [
-                FilteringTextInputFormatter.deny(RegExp(r'^[0-5 -.,]|[-., ]'))
-              ],
+              inputFormatters: [FilteringTextInputFormatter.deny(RegExp(r'^[0-5 -.,]|[-., ]'))],
               validator: validator.add(
                 key: 'phone',
                 rules: [
                   ValidatorX.mandatory(message: "Mobile field is required"),
-                  ValidatorX.minLength(
-                    length: 10,
-                    message: 'Mobile number must be at least 10 digit long',
-                  )
+                  ValidatorX.minLength(length: 10, message: 'Mobile number must be at least 10 digit long'),
                 ],
               ),
               onChanged: (value) {
@@ -549,15 +455,13 @@ class _PaymentsState extends State<Payments> {
               },
             ),
             SizedBox(height: 10.0),
-            formField(
+            formFieldOld(
               context,
               'Email',
               prefixIcon: UniconsLine.mailbox,
               controller: _emailController,
               textInputAction: TextInputAction.next,
-              inputFormatters: [
-                FilteringTextInputFormatter.deny(RegExp(r'[ -,]'))
-              ],
+              inputFormatters: [FilteringTextInputFormatter.deny(RegExp(r'[ -,]'))],
               validator: validator.add(
                 key: 'email',
                 // rules: [],
@@ -567,20 +471,16 @@ class _PaymentsState extends State<Payments> {
               },
             ),
             SizedBox(height: 10.0),
-            formField(
+            formFieldOld(
               context,
               'Address',
               prefixIcon: UniconsLine.home,
               controller: _addressController,
               textInputAction: TextInputAction.next,
-              inputFormatters: [
-                FilteringTextInputFormatter.deny(RegExp(r'^[ ]'))
-              ],
+              inputFormatters: [FilteringTextInputFormatter.deny(RegExp(r'^[ ]'))],
               validator: validator.add(
                 key: 'address',
-                rules: [
-                  ValidatorX.mandatory(message: "Address field is required"),
-                ],
+                rules: [ValidatorX.mandatory(message: "Address field is required")],
               ),
               onChanged: (value) {
                 validator.clearErrorsAt('address');
@@ -590,7 +490,7 @@ class _PaymentsState extends State<Payments> {
             if (stateData != null) _stateDropdown(),
             SizedBox(height: 10),
             if (citiesData != null) _cityDropdown(),
-            formField(
+            formFieldOld(
               context,
               'Pincode',
               prefixIcon: UniconsLine.location_pin_alt,
@@ -598,14 +498,10 @@ class _PaymentsState extends State<Payments> {
               textInputAction: TextInputAction.next,
               keyboardType: TextInputType.number,
               maxLength: 6,
-              inputFormatters: [
-                FilteringTextInputFormatter.deny(RegExp(r'[ -.,]'))
-              ],
+              inputFormatters: [FilteringTextInputFormatter.deny(RegExp(r'[ -.,]'))],
               validator: validator.add(
                 key: 'pincode',
-                rules: [
-                  ValidatorX.mandatory(message: "Pincode field is required"),
-                ],
+                rules: [ValidatorX.mandatory(message: "Pincode field is required")],
               ),
               onChanged: (value) {
                 validator.clearErrorsAt('pincode');
@@ -628,24 +524,15 @@ class _PaymentsState extends State<Payments> {
         isExpanded: true,
         validator: validator.add(
           key: 'payment_type',
-          rules: [
-            ValidatorX.mandatory(message: "Select your payment method"),
-          ],
+          rules: [ValidatorX.mandatory(message: "Select your payment method")],
         ),
         hint: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15.0),
           child: Row(
             children: [
-              Icon(
-                UniconsLine.transaction,
-                color: textColorSecondary,
-                size: 20,
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              text('Select Payment Method',
-                  fontSize: textSizeMedium, textColor: textColorSecondary),
+              Icon(UniconsLine.transaction, color: textColorSecondary, size: 20),
+              SizedBox(width: 10),
+              text('Select Payment Method', fontSize: textSizeMedium, textColor: textColorSecondary),
             ],
           ),
         ),
@@ -659,8 +546,7 @@ class _PaymentsState extends State<Payments> {
             borderRadius: BorderRadius.circular(8),
             borderSide: const BorderSide(color: white, width: 0.0),
           ),
-          border: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.black12)),
+          border: UnderlineInputBorder(borderSide: BorderSide(color: Colors.black12)),
           contentPadding: EdgeInsets.symmetric(vertical: 15),
           // hintText: 'Select State',
           filled: true,
@@ -681,14 +567,8 @@ class _PaymentsState extends State<Payments> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Icon(
-                    UniconsLine.transaction,
-                    color: textColorSecondary,
-                    size: 20,
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
+                  Icon(UniconsLine.transaction, color: textColorSecondary, size: 20),
+                  SizedBox(width: 10),
                   Text(
                     paymentMode['name'],
                     style: TextStyle(
@@ -710,10 +590,7 @@ class _PaymentsState extends State<Payments> {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(20.0),
-          topRight: Radius.circular(20.0),
-        ),
+        borderRadius: BorderRadius.only(topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0)),
         color: colorAccent,
       ),
       child: Row(
@@ -726,10 +603,8 @@ class _PaymentsState extends State<Payments> {
             fontFamily: fontBold,
           ),
           MaterialButton(
-            padding:
-                const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0)),
+            padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
             onPressed: () {
               if (_addressFormKey.currentState!.validate()) {
                 FocusScope.of(context).requestFocus(FocusNode());
@@ -743,12 +618,7 @@ class _PaymentsState extends State<Payments> {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  text(
-                    'Pay',
-                    fontSize: textSizeLargeMedium,
-                    textColor: white,
-                    fontFamily: fontBold,
-                  ),
+                  text('Pay', fontSize: textSizeLargeMedium, textColor: white, fontFamily: fontBold),
                   // 5.width,
                   // Icon(
                   //   Icons.arrow_forward_ios,
@@ -758,64 +628,56 @@ class _PaymentsState extends State<Payments> {
                 ],
               ),
             ),
-          )
+          ),
         ],
       ),
     );
   }
 
   void _fetchShippingInformation(int userType, {String? myStateSelection}) {
-    Api.http.get('shopping/shipping', queryParameters: {
-      "user_type": userType,
-      "stateId": myStateSelection,
-    }).then((response) {
-      if (response.data['status']) {
-        setState(() {
-          cartProducts = response.data['data']['cartDetails']['products'];
-          payByList = response.data['data']['payBy'];
-          if (response.data['data']['cartDetails']['totalDp'] != null) {
-            amount = num.parse(response.data['data']['cartDetails']
-                    ['totalSellingPrice']
-                .toString());
-          } else {
-            amount = num.parse('0');
-          }
-          if (response.data['data']['cartDetails']['totalShipping'] != null) {
-            convenienceFee = num.parse(response.data['data']['cartDetails']
-                    ['totalShipping']
-                .toString());
-          } else {
-            convenienceFee = num.parse('0');
-          }
-          if (response.data['data']['cartDetails']['totalCharge'] != null) {
-            total = num.parse(
-                response.data['data']['cartDetails']['totalCharge'].toString());
-          } else {
-            total = num.parse('0');
-          }
-          if (response.data['data']['cartDetails']['coinAmount'] != null) {
-            useCoin = num.parse(
-                response.data['data']['cartDetails']['coinAmount'].toString());
-          } else {
-            useCoin = num.parse('0');
+    Api.http
+        .get('shopping/shipping', queryParameters: {"user_type": userType, "stateId": myStateSelection})
+        .then((response) {
+          if (response.data['status']) {
+            setState(() {
+              cartProducts = response.data['data']['cartDetails']['products'];
+              payByList = response.data['data']['payBy'];
+              if (response.data['data']['cartDetails']['totalDp'] != null) {
+                amount = num.parse(response.data['data']['cartDetails']['totalSellingPrice'].toString());
+              } else {
+                amount = num.parse('0');
+              }
+              if (response.data['data']['cartDetails']['totalShipping'] != null) {
+                convenienceFee = num.parse(response.data['data']['cartDetails']['totalShipping'].toString());
+              } else {
+                convenienceFee = num.parse('0');
+              }
+              if (response.data['data']['cartDetails']['totalCharge'] != null) {
+                total = num.parse(response.data['data']['cartDetails']['totalCharge'].toString());
+              } else {
+                total = num.parse('0');
+              }
+              if (response.data['data']['cartDetails']['coinAmount'] != null) {
+                useCoin = num.parse(response.data['data']['cartDetails']['coinAmount'].toString());
+              } else {
+                useCoin = num.parse('0');
+              }
+            });
+            int outOfStockCount = 0;
+            cartProducts!.forEach((product) {
+              if (product['outOfStock']) {
+                outOfStockCount++;
+              }
+            });
+            if (outOfStockCount > 0) {
+              AppUtils.showErrorSnackBar('One or more item from your cart has been out of stock');
+              Future.delayed(Duration(seconds: 3), () {
+                Get.back();
+                Get.back(result: false);
+              });
+            }
           }
         });
-        int outOfStockCount = 0;
-        cartProducts!.forEach((product) {
-          if (product['outOfStock']) {
-            outOfStockCount++;
-          }
-        });
-        if (outOfStockCount > 0) {
-          AppUtils.showErrorSnackBar(
-              'One or more item from your cart has been out of stock');
-          Future.delayed(Duration(seconds: 3), () {
-            Get.back();
-            Get.back(result: false);
-          });
-        }
-      }
-    });
   }
 
   void _confirmOrder() {
@@ -828,45 +690,40 @@ class _PaymentsState extends State<Payments> {
       "city_id": myCitySelection,
       "pincode": _pinCodeController.text,
       "payment_type": myPaymentSelection,
-      "user_type": Auth.check()! ? 1 : 2
+      "user_type": Auth.check()! ? 1 : 2,
     };
 
     Api.http
         .post('shopping/shipping/order-confirm', data: sendData)
         .then((response) {
-      if (response.data['status']) {
-        orderId = response.data['order']['id'];
-        if (myPaymentSelection == "2") {
-          Get.toNamed(
-            '/payment-web-view',
-            arguments: response.data['webPaymentUrl'],
-          )?.then((value) {
-            if (value != null) {
-              Get.toNamed(
-                '/shopping-thanks',
-                arguments: orderId,
-              );
+          if (response.data['status']) {
+            orderId = response.data['order']['id'];
+            if (myPaymentSelection == "2") {
+              Get.toNamed('/payment-web-view', arguments: response.data['webPaymentUrl'])?.then((value) {
+                if (value != null) {
+                  Get.toNamed('/shopping-thanks', arguments: orderId);
+                }
+              });
+            } else {
+              Get.toNamed('/shopping-thanks', arguments: orderId);
             }
-          });
-        } else {
-          Get.toNamed('/shopping-thanks', arguments: orderId);
-        }
-      } else {
-        AppUtils.showErrorSnackBar(response.data['data']);
-      }
-    }).catchError((error) {
-      if (error.response.statusCode == 422) {
-        setState(() {
-          validator.setErrors(error.response.data['errors']);
+          } else {
+            AppUtils.showErrorSnackBar(response.data['data']);
+          }
+        })
+        .catchError((error) {
+          if (error.response.statusCode == 422) {
+            setState(() {
+              validator.setErrors(error.response.data['errors']);
+            });
+          } else {
+            GetBar(
+              duration: Duration(seconds: 5),
+              message: error.response.data['error'],
+              backgroundColor: Colors.red,
+            ).show();
+          }
         });
-      } else {
-        GetBar(
-          duration: Duration(seconds: 5),
-          message: error.response.data['error'],
-          backgroundColor: Colors.red,
-        ).show();
-      }
-    });
   }
 
   @override

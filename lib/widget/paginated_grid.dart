@@ -7,6 +7,7 @@ import 'package:flutter_paginator_ns/type_definitions.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 
 import '../widget/theme.dart';
+import 'colors.dart';
 
 class PaginatedGrid extends StatefulWidget {
   final String? pageTitle;
@@ -44,17 +45,16 @@ class PaginatedGrid extends StatefulWidget {
     this.isPrimaryList = true,
     this.scrollPhysics,
     this.layoutHeight = 0.15,
-  })  : assert(apiFuture != null),
-        assert(listItemBuilder != null),
-        super(key: key);
+  }) : assert(apiFuture != null),
+       assert(listItemBuilder != null),
+       super(key: key);
 
   @override
   PaginatedGridState createState() => PaginatedGridState();
 }
 
 class PaginatedGridState extends State<PaginatedGrid> {
-  final GlobalKey<RefreshIndicatorState> refreshIndicatorKey =
-      GlobalKey<RefreshIndicatorState>();
+  final GlobalKey<RefreshIndicatorState> refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
   final GlobalKey<PaginatorState> paginationKey = GlobalKey();
 
   void refreshData() {
@@ -62,8 +62,7 @@ class PaginatedGridState extends State<PaginatedGrid> {
       pageLoadFuture: pageLoadFuture,
       resetState: widget.resetStateOnRefresh!,
     );
-    if (widget.refreshPerformActionCallback != null)
-      widget.refreshPerformActionCallback();
+    if (widget.refreshPerformActionCallback != null) widget.refreshPerformActionCallback();
   }
 
   @override
@@ -75,9 +74,7 @@ class PaginatedGridState extends State<PaginatedGrid> {
             appBar: widget.pageTitle != null
                 ? AppBar(
                     elevation: 2.0,
-                    title: Text(
-                      widget.pageTitle!,
-                    ),
+                    title: Text(widget.pageTitle!),
                     actions: widget.appBarAction != null
                         ? widget.appBarAction
                         : [
@@ -89,9 +86,7 @@ class PaginatedGridState extends State<PaginatedGrid> {
                                   resetState: true,
                                 );
                               },
-                              icon: Icon(
-                                Icons.refresh,
-                              ),
+                              icon: Icon(Icons.refresh),
                             ),
                           ],
                   )
@@ -101,10 +96,11 @@ class PaginatedGridState extends State<PaginatedGrid> {
                 Expanded(
                   child: Paginator.gridView(
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 4.0,
-                        mainAxisSpacing: 4.0,
-                        childAspectRatio: 0.53),
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 4.0,
+                      mainAxisSpacing: 4.0,
+                      childAspectRatio: 0.53,
+                    ),
                     key: paginationKey,
                     shrinkWrap: true,
                     primary: widget.isPrimaryList,
@@ -120,7 +116,7 @@ class PaginatedGridState extends State<PaginatedGrid> {
                         ? widget.scrollPhysics
                         : RangeMaintainingScrollPhysics(),
                   ),
-                )
+                ),
               ],
             ),
             floatingActionButton: widget.floatingActionButton,
@@ -163,29 +159,18 @@ class PaginatedGridState extends State<PaginatedGrid> {
       return widget.loadingWidgetBuilder!();
     }
 
-    return Container(
-      alignment: Alignment.center,
-      height: 160.0,
-      child: CircularProgressIndicator(),
-    );
+    return Container(alignment: Alignment.center, height: 160.0, child: CircularProgressIndicator());
   }
 
-  Widget errorWidgetBuilder(
-      Pagination pagination, RetryListener retryListener) {
+  Widget errorWidgetBuilder(Pagination pagination, RetryListener retryListener) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Text(pagination.errorMessage!),
-        ),
+        Padding(padding: const EdgeInsets.all(16.0), child: Text(pagination.errorMessage!)),
         TextButton(
           onPressed: retryListener,
-          child: CustomButton(
-            textContent: 'Retry',
-            onPressed: retryListener,
-          ),
-        )
+          child: CustomButtonOld(textContent: 'Retry', onPressed: retryListener),
+        ),
       ],
     );
   }
@@ -218,7 +203,7 @@ class PaginatedGridState extends State<PaginatedGrid> {
               pageErrorChecker: pageErrorChecker,
               scrollPhysics: BouncingScrollPhysics(),
             ),
-          )
+          ),
         ],
       ),
     );

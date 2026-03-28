@@ -4,6 +4,7 @@ import 'package:unicons/unicons.dart';
 
 import '../../services/api.dart';
 import '../../services/size_config.dart';
+import '../../widget/colors.dart';
 import '../../widget/paginated_list.dart';
 import '../../widget/theme.dart';
 
@@ -29,15 +30,8 @@ class _FundRequestViewState extends State<FundRequestView> {
         onPressed: () {
           Get.toNamed('/fund-request')!.then((value) => fundRequestPaginatedListKey.currentState!.refresh());
         },
-        label: text(
-          'Create'.toUpperCase(),
-          textColor: white,
-          fontFamily: fontBold,
-        ),
-        icon: Icon(
-          UniconsLine.plus,
-          color: white,
-        ),
+        label: text('Create'.toUpperCase(), textColor: white, fontFamily: fontBold),
+        icon: Icon(UniconsLine.plus, color: white),
         backgroundColor: colorPrimary,
       ),
     );
@@ -46,15 +40,8 @@ class _FundRequestViewState extends State<FundRequestView> {
   Widget _fundRequestBuilder(dynamic fundRequest, int index) {
     return Container(
       width: w(80),
-      decoration: boxDecoration(
-        showShadow: true,
-        bgColor: white,
-        radius: 10.0,
-      ),
-      margin: EdgeInsets.symmetric(
-        horizontal: 7.5,
-        vertical: 7.5,
-      ),
+      decoration: boxDecoration(showShadow: true, bgColor: white, radius: 10.0),
+      margin: EdgeInsets.symmetric(horizontal: 7.5, vertical: 7.5),
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
         child: Row(
@@ -73,11 +60,7 @@ class _FundRequestViewState extends State<FundRequestView> {
                           children: [
                             Padding(
                               padding: const EdgeInsets.only(top: 4.0),
-                              child: Icon(
-                                UniconsLine.slack,
-                                color: colorPrimary,
-                                size: textSizeXLarge,
-                              ),
+                              child: Icon(UniconsLine.slack, color: colorPrimary, size: textSizeXLarge),
                             ),
                             SizedBox(width: w(4)),
                             Expanded(
@@ -113,7 +96,7 @@ class _FundRequestViewState extends State<FundRequestView> {
                       //     fundRequest['noPins'].toString(),
                       //     textColor: white,
                       //     textAllCaps: true,
-                      //     fontFamily: fontSemibold,
+                      //     fontFamily: fontSemiBold,
                       //     fontSize: textSizeSMedium,
                       //   ),
                       // ),
@@ -124,17 +107,15 @@ class _FundRequestViewState extends State<FundRequestView> {
                           color: fundRequest['status'] == "Pending"
                               ? Colors.orange
                               : fundRequest['status'] == "Approved"
-                                  ? Colors.green
-                                  : Colors.red,
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(10),
-                          ),
+                              ? Colors.green
+                              : Colors.red,
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
                         ),
                         child: text(
                           fundRequest['status']['name'],
                           textColor: white,
                           textAllCaps: true,
-                          fontFamily: fontSemibold,
+                          fontFamily: fontSemiBold,
                           fontSize: textSizeMedium,
                         ),
                       ),
@@ -147,47 +128,27 @@ class _FundRequestViewState extends State<FundRequestView> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          text(
-                            "Amount",
-                            fontFamily: fontBold,
-                          ),
+                          text("Amount", fontFamily: fontBold),
                           SizedBox(height: 4),
-                          text(
-                            fundRequest['amount'],
-                            textColor: green,
-                          ),
+                          text(fundRequest['amount'], textColor: green),
                         ],
                       ),
                       SizedBox(width: 10),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          text(
-                            "Payment Mode",
-                            fontFamily: fontBold,
-                          ),
+                          text("Payment Mode", fontFamily: fontBold),
                           SizedBox(height: 4),
-                          text(
-                            fundRequest['paymentMode']['name'],
-                            textColor: textColorSecondary,
-                          ),
+                          text(fundRequest['paymentMode']['name'], textColor: textColorSecondary),
                         ],
                       ),
                       SizedBox(width: 10),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: <Widget>[
-                          Align(
-                            child: text(
-                              "Reference No",
-                              fontFamily: fontBold,
-                            ),
-                          ),
+                          Align(child: text("Reference No", fontFamily: fontBold)),
                           SizedBox(height: 4),
-                          text(
-                            fundRequest['referenceNo'].toString(),
-                            textColor: green,
-                          ),
+                          text(fundRequest['referenceNo'].toString(), textColor: green),
                         ],
                       ),
                     ],
@@ -200,10 +161,7 @@ class _FundRequestViewState extends State<FundRequestView> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            text(
-                              "Bank",
-                              fontFamily: fontBold,
-                            ),
+                            text("Bank", fontFamily: fontBold),
                             SizedBox(height: 4),
                             text(fundRequest['bank'], textColor: textColorSecondary, isLongText: true),
                           ],
@@ -214,18 +172,9 @@ class _FundRequestViewState extends State<FundRequestView> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: <Widget>[
-                            Align(
-                              child: text(
-                                "Deposit Date",
-                                fontFamily: fontBold,
-                              ),
-                            ),
+                            Align(child: text("Deposit Date", fontFamily: fontBold)),
                             SizedBox(height: 4),
-                            text(
-                              fundRequest['depositDate'],
-                              textColor: textColorSecondary,
-                              isLongText: true,
-                            ),
+                            text(fundRequest['depositDate'], textColor: textColorSecondary, isLongText: true),
                           ],
                         ),
                       ),
@@ -239,10 +188,7 @@ class _FundRequestViewState extends State<FundRequestView> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            text(
-                              "Payment Status",
-                              fontFamily: fontBold,
-                            ),
+                            text("Payment Status", fontFamily: fontBold),
                             SizedBox(height: 4),
                             Container(
                               padding: EdgeInsets.symmetric(horizontal: 6, vertical: 2),
@@ -250,17 +196,15 @@ class _FundRequestViewState extends State<FundRequestView> {
                                 color: fundRequest['status']['name'] == "Pending"
                                     ? Colors.orange
                                     : fundRequest['status']['name'] == "Approved"
-                                        ? Colors.green
-                                        : Colors.red,
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(10),
-                                ),
+                                    ? Colors.green
+                                    : Colors.red,
+                                borderRadius: BorderRadius.all(Radius.circular(10)),
                               ),
                               child: text(
                                 fundRequest['status']['name'],
                                 textColor: white,
                                 textAllCaps: true,
-                                fontFamily: fontSemibold,
+                                fontFamily: fontSemiBold,
                                 fontSize: textSizeMedium,
                               ),
                             ),
@@ -282,22 +226,20 @@ class _FundRequestViewState extends State<FundRequestView> {
                             child: Container(
                               padding: EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(10),
-                                ),
+                                borderRadius: BorderRadius.all(Radius.circular(10)),
                                 color: Colors.green,
                               ),
                               child: text(
                                 "View Receipt".toUpperCase(),
                                 textColor: white,
                                 textAllCaps: true,
-                                fontFamily: fontSemibold,
+                                fontFamily: fontSemiBold,
                                 fontSize: textSizeSMedium,
                               ),
                             ),
                           ),
                         ],
-                      )
+                      ),
                     ],
                   ),
                   Divider(height: 25),

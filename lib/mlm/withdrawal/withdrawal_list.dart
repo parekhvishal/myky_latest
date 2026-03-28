@@ -4,6 +4,7 @@ import 'package:unicons/unicons.dart';
 
 import '../../services/api.dart';
 import '../../services/size_config.dart';
+import '../../widget/colors.dart';
 import '../../widget/paginated_list.dart';
 import '../../widget/theme.dart';
 
@@ -28,15 +29,8 @@ class _WithdrawalListState extends State<WithdrawalList> {
         onPressed: () {
           Get.toNamed('/withdrawal-request')!.then((value) => withdrawalListKey.currentState!.refresh());
         },
-        label: text(
-          'Request'.toUpperCase(),
-          textColor: white,
-          fontFamily: fontBold,
-        ),
-        icon: Icon(
-          UniconsLine.plus,
-          color: white,
-        ),
+        label: text('Request'.toUpperCase(), textColor: white, fontFamily: fontBold),
+        icon: Icon(UniconsLine.plus, color: white),
         backgroundColor: colorPrimary,
       ),
     );
@@ -45,15 +39,8 @@ class _WithdrawalListState extends State<WithdrawalList> {
   Widget _upgradeTopUpsBuilder(dynamic withdrawal, int index) {
     return Container(
       width: w(80),
-      decoration: boxDecoration(
-        showShadow: true,
-        bgColor: white,
-        radius: 10.0,
-      ),
-      margin: EdgeInsets.symmetric(
-        horizontal: 7.5,
-        vertical: 7.5,
-      ),
+      decoration: boxDecoration(showShadow: true, bgColor: white, radius: 10.0),
+      margin: EdgeInsets.symmetric(horizontal: 7.5, vertical: 7.5),
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
         child: Row(
@@ -70,13 +57,13 @@ class _WithdrawalListState extends State<WithdrawalList> {
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Icon(
-                              UniconsLine.bolt,
-                              color: colorPrimary,
-                              size: textSizeXLarge,
-                            ),
+                            Icon(UniconsLine.bolt, color: colorPrimary, size: textSizeXLarge),
                             SizedBox(width: w(4)),
-                            text(withdrawal['createdAt'], textColor: textColorSecondary, fontSize: textSizeSMedium),
+                            text(
+                              withdrawal['createdAt'],
+                              textColor: textColorSecondary,
+                              fontSize: textSizeSMedium,
+                            ),
                           ],
                         ),
                       ),
@@ -86,17 +73,15 @@ class _WithdrawalListState extends State<WithdrawalList> {
                           color: withdrawal['status']['id'] == 1
                               ? Colors.orange
                               : withdrawal['status']['id'] == 2
-                                  ? Colors.green
-                                  : Colors.red,
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(10),
-                          ),
+                              ? Colors.green
+                              : Colors.red,
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
                         ),
                         child: text(
                           withdrawal['status']['name'],
                           textColor: white,
                           textAllCaps: true,
-                          fontFamily: fontSemibold,
+                          fontFamily: fontSemiBold,
                           fontSize: textSizeMedium,
                         ),
                       ),
@@ -106,10 +91,7 @@ class _WithdrawalListState extends State<WithdrawalList> {
                   Row(
                     // mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
-                      text(
-                        "Amount : ",
-                        fontFamily: fontBold,
-                      ),
+                      text("Amount : ", fontFamily: fontBold),
                       SizedBox(width: 4),
                       text(
                         '₹ ${withdrawal['amount'].toString().replaceAll('null', 'N/A')}',

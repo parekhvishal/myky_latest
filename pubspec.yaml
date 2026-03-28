@@ -131,6 +131,30 @@ flutter:
 
 
   fonts:
+    - family: ExtraLight
+      fonts:
+        - asset: assets/fonts/Sora-ExtraLight.ttf
+
+    - family: Light
+      fonts:
+        - asset: assets/fonts/Sora-Light.ttf
+
+    - family: Regular
+      fonts:
+        - asset: assets/fonts/Sora-Regular.ttf
+
+    - family: SemiBold
+      fonts:
+        - asset: assets/fonts/Sora-SemiBold.ttf
+
+    - family: Bold
+      fonts:
+        - asset: assets/fonts/Sora-Bold.ttf
+
+    - family: ExtraBold
+      fonts:
+        - asset: assets/fonts/Sora-ExtraBold.ttf
+
     - family: LexendRegular
       fonts:
         - asset: assets/fonts/Lexend-Regular.ttf

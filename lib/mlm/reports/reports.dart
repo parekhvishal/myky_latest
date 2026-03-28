@@ -4,7 +4,7 @@ import 'package:unicons/unicons.dart';
 
 import '../../../../services/auth.dart';
 import '../../services/api.dart';
-import '../../services/size_config.dart';
+import '../../widget/colors.dart';
 import '../../widget/paginated_list.dart';
 import '../../widget/theme.dart';
 import '../common_list.dart';
@@ -28,22 +28,19 @@ class _ReportsState extends State<Reports> {
   Widget build(BuildContext context) {
     print('length : ${Auth.isVendor()}');
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Reports'),
-        automaticallyImplyLeading: type != null ? true : false,
-      ),
+      appBar: AppBar(title: const Text('Reports'), automaticallyImplyLeading: type != null ? true : false),
       body: SafeArea(
         child: DefaultTabController(
           initialIndex: Get.arguments == "myDownLine"
               ? 1
               : Get.arguments == "sales"
-                  ? 3
-                  : 0,
+              ? 3
+              : 0,
           length: Auth.user()!['code'] == "100001"
               ? 3
               : Auth.isVendor() == true
-                  ? 3
-                  : 2,
+              ? 3
+              : 2,
           child: Scaffold(
             appBar: PreferredSize(
               preferredSize: const Size.fromHeight(60),
@@ -58,8 +55,7 @@ class _ReportsState extends State<Reports> {
                         SizedBox(
                           width: MediaQuery.of(context).size.width,
                           child: TabBar(
-                            labelPadding:
-                                const EdgeInsets.only(left: 0, right: 0),
+                            labelPadding: const EdgeInsets.only(left: 0, right: 0),
                             indicatorWeight: 4.0,
                             indicatorSize: TabBarIndicatorSize.label,
                             indicatorColor: colorPrimary,
@@ -71,8 +67,7 @@ class _ReportsState extends State<Reports> {
                                 padding: const EdgeInsets.all(12.0),
                                 child: const Text(
                                   'My Friends',
-                                  style: TextStyle(
-                                      fontSize: 18.0, fontFamily: fontBold),
+                                  style: TextStyle(fontSize: 18.0, fontFamily: fontBold),
                                 ),
                               ),
                               if (Auth.user()!['code'] == "100001")
@@ -80,16 +75,14 @@ class _ReportsState extends State<Reports> {
                                   padding: const EdgeInsets.all(8.0),
                                   child: const Text(
                                     'My Patrons',
-                                    style: TextStyle(
-                                        fontSize: 18.0, fontFamily: fontBold),
+                                    style: TextStyle(fontSize: 18.0, fontFamily: fontBold),
                                   ),
                                 ),
                               Container(
                                 padding: const EdgeInsets.all(8.0),
                                 child: const Text(
                                   'TDS Report',
-                                  style: TextStyle(
-                                      fontSize: 18.0, fontFamily: fontBold),
+                                  style: TextStyle(fontSize: 18.0, fontFamily: fontBold),
                                 ),
                               ),
                               if (Auth.isVendor() == true)
@@ -97,8 +90,7 @@ class _ReportsState extends State<Reports> {
                                   padding: const EdgeInsets.all(8.0),
                                   child: const Text(
                                     'Sales Report',
-                                    style: TextStyle(
-                                        fontSize: 18.0, fontFamily: fontBold),
+                                    style: TextStyle(fontSize: 18.0, fontFamily: fontBold),
                                   ),
                                 ),
                             ],
@@ -130,14 +122,10 @@ class _ReportsState extends State<Reports> {
                     resetStateOnRefresh: true,
                   ),
                 FutureBuilder(
-                  future: Api.http.get('member/reports/tds-report').then(
-                        (response) => response.data,
-                      ),
+                  future: Api.http.get('member/reports/tds-report').then((response) => response.data),
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
                     if (!snapshot.hasData) {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
+                      return const Center(child: CircularProgressIndicator());
                     } else if (snapshot.data['list'].length == 0) {
                       return Center(
                         child: Container(
@@ -164,8 +152,7 @@ class _ReportsState extends State<Reports> {
                                   ),
                                   padding: const EdgeInsets.all(8),
                                   child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
@@ -185,7 +172,7 @@ class _ReportsState extends State<Reports> {
                                     ],
                                   ),
                                 ),
-                              )
+                              ),
                             ],
                           ),
                         ),
@@ -204,8 +191,7 @@ class _ReportsState extends State<Reports> {
                   PaginatedList(
                     noDataTitle: 'Sales Reports',
                     apiFuture: (int page) async {
-                      return Api.http
-                          .get("member/reports/sales-report?page=$page");
+                      return Api.http.get("member/reports/sales-report?page=$page");
                     },
                     listItemBuilder: _salesReportBuilder,
                     resetStateOnRefresh: true,
@@ -226,9 +212,7 @@ class _ReportsState extends State<Reports> {
       status: myDirect['status'],
       statusColor: _getStatusColor(myDirect['status']),
       icon: UniconsLine.thumbs_up,
-      backgroundColor: myDirect['isPromotor'] == true
-          ? Colors.green.withOpacity(0.15)
-          : Colors.white,
+      backgroundColor: myDirect['isPromotor'] == true ? Colors.green.withOpacity(0.15) : Colors.white,
       infoRows: [
         InfoRow(
           leftTitle: "Member ID",
@@ -239,6 +223,7 @@ class _ReportsState extends State<Reports> {
       ],
     );
   }
+
   Widget _myDownlineBuilder(dynamic myDownline, int index) {
     return CommonListCard(
       data: myDownline,
@@ -247,9 +232,7 @@ class _ReportsState extends State<Reports> {
       status: myDownline['status'],
       statusColor: _getStatusColor(myDownline['status']),
       icon: UniconsLine.thumbs_up,
-      backgroundColor: myDownline['isPromotor'] == true
-          ? Colors.green.withOpacity(0.15)
-          : Colors.white,
+      backgroundColor: myDownline['isPromotor'] == true ? Colors.green.withOpacity(0.15) : Colors.white,
       infoRows: [
         InfoRow(
           leftTitle: "Member ID",
@@ -273,6 +256,7 @@ class _ReportsState extends State<Reports> {
       infoRows: [], // No extra rows
     );
   }
+
   Widget _salesReportBuilder(dynamic sales, int index) {
     return CommonListCard(
       data: sales,
@@ -315,5 +299,4 @@ class _ReportsState extends State<Reports> {
         return Colors.black87;
     }
   }
-
 }

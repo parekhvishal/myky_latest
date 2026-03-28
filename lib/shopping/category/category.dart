@@ -48,10 +48,7 @@ class _CategoryState extends State<Category> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: text(
-          'Categories'.toUpperCase(),
-          fontweight: FontWeight.bold,
-        ),
+        title: text('Categories'.toUpperCase(), fontweight: FontWeight.bold),
         actions: [
           IconButton(
             constraints: BoxConstraints(maxWidth: 35),
@@ -78,18 +75,12 @@ class _CategoryState extends State<Category> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Expanded(
-                      flex: 3,
-                      child: buildCategoryList(),
-                    ),
+                    Expanded(flex: 3, child: buildCategoryList()),
                     Expanded(
                       flex: 8,
                       child: Container(
                         padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 5),
-                        decoration: boxDecoration(
-                          showShadow: false,
-                          bgColor: white,
-                        ),
+                        decoration: boxDecoration(showShadow: false, bgColor: white),
                         child: Column(
                           children: [
                             if (selectedIndex != null)
@@ -97,25 +88,17 @@ class _CategoryState extends State<Category> {
                                 padding: const EdgeInsets.symmetric(horizontal: 15.0),
                                 child: Align(
                                   alignment: Alignment.topLeft,
-                                  child: text(
-                                    selectedIndex!['name'],
-                                    fontFamily: fontSemibold,
-                                  ),
+                                  child: text(selectedIndex!['name'], fontFamily: fontSemiBold),
                                 ),
                               ),
-                            SizedBox(
-                              height: 10,
-                            ),
+                            SizedBox(height: 10),
                             Expanded(
-                              child: Container(
-                                height: h(99),
-                                child: buildSubcategoryList(context),
-                              ),
+                              child: Container(height: h(99), child: buildSubcategoryList(context)),
                             ),
                           ],
                         ),
                       ),
-                    )
+                    ),
                   ],
                 )
               : Center(
@@ -145,9 +128,7 @@ class _CategoryState extends State<Category> {
           },
           child: Container(
             padding: const EdgeInsets.symmetric(vertical: 10),
-            decoration: BoxDecoration(
-              color: selectedIndex == categoryList[index] ? Colors.white : null,
-            ),
+            decoration: BoxDecoration(color: selectedIndex == categoryList[index] ? Colors.white : null),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -168,12 +149,7 @@ class _CategoryState extends State<Category> {
                   ),
                 ),
                 SizedBox(height: 8.0),
-                text(
-                  categoryList[index]['name'],
-                  isCentered: true,
-                  isLongText: true,
-                  fontSize: 13.0,
-                ),
+                text(categoryList[index]['name'], isCentered: true, isLongText: true, fontSize: 13.0),
               ],
             ),
           ),
@@ -185,25 +161,22 @@ class _CategoryState extends State<Category> {
   Widget buildSubcategoryList(BuildContext context) {
     return subCategory.length > 0
         ? GridView.builder(
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3,
-              mainAxisExtent: 135,
-            ),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, mainAxisExtent: 135),
             padding: EdgeInsets.only(right: 10),
             shrinkWrap: true,
             itemCount: subCategory.length,
             itemBuilder: (context, index) {
               return GestureDetector(
                 onTap: () {
-                  Get.toNamed("/product-list", arguments: {
-                    "category": [subCategory[index]['id']],
-                  });
+                  Get.toNamed(
+                    "/product-list",
+                    arguments: {
+                      "category": [subCategory[index]['id']],
+                    },
+                  );
                 },
                 child: Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 2.w,
-                    vertical: 5.h,
-                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 5.h),
                   child: Column(
                     children: [
                       ClipRRect(
@@ -238,8 +211,6 @@ class _CategoryState extends State<Category> {
               );
             },
           )
-        : Center(
-            child: Image.asset('assets/images/results.png'),
-          );
+        : Center(child: Image.asset('assets/images/results.png'));
   }
 }

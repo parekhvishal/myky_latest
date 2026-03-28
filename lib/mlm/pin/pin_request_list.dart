@@ -4,6 +4,7 @@ import 'package:unicons/unicons.dart';
 
 import '../../services/api.dart';
 import '../../services/size_config.dart';
+import '../../widget/colors.dart';
 import '../../widget/paginated_list.dart';
 import '../../widget/theme.dart';
 
@@ -28,15 +29,8 @@ class _PinRequestListState extends State<PinRequestList> {
         onPressed: () {
           Get.toNamed('/pin-request')!.then((value) => pinRequestPaginatedListKey.currentState!.refresh());
         },
-        label: text(
-          'Create'.toUpperCase(),
-          textColor: white,
-          fontFamily: fontBold,
-        ),
-        icon: Icon(
-          UniconsLine.plus,
-          color: white,
-        ),
+        label: text('Create'.toUpperCase(), textColor: white, fontFamily: fontBold),
+        icon: Icon(UniconsLine.plus, color: white),
         backgroundColor: colorPrimary,
       ),
     );
@@ -45,15 +39,8 @@ class _PinRequestListState extends State<PinRequestList> {
   Widget _pinRequestBuilder(dynamic pinRequest, int index) {
     return Container(
       width: w(80),
-      decoration: boxDecoration(
-        showShadow: true,
-        bgColor: white,
-        radius: 10.0,
-      ),
-      margin: EdgeInsets.symmetric(
-        horizontal: 7.5,
-        vertical: 7.5,
-      ),
+      decoration: boxDecoration(showShadow: true, bgColor: white, radius: 10.0),
+      margin: EdgeInsets.symmetric(horizontal: 7.5, vertical: 7.5),
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
         child: Row(
@@ -72,22 +59,14 @@ class _PinRequestListState extends State<PinRequestList> {
                           children: [
                             Padding(
                               padding: const EdgeInsets.only(top: 4.0),
-                              child: Icon(
-                                UniconsLine.slack,
-                                color: colorPrimary,
-                                size: textSizeXLarge,
-                              ),
+                              child: Icon(UniconsLine.slack, color: colorPrimary, size: textSizeXLarge),
                             ),
                             SizedBox(width: w(4)),
                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
-                                  text(
-                                    pinRequest['package'],
-                                    fontFamily: fontBold,
-                                    isLongText: true,
-                                  ),
+                                  text(pinRequest['package'], fontFamily: fontBold, isLongText: true),
                                   text(
                                     pinRequest['createdAt'],
                                     textColor: textColorSecondary,
@@ -104,15 +83,13 @@ class _PinRequestListState extends State<PinRequestList> {
                         padding: EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                         decoration: BoxDecoration(
                           color: colorAccent,
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(25),
-                          ),
+                          borderRadius: BorderRadius.all(Radius.circular(25)),
                         ),
                         child: text(
                           pinRequest['noPins'].toString(),
                           textColor: white,
                           textAllCaps: true,
-                          fontFamily: fontSemibold,
+                          fontFamily: fontSemiBold,
                           fontSize: textSizeSMedium,
                         ),
                       ),
@@ -123,17 +100,15 @@ class _PinRequestListState extends State<PinRequestList> {
                           color: pinRequest['status'] == "Pending"
                               ? Colors.orange
                               : pinRequest['status'] == "Approved"
-                                  ? Colors.green
-                                  : Colors.red,
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(10),
-                          ),
+                              ? Colors.green
+                              : Colors.red,
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
                         ),
                         child: text(
                           pinRequest['status'],
                           textColor: white,
                           textAllCaps: true,
-                          fontFamily: fontSemibold,
+                          fontFamily: fontSemiBold,
                           fontSize: textSizeMedium,
                         ),
                       ),
@@ -146,32 +121,18 @@ class _PinRequestListState extends State<PinRequestList> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          text(
-                            "Bank",
-                            fontFamily: fontBold,
-                          ),
+                          text("Bank", fontFamily: fontBold),
                           SizedBox(height: 4),
-                          text(
-                            pinRequest['bank'] ?? 'N/A',
-                            textColor: textColorSecondary,
-                          ),
+                          text(pinRequest['bank'] ?? 'N/A', textColor: textColorSecondary),
                         ],
                       ),
                       SizedBox(width: 10),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: <Widget>[
-                          Align(
-                            child: text(
-                              "Ref No",
-                              fontFamily: fontBold,
-                            ),
-                          ),
+                          Align(child: text("Ref No", fontFamily: fontBold)),
                           SizedBox(height: 4),
-                          text(
-                            pinRequest['referenceNo'] ?? 'N/A',
-                            textColor: green,
-                          ),
+                          text(pinRequest['referenceNo'] ?? 'N/A', textColor: green),
                         ],
                       ),
                     ],
@@ -183,10 +144,7 @@ class _PinRequestListState extends State<PinRequestList> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          text(
-                            "Payment Mode",
-                            fontFamily: fontBold,
-                          ),
+                          text("Payment Mode", fontFamily: fontBold),
                           SizedBox(height: 4),
                           text(
                             pinRequest['paymentMode'] ?? 'N/A',
@@ -199,17 +157,9 @@ class _PinRequestListState extends State<PinRequestList> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: <Widget>[
-                          Align(
-                            child: text(
-                              "Deposit Date",
-                              fontFamily: fontBold,
-                            ),
-                          ),
+                          Align(child: text("Deposit Date", fontFamily: fontBold)),
                           SizedBox(height: 4),
-                          text(
-                            pinRequest['depositDate'] ?? 'N/A',
-                            textColor: textColorSecondary,
-                          ),
+                          text(pinRequest['depositDate'] ?? 'N/A', textColor: textColorSecondary),
                         ],
                       ),
                     ],
@@ -220,13 +170,10 @@ class _PinRequestListState extends State<PinRequestList> {
                     children: [
                       TextButton(
                         onPressed: () {
-                          Get.toNamed(
-                            '/photo-zoom',
-                            arguments: {'url': pinRequest['receipt']},
-                          );
+                          Get.toNamed('/photo-zoom', arguments: {'url': pinRequest['receipt']});
                         },
                         child: text('View Receipt'),
-                      )
+                      ),
                     ],
                   ),
                 ],

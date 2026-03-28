@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import '../../shopping/recharge/planScreen.dart';
-import '../../utils/app_utils.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../../services/api.dart';
 import '../../../services/validator_x.dart';
 import '../../../widget/theme.dart';
+import '../../shopping/recharge/planScreen.dart';
+import '../../utils/app_utils.dart';
+import '../../widget/colors.dart';
 
 class MobileRecharge extends StatefulWidget {
   @override
@@ -41,15 +42,10 @@ class _MobileRechargeState extends State<MobileRecharge> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: Text('Mobile Recharge'),
-      ),
+      appBar: AppBar(title: Text('Mobile Recharge')),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 10,
-            vertical: 15,
-          ),
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
           child: Form(
             autovalidateMode: AutovalidateMode.onUserInteraction,
             key: _prepaidFormKey,
@@ -96,11 +92,7 @@ class _MobileRechargeState extends State<MobileRecharge> {
                 // SizedBox(height: 20),
                 _buildButtonField(context),
                 SizedBox(height: 10),
-                text(
-                  "Only Prepaid Mobile Recharge Accept.",
-                  fontFamily: fontMedium,
-                  textColor: grey,
-                ),
+                text("Only Prepaid Mobile Recharge Accept.", fontFamily: fontMedium, textColor: grey),
               ],
             ),
           ),
@@ -117,9 +109,7 @@ class _MobileRechargeState extends State<MobileRecharge> {
         isExpanded: true,
         validator: validator.add(
           key: 'circle_id',
-          rules: [
-            ValidatorX.mandatory(message: "Select Circle"),
-          ],
+          rules: [ValidatorX.mandatory(message: "Select Circle")],
         ),
         hint: text('Select Circle', fontFamily: fontMedium, textColor: grey),
         decoration: InputDecoration(border: OutlineInputBorder()),
@@ -135,9 +125,7 @@ class _MobileRechargeState extends State<MobileRecharge> {
         items: mobileOperator!['circles'].map<DropdownMenuItem<String>>((category) {
           return DropdownMenuItem<String>(
             value: category['id'].toString(),
-            child: text(
-              category['circle'].toString(),
-            ),
+            child: text(category['circle'].toString()),
           );
         }).toList(),
       ),
@@ -148,41 +136,40 @@ class _MobileRechargeState extends State<MobileRecharge> {
     return Padding(
       padding: const EdgeInsets.all(2.0),
       child: DropdownButtonFormField<Map>(
-          isDense: true,
-          isExpanded: true,
-          validator: (value) {
-            if (value == null) {
-              return 'Operator is required';
-            }
-          },
-          // validator: validator.add(
-          //   key: 'operator_id',
-          //   rules: [
-          //     ValidatorX.mandatory(message: "Select Operators"),
-          //   ],
-          // ),
-          hint: text('Select Operators', fontFamily: fontMedium, textColor: grey),
-          decoration: InputDecoration(border: OutlineInputBorder()),
-          value: operatorSelection,
-          iconSize: 20,
-          elevation: 16,
-          onChanged: (Map? newValue) {
-            validator.clearErrorsAt('operator_id');
-            setState(() {
-              operatorSelection = newValue!;
-            });
-          },
-          items: mobileOperator!['prepaid'].map<DropdownMenuItem<Map>>((operator) {
-            return DropdownMenuItem<Map>(
-              value: operator,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 10.0),
-                child: text(
-                  operator['name'].toString(),
-                ),
-              ),
-            );
-          }).toList()),
+        isDense: true,
+        isExpanded: true,
+        validator: (value) {
+          if (value == null) {
+            return 'Operator is required';
+          }
+        },
+        // validator: validator.add(
+        //   key: 'operator_id',
+        //   rules: [
+        //     ValidatorX.mandatory(message: "Select Operators"),
+        //   ],
+        // ),
+        hint: text('Select Operators', fontFamily: fontMedium, textColor: grey),
+        decoration: InputDecoration(border: OutlineInputBorder()),
+        value: operatorSelection,
+        iconSize: 20,
+        elevation: 16,
+        onChanged: (Map? newValue) {
+          validator.clearErrorsAt('operator_id');
+          setState(() {
+            operatorSelection = newValue!;
+          });
+        },
+        items: mobileOperator!['prepaid'].map<DropdownMenuItem<Map>>((operator) {
+          return DropdownMenuItem<Map>(
+            value: operator,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 10.0),
+              child: text(operator['name'].toString()),
+            ),
+          );
+        }).toList(),
+      ),
     );
   }
 
@@ -204,7 +191,7 @@ class _MobileRechargeState extends State<MobileRecharge> {
             } else if (!regExp.hasMatch(value)) {
               return "Mobile Number invalid";
             }
-          })
+          }),
         ],
       ),
       controller: _numberController,
@@ -213,9 +200,7 @@ class _MobileRechargeState extends State<MobileRecharge> {
         border: OutlineInputBorder(),
         labelText: 'Mobile Number',
       ),
-      style: primaryTextStyle(
-        fontFamily: fontMedium,
-      ),
+      style: primaryTextStyle(fontFamily: fontMedium),
     );
   }
 
@@ -225,9 +210,7 @@ class _MobileRechargeState extends State<MobileRecharge> {
       readOnly: true,
       validator: validator.add(
         key: 'amount',
-        rules: [
-          ValidatorX.mandatory(message: "Amount is required"),
-        ],
+        rules: [ValidatorX.mandatory(message: "Amount is required")],
       ),
       maxLength: 4,
       controller: _priceController,
@@ -238,9 +221,7 @@ class _MobileRechargeState extends State<MobileRecharge> {
         labelText: 'Amount',
         prefixText: ' ₹ ',
       ),
-      style: primaryTextStyle(
-        fontFamily: fontMedium,
-      ),
+      style: primaryTextStyle(fontFamily: fontMedium),
     );
   }
 
@@ -249,9 +230,7 @@ class _MobileRechargeState extends State<MobileRecharge> {
       inputFormatters: [FilteringTextInputFormatter.deny(new RegExp(r'[ ,.-]'))],
       validator: validator.add(
         key: 'password',
-        rules: [
-          ValidatorX.mandatory(message: "Transaction Password is required"),
-        ],
+        rules: [ValidatorX.mandatory(message: "Transaction Password is required")],
       ),
       controller: _transactionPasswordController,
       obscureText: passwordVisible,
@@ -268,9 +247,7 @@ class _MobileRechargeState extends State<MobileRecharge> {
           child: passwordVisible ? Icon(Icons.visibility_off) : Icon(Icons.visibility),
         ),
       ),
-      style: primaryTextStyle(
-        fontFamily: fontMedium,
-      ),
+      style: primaryTextStyle(fontFamily: fontMedium),
     );
   }
 
@@ -279,7 +256,7 @@ class _MobileRechargeState extends State<MobileRecharge> {
       padding: const EdgeInsets.all(0),
       child: SizedBox(
         width: double.infinity,
-        child: CustomButton(
+        child: CustomButtonOld(
           textContent: "Proceed".toUpperCase(),
           onPressed: () {
             if (_prepaidFormKey.currentState!.validate()) {
@@ -292,28 +269,28 @@ class _MobileRechargeState extends State<MobileRecharge> {
                 'circle_id': circleSelection,
               };
 
-              Api.http.post('member/recharge/mobile-recharge', data: sendData).then((response) {
-                if (response.data['status']) {
-                  orderId = response.data['rechargeOrder']['id'];
-                  Get.toNamed(
-                    '/payment-web-view',
-                    arguments: response.data['webPaymentUrl'],
-                  )?.then((value) {
-                    if (value != null) {
-                      Get.toNamed('/recharge-thanks', arguments: orderId);
+              Api.http
+                  .post('member/recharge/mobile-recharge', data: sendData)
+                  .then((response) {
+                    if (response.data['status']) {
+                      orderId = response.data['rechargeOrder']['id'];
+                      Get.toNamed('/payment-web-view', arguments: response.data['webPaymentUrl'])?.then((
+                        value,
+                      ) {
+                        if (value != null) {
+                          Get.toNamed('/recharge-thanks', arguments: orderId);
+                        }
+                      });
+                      // AppUtils.startTransaction(response.data);
+                    } else {
+                      AppUtils.showErrorSnackBar(response.data['message']);
+                    }
+                  })
+                  .catchError((error) {
+                    if (error.response.statusCode == 422) {
+                      validator.setErrors(error.response.data['errors']);
                     }
                   });
-                  // AppUtils.startTransaction(response.data);
-                } else {
-                  AppUtils.showErrorSnackBar(response.data['message']);
-                }
-              }).catchError(
-                (error) {
-                  if (error.response.statusCode == 422) {
-                    validator.setErrors(error.response.data['errors']);
-                  }
-                },
-              );
             }
           },
         ),

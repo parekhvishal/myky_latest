@@ -21,12 +21,11 @@ import '../../../services/auth.dart';
 import '../../../services/size_config.dart';
 import '../../services/api.dart';
 import '../../widget/BottomNavigationBar.dart';
+import '../../widget/colors.dart';
 import '../../widget/file_download_controller.dart';
 import '../../widget/theme.dart';
 import '../app_drawer.dart';
 import '../wallet/wallet.dart';
-import 'components/day_wise_downline.dart';
-import 'components/last_7_days_earning_graph.dart';
 import 'components/myky_coins_widget.dart';
 
 class Dashboard extends StatefulWidget {
@@ -61,11 +60,7 @@ class _DashboardState extends State<Dashboard> {
           indexController.add(index);
         },
         controller: pageController,
-        children: [
-          const MainDashboard(),
-          Wallet(),
-          Reports(),
-        ],
+        children: [const MainDashboard(), Wallet(), Reports()],
       ),
       bottomNavigationBar: StreamBuilder<Object>(
         stream: indexController.stream,
@@ -76,11 +71,7 @@ class _DashboardState extends State<Dashboard> {
             backgroundColor: app_background,
             color: Colors.white,
             initialIndex: 0,
-            items: const <Widget>[
-              Icon(UniconsLine.home),
-              Icon(UniconsLine.wallet),
-              Icon(UniconsLine.file),
-            ],
+            items: const <Widget>[Icon(UniconsLine.home), Icon(UniconsLine.wallet), Icon(UniconsLine.file)],
             onTap: (int value) {
               indexController.add(value);
               pageController.jumpToPage(value);
@@ -130,8 +121,7 @@ class _MainDashboardState extends State<MainDashboard> {
             mlmDashboard['member']['isVendorLastPendingOrder'] == true) {
           showAmountPopup(context, mlmDashboard['member']);
         }
-        _bytesImage = const Base64Decoder()
-            .convert(mlmDashboard['member']['qrCodeImage']);
+        _bytesImage = const Base64Decoder().convert(mlmDashboard['member']['qrCodeImage']);
       });
       return response.data;
     });
@@ -150,10 +140,9 @@ class _MainDashboardState extends State<MainDashboard> {
   }
 
   callInvoiceApi() async {
-    await Api.http
-        .get(
-            "member/promotor-request/promotor-invoice/${promotorStatusData['id']}")
-        .then((response) {
+    await Api.http.get("member/promotor-request/promotor-invoice/${promotorStatusData['id']}").then((
+      response,
+    ) {
       invoiceUrl = response.data['url'] ?? "";
     });
   }
@@ -172,13 +161,8 @@ class _MainDashboardState extends State<MainDashboard> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(32.0)),
-          ),
-          title: text(
-            "${vendorKycMessage}",
-            isLongText: true,
-          ),
+          shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(32.0))),
+          title: text("${vendorKycMessage}", isLongText: true),
           actions: <Widget>[
             TextButton(
               child: const Text('Ok'),
@@ -198,15 +182,13 @@ class _MainDashboardState extends State<MainDashboard> {
   Future scanQR() async {
     dynamic barcodeScanRes;
     try {
-      barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
-          '#ff6666', 'Cancel', false, ScanMode.QR);
+      barcodeScanRes = await FlutterBarcodeScanner.scanBarcode('#ff6666', 'Cancel', false, ScanMode.QR);
 
       if (barcodeScanRes != '-1') {
         if (isJson(barcodeScanRes) == true) {
           Get.toNamed('/qr-view', arguments: barcodeScanRes);
         } else {
-          if (barcodeScanRes.isNotEmpty &&
-              barcodeScanRes.contains('https://myky-')) {
+          if (barcodeScanRes.isNotEmpty && barcodeScanRes.contains('https://myky-')) {
             launchUrl(Uri.parse(barcodeScanRes));
           } else {
             AppUtils.showErrorSnackBar('Not a valid MYKY QR');
@@ -231,9 +213,7 @@ class _MainDashboardState extends State<MainDashboard> {
     width = MediaQuery.of(context).size.width;
     return Scaffold(
       key: _scaffoldKey,
-      endDrawer: SafeArea(
-        child: AppDrawer(),
-      ),
+      endDrawer: SafeArea(child: AppDrawer()),
       appBar: AppBar(
         elevation: 2.0,
         title: GestureDetector(
@@ -407,8 +387,7 @@ class _MainDashboardState extends State<MainDashboard> {
 
                               GestureDetector(
                                 onTap: () {
-                                  HapticFeedback
-                                      .heavyImpact(); // Adds haptic feedback
+                                  HapticFeedback.heavyImpact(); // Adds haptic feedback
                                   Get.toNamed('/nearby-offline-store');
                                   // if (kDebugMode) {
                                   //   showAmountPopup(context);
@@ -417,20 +396,13 @@ class _MainDashboardState extends State<MainDashboard> {
                                 child: Container(
                                   decoration: BoxDecoration(
                                     gradient: const LinearGradient(
-                                      colors: [
-                                        Colors.deepPurpleAccent,
-                                        Colors.pinkAccent,
-                                      ],
+                                      colors: [Colors.deepPurpleAccent, Colors.pinkAccent],
                                       begin: Alignment.topLeft,
                                       end: Alignment.bottomRight,
                                     ),
                                     borderRadius: BorderRadius.circular(20),
                                     boxShadow: const [
-                                      BoxShadow(
-                                        color: Colors.black26,
-                                        offset: Offset(4, 4),
-                                        blurRadius: 10,
-                                      ),
+                                      BoxShadow(color: Colors.black26, offset: Offset(4, 4), blurRadius: 10),
                                       BoxShadow(
                                         color: Colors.white10,
                                         offset: Offset(-4, -4),
@@ -439,8 +411,7 @@ class _MainDashboardState extends State<MainDashboard> {
                                     ],
                                   ),
                                   child: const Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: 15, horizontal: 30),
+                                    padding: EdgeInsets.symmetric(vertical: 15, horizontal: 30),
                                     child: Center(
                                       child: Text(
                                         "Nearby offline store",
@@ -455,19 +426,17 @@ class _MainDashboardState extends State<MainDashboard> {
                                 ),
                               ).paddingSymmetric(horizontal: 10),
                               8.heightBox,
-                              if (dashboardDetail['offlineOrderResumeStatus'] !=
-                                      null &&
-                                  dashboardDetail[
-                                      'offlineOrderResumeStatus']) ...[
+                              if (dashboardDetail['offlineOrderResumeStatus'] != null &&
+                                  dashboardDetail['offlineOrderResumeStatus']) ...[
                                 8.heightBox,
-                                CustomButton(
-                                    textContent: 'Complete your payment',
-                                    onPressed: () {
-                                      Get.toNamed('/off-line-orders')!
-                                          .then((value) {
-                                        _future = getDashboard();
-                                      });
-                                    }).paddingSymmetric(horizontal: 10),
+                                CustomButtonOld(
+                                  textContent: 'Complete your payment',
+                                  onPressed: () {
+                                    Get.toNamed('/off-line-orders')!.then((value) {
+                                      _future = getDashboard();
+                                    });
+                                  },
+                                ).paddingSymmetric(horizontal: 10),
                               ],
                               8.heightBox,
                               _qrCodeScan(context, dashboardDetail),
@@ -501,8 +470,7 @@ class _MainDashboardState extends State<MainDashboard> {
                                       return Container(
                                         margin: EdgeInsets.only(right: 12.w),
                                         child: ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(8.r),
+                                          borderRadius: BorderRadius.circular(8.r),
                                           child: Image.network(
                                             vendorShopImages[i]['fileName'],
                                             fit: BoxFit.contain,
@@ -513,8 +481,7 @@ class _MainDashboardState extends State<MainDashboard> {
                                       ).onTap(() {
                                         Get.toNamed(
                                           'image-preview',
-                                          arguments: vendorShopImages[i]
-                                              ['fileName'],
+                                          arguments: vendorShopImages[i]['fileName'],
                                         );
                                       });
                                     },
@@ -523,12 +490,9 @@ class _MainDashboardState extends State<MainDashboard> {
                               ],
                               8.heightBox,
                               Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 12.0),
+                                padding: const EdgeInsets.symmetric(horizontal: 12.0),
                                 child: MykyCoinsWidget(
-                                  coinBalance:
-                                      dashboardDetail['coinWalletBalance']
-                                          .toString(),
+                                  coinBalance: dashboardDetail['coinWalletBalance'].toString(),
                                   onTap: () {
                                     Get.toNamed('/coin-wallet');
                                   },
@@ -555,14 +519,12 @@ class _MainDashboardState extends State<MainDashboard> {
                         Positioned(
                           top: 50,
                           child: CircleAvatar(
-                            backgroundImage: NetworkImage(
-                              dashboardDetail['member']['profileImageUrl'],
-                            ),
+                            backgroundImage: NetworkImage(dashboardDetail['member']['profileImageUrl']),
                             radius: 45,
                           ),
                         ),
                       ],
-                    )
+                    ),
                   ],
                 ),
               ),
@@ -576,36 +538,20 @@ class _MainDashboardState extends State<MainDashboard> {
   Widget _memberAbout(BuildContext context, Map dashboardDetail) {
     return Container(
       margin: const EdgeInsets.only(left: 10, top: 10, right: 10),
-      decoration: boxDecoration(
-        radius: 10,
-        showShadow: true,
-      ),
+      decoration: boxDecoration(radius: 10, showShadow: true),
       child: Column(
         children: <Widget>[
           ExpansionTile(
-            title: text(
-              "Member Info",
-              fontFamily: fontSemibold,
-              fontSize: textSizeLargeMedium,
-            ),
+            title: text("Member Info", fontFamily: fontSemiBold, fontSize: textSizeLargeMedium),
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 10.0,
-                  horizontal: 5.0,
-                ),
+                padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    rowHeading(
-                      'Full Name : ',
-                      dashboardDetail['member']['name'],
-                    ),
+                    rowHeading('Full Name : ', dashboardDetail['member']['name']),
                     const SizedBox(height: 10.0),
-                    rowHeading(
-                      'Mobile : ',
-                      dashboardDetail['member']['mobile'],
-                    ),
+                    rowHeading('Mobile : ', dashboardDetail['member']['mobile']),
                     const SizedBox(height: 10.0),
                     rowHeading(
                       'Whatsapp Number : ',
@@ -616,20 +562,12 @@ class _MainDashboardState extends State<MainDashboard> {
                     const SizedBox(height: 10.0),
                     rowHeading(
                       'Email : ',
-                      dashboardDetail['member']['email'] != null
-                          ? dashboardDetail['member']['email']
-                          : "--",
+                      dashboardDetail['member']['email'] != null ? dashboardDetail['member']['email'] : "--",
                     ),
                     const SizedBox(height: 10.0),
-                    rowHeading(
-                      'Account Status : ',
-                      dashboardDetail['member']['memberStatus'],
-                    ),
+                    rowHeading('Account Status : ', dashboardDetail['member']['memberStatus']),
                     const SizedBox(height: 10.0),
-                    rowHeading(
-                      'KYC Status : ',
-                      dashboardDetail['member']['kycStatus'],
-                    ),
+                    rowHeading('KYC Status : ', dashboardDetail['member']['kycStatus']),
                     if (Auth.isVendor() == true) ...[
                       const SizedBox(height: 10.0),
                       rowHeading(
@@ -656,18 +594,12 @@ class _MainDashboardState extends State<MainDashboard> {
                       ),
                     ],
                     const SizedBox(height: 10.0),
-                    rowHeading(
-                      'Registration Date : ',
-                      dashboardDetail['member']['regDate'],
-                    ),
+                    rowHeading('Registration Date : ', dashboardDetail['member']['regDate']),
                     const SizedBox(height: 10.0),
-                    rowHeading(
-                      'Activation Date : ',
-                      dashboardDetail['member']['actDate'] ?? "--",
-                    ),
+                    rowHeading('Activation Date : ', dashboardDetail['member']['actDate'] ?? "--"),
                   ],
                 ),
-              )
+              ),
             ],
           ),
         ],
@@ -684,10 +616,7 @@ class _MainDashboardState extends State<MainDashboard> {
           fontFamily: fontMedium,
           fontSize: textSizeNormal,
         ),
-        text(
-          dashboardDetail['member']['code'],
-          fontSize: textSizeLargeMedium,
-        ),
+        text(dashboardDetail['member']['code'], fontSize: textSizeLargeMedium),
       ],
     );
   }
@@ -716,9 +645,7 @@ class _MainDashboardState extends State<MainDashboard> {
             ),
           ],
         ),
-        const SizedBox(
-          height: 10,
-        ),
+        const SizedBox(height: 10),
         Container(
           height: h(10),
           child: ListView.builder(
@@ -729,18 +656,13 @@ class _MainDashboardState extends State<MainDashboard> {
             itemBuilder: (context, index) {
               return Container(
                 width: w(80),
-                decoration: boxDecoration(
-                  showShadow: true,
-                  bgColor: Colors.white,
-                  radius: 10.0,
-                ),
+                decoration: boxDecoration(showShadow: true, bgColor: Colors.white, radius: 10.0),
                 margin: EdgeInsets.only(
                   left: index == 0 ? 15 : 7.5,
                   right: (bank.length) - 1 == index ? 15 : 7.5,
                 ),
                 child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+                  padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.max,
@@ -753,25 +675,15 @@ class _MainDashboardState extends State<MainDashboard> {
                               children: <Widget>[
                                 Expanded(
                                   child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Icon(
-                                        Icons.domain,
-                                        color: colorPrimary,
-                                        size: textSizeXLarge,
-                                      ),
+                                      Icon(Icons.domain, color: colorPrimary, size: textSizeXLarge),
                                       SizedBox(width: w(2)),
                                       Expanded(
                                         child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
                                           children: <Widget>[
-                                            text(
-                                              bank[index]['name'],
-                                              fontFamily: fontBold,
-                                              isLongText: true,
-                                            ),
+                                            text(bank[index]['name'], fontFamily: fontBold, isLongText: true),
                                           ],
                                         ),
                                       ),
@@ -855,12 +767,10 @@ class _MainDashboardState extends State<MainDashboard> {
                 Expanded(
                   child: GestureDetector(
                     onTap: () {
-                      if (dashboardDetail['pendingWalletBalance']
-                              .toString()
-                              .toInt() >
-                          0) {
+                      if (dashboardDetail['pendingWalletBalance'].toString().toInt() > 0) {
                         AppUtils.showErrorSnackBar(
-                            'To receive this wallet amount, please upgrade to Promoter');
+                          'To receive this wallet amount, please upgrade to Promoter',
+                        );
                       }
                     },
                     child: _buildBlocks(
@@ -973,14 +883,13 @@ class _MainDashboardState extends State<MainDashboard> {
               ],
             ),
             const SizedBox(height: 16.0),
-          ]
+          ],
         ],
       ),
     );
   }
 
-  Widget _buildBlocks(String label, Color color, dynamic count,
-      {IconData? icon, bool isIcon = true}) {
+  Widget _buildBlocks(String label, Color color, dynamic count, {IconData? icon, bool isIcon = true}) {
     return Container(
       height: 118.h,
       decoration: BoxDecoration(
@@ -994,10 +903,7 @@ class _MainDashboardState extends State<MainDashboard> {
             offset: const Offset(0, 4),
           ),
         ],
-        border: Border.all(
-          color: color.withOpacity(0.6),
-          width: 3.w,
-        ),
+        border: Border.all(color: color.withOpacity(0.6), width: 3.w),
       ),
       child: Padding(
         padding: EdgeInsets.all(14.w),
@@ -1008,11 +914,7 @@ class _MainDashboardState extends State<MainDashboard> {
             // Count/Value
             Text(
               count.toString(),
-              style: TextStyle(
-                fontSize: 22.sp,
-                fontWeight: FontWeight.bold,
-                color: const Color(0xFF1A202C),
-              ),
+              style: TextStyle(fontSize: 22.sp, fontWeight: FontWeight.bold, color: const Color(0xFF1A202C)),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
             ),
@@ -1040,11 +942,7 @@ class _MainDashboardState extends State<MainDashboard> {
                       color: color.withOpacity(0.1),
                       borderRadius: BorderRadius.circular(6.r),
                     ),
-                    child: Icon(
-                      icon,
-                      size: 16.sp,
-                      color: color,
-                    ),
+                    child: Icon(icon, size: 16.sp, color: color),
                   ),
               ],
             ),
@@ -1091,57 +989,37 @@ class _MainDashboardState extends State<MainDashboard> {
               decoration: InputDecoration(
                 hintText: dashboardDetail['refLink'],
                 hintStyle: TextStyle(fontSize: 14.sp),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                contentPadding: const EdgeInsets.symmetric(
-                  horizontal: 25,
-                  vertical: 13,
-                ),
+                border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 25, vertical: 13),
                 suffixIcon: Row(
                   children: [
                     15.widthBox,
                     Text(
                       dashboardDetail['refLink'].toString(),
                       // "https://www.google.co.in/",
-                      style: TextStyle(
-                        color: colorPrimary,
-                        fontSize: 15.sp,
-                        fontFamily: fontMedium,
-                      ),
+                      style: TextStyle(color: colorPrimary, fontSize: 15.sp, fontFamily: fontMedium),
                       overflow: TextOverflow.ellipsis,
                     ).expand(flex: 75),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Icon(
-                          Icons.content_copy,
-                          size: 20.sp,
-                          color: colorPrimary,
-                        ).onTap(
-                          () {
-                            Clipboard.setData(
-                              ClipboardData(text: dashboardDetail['refLink']),
-                            );
-                            GetBar(
-                              duration: const Duration(seconds: 5),
-                              message: 'Referral Link copied to clipboard',
-                              backgroundColor: colorPrimary,
-                            ).show();
-                          },
-                        ),
+                        Icon(Icons.content_copy, size: 20.sp, color: colorPrimary).onTap(() {
+                          Clipboard.setData(ClipboardData(text: dashboardDetail['refLink']));
+                          GetBar(
+                            duration: const Duration(seconds: 5),
+                            message: 'Referral Link copied to clipboard',
+                            backgroundColor: colorPrimary,
+                          ).show();
+                        }),
                         15.widthBox,
-                        Icon(
-                          UniconsLine.share_alt,
-                          size: 20.sp,
-                          color: colorAccent,
-                        ).onTap(() {
+                        Icon(UniconsLine.share_alt, size: 20.sp, color: colorAccent).onTap(() {
                           _shareLinkWIthImage(
-                              // "https://stage.myky.co.in/storage/65/5.jpg",
-                              // "Refer & Save with Myky! 🌟Invite your friends to Myky and both of you win!When your friend makes their first purchase, they get 50% off, and as a thank-you, you'll also receive 50% off on your next order.\n 🎉Start referring and enjoy amazing savings! 🚀\nLet me know if you need any modifications!",
-                              dashboardDetail['referralImage'],
-                              dashboardDetail['referralDescription'],
-                              dashboardDetail['refLink']);
+                            // "https://stage.myky.co.in/storage/65/5.jpg",
+                            // "Refer & Save with Myky! 🌟Invite your friends to Myky and both of you win!When your friend makes their first purchase, they get 50% off, and as a thank-you, you'll also receive 50% off on your next order.\n 🎉Start referring and enjoy amazing savings! 🚀\nLet me know if you need any modifications!",
+                            dashboardDetail['referralImage'],
+                            dashboardDetail['referralDescription'],
+                            dashboardDetail['refLink'],
+                          );
                           // String link = dashboardDetail['refLink'];
                           // if (link.isNotEmpty) {
                           //   Share.share(dashboardDetail['refLink']);
@@ -1207,8 +1085,7 @@ class _MainDashboardState extends State<MainDashboard> {
             child: Container(
               decoration: boxDecoration(radius: 10, showShadow: true),
               child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
@@ -1219,28 +1096,18 @@ class _MainDashboardState extends State<MainDashboard> {
                           context: context,
                           builder: (context) => AlertDialog(
                             shape: const RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10.0)),
+                              borderRadius: BorderRadius.all(Radius.circular(10.0)),
                             ),
                             content: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Image.memory(
-                                  _bytesImage!,
-                                  height: 300,
-                                  width: 300,
-                                ),
+                                Image.memory(_bytesImage!, height: 300, width: 300),
                                 Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
+                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                                   children: [
                                     TextButton(
-                                      onPressed: () =>
-                                          Navigator.of(context).pop(false),
-                                      child: text(
-                                        'Close',
-                                        fontSize: 18.0,
-                                      ),
+                                      onPressed: () => Navigator.of(context).pop(false),
+                                      child: text('Close', fontSize: 18.0),
                                     ),
                                     if (dashboardDetail['qrCodeUrl'] != "")
                                       Expanded(
@@ -1251,10 +1118,7 @@ class _MainDashboardState extends State<MainDashboard> {
                                               context,
                                             );
                                           },
-                                          child: text(
-                                            'Download',
-                                            fontSize: 18.0,
-                                          ),
+                                          child: text('Download', fontSize: 18.0),
                                         ),
                                       ),
                                   ],
@@ -1264,15 +1128,9 @@ class _MainDashboardState extends State<MainDashboard> {
                           ),
                         );
                       },
-                      icon: const Icon(
-                        UniconsLine.qrcode_scan,
-                      ),
+                      icon: const Icon(UniconsLine.qrcode_scan),
                     ),
-                    text(
-                      "View QR Code",
-                      fontSize: 12.0,
-                      fontweight: FontWeight.w600,
-                    ),
+                    text("View QR Code", fontSize: 12.0, fontweight: FontWeight.w600),
                   ],
                 ),
               ),
@@ -1280,46 +1138,44 @@ class _MainDashboardState extends State<MainDashboard> {
           ),
         10.widthBox,
         Expanded(
-            child: Container(
-          decoration: boxDecoration(radius: 10, showShadow: true),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                IconButton(
-                  iconSize: 35,
-                  onPressed: () {
-                    scanQR();
-                  },
-                  icon: const Icon(
-                    UniconsLine.qrcode_scan,
+          child: Container(
+            decoration: boxDecoration(radius: 10, showShadow: true),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  IconButton(
+                    iconSize: 35,
+                    onPressed: () {
+                      scanQR();
+                    },
+                    icon: const Icon(UniconsLine.qrcode_scan),
                   ),
-                ),
-                FittedBox(
-                  child: text(
-                    "Scan Only MYKY QR Code",
-                    fontSize: 12.0,
-                    fontweight: FontWeight.w600,
-                    textColor: redColor,
-                    maxLine: 1,
-                    isCentered: true,
-                    isLongText: true,
+                  FittedBox(
+                    child: text(
+                      "Scan Only MYKY QR Code",
+                      fontSize: 12.0,
+                      fontweight: FontWeight.w600,
+                      textColor: redColor,
+                      maxLine: 1,
+                      isCentered: true,
+                      isLongText: true,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
-        )
-            //     .onTap(() {
-            //   Get.toNamed(
-            //     '/qr-view',
-            //     arguments: json.encode(
-            //       {"id": 1, "code": "100001", "name": "Vendor First Nk"},
-            //     ),
-            //   );
-            // }),
-            ),
+          //     .onTap(() {
+          //   Get.toNamed(
+          //     '/qr-view',
+          //     arguments: json.encode(
+          //       {"id": 1, "code": "100001", "name": "Vendor First Nk"},
+          //     ),
+          //   );
+          // }),
+        ),
       ],
     ).marginSymmetric(horizontal: 10.w);
   }
@@ -1353,9 +1209,12 @@ class _MainDashboardState extends State<MainDashboard> {
     final path = '${tempDir.path}/promotion.jpeg';
 
     await Dio().download(url, path);
-    Share.shareFiles([path],
-        text: "$text\n\n"
-            "$link\n");
+    Share.shareFiles(
+      [path],
+      text:
+          "$text\n\n"
+          "$link\n",
+    );
 
     return path;
   }
@@ -1365,36 +1224,23 @@ class _MainDashboardState extends State<MainDashboard> {
       context: context,
       builder: (BuildContext context) {
         return Dialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15),
-          ),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
           child: Stack(
-            clipBehavior:
-                Clip.none, // Allows close button to be outside the dialog
+            clipBehavior: Clip.none, // Allows close button to be outside the dialog
             children: [
               Container(
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
                   color: Colors.white,
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Colors.black26,
-                      blurRadius: 8,
-                      offset: Offset(0, 4),
-                    ),
-                  ],
+                  boxShadow: const [BoxShadow(color: Colors.black26, blurRadius: 8, offset: Offset(0, 4))],
                 ),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     const Text(
                       "Payment Details",
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
+                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
                     ),
                     const SizedBox(height: 10),
 
@@ -1402,11 +1248,11 @@ class _MainDashboardState extends State<MainDashboard> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text("Total Amount:",
-                            style: TextStyle(fontSize: 16)),
-                        Text(data['vendorTotalOrderAmount'].toString(),
-                            style: const TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.bold)),
+                        const Text("Total Amount:", style: TextStyle(fontSize: 16)),
+                        Text(
+                          data['vendorTotalOrderAmount'].toString(),
+                          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
                       ],
                     ),
                     const Divider(),
@@ -1416,11 +1262,14 @@ class _MainDashboardState extends State<MainDashboard> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         const Text("Discount:", style: TextStyle(fontSize: 16)),
-                        Text(data['vendortotalDiscount'].toString(),
-                            style: const TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.green)),
+                        Text(
+                          data['vendortotalDiscount'].toString(),
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.green,
+                          ),
+                        ),
                       ],
                     ),
                     const Divider(),
@@ -1429,14 +1278,14 @@ class _MainDashboardState extends State<MainDashboard> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text("Vendor Amount:",
-                            style: TextStyle(fontSize: 16)),
+                        const Text("Vendor Amount:", style: TextStyle(fontSize: 16)),
                         Text(
                           data['vendortotalAmount'].toString(),
                           style: const TextStyle(
-                              fontSize: 22,
-                              fontWeight: FontWeight.w900,
-                              color: Colors.red),
+                            fontSize: 22,
+                            fontWeight: FontWeight.w900,
+                            color: Colors.red,
+                          ),
                         ),
                       ],
                     ),
@@ -1456,15 +1305,10 @@ class _MainDashboardState extends State<MainDashboard> {
                       shape: BoxShape.circle,
                       color: colorPrimary,
                       boxShadow: const [
-                        BoxShadow(
-                          color: Colors.black26,
-                          blurRadius: 4,
-                          offset: Offset(0, 2),
-                        ),
+                        BoxShadow(color: Colors.black26, blurRadius: 4, offset: Offset(0, 2)),
                       ],
                     ),
-                    child:
-                        const Icon(Icons.close, color: Colors.white, size: 20),
+                    child: const Icon(Icons.close, color: Colors.white, size: 20),
                   ),
                 ),
               ),

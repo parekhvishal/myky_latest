@@ -2,16 +2,17 @@ import 'dart:convert';
 
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
+
 // import 'package:paytm_allinonesdk/paytm_allinonesdk.dart';
 
 import '../services/api.dart';
 import '../services/auth.dart';
+import '../widget/colors.dart';
 import '../widget/network_image.dart';
 import '../widget/theme.dart';
 
@@ -67,10 +68,7 @@ class AppUtils {
         sts == 'loss' ||
         sts == 'cancelled') {
       colorToReturn = const Color(0XFFf1556c);
-    } else if (sts == 'in-progress' ||
-        sts == 'authorize' ||
-        sts == 'processing' ||
-        sts == 'dispatch') {
+    } else if (sts == 'in-progress' || sts == 'authorize' || sts == 'processing' || sts == 'dispatch') {
       colorToReturn = const Color(0XFF4FC6E0);
     } else if (sts == 'blocked') {
       colorToReturn = const Color(0XFF131314);
@@ -80,106 +78,94 @@ class AppUtils {
 
   static void onLoading(BuildContext context, String? msg) {
     if (!Get.isDialogOpen!) {
-      Get.dialog(WillPopScope(
-        onWillPop: () {
-          return Future.value(false);
-        },
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: ClipRRect(
+      Get.dialog(
+        WillPopScope(
+          onWillPop: () {
+            return Future.value(false);
+          },
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: ClipRRect(
                 borderRadius: BorderRadius.circular(8.0),
                 child: Container(
-                    color: Colors.white,
-                    // width: 250,
-                    child: Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: Row(
-                        children: [
-                          SizedBox(
-                            height: 40,
-                            width: 40,
-                            child: const CircularProgressIndicator(
-                              // backgroundColor: Colors.white,
-                              valueColor: AlwaysStoppedAnimation<Color>(
-                                Colors.green, //<-- SEE HERE
-                              ),
+                  color: Colors.white,
+                  // width: 250,
+                  child: Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          height: 40,
+                          width: 40,
+                          child: const CircularProgressIndicator(
+                            // backgroundColor: Colors.white,
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                              Colors.green, //<-- SEE HERE
                             ),
                           ),
-                          const SizedBox(width: 15),
-                          DefaultTextStyle(
-                            style: const TextStyle(
-                                height: 1.5,
-                                fontSize: 14,
-                                fontFamily: fontBold,
-                                color: Colors.black),
-                            child: Text(
-                              msg ?? "Your documents are\nuploading please wait..",
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          )
-                        ],
-                      ),
-                    ))),
+                        ),
+                        const SizedBox(width: 15),
+                        DefaultTextStyle(
+                          style: const TextStyle(
+                            height: 1.5,
+                            fontSize: 14,
+                            fontFamily: fontBold,
+                            color: Colors.black,
+                          ),
+                          child: Text(
+                            msg ?? "Your documents are\nuploading please wait..",
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ),
         ),
-      ));
+      );
     }
   }
 
-  static Future showDialogForImageExpand(
-    context, {
-    String? imageURL,
-    Widget? imageWidget,
-  }) {
+  static Future showDialogForImageExpand(context, {String? imageURL, Widget? imageWidget}) {
     return showDialog(
       context: context,
       builder: (context) {
         return Dialog(
-            elevation: 0,
-            shape: RoundedRectangleBorder(
+          elevation: 0,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.r)),
+          insetPadding: EdgeInsets.symmetric(horizontal: 15.w),
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          backgroundColor: Colors.lightGreen,
+          child: Container(
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: Colors.black,
+              border: Border.all(color: colorAccent, width: 1.w),
               borderRadius: BorderRadius.circular(10.r),
+              boxShadow: const [
+                BoxShadow(
+                  color: Color(0x1e1f2f46),
+                  offset: Offset(0.0, 64.0),
+                  blurRadius: 64.0,
+                  spreadRadius: -48.0,
+                ), //BoxShadow
+              ],
             ),
-            insetPadding: EdgeInsets.symmetric(horizontal: 15.w),
-            clipBehavior: Clip.antiAliasWithSaveLayer,
-            backgroundColor: Colors.lightGreen,
-            child: Container(
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: Colors.black,
-                border: Border.all(
-                  color: colorAccent,
-                  width: 1.w,
-                ),
-                borderRadius: BorderRadius.circular(10.r),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Color(0x1e1f2f46),
-                    offset: Offset(
-                      0.0,
-                      64.0,
-                    ),
-                    blurRadius: 64.0,
-                    spreadRadius: -48.0,
-                  ), //BoxShadow
-                ],
-              ),
-              padding: EdgeInsets.all(5.sp),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  if (imageURL != null)
-                    PNetworkImage(
-                      imageURL,
-                      height: 500.sp,
-                      width: 500.sp,
-                      fit: BoxFit.fill,
-                      borderRadius: 5.r,
-                    ),
-                  if (imageWidget != null) imageWidget,
-                ],
-              ),
-            ));
+            padding: EdgeInsets.all(5.sp),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (imageURL != null)
+                  PNetworkImage(imageURL, height: 500.sp, width: 500.sp, fit: BoxFit.fill, borderRadius: 5.r),
+                if (imageWidget != null) imageWidget,
+              ],
+            ),
+          ),
+        );
       },
     );
   }
@@ -190,8 +176,7 @@ class AppUtils {
     if (uri != null) {
       final dynamic queryParams = uri.queryParameters;
       if (queryParams.length > 0) {
-        encodedItemData =
-            queryParams.containsKey('product-detail') ? queryParams['product-detail'] : "";
+        encodedItemData = queryParams.containsKey('product-detail') ? queryParams['product-detail'] : "";
         // String type = queryParams["type"];
         // verify the id is parsed correctly
       }
@@ -222,7 +207,6 @@ class AppUtils {
     });
     return list;
   }
-
 
   // static void showErrorSnackBar(String message) {
   //   GetBar(
@@ -255,13 +239,9 @@ class AppUtils {
         duration: Duration(seconds: secondsToDisplay ?? 3),
         snackPosition: SnackPosition.TOP,
         borderRadius: 10.r,
-        margin: EdgeInsets.symmetric(
-          horizontal: 15.w,
-          vertical: 15.h,
-        ),
+        margin: EdgeInsets.symmetric(horizontal: 15.w, vertical: 15.h),
         snackStyle: SnackStyle.FLOATING,
-        messageText:
-            Center(child: text(message, textColor: Colors.white, fontSize: 14.0, isLongText: true)),
+        messageText: Center(child: text(message, textColor: Colors.white, fontSize: 14.0, isLongText: true)),
       ).show();
     }
   }
@@ -275,8 +255,7 @@ class AppUtils {
       borderRadius: 10.r,
       margin: EdgeInsets.symmetric(horizontal: 15.w, vertical: 15.h),
       snackStyle: SnackStyle.FLOATING,
-      messageText:
-          Center(child: text(message, textColor: Colors.white, fontSize: 14.0, isLongText: true)),
+      messageText: Center(child: text(message, textColor: Colors.white, fontSize: 14.0, isLongText: true)),
     ).show();
   }
 
@@ -284,18 +263,18 @@ class AppUtils {
     GetBar(
       backgroundColor: color == null ? primary : color,
       duration: Duration(seconds: 3),
-      messageText: Center(
-        child: text(message, textColor: Colors.white, fontSize: 14.0, isLongText: true),
-      ),
+      messageText: Center(child: text(message, textColor: Colors.white, fontSize: 14.0, isLongText: true)),
       snackPosition: SnackPosition.TOP,
     ).show();
   }
 
-  static redirect(routeName,
-      {dynamic arguments,
-      String? pageToRedirectAfterLogin,
-      Function? callWhileBack,
-      Function(dynamic value)? callWhileBackWithValue}) {
+  static redirect(
+    routeName, {
+    dynamic arguments,
+    String? pageToRedirectAfterLogin,
+    Function? callWhileBack,
+    Function(dynamic value)? callWhileBackWithValue,
+  }) {
     if (routeName == 'login-mlm') {
       Get.toNamed(routeName, arguments: 'justBack')!.then((value) {
         if (Auth.check()! && pageToRedirectAfterLogin != null) {
@@ -322,23 +301,28 @@ class AppUtils {
   }
 
   static Future<dynamic> fetchPlans({code}) {
-    return Api.http.get('https://www.keralarecharge.com/api/', queryParameters: {
-      'api_key': 'ec720f6e2b32531ec17ff84f2d131132',
-      'module': 'rechargeoffers',
-      'operator': code,
-      // 'operator': 'PR1',
-      'format': 1,
-    }).then((response) {
-      if (response.data.runtimeType.toString() == 'List<dynamic>') {
-        return response.data[0];
-      } else {
-        if (response.data.containsKey('error')) {
-          return 'No Plans Found';
-        } else {
-          return 'Something Went Wrong';
-        }
-      }
-    });
+    return Api.http
+        .get(
+          'https://www.keralarecharge.com/api/',
+          queryParameters: {
+            'api_key': 'ec720f6e2b32531ec17ff84f2d131132',
+            'module': 'rechargeoffers',
+            'operator': code,
+            // 'operator': 'PR1',
+            'format': 1,
+          },
+        )
+        .then((response) {
+          if (response.data.runtimeType.toString() == 'List<dynamic>') {
+            return response.data[0];
+          } else {
+            if (response.data.containsKey('error')) {
+              return 'No Plans Found';
+            } else {
+              return 'Something Went Wrong';
+            }
+          }
+        });
   }
 
   // static Future<void> startTransaction(data) async {
@@ -364,11 +348,8 @@ class AppUtils {
   // }
 
   static callPaymentProcess(uniqueOrderNo, orderId) {
-    Api.http.post('member/recharge/payment-process', data: {
-      'order': uniqueOrderNo,
-    }).then((response) {
+    Api.http.post('member/recharge/payment-process', data: {'order': uniqueOrderNo}).then((response) {
       Get.toNamed('/recharge-thanks', arguments: orderId);
     });
   }
-
 }

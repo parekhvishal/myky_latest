@@ -12,6 +12,7 @@ import '../../services/api.dart';
 import '../../services/getImage_service.dart';
 import '../../services/size_config.dart';
 import '../../services/validator_x.dart';
+import '../../widget/colors.dart';
 import '../../widget/image_picker.dart';
 import '../../widget/network_image.dart';
 import '../../widget/theme.dart';
@@ -34,8 +35,7 @@ class _KycDetailsState extends State<KycDetails> {
 
   final TextEditingController _aadhaarController = TextEditingController();
   final TextEditingController _accountNameController = TextEditingController();
-  final TextEditingController _accountNumberController =
-      TextEditingController();
+  final TextEditingController _accountNumberController = TextEditingController();
   final TextEditingController _bankNameController = TextEditingController();
   final TextEditingController _bankBranchController = TextEditingController();
   final TextEditingController _ifscCodeController = TextEditingController();
@@ -80,9 +80,7 @@ class _KycDetailsState extends State<KycDetails> {
       isExpanded: true,
       validator: validator.add(
         key: 'account_type',
-        rules: [
-          ValidatorX.mandatory(message: "Select Your Account Type"),
-        ],
+        rules: [ValidatorX.mandatory(message: "Select Your Account Type")],
       ),
       hint: const Text('Select Account Type'),
       value: accountType,
@@ -108,10 +106,7 @@ class _KycDetailsState extends State<KycDetails> {
         validator.clearErrorsAt('accountType');
       },
       items: _accountTypes.map<DropdownMenuItem<String>>((type) {
-        return DropdownMenuItem<String>(
-          child: Text(type['type']),
-          value: type['value'].toString(),
-        );
+        return DropdownMenuItem<String>(child: Text(type['type']), value: type['value'].toString());
       }).toList(),
     );
   }
@@ -123,9 +118,7 @@ class _KycDetailsState extends State<KycDetails> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text(
-              'KYC',
-            ),
+            const Text('KYC'),
             if (kycData != null)
               Container(
                 color: Colors.white,
@@ -135,13 +128,13 @@ class _KycDetailsState extends State<KycDetails> {
                   textColor: kycData!['kycStatus']['id'] == 1
                       ? HexColor("##68BBE3")
                       : kycData!['kycStatus']['id'] == 2
-                          ? Colors.amber
-                          : kycData!['kycStatus']['id'] == 3
-                              ? Colors.green
-                              : Colors.red,
+                      ? Colors.amber
+                      : kycData!['kycStatus']['id'] == 3
+                      ? Colors.green
+                      : Colors.red,
                   fontFamily: fontBold,
                 ),
-              )
+              ),
           ],
         ),
       ),
@@ -153,12 +146,8 @@ class _KycDetailsState extends State<KycDetails> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-                decoration: boxDecoration(
-                  showShadow: true,
-                  bgColor: white_color,
-                ),
+                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                decoration: boxDecoration(showShadow: true, bgColor: white_color),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -179,12 +168,8 @@ class _KycDetailsState extends State<KycDetails> {
               ),
               const SizedBox(height: 10),
               Container(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-                decoration: boxDecoration(
-                  showShadow: true,
-                  bgColor: white_color,
-                ),
+                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                decoration: boxDecoration(showShadow: true, bgColor: white_color),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -199,15 +184,10 @@ class _KycDetailsState extends State<KycDetails> {
                       'Account Holder Name',
                       controller: _accountNameController,
                       keyboardType: TextInputType.text,
-                      inputFormatters: [
-                        FilteringTextInputFormatter.deny(RegExp(r'^[ -.,]'))
-                      ],
+                      inputFormatters: [FilteringTextInputFormatter.deny(RegExp(r'^[ -.,]'))],
                       validator: validator.add(
                         key: 'accountName',
-                        rules: [
-                          ValidatorX.mandatory(
-                              message: 'Account holder name field is required'),
-                        ],
+                        rules: [ValidatorX.mandatory(message: 'Account holder name field is required')],
                       ),
                       onChanged: (String value) {
                         validator.clearErrorsAt('accountName');
@@ -222,12 +202,11 @@ class _KycDetailsState extends State<KycDetails> {
                       validator: validator.add(
                         key: 'accountNumber',
                         rules: [
-                          ValidatorX.mandatory(
-                              message: 'Account number field is required'),
+                          ValidatorX.mandatory(message: 'Account number field is required'),
                           ValidatorX.minLength(
-                              length: 9,
-                              message:
-                                  'The account number must be between 9 and 18 digits')
+                            length: 9,
+                            message: 'The account number must be between 9 and 18 digits',
+                          ),
                         ],
                       ),
                       onChanged: (String value) {
@@ -240,10 +219,7 @@ class _KycDetailsState extends State<KycDetails> {
                       isExpanded: true,
                       validator: validator.add(
                         key: 'accountType',
-                        rules: [
-                          ValidatorX.mandatory(
-                              message: "Select your account type"),
-                        ],
+                        rules: [ValidatorX.mandatory(message: "Select your account type")],
                       ),
                       hint: const Text('Select your account type'),
                       value: accountType,
@@ -256,9 +232,9 @@ class _KycDetailsState extends State<KycDetails> {
                         ),
                         // prefixIcon: prefixIcon,
                         enabledBorder: const UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.black12)),
-                        focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: colorPrimary)),
+                          borderSide: BorderSide(color: Colors.black12),
+                        ),
+                        focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: colorPrimary)),
                       ),
                       onChanged: (String? newValue) {
                         validator.clearErrorsAt('accountType');
@@ -266,8 +242,7 @@ class _KycDetailsState extends State<KycDetails> {
                           accountType = newValue!;
                         });
                       },
-                      items:
-                          _accountTypes.map<DropdownMenuItem<String>>((type) {
+                      items: _accountTypes.map<DropdownMenuItem<String>>((type) {
                         return DropdownMenuItem<String>(
                           child: Text(type['type']),
                           value: type['value'].toString(),
@@ -277,27 +252,25 @@ class _KycDetailsState extends State<KycDetails> {
                     const SizedBox(height: 10),
                     floatingInput(
                       'IFSC Code',
-                      inputFormatters: [
-                        FilteringTextInputFormatter.deny(RegExp(r'^[ ,-]'))
-                      ],
+                      inputFormatters: [FilteringTextInputFormatter.deny(RegExp(r'^[ ,-]'))],
                       controller: _ifscCodeController,
                       onChanged: (value) {
                         validator.clearErrorsAt('bankIfsc');
                         if (value.length == 11) {
                           Api.httpWithoutBaseUrl
-                              .get('https://ifsc.razorpay.com/' +
-                                  _ifscCodeController.text)
+                              .get('https://ifsc.razorpay.com/' + _ifscCodeController.text)
                               .then((res) {
-                            setState(() {
-                              _bankNameController.text = res.data['BANK'];
-                              _bankBranchController.text = res.data['BRANCH'];
-                            });
-                          }).catchError((err) {
-                            setState(() {
-                              _bankNameController.text = '';
-                              _bankBranchController.text = '';
-                            });
-                          });
+                                setState(() {
+                                  _bankNameController.text = res.data['BANK'];
+                                  _bankBranchController.text = res.data['BRANCH'];
+                                });
+                              })
+                              .catchError((err) {
+                                setState(() {
+                                  _bankNameController.text = '';
+                                  _bankBranchController.text = '';
+                                });
+                              });
                         } else {
                           setState(() {
                             _bankNameController.text = '';
@@ -307,10 +280,7 @@ class _KycDetailsState extends State<KycDetails> {
                       },
                       validator: validator.add(
                         key: 'bankIfsc',
-                        rules: [
-                          ValidatorX.mandatory(
-                              message: 'IFSC code is required'),
-                        ],
+                        rules: [ValidatorX.mandatory(message: 'IFSC code is required')],
                       ),
                     ),
                     const SizedBox(height: 10),
@@ -319,10 +289,7 @@ class _KycDetailsState extends State<KycDetails> {
                       controller: _bankNameController,
                       validator: validator.add(
                         key: 'bankName',
-                        rules: [
-                          ValidatorX.mandatory(
-                              message: 'Bank name field is required'),
-                        ],
+                        rules: [ValidatorX.mandatory(message: 'Bank name field is required')],
                       ),
                       onChanged: (String value) {
                         validator.clearErrorsAt('bankName');
@@ -334,10 +301,7 @@ class _KycDetailsState extends State<KycDetails> {
                       controller: _bankBranchController,
                       validator: validator.add(
                         key: 'bankBranch',
-                        rules: [
-                          ValidatorX.mandatory(
-                              message: 'Bank branch field is required'),
-                        ],
+                        rules: [ValidatorX.mandatory(message: 'Bank branch field is required')],
                       ),
                       onChanged: (String value) {
                         validator.clearErrorsAt('bankBranch');
@@ -349,12 +313,8 @@ class _KycDetailsState extends State<KycDetails> {
               ),
               const SizedBox(height: 10),
               Container(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-                decoration: boxDecoration(
-                  showShadow: true,
-                  bgColor: white_color,
-                ),
+                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                decoration: boxDecoration(showShadow: true, bgColor: white_color),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -398,13 +358,12 @@ class _KycDetailsState extends State<KycDetails> {
                     ? const SizedBox.shrink()
                     : Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: CustomButton(
+                        child: CustomButtonOld(
                           textContent: 'Submit',
                           onPressed: () async {
                             if (_kycFormKey.currentState!.validate()) {
                               setState(() {
-                                autovalidateMode =
-                                    AutovalidateMode.onUserInteraction;
+                                autovalidateMode = AutovalidateMode.onUserInteraction;
                               });
                               FocusScope.of(context).requestFocus(FocusNode());
                               dynamic panCardImageVapor;
@@ -414,15 +373,12 @@ class _KycDetailsState extends State<KycDetails> {
                               if (_cancelChequeImage != null) {
                                 chequeImageVapor = await Vapor.upload(
                                   _cancelChequeImage,
-                                  progressCallback:
-                                      (int? completed, int? total) {
+                                  progressCallback: (int? completed, int? total) {
                                     setState(() {
                                       if (completed != total) {
                                         uploadingCheque = true;
                                         progressStringCheque =
-                                            ((completed! / total!) * 100)
-                                                    .toStringAsFixed(0) +
-                                                "%";
+                                            ((completed! / total!) * 100).toStringAsFixed(0) + "%";
                                       } else {
                                         uploadingCheque = false;
                                       }
@@ -438,34 +394,30 @@ class _KycDetailsState extends State<KycDetails> {
                                 'accountType': accountType,
                                 'accountName': _accountNameController.text,
                                 'accountNumber': _accountNumberController.text,
-                                if (_cancelChequeImage != null)
-                                  'cancelChequeImage': chequeImageVapor,
+                                if (_cancelChequeImage != null) 'cancelChequeImage': chequeImageVapor,
                               };
                               Api.http
                                   .post('member/profile/kyc', data: sendData)
                                   .then((response) async {
-                                if (response.data['status']) {
-                                  Get.back();
-                                  AppUtils.showSuccessSnackBar(
-                                      response.data['message']);
-                                } else {
-                                  AppUtils.showErrorSnackBar(
-                                      response.data['message']);
-                                }
-                              }).catchError((error) {
-                                if (error.response.statusCode == 401 ||
-                                    error.response.statusCode == 403) {
-                                  AppUtils.showErrorSnackBar(
-                                      error.response.data['message']);
-                                }
-                                if (error.response.statusCode == 422) {
-                                  setState(() {
-                                    validator.setErrors(
-                                        error.response.data['errors']);
-                                    _errors = error.response.data['errors'];
+                                    if (response.data['status']) {
+                                      Get.back();
+                                      AppUtils.showSuccessSnackBar(response.data['message']);
+                                    } else {
+                                      AppUtils.showErrorSnackBar(response.data['message']);
+                                    }
+                                  })
+                                  .catchError((error) {
+                                    if (error.response.statusCode == 401 ||
+                                        error.response.statusCode == 403) {
+                                      AppUtils.showErrorSnackBar(error.response.data['message']);
+                                    }
+                                    if (error.response.statusCode == 422) {
+                                      setState(() {
+                                        validator.setErrors(error.response.data['errors']);
+                                        _errors = error.response.data['errors'];
+                                      });
+                                    }
                                   });
-                                }
-                              });
                             }
                           },
                         ),
@@ -486,7 +438,7 @@ class _KycDetailsState extends State<KycDetails> {
           text(
             'Upload Bank PassBook Front Page',
             fontSize: textSizeLargeMedium,
-            fontFamily: fontSemibold,
+            fontFamily: fontSemiBold,
             textColor: textColorPrimary,
             isLongText: true,
           ),
@@ -494,64 +446,55 @@ class _KycDetailsState extends State<KycDetails> {
             alignment: Alignment.topRight,
             children: <Widget>[
               Card(
-                  semanticContainer: true,
-                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                  margin: const EdgeInsets.all(spacing_control),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  child: Column(
-                    children: <Widget>[
-                      if (!uploadingCheque)
-                        _cancelChequeImage != null
-                            ? Image.file(
-                                _cancelChequeImage!,
-                                width: w(100),
-                                height: 200,
-                                fit: BoxFit.contain,
-                              )
-                            : kycData!['cancelChequeImage'] != null
-                                ? PNetworkImage(
-                                    kycData!['cancelChequeImage'],
-                                    width: w(100),
-                                    fit: BoxFit.contain,
-                                    height: 200,
-                                  )
-                                : Image.asset(
-                                    'assets/images/no_image.png',
-                                    width: w(100),
-                                    height: 200,
-                                    fit: BoxFit.contain,
-                                  ),
-                      if (uploadingCheque)
-                        Container(
-                          height: 200.0,
-                          width: w(100),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              const CircularProgressIndicator(),
-                              const SizedBox(height: 20.0),
-                              Text(
-                                "Uploading Image: $progressStringCheque ",
-                              )
-                            ],
-                          ),
-                        )
-                    ],
-                  )),
+                semanticContainer: true,
+                clipBehavior: Clip.antiAliasWithSaveLayer,
+                margin: const EdgeInsets.all(spacing_control),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+                child: Column(
+                  children: <Widget>[
+                    if (!uploadingCheque)
+                      _cancelChequeImage != null
+                          ? Image.file(_cancelChequeImage!, width: w(100), height: 200, fit: BoxFit.contain)
+                          : kycData!['cancelChequeImage'] != null
+                          ? PNetworkImage(
+                              kycData!['cancelChequeImage'],
+                              width: w(100),
+                              fit: BoxFit.contain,
+                              height: 200,
+                            )
+                          : Image.asset(
+                              'assets/images/no_image.png',
+                              width: w(100),
+                              height: 200,
+                              fit: BoxFit.contain,
+                            ),
+                    if (uploadingCheque)
+                      Container(
+                        height: 200.0,
+                        width: w(100),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            const CircularProgressIndicator(),
+                            const SizedBox(height: 20.0),
+                            Text("Uploading Image: $progressStringCheque "),
+                          ],
+                        ),
+                      ),
+                  ],
+                ),
+              ),
               Container(
                 padding: const EdgeInsets.all(spacing_control),
                 margin: const EdgeInsets.only(top: 15, right: 10),
                 decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: white_color,
-                    border: Border.all(color: colorPrimary)),
+                  shape: BoxShape.circle,
+                  color: white_color,
+                  border: Border.all(color: colorPrimary),
+                ),
                 child: GestureDetector(
                   onTap: () {
-                    GetImageFromDevice.instance
-                        .getImage(ImgSource.both, context)
-                        .then((file) {
+                    GetImageFromDevice.instance.getImage(ImgSource.both, context).then((file) {
                       if (file != null) {
                         _cancelChequeImage = file;
                         setState(() {});
@@ -559,28 +502,17 @@ class _KycDetailsState extends State<KycDetails> {
                     });
                     // getChequeImage(ImgSource.Both);
                   },
-                  child: Icon(
-                    Icons.camera_alt,
-                    color: colorPrimary,
-                    size: 20,
-                  ),
+                  child: Icon(Icons.camera_alt, color: colorPrimary, size: 20),
                 ),
               ),
             ],
           ),
-          if (_errors != null &&
-              _cancelChequeImage == null &&
-              _errors!.containsKey('cancel_cheque_image'))
+          if (_errors != null && _cancelChequeImage == null && _errors!.containsKey('cancel_cheque_image'))
             const SizedBox(height: 5),
-          if (_errors != null &&
-              _cancelChequeImage == null &&
-              _errors!.containsKey('cancel_cheque_image'))
+          if (_errors != null && _cancelChequeImage == null && _errors!.containsKey('cancel_cheque_image'))
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Text(
-                _errors!['cancel_cheque_image'][0],
-                style: const TextStyle(color: Colors.red),
-              ),
+              child: Text(_errors!['cancel_cheque_image'][0], style: const TextStyle(color: Colors.red)),
             ),
         ],
       ),

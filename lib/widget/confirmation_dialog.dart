@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:nb_utils/nb_utils.dart' hide white;
 
+import 'colors.dart';
 import 'theme.dart';
 
 class ConfirmationDialog extends StatelessWidget {
@@ -41,9 +42,7 @@ class ConfirmationDialog extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  decoration: boxDecorationDefault(
-                    color: white,
-                  ),
+                  decoration: boxDecorationDefault(color: white),
                   margin: EdgeInsets.symmetric(horizontal: 30.w),
                   padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 15.h),
                   child: Column(
@@ -70,12 +69,7 @@ class ConfirmationDialog extends StatelessWidget {
                               }
                             },
                             elevation: 0,
-                            child: text(
-                              'NO',
-                              fontFamily: fontBold,
-                              fontSize: 18.sp,
-                              textColor: white,
-                            ),
+                            child: text('NO', fontFamily: fontBold, fontSize: 18.sp, textColor: white),
                             color: colorPrimary,
                           ).cornerRadiusWithClipRRect(12),
                           20.width,
@@ -84,21 +78,17 @@ class ConfirmationDialog extends StatelessWidget {
                               onPositiveClick.call();
                             },
                             elevation: 0,
-                            child: text(
-                              'YES',
-                              fontFamily: fontBold,
-                              fontSize: 18.sp,
-                            ),
+                            child: text('YES', fontFamily: fontBold, fontSize: 18.sp),
                             color: Colors.grey,
                           ).cornerRadiusWithClipRRect(12),
                         ],
-                      )
+                      ),
                     ],
                   ),
                 ),
               ],
             ),
-          )
+          ),
         ],
       ),
     );

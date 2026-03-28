@@ -1,8 +1,10 @@
 import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myky_clone/services/api.dart';
 import 'package:myky_clone/widget/theme.dart';
+
 import '../../spin-wheel/spin_wheel.dart';
 import '../../utils/app_utils.dart';
 
@@ -88,10 +90,7 @@ class _RewardState extends State<Reward> {
         title: const Text("Locked Reward"),
         content: const Text("You need to unlock this reward first."),
         actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text("Close"),
-          ),
+          TextButton(onPressed: () => Navigator.pop(context), child: const Text("Close")),
           ElevatedButton(
             onPressed: () {
               Navigator.pop(context);
@@ -118,30 +117,17 @@ class _RewardState extends State<Reward> {
         automaticallyImplyLeading: false,
         toolbarHeight: 56,
         titleSpacing: 20,
-        title: Image.asset(
-          "assets/images/myky_new_logo_1.png",
-          height: 28,
-          width: 88,
-        ),
+        title: Image.asset("assets/images/myky_new_logo_1.png", height: 28, width: 88),
         actions: [
           IconButton(
-            icon: const Icon(
-              Icons.notifications_outlined,
-              color: Colors.black,
-              size: 24,
-            ),
+            icon: const Icon(Icons.notifications_outlined, color: Colors.black, size: 24),
             onPressed: () {},
           ),
           Padding(
             padding: const EdgeInsets.only(right: 12),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(40),
-              child: Image.asset(
-                profileImage,
-                height: 34,
-                width: 34,
-                fit: BoxFit.cover,
-              ),
+              child: Image.asset(profileImage, height: 34, width: 34, fit: BoxFit.cover),
             ),
           ),
         ],
@@ -158,11 +144,7 @@ class _RewardState extends State<Reward> {
                 child: Center(
                   child: Text(
                     "YOUR REWARDS",
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Color(0xFF0C2B87),
-                      fontFamily: fontLexendMedium,
-                    ),
+                    style: TextStyle(fontSize: 20, color: Color(0xFF0C2B87), fontFamily: fontSemiBold),
                   ),
                 ),
               ),
@@ -201,11 +183,7 @@ class _RewardState extends State<Reward> {
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Icon(
-                                      Icons.check_circle,
-                                      size: 14,
-                                      color: Color(0xFF0C58D7),
-                                    ),
+                                    Icon(Icons.check_circle, size: 14, color: Color(0xFF0C58D7)),
                                     SizedBox(width: 4),
                                     Text(
                                       "Redeemed",
@@ -231,31 +209,16 @@ class _RewardState extends State<Reward> {
                             decoration: BoxDecoration(
                               color: const Color(0xFFF4FBFF),
                               borderRadius: BorderRadius.circular(18),
-                              border: Border.all(
-                                color: const Color(0xFFBEE7F5),
-                                width: 2,
-                              ),
+                              border: Border.all(color: const Color(0xFFBEE7F5), width: 2),
                               boxShadow: const [
-                                BoxShadow(
-                                  color: Color(0x11000000),
-                                  blurRadius: 6,
-                                  offset: Offset(0, 2),
-                                ),
+                                BoxShadow(color: Color(0x11000000), blurRadius: 6, offset: Offset(0, 2)),
                               ],
                             ),
-                            padding: const EdgeInsets.only(
-                              top: 10,
-                              left: 12,
-                              right: 12,
-                            ),
+                            padding: const EdgeInsets.only(top: 10, left: 12, right: 12),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Icon(
-                                  Icons.card_giftcard_rounded,
-                                  color: Color(0xFF0C9ACB),
-                                  size: 30,
-                                ),
+                                const Icon(Icons.card_giftcard_rounded, color: Color(0xFF0C9ACB), size: 30),
                                 const SizedBox(height: 6),
                                 Text(
                                   "Reward #$spinId",
@@ -270,10 +233,7 @@ class _RewardState extends State<Reward> {
                                 const SizedBox(height: 2),
                                 Text(
                                   "Redeemed on ${item['redeemed_at'] ?? 'N/A'}",
-                                  style: const TextStyle(
-                                    fontSize: 11,
-                                    color: Color(0x88000000),
-                                  ),
+                                  style: const TextStyle(fontSize: 11, color: Color(0x88000000)),
                                 ),
                               ],
                             ),
@@ -290,17 +250,8 @@ class _RewardState extends State<Reward> {
                       borderRadius: BorderRadius.circular(18),
                       child: Stack(
                         children: [
-                          Positioned.fill(
-                            child: Image.asset(
-                              "assets/images/awards.png",
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          Positioned.fill(
-                            child: Container(
-                              color: const Color(0xFF0C1FB9).withOpacity(0.88),
-                            ),
-                          ),
+                          Positioned.fill(child: Image.asset("assets/images/awards.png", fit: BoxFit.cover)),
+                          Positioned.fill(child: Container(color: const Color(0xFF0C1FB9).withOpacity(0.88))),
                           Positioned.fill(
                             child: BackdropFilter(
                               filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
@@ -318,7 +269,7 @@ class _RewardState extends State<Reward> {
                                   style: TextStyle(
                                     fontSize: 12,
                                     color: Colors.white,
-                                    fontFamily: fontPoppinsMedium,
+                                    fontFamily: fontSemiBold,
                                   ),
                                 ),
                               ],

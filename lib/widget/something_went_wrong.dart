@@ -42,16 +42,16 @@ class _SomethingWentWrongState extends State<SomethingWentWrong> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      CustomButton(
+                      CustomButtonOld(
                         textContent: 'Back Home',
                         onPressed: () {
                           Get.offAllNamed('/ecommerce');
                         },
-                      )
+                      ),
                     ],
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),

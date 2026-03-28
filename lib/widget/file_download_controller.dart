@@ -12,6 +12,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../utils/app_utils.dart';
+import 'colors.dart';
 
 class FileDownloadCtrl {
   static int progressInt = 0;
@@ -59,17 +60,9 @@ class FileDownloadCtrl {
           try {
             getFile(url);
           } on Exception catch (exception) {
-            toast(
-              '${exception}exception',
-              bgColor: colorPrimary,
-              textColor: white,
-            );
+            toast('${exception}exception', bgColor: colorPrimary, textColor: white);
           } catch (error) {
-            toast(
-              '${error}error',
-              bgColor: colorPrimary,
-              textColor: white,
-            );
+            toast('${error}error', bgColor: colorPrimary, textColor: white);
           }
         }
       } else {}
@@ -106,8 +99,10 @@ class FileDownloadCtrl {
     try {
       await dio.download(url, filePath);
     } catch (e) {
-      AppUtils.showErrorSnackBar("We could not download, please check internet or try again later",
-          secondsToDisplay: 3);
+      AppUtils.showErrorSnackBar(
+        "We could not download, please check internet or try again later",
+        secondsToDisplay: 3,
+      );
     }
   }
 

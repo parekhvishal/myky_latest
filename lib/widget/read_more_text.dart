@@ -1,11 +1,9 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:myky_clone/widget/theme.dart';
 
-enum TrimMode {
-  Length,
-  Line,
-}
+import 'colors.dart';
+
+enum TrimMode { Length, Line }
 
 class ReadMoreText extends StatefulWidget {
   const ReadMoreText(
@@ -72,9 +70,7 @@ class ReadMoreTextState extends State<ReadMoreText> {
 
     TextSpan link = TextSpan(
       text: _readMore ? widget.trimCollapsedText : widget.trimExpandedText,
-      style: effectiveTextStyle!.copyWith(
-        color: colorClickableText,
-      ),
+      style: effectiveTextStyle!.copyWith(color: colorClickableText),
       recognizer: TapGestureRecognizer()..onTap = _onTapLink,
     );
 
@@ -84,10 +80,7 @@ class ReadMoreTextState extends State<ReadMoreText> {
         final double maxWidth = constraints.maxWidth;
 
         // Create a TextSpan with data
-        final text = TextSpan(
-          style: effectiveTextStyle,
-          text: widget.data,
-        );
+        final text = TextSpan(style: effectiveTextStyle, text: widget.data);
 
         // Layout and measure link
         TextPainter textPainter = TextPainter(
@@ -112,15 +105,12 @@ class ReadMoreTextState extends State<ReadMoreText> {
         int? endIndex;
 
         if (linkSize.width < maxWidth) {
-          final pos = textPainter.getPositionForOffset(Offset(
-            textSize.width - linkSize.width,
-            textSize.height,
-          ));
+          final pos = textPainter.getPositionForOffset(
+            Offset(textSize.width - linkSize.width, textSize.height),
+          );
           endIndex = textPainter.getOffsetBefore(pos.offset) ?? 0;
         } else {
-          var pos = textPainter.getPositionForOffset(
-            textSize.bottomLeft(Offset.zero),
-          );
+          var pos = textPainter.getPositionForOffset(textSize.bottomLeft(Offset.zero));
           endIndex = pos.offset;
           linkLongerThanLine = true;
         }
@@ -135,24 +125,20 @@ class ReadMoreTextState extends State<ReadMoreText> {
                 children: <TextSpan>[link],
               );
             } else {
-              textSpan = TextSpan(
-                style: effectiveTextStyle,
-                text: widget.data,
-              );
+              textSpan = TextSpan(style: effectiveTextStyle, text: widget.data);
             }
             break;
           case TrimMode.Line:
             if (textPainter.didExceedMaxLines) {
               textSpan = TextSpan(
                 style: effectiveTextStyle,
-                text: _readMore ? widget.data.substring(0, endIndex) + (linkLongerThanLine ? _kLineSeparator : '') : widget.data,
+                text: _readMore
+                    ? widget.data.substring(0, endIndex) + (linkLongerThanLine ? _kLineSeparator : '')
+                    : widget.data,
                 children: <TextSpan>[link],
               );
             } else {
-              textSpan = TextSpan(
-                style: effectiveTextStyle,
-                text: widget.data,
-              );
+              textSpan = TextSpan(style: effectiveTextStyle, text: widget.data);
             }
             break;
           default:
@@ -175,9 +161,7 @@ class ReadMoreTextState extends State<ReadMoreText> {
       result = Semantics(
         textDirection: widget.textDirection,
         label: widget.semanticsLabel,
-        child: ExcludeSemantics(
-          child: result,
-        ),
+        child: ExcludeSemantics(child: result),
       );
     }
     return result;

@@ -11,6 +11,7 @@ import 'package:nb_utils/nb_utils.dart' hide white;
 import '../../services/Vapor.dart';
 import '../../services/api.dart';
 import '../../services/validator_x.dart';
+import '../../widget/colors.dart';
 import '../../widget/image_picker.dart';
 import '../../widget/theme.dart';
 
@@ -34,14 +35,8 @@ class _ImageOrMessageState extends State<ImageOrMessage> {
     PickedFile? image = await ImagePickerGC.pickImage(
       context: context,
       source: source,
-      cameraIcon: Icon(
-        Boxicons.bx_camera,
-        color: colorPrimary,
-      ),
-      galleryIcon: Icon(
-        Boxicons.bx_image,
-        color: colorPrimary,
-      ),
+      cameraIcon: Icon(Boxicons.bx_camera, color: colorPrimary),
+      galleryIcon: Icon(Boxicons.bx_image, color: colorPrimary),
     );
     setState(() {
       _image = File(image!.path);
@@ -75,9 +70,7 @@ class _ImageOrMessageState extends State<ImageOrMessage> {
                     controller: _messageController,
                     maxLength: 190,
                     maxLines: 5,
-                    validator: validator.add(
-                      key: 'message',
-                    ),
+                    validator: validator.add(key: 'message'),
                     onChanged: (value) {
                       validator.clearErrorsAt('message');
                     },
@@ -103,9 +96,7 @@ class _ImageOrMessageState extends State<ImageOrMessage> {
                               semanticContainer: true,
                               clipBehavior: Clip.antiAliasWithSaveLayer,
                               margin: EdgeInsets.all(4.sp),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8.r),
-                              ),
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
                               child: Column(
                                 children: <Widget>[
                                   _image != null
@@ -129,10 +120,7 @@ class _ImageOrMessageState extends State<ImageOrMessage> {
                             ),
                             Container(
                               padding: EdgeInsets.all(4.sp),
-                              margin: EdgeInsets.only(
-                                top: 15.h,
-                                right: 10.w,
-                              ),
+                              margin: EdgeInsets.only(top: 15.h, right: 10.w),
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 color: white,
@@ -142,11 +130,7 @@ class _ImageOrMessageState extends State<ImageOrMessage> {
                                 onTap: () {
                                   getImage(ImgSource.gallery);
                                 },
-                                child: Icon(
-                                  Icons.camera_alt,
-                                  color: colorPrimary,
-                                  size: 20.sp,
-                                ),
+                                child: Icon(Icons.camera_alt, color: colorPrimary, size: 20.sp),
                               ),
                             ),
                           ],
@@ -155,25 +139,20 @@ class _ImageOrMessageState extends State<ImageOrMessage> {
                         if (_image == null && _errors.containsKey('image'))
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 20.w),
-                            child: text(
-                              _errors['image'][0],
-                              textColor: red,
-                            ),
+                            child: text(_errors['image'][0], textColor: red),
                           ),
                       ],
                     ),
                   ),
                   20.height,
-                  CustomButton(
+                  CustomButtonOld(
                     textContent: 'Send',
                     onPressed: () async {
                       if (_imageOrMessageKey.currentState!.validate()) {
                         FocusScope.of(context).requestFocus(FocusNode());
                         dynamic screenShot;
                         if (_image != null) {
-                          screenShot = await Vapor.upload(
-                            _image,
-                          );
+                          screenShot = await Vapor.upload(_image);
                         }
                         Map<String, dynamic> sendData = {
                           if (screenShot != null) 'image': screenShot,
@@ -183,30 +162,31 @@ class _ImageOrMessageState extends State<ImageOrMessage> {
 
                         Api.http
                             .post(
-                          'member/offline-store-complaint/update',
-                          data: sendData,
-                          // data: FormData.fromMap(sendData),
-                        )
+                              'member/offline-store-complaint/update',
+                              data: sendData,
+                              // data: FormData.fromMap(sendData),
+                            )
                             .then((res) async {
-                          if (res.data['status']) {
-                            Get.back();
-                          } else {
-                            GetSnackBar(
-                              backgroundColor: Colors.red,
-                              duration: const Duration(seconds: 3),
-                              message: res.data['message'],
-                            ).show();
-                          }
-                        }).catchError((error) {
-                          if (error.response.statusCode == 422) {
-                            setState(() {
-                              validator.setErrors(error.response.data['errors']);
+                              if (res.data['status']) {
+                                Get.back();
+                              } else {
+                                GetSnackBar(
+                                  backgroundColor: Colors.red,
+                                  duration: const Duration(seconds: 3),
+                                  message: res.data['message'],
+                                ).show();
+                              }
+                            })
+                            .catchError((error) {
+                              if (error.response.statusCode == 422) {
+                                setState(() {
+                                  validator.setErrors(error.response.data['errors']);
+                                });
+                              }
                             });
-                          }
-                        });
                       }
                     },
-                  )
+                  ),
                 ],
               ),
             ),

@@ -8,6 +8,7 @@ import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../widget/theme.dart';
+import 'colors.dart';
 
 class PaginatedList extends StatefulWidget {
   final String? pageTitle;
@@ -53,8 +54,7 @@ class PaginatedList extends StatefulWidget {
 }
 
 class PaginatedListState extends State<PaginatedList> {
-  final GlobalKey<RefreshIndicatorState> liquidRefreshIndicatorKey =
-      GlobalKey<RefreshIndicatorState>();
+  final GlobalKey<RefreshIndicatorState> liquidRefreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
   final GlobalKey<RefreshIndicatorState> refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
   final GlobalKey<PaginatorState> paginationKey = GlobalKey();
   SharedPreferences? preferences;
@@ -79,26 +79,21 @@ class PaginatedListState extends State<PaginatedList> {
             appBar: widget.pageTitle != null
                 ? AppBar(
                     elevation: 2.0,
-                    title: text(
-                      widget.pageTitle!,
-                      fontweight: FontWeight.bold,
-                    ),
-                    actions: widget.appBarAction != null
-                        ? widget.appBarAction
-                        : [
-                            IconButton(
-                              key: refreshIndicatorKey,
-                              onPressed: () {
-                                paginationKey.currentState!.changeState(
-                                  pageLoadFuture: pageLoadFuture,
-                                  resetState: true,
-                                );
-                              },
-                              icon: Icon(
-                                Icons.refresh,
-                              ),
-                            ),
-                          ],
+                    title: text(widget.pageTitle!, fontweight: FontWeight.bold),
+                    actions:
+                        widget.appBarAction ??
+                        [
+                          IconButton(
+                            key: refreshIndicatorKey,
+                            onPressed: () {
+                              paginationKey.currentState!.changeState(
+                                pageLoadFuture: pageLoadFuture,
+                                resetState: true,
+                              );
+                            },
+                            icon: Icon(Icons.refresh),
+                          ),
+                        ],
                   )
                 : null,
             body: widget.isPullToRefresh
@@ -125,7 +120,7 @@ class PaginatedListState extends State<PaginatedList> {
                             pageErrorChecker: pageErrorChecker,
                             scrollPhysics: BouncingScrollPhysics(),
                           ),
-                        )
+                        ),
                       ],
                     ),
                   )
@@ -183,28 +178,18 @@ class PaginatedListState extends State<PaginatedList> {
       return widget.loadingWidgetBuilder!();
     }
 
-    return Container(
-      alignment: Alignment.center,
-      height: 160.0,
-      child: CircularProgressIndicator(),
-    );
+    return Container(alignment: Alignment.center, height: 160.0, child: CircularProgressIndicator());
   }
 
   Widget errorWidgetBuilder(Pagination pagination, RetryListener retryListener) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Text(pagination.errorMessage!),
-        ),
+        Padding(padding: const EdgeInsets.all(16.0), child: Text(pagination.errorMessage!)),
         TextButton(
           onPressed: retryListener,
-          child: CustomButton(
-            textContent: 'Retry',
-            onPressed: retryListener,
-          ),
-        )
+          child: CustomButtonOld(textContent: 'Retry', onPressed: retryListener),
+        ),
       ],
     );
   }
@@ -219,7 +204,7 @@ class PaginatedListState extends State<PaginatedList> {
       child: emptyWidget(
         context,
         'assets/images/no_result.png',
-        "No Data Found in ${widget.pageTitle == null ? widget.noDataTitle : widget.pageTitle}",
+        "No Data Found in ${widget.pageTitle ?? widget.noDataTitle}",
         widget.isDescription ? "There was no record based on the details you entered." : "",
       ),
     );
@@ -258,7 +243,7 @@ class PaginatedListState extends State<PaginatedList> {
                     pageErrorChecker: pageErrorChecker,
                     scrollPhysics: BouncingScrollPhysics(),
                   ),
-                )
+                ),
               ],
             ),
           )

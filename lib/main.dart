@@ -38,12 +38,9 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   toast('${message.data}');
   toast('${message.notification}');
   RemoteNotification? notification = message.notification;
-  TextToSpeechWithTranslation textToSpeechWithTranslation =
-      TextToSpeechWithTranslation();
+  TextToSpeechWithTranslation textToSpeechWithTranslation = TextToSpeechWithTranslation();
   if (message.data['isAudio'] == "1") {
-    textToSpeechWithTranslation.speak(
-      message.data['message'],
-    );
+    textToSpeechWithTranslation.speak(message.data['message']);
   }
 }
 
@@ -54,8 +51,7 @@ const AndroidNotificationChannel channel = AndroidNotificationChannel(
   importance: Importance.high,
 );
 
-final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-    FlutterLocalNotificationsPlugin();
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -68,8 +64,7 @@ void main() async {
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   await flutterLocalNotificationsPlugin
-      .resolvePlatformSpecificImplementation<
-          AndroidFlutterLocalNotificationsPlugin>()
+      .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
       ?.createNotificationChannel(channel);
 
   await PushNotificationManager().init();
@@ -77,25 +72,25 @@ void main() async {
 
   Get.put<Cart>(Cart());
   await Get.putAsync(() => UPIAppService().init());
-  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-    statusBarIconBrightness: Brightness.light,
-  ));
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(statusBarIconBrightness: Brightness.light));
 
-  runApp(ScreenUtilInit(
-    designSize: const Size(375, 812),
-    minTextAdapt: true,
-    splitScreenMode: true,
-    useInheritedMediaQuery: true,
-    builder: (BuildContext context, Widget? child) {
-      return GetMaterialApp(
-        themeMode: ThemeMode.light,
-        debugShowCheckedModeBanner: false,
-        title: AppConfig.appName,
-        theme: buildThemeData(),
-        getPages: AppRouter.pages,
-        defaultTransition: Transition.leftToRightWithFade,
-        routingCallback: (routing) async {},
-      );
-    },
-  ));
+  runApp(
+    ScreenUtilInit(
+      designSize: const Size(375, 812),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      useInheritedMediaQuery: true,
+      builder: (BuildContext context, Widget? child) {
+        return GetMaterialApp(
+          themeMode: ThemeMode.light,
+          debugShowCheckedModeBanner: false,
+          title: AppConfig.appName,
+          theme: buildLightThemeData(),
+          getPages: AppRouter.pages,
+          defaultTransition: Transition.leftToRightWithFade,
+          routingCallback: (routing) async {},
+        );
+      },
+    ),
+  );
 }

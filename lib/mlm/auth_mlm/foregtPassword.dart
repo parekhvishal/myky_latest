@@ -6,6 +6,7 @@ import 'package:unicons/unicons.dart';
 import '../../services/api.dart';
 import '../../services/validator_x.dart';
 import '../../utils/app_utils.dart';
+import '../../widget/colors.dart';
 import '../../widget/theme.dart';
 
 class ForgotPassword extends StatefulWidget {
@@ -36,17 +37,15 @@ class _ForgotPasswordState extends State<ForgotPassword> {
             child: Column(
               children: <Widget>[
                 const SizedBox(height: 60.0),
-                Image.asset(
-                  logo,
-                  width: width / 1.3,
-                ),
+                Image.asset(logo, width: width / 1.3),
                 SizedBox(height: 20.0),
                 Center(
-                    child: text(
-                  "Enter your member ID and we’ll send your new password to your registered mobile number",
-                  isLongText: true,
-                  isCentered: true,
-                )),
+                  child: text(
+                    "Enter your member ID and we’ll send your new password to your registered mobile number",
+                    isLongText: true,
+                    isCentered: true,
+                  ),
+                ),
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Column(
@@ -54,7 +53,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                       SizedBox(height: 20.0),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                        child: formField(
+                        child: formFieldOld(
                           context,
                           "Member ID",
                           prefixIcon: UniconsLine.tag,
@@ -68,9 +67,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                           },
                           validator: validator.add(
                             key: 'code',
-                            rules: [
-                              ValidatorX.mandatory(message: 'The member ID field is required'),
-                            ],
+                            rules: [ValidatorX.mandatory(message: 'The member ID field is required')],
                           ),
                         ),
                       ),
@@ -79,7 +76,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                         padding: const EdgeInsets.all(8.0),
                         child: SizedBox(
                           width: double.infinity,
-                          child: CustomButton(
+                          child: CustomButtonOld(
                             textContent: 'Reset Password'.toUpperCase(),
                             onPressed: () {
                               if (_forgotPasswordFormKey.currentState!.validate()) {
@@ -87,21 +84,24 @@ class _ForgotPasswordState extends State<ForgotPassword> {
 
                                 Map sendData = {'code': _codeController.text};
 
-                                Api.http.put('member/forgot-password', data: sendData).then((response) {
-                                  if (response.data['status']) {
-                                    Get.back();
-                                    AppUtils.showSuccessSnackBar(response.data['message']);
-                                  } else {
-                                    AppUtils.showErrorSnackBar(response.data['error']);
-                                  }
-                                }).catchError((error) {
-                                  if (error.response.statusCode == 422) {
-                                    validator.setErrors(error.response.data['error']);
-                                    setState(() {
-                                      validator.setErrors(error.response.data['errors']);
+                                Api.http
+                                    .put('member/forgot-password', data: sendData)
+                                    .then((response) {
+                                      if (response.data['status']) {
+                                        Get.back();
+                                        AppUtils.showSuccessSnackBar(response.data['message']);
+                                      } else {
+                                        AppUtils.showErrorSnackBar(response.data['error']);
+                                      }
+                                    })
+                                    .catchError((error) {
+                                      if (error.response.statusCode == 422) {
+                                        validator.setErrors(error.response.data['error']);
+                                        setState(() {
+                                          validator.setErrors(error.response.data['errors']);
+                                        });
+                                      }
                                     });
-                                  }
-                                });
                               }
                             },
                           ),
@@ -115,11 +115,8 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                               TextSpan(text: "Back to "),
                               TextSpan(
                                 text: "Login",
-                                style: TextStyle(
-                                  color: colorAccent,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              )
+                                style: TextStyle(color: colorAccent, fontWeight: FontWeight.w600),
+                              ),
                             ],
                           ),
                           textAlign: TextAlign.center,

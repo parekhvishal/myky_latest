@@ -4,6 +4,7 @@ import 'package:nb_utils/nb_utils.dart' hide white;
 import '../../../../services/api.dart';
 import '../../../../widget/paginated_list.dart';
 import '../../../../widget/theme.dart';
+import '../../widget/colors.dart';
 
 class VendorWalletTransactionOld extends StatefulWidget {
   const VendorWalletTransactionOld({Key? key}) : super(key: key);
@@ -41,80 +42,46 @@ class VendorWalletTransactionOldState extends State<VendorWalletTransactionOld> 
                     padding: EdgeInsets.symmetric(horizontal: 4, vertical: 2),
                     decoration: BoxDecoration(
                       color: item['type'] == 'Credit' ? Colors.green : Colors.red,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(5),
-                      ),
+                      borderRadius: BorderRadius.all(Radius.circular(5)),
                     ),
                     child: text(
                       item['type'],
                       textColor: white,
                       textAllCaps: true,
-                      fontFamily: fontSemibold,
+                      fontFamily: fontSemiBold,
                       fontSize: textSizeSMedium,
                     ),
                   ),
                 ],
               ),
               10.height,
-              Divider(
-                height: 3,
-                color: colorPrimary_light.withOpacity(0.5),
-                thickness: 1.2,
-              ),
+              Divider(height: 3, color: colorPrimary_light.withOpacity(0.5), thickness: 1.2),
               Row(
                 children: [
-                  text(
-                    'Amount: ',
-                    textColor: textColorSecondary,
-                    fontSize: textSizeSMedium,
-                  ),
+                  text('Amount: ', textColor: textColorSecondary, fontSize: textSizeSMedium),
                   10.width,
-                  text(
-                    '\₹ ${item['amount']}',
-                    textColor: green,
-                  ),
+                  text('\₹ ${item['amount']}', textColor: green),
                 ],
               ),
               Row(
                 children: [
-                  text(
-                    'Profit Shared: ',
-                    textColor: textColorSecondary,
-                    fontSize: textSizeSMedium,
-                  ),
+                  text('Profit Shared: ', textColor: textColorSecondary, fontSize: textSizeSMedium),
                   10.width,
-                  text(
-                    '\₹ ${item['companyCharge']}',
-                    textColor: green,
-                  ),
+                  text('\₹ ${item['companyCharge']}', textColor: green),
                 ],
               ),
               Row(
                 children: [
-                  text(
-                    'GST Amount: ',
-                    textColor: textColorSecondary,
-                    fontSize: textSizeSMedium,
-                  ),
+                  text('GST Amount: ', textColor: textColorSecondary, fontSize: textSizeSMedium),
                   10.width,
-                  text(
-                    '\₹ ${item['gstAmount']}',
-                    textColor: green,
-                  ),
+                  text('\₹ ${item['gstAmount']}', textColor: green),
                 ],
               ),
               Row(
                 children: [
-                  text(
-                    'Payable Amount: ',
-                    textColor: textColorSecondary,
-                    fontSize: textSizeSMedium,
-                  ),
+                  text('Payable Amount: ', textColor: textColorSecondary, fontSize: textSizeSMedium),
                   10.width,
-                  text(
-                    '\₹ ${item['total']}',
-                    textColor: green,
-                  ),
+                  text('\₹ ${item['total']}', textColor: green),
                 ],
               ),
               // Row(

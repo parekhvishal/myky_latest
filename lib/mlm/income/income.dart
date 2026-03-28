@@ -3,6 +3,7 @@ import 'package:unicons/unicons.dart';
 
 import '../../services/api.dart';
 import '../../services/size_config.dart';
+import '../../widget/colors.dart';
 import '../../widget/paginated_list.dart';
 import '../../widget/theme.dart';
 import '../common_list.dart';
@@ -32,8 +33,7 @@ class _IncomesState extends State<Incomes> {
                       SizedBox(
                         width: MediaQuery.of(context).size.width,
                         child: TabBar(
-                          labelPadding:
-                              const EdgeInsets.only(left: 0, right: 0),
+                          labelPadding: const EdgeInsets.only(left: 0, right: 0),
                           indicatorWeight: 4.0,
                           indicatorSize: TabBarIndicatorSize.label,
                           indicatorColor: colorPrimary,
@@ -45,56 +45,49 @@ class _IncomesState extends State<Incomes> {
                               padding: const EdgeInsets.all(8.0),
                               child: const Text(
                                 'Offline Store Rewards',
-                                style: TextStyle(
-                                    fontSize: 18.0, fontFamily: fontBold),
+                                style: TextStyle(fontSize: 18.0, fontFamily: fontBold),
                               ),
                             ),
                             Container(
                               padding: const EdgeInsets.all(8.0),
                               child: const Text(
                                 'Online Store Rewards',
-                                style: TextStyle(
-                                    fontSize: 18.0, fontFamily: fontBold),
+                                style: TextStyle(fontSize: 18.0, fontFamily: fontBold),
                               ),
                             ),
                             Container(
                               padding: const EdgeInsets.all(8.0),
                               child: const Text(
                                 'Self Purchase Cashback',
-                                style: TextStyle(
-                                    fontSize: 18.0, fontFamily: fontBold),
+                                style: TextStyle(fontSize: 18.0, fontFamily: fontBold),
                               ),
                             ),
                             Container(
                               padding: const EdgeInsets.all(8.0),
                               child: const Text(
                                 'Shops Sales Share',
-                                style: TextStyle(
-                                    fontSize: 18.0, fontFamily: fontBold),
+                                style: TextStyle(fontSize: 18.0, fontFamily: fontBold),
                               ),
                             ),
                             Container(
                               padding: const EdgeInsets.all(8.0),
                               child: const Text(
                                 'Share & Earn Rewards',
-                                style: TextStyle(
-                                    fontSize: 18.0, fontFamily: fontBold),
+                                style: TextStyle(fontSize: 18.0, fontFamily: fontBold),
                               ),
                             ),
                             Container(
                               padding: const EdgeInsets.all(12.0),
                               child: const Text(
                                 'Recharge cashback',
-                                style: TextStyle(
-                                    fontSize: 18.0, fontFamily: fontBold),
+                                style: TextStyle(fontSize: 18.0, fontFamily: fontBold),
                               ),
                             ),
                             Container(
                               padding: const EdgeInsets.all(8.0),
                               child: const Text(
                                 'DTH cashback',
-                                style: TextStyle(
-                                    fontSize: 18.0, fontFamily: fontBold),
+                                style: TextStyle(fontSize: 18.0, fontFamily: fontBold),
                               ),
                             ),
                           ],
@@ -111,56 +104,49 @@ class _IncomesState extends State<Incomes> {
                 PaginatedList(
                   noDataTitle: 'Offline Store Rewards',
                   apiFuture: (int page) async {
-                    return Api.http
-                        .get("member/incomes/offline-store-income?page=$page");
+                    return Api.http.get("member/incomes/offline-store-income?page=$page");
                   },
                   listItemBuilder: _offlineStoreIncomeBuilder,
                 ),
                 PaginatedList(
                   noDataTitle: 'Online Store Rewards',
                   apiFuture: (int page) async {
-                    return Api.http
-                        .get("member/incomes/online-store-income?page=$page");
+                    return Api.http.get("member/incomes/online-store-income?page=$page");
                   },
                   listItemBuilder: _onlineStoreIncomeBuilder,
                 ),
                 PaginatedList(
                   noDataTitle: 'Self Purchase Rewards',
                   apiFuture: (int page) async {
-                    return Api.http.get(
-                        "member/incomes/self-purchase-discount?page=$page");
+                    return Api.http.get("member/incomes/self-purchase-discount?page=$page");
                   },
                   listItemBuilder: _selfPurchaseIncomeBuilder,
                 ),
                 PaginatedList(
                   noDataTitle: 'Shop Sales Share',
                   apiFuture: (int page) async {
-                    return Api.http
-                        .get("member/incomes/shop-sponsor-income?page=$page");
+                    return Api.http.get("member/incomes/shop-sponsor-income?page=$page");
                   },
                   listItemBuilder: _salesProfitIncomeBuilder,
                 ),
                 PaginatedList(
                   noDataTitle: 'Share & Earn Rewards',
                   apiFuture: (int page) async {
-                    return Api.http
-                        .get("member/incomes/share-and-earn-income?page=$page");
+                    return Api.http.get("member/incomes/share-and-earn-income?page=$page");
                   },
                   listItemBuilder: _shareEarnIncomeBuilder,
                 ),
                 PaginatedList(
                   noDataTitle: 'Mobile Recharge Rewards',
                   apiFuture: (int page) async {
-                    return Api.http.get(
-                        "member/incomes/mobile-recharge-income?page=$page");
+                    return Api.http.get("member/incomes/mobile-recharge-income?page=$page");
                   },
                   listItemBuilder: _mobileRechargeIncomeBuilder,
                 ),
                 PaginatedList(
                   noDataTitle: 'DTH Recharge Rewards',
                   apiFuture: (int page) async {
-                    return Api.http
-                        .get("member/incomes/dth-recharge-income?page=$page");
+                    return Api.http.get("member/incomes/dth-recharge-income?page=$page");
                   },
                   listItemBuilder: _dthRechargeBuilder,
                 ),
@@ -220,15 +206,8 @@ class _IncomesState extends State<Incomes> {
   Widget _promotorSponsorIncomeBuilder(dynamic promoterIncome, int index) {
     return Container(
       width: w(80),
-      decoration: boxDecoration(
-        showShadow: true,
-        bgColor: white,
-        radius: 10.0,
-      ),
-      margin: const EdgeInsets.symmetric(
-        horizontal: 7.5,
-        vertical: 7.5,
-      ),
+      decoration: boxDecoration(showShadow: true, bgColor: white, radius: 10.0),
+      margin: const EdgeInsets.symmetric(horizontal: 7.5, vertical: 7.5),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
         child: Row(
@@ -247,24 +226,15 @@ class _IncomesState extends State<Incomes> {
                         child: CircleAvatar(
                           backgroundColor: colorPrimary.withOpacity(0.2),
                           radius: 20,
-                          child: Icon(
-                            UniconsLine.rupee_sign,
-                            color: colorPrimary,
-                            size: textSizeXLarge,
-                          ),
+                          child: Icon(UniconsLine.rupee_sign, color: colorPrimary, size: textSizeXLarge),
                         ),
                       ),
                       SizedBox(width: w(4)),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: <Widget>[
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          text(
-                            promoterIncome['createdAt'],
-                            fontFamily: fontBold,
-                          ),
+                          const SizedBox(height: 5),
+                          text(promoterIncome['createdAt'], fontFamily: fontBold),
                         ],
                       ),
                     ],
@@ -273,52 +243,30 @@ class _IncomesState extends State<Incomes> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      text(
-                        "Amount (₹) :",
-                        fontFamily: fontBold,
-                      ),
-                      text(
-                        promoterIncome['amount'],
-                        textColor: textColorSecondary,
-                      ),
+                      text("Amount (₹) :", fontFamily: fontBold),
+                      text(promoterIncome['amount'], textColor: textColorSecondary),
                     ],
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      text(
-                        "TDS (₹) :",
-                        fontFamily: fontBold,
-                      ),
-                      text(
-                        promoterIncome['tds'],
-                        textColor: textColorSecondary,
-                        fontSize: textSizeSMedium,
-                      ),
+                      text("TDS (₹) :", fontFamily: fontBold),
+                      text(promoterIncome['tds'], textColor: textColorSecondary, fontSize: textSizeSMedium),
                     ],
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      text(
-                        "Total (₹) :",
-                        fontFamily: fontBold,
-                      ),
+                      text("Total (₹) :", fontFamily: fontBold),
                       const SizedBox(height: 4),
-                      text(
-                        promoterIncome['total'],
-                        textColor: textColorSecondary,
-                      ),
+                      text(promoterIncome['total'], textColor: textColorSecondary),
                     ],
                   ),
                   // Divider(height: 25),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
-                      text(
-                        "Remark :",
-                        fontFamily: fontBold,
-                      ),
+                      text("Remark :", fontFamily: fontBold),
                       const SizedBox(width: 6),
                       Expanded(
                         child: text(
@@ -356,7 +304,6 @@ class _IncomesState extends State<Incomes> {
     );
   }
 }
-
 
 class IncomeListCard extends StatelessWidget {
   final dynamic data;

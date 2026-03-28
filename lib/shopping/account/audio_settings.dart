@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nb_utils/nb_utils.dart';
+
 import '../../services/api.dart';
 import '../../services/auth.dart';
 import '../../utils/app_utils.dart';
+import '../../widget/colors.dart';
 import '../../widget/theme.dart';
-import 'package:nb_utils/nb_utils.dart';
 
 class AudioSettings extends StatefulWidget {
   const AudioSettings({Key? key}) : super(key: key);
@@ -37,14 +39,12 @@ class _AudioSettingsState extends State<AudioSettings> {
     setState(() {
       isSwitched = !isSwitched;
     });
-    Api.httpWithoutLoader.post('member/audio-settings', data: {
-      'is_audio': (isSwitched) ? 1 : 2,
-    }).then((response) {
+    Api.httpWithoutLoader.post('member/audio-settings', data: {'is_audio': (isSwitched) ? 1 : 2}).then((
+      response,
+    ) {
       if (response.data['status']) {
         Get.back();
-        Auth.setAudioSetting(
-          audio: (isSwitched) ? 1 : 2,
-        );
+        Auth.setAudioSetting(audio: (isSwitched) ? 1 : 2);
         AppUtils.showSuccessSnackBar('Your Settings has been saved successfully');
       } else {
         AppUtils.showErrorSnackBar(response.data['message']);
@@ -55,11 +55,7 @@ class _AudioSettingsState extends State<AudioSettings> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Audio Settings',
-        ),
-      ),
+      appBar: AppBar(title: Text('Audio Settings')),
       body: Container(
         padding: EdgeInsets.all(12),
         child: Column(
@@ -78,11 +74,7 @@ class _AudioSettingsState extends State<AudioSettings> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                text(
-                  'Your current Setting',
-                  fontFamily: fontMedium,
-                  fontSize: textSizeLargeMedium,
-                ),
+                text('Your current Setting', fontFamily: fontMedium, fontSize: textSizeLargeMedium),
                 Transform.scale(
                   scale: 1.5,
                   child: Switch(

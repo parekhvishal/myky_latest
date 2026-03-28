@@ -4,6 +4,7 @@ import 'package:nb_utils/nb_utils.dart';
 
 import '../../services/api.dart';
 import '../../utils/app_utils.dart';
+import '../../widget/colors.dart';
 import '../../widget/theme.dart';
 
 class VendorToCustomer extends StatefulWidget {
@@ -32,9 +33,7 @@ class _VendorToCustomerState extends State<VendorToCustomer> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Vendor-Customer'),
-      ),
+      appBar: AppBar(title: Text('Vendor-Customer')),
       backgroundColor: whiteColor,
       body: FutureBuilder(
         future: _future,
@@ -70,29 +69,19 @@ class _VendorToCustomerState extends State<VendorToCustomer> {
 
   Widget _languageVideoBuilder(item) {
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        vertical: 10.0,
-        horizontal: 15,
-      ),
-      child: CircleAvatar(
-        radius: 50,
-        backgroundColor: colorPrimary.withOpacity(0.65),
-        child: text(
-          item['language'],
-          fontFamily: fontBold,
-          textColor: whiteColor,
-          isCentered: true,
-        ),
-      ).onTap(() {
-        if (item['link'] != null) {
-          Get.toNamed(
-            '/pdf-viewer',
-            arguments: item['link'],
-          );
-        } else {
-          AppUtils.showErrorSnackBar('PDF not found');
-        }
-      }),
+      padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15),
+      child:
+          CircleAvatar(
+            radius: 50,
+            backgroundColor: colorPrimary.withOpacity(0.65),
+            child: text(item['language'], fontFamily: fontBold, textColor: whiteColor, isCentered: true),
+          ).onTap(() {
+            if (item['link'] != null) {
+              Get.toNamed('/pdf-viewer', arguments: item['link']);
+            } else {
+              AppUtils.showErrorSnackBar('PDF not found');
+            }
+          }),
     );
   }
 }

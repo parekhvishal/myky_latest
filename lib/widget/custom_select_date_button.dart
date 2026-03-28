@@ -3,6 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:myky_clone/widget/theme.dart';
 import 'package:nb_utils/nb_utils.dart';
 
+import 'colors.dart';
+
 class CustomSelectDateContainer extends StatelessWidget {
   final String title;
   final GestureTapCallback onTap;
@@ -22,10 +24,7 @@ class CustomSelectDateContainer extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 5.w),
       decoration: boxDecorationDefault(
         borderRadius: radius(10.r),
-        border: Border.all(
-          width: 1.w,
-          color: gray,
-        ),
+        border: Border.all(width: 1.w, color: gray),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -34,34 +33,19 @@ class CustomSelectDateContainer extends StatelessWidget {
           Container(
             width: 20.sp,
             height: 20.sp,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: colorPrimary.withOpacity(0.8),
-            ),
-            child: Icon(
-              Icons.calendar_month,
-              size: 13.sp,
-              color: Colors.white,
-            ),
+            decoration: BoxDecoration(shape: BoxShape.circle, color: colorPrimary.withOpacity(0.8)),
+            child: Icon(Icons.calendar_month, size: 13.sp, color: Colors.white),
           ),
           Padding(
             padding: EdgeInsets.all(8.sp),
-            child: text(
-              title,
-              fontSize: 12.sp,
-              fontFamily: fontMedium,
-            ),
+            child: text(title, fontSize: 12.sp, fontFamily: fontMedium),
           ),
           isCloseVisible == true
               ? GestureDetector(
                   onTap: onTap,
-                  child: Icon(
-                    Icons.close,
-                    size: 20.sp,
-                    color: redColor,
-                  ),
+                  child: Icon(Icons.close, size: 20.sp, color: redColor),
                 )
-              : const SizedBox()
+              : const SizedBox(),
         ],
       ),
     );

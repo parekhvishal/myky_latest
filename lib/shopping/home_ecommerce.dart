@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner_plus/flutter_barcode_scanner_plus.dart';
-import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myky_clone/utils/en_extensions.dart';
@@ -17,7 +16,6 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../../services/CountCtl.dart';
 import '../../../services/auth.dart';
 import '../../../widget/customWidget.dart';
-import '../../../widget/product_widget.dart';
 import '../../services/api.dart';
 import '../../services/cart_service.dart';
 import '../../services/dynamic_link.dart';
@@ -28,11 +26,11 @@ import '../../utils/app_utils.dart';
 import '../../widget/guest_login_service.dart';
 import '../../widget/theme.dart';
 import '../services/announcement_service.dart';
+import '../widget/colors.dart';
 import '../widget/network_image.dart';
 import '../widget/shiny_title.dart';
 import 'account/my_account.dart';
 import 'category/category.dart';
-import 'filter/filter_page.dart';
 import 'order/my_orders.dart';
 import 'recharge/recharge_page.dart';
 
@@ -113,68 +111,66 @@ class _HomeECommerceState extends State<HomeECommerce> {
 
   Future<bool> _onWillPop() {
     if (_selectedIndex == 0) {
-      Get.dialog(Dialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
-        insetPadding: const EdgeInsets.all(25),
-        clipBehavior: Clip.antiAliasWithSaveLayer,
-        child: Material(
-          child: Container(
-            decoration: new BoxDecoration(
-              color: Colors.white,
-              shape: BoxShape.rectangle,
-              borderRadius: BorderRadius.circular(16),
-              boxShadow: [
-                const BoxShadow(
-                  color: Colors.black26,
-                  blurRadius: 10.0,
-                  offset: Offset(0.0, 10.0),
-                ),
-              ],
-            ),
-            width: MediaQuery.of(context).size.width,
-            child: Column(
-              mainAxisSize: MainAxisSize.min, // To make the card compact
-              children: <Widget>[
-                const SizedBox(height: 24),
-                // SizedBox(height: 15),
-                text(
-                  'Are you sure?\n Do you want to exit an App',
-                  textColor: textColorPrimary,
-                  fontFamily: fontBold,
-                  fontSize: textSizeLargeMedium,
-                  isCentered: true,
-                  isLongText: true,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    TextButton(
-                      onPressed: () => Navigator.of(context).pop(false),
-                      child: text(
-                        'No',
-                        fontSize: textSizeLargeMedium,
-                        fontFamily: fontBold,
-                        textColor: green,
+      Get.dialog(
+        Dialog(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+          insetPadding: const EdgeInsets.all(25),
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          child: Material(
+            child: Container(
+              decoration: new BoxDecoration(
+                color: Colors.white,
+                shape: BoxShape.rectangle,
+                borderRadius: BorderRadius.circular(16),
+                boxShadow: [
+                  const BoxShadow(color: Colors.black26, blurRadius: 10.0, offset: Offset(0.0, 10.0)),
+                ],
+              ),
+              width: MediaQuery.of(context).size.width,
+              child: Column(
+                mainAxisSize: MainAxisSize.min, // To make the card compact
+                children: <Widget>[
+                  const SizedBox(height: 24),
+                  // SizedBox(height: 15),
+                  text(
+                    'Are you sure?\n Do you want to exit an App',
+                    textColor: textColorPrimary,
+                    fontFamily: fontBold,
+                    fontSize: textSizeLargeMedium,
+                    isCentered: true,
+                    isLongText: true,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      TextButton(
+                        onPressed: () => Navigator.of(context).pop(false),
+                        child: text(
+                          'No',
+                          fontSize: textSizeLargeMedium,
+                          fontFamily: fontBold,
+                          textColor: green,
+                        ),
                       ),
-                    ),
-                    TextButton(
-                      onPressed: () async {
-                        SystemNavigator.pop();
-                      },
-                      child: text(
-                        'Yes',
-                        fontSize: textSizeLargeMedium,
-                        fontFamily: fontBold,
-                        textColor: red,
+                      TextButton(
+                        onPressed: () async {
+                          SystemNavigator.pop();
+                        },
+                        child: text(
+                          'Yes',
+                          fontSize: textSizeLargeMedium,
+                          fontFamily: fontBold,
+                          textColor: red,
+                        ),
                       ),
-                    ),
-                  ],
-                )
-              ],
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),
-      ));
+      );
     } else {
       setState(() {
         _selectedIndex = 0;
@@ -193,9 +189,12 @@ class _HomeECommerceState extends State<HomeECommerce> {
     if (index == 2) {
       onSelectBehaviour(index);
     } else if (index == 3 && !Auth.check()!) {
-      AppUtils.redirect('/login-mlm', callWhileBack: () {
-        Get.offAllNamed('ecommerce');
-      });
+      AppUtils.redirect(
+        '/login-mlm',
+        callWhileBack: () {
+          Get.offAllNamed('ecommerce');
+        },
+      );
     } else if (index == 4) {
       onSelectBehaviour(index);
     } else {
@@ -219,15 +218,13 @@ class _HomeECommerceState extends State<HomeECommerce> {
   Future scanQR() async {
     dynamic barcodeScanRes;
     try {
-      barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
-          '#ff6666', 'Cancel', false, ScanMode.QR);
+      barcodeScanRes = await FlutterBarcodeScanner.scanBarcode('#ff6666', 'Cancel', false, ScanMode.QR);
 
       if (barcodeScanRes != '-1') {
         if (isJson(barcodeScanRes) == true) {
           Get.toNamed('/qr-view', arguments: barcodeScanRes);
         } else {
-          if (barcodeScanRes.isNotEmpty &&
-              barcodeScanRes.contains('https://myky-')) {
+          if (barcodeScanRes.isNotEmpty && barcodeScanRes.contains('https://myky-')) {
             launchUrl(Uri.parse(barcodeScanRes));
           } else {
             AppUtils.showErrorSnackBar('Not a valid MYKY QR');
@@ -246,123 +243,100 @@ class _HomeECommerceState extends State<HomeECommerce> {
       });
     } else {
       Get.bottomSheet(
-        StatefulBuilder(builder: (BuildContext context,
-            void Function(void Function()) setDialogState) {
-          return Container(
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.only(
+        StatefulBuilder(
+          builder: (BuildContext context, void Function(void Function()) setDialogState) {
+            return Container(
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.only(
                   topRight: Radius.circular(20.0),
-                  topLeft: Radius.circular(20.0)),
-              color: white,
-            ),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const SizedBox(
-                    height: 12,
-                  ),
-                  Align(
-                    alignment: Alignment.topRight,
-                    child: const Icon(
-                      UniconsLine.times_circle,
-                      color: Colors.grey,
-                    ).onTap(() {
-                      Get.back();
-                    }),
-                  ),
-                  20.height,
-                  AppButton(
-                    shapeBorder:
-                        RoundedRectangleBorder(borderRadius: radius(10)),
-                    elevation: 30,
-                    width: double.infinity,
-                    color: const Color(0xff9afdcd),
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 15,
-                      horizontal: 20,
-                    ),
-                    onTap: () {
-                      Get.back();
-                      showBottomSheet(context, index);
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            const Icon(UniconsLine.user),
-                            10.width,
-                            const Text(
-                              'Login as a guest',
-                              style: TextStyle(
-                                fontFamily: fontBold,
-                                color: black,
-                                fontSize: 16,
-                              ),
-                            ),
-                          ],
-                        ),
-                        const Icon(Icons.chevron_right_rounded),
-                      ],
-                    ),
-                  ),
-                  20.height,
-                  AppButton(
-                    shapeBorder:
-                        RoundedRectangleBorder(borderRadius: radius(10)),
-                    elevation: 30,
-                    width: double.infinity,
-                    color: const Color(0xff6153d3),
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 15, horizontal: 20),
-                    onTap: () {
-                      Get.back();
-                      AppUtils.redirect(
-                        'login-mlm',
-                        callWhileBackWithValue: (value) {
-                          setState(() {
-                            Cart.instance.fetchCartList();
-
-                            _selectedIndex = 0;
-                          });
-                        },
-                      );
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            const Icon(
-                              UniconsLine.user_arrows,
-                              color: Colors.white,
-                            ),
-                            10.width,
-                            const Text(
-                              'Login as a myky member',
-                              style: TextStyle(
-                                fontFamily: fontBold,
-                                color: white,
-                                fontSize: 16,
-                              ),
-                            ),
-                          ],
-                        ),
-                        const Icon(
-                          Icons.chevron_right_rounded,
-                          color: Colors.white,
-                        ),
-                      ],
-                    ),
-                  ),
-                  20.height,
-                ],
+                  topLeft: Radius.circular(20.0),
+                ),
+                color: white,
               ),
-            ),
-          );
-        }),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const SizedBox(height: 12),
+                    Align(
+                      alignment: Alignment.topRight,
+                      child: const Icon(UniconsLine.times_circle, color: Colors.grey).onTap(() {
+                        Get.back();
+                      }),
+                    ),
+                    20.height,
+                    AppButton(
+                      shapeBorder: RoundedRectangleBorder(borderRadius: radius(10)),
+                      elevation: 30,
+                      width: double.infinity,
+                      color: const Color(0xff9afdcd),
+                      padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                      onTap: () {
+                        Get.back();
+                        showBottomSheet(context, index);
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              const Icon(UniconsLine.user),
+                              10.width,
+                              const Text(
+                                'Login as a guest',
+                                style: TextStyle(fontFamily: fontBold, color: black, fontSize: 16),
+                              ),
+                            ],
+                          ),
+                          const Icon(Icons.chevron_right_rounded),
+                        ],
+                      ),
+                    ),
+                    20.height,
+                    AppButton(
+                      shapeBorder: RoundedRectangleBorder(borderRadius: radius(10)),
+                      elevation: 30,
+                      width: double.infinity,
+                      color: const Color(0xff6153d3),
+                      padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                      onTap: () {
+                        Get.back();
+                        AppUtils.redirect(
+                          'login-mlm',
+                          callWhileBackWithValue: (value) {
+                            setState(() {
+                              Cart.instance.fetchCartList();
+
+                              _selectedIndex = 0;
+                            });
+                          },
+                        );
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              const Icon(UniconsLine.user_arrows, color: Colors.white),
+                              10.width,
+                              const Text(
+                                'Login as a myky member',
+                                style: TextStyle(fontFamily: fontBold, color: white, fontSize: 16),
+                              ),
+                            ],
+                          ),
+                          const Icon(Icons.chevron_right_rounded, color: Colors.white),
+                        ],
+                      ),
+                    ),
+                    20.height,
+                  ],
+                ),
+              ),
+            );
+          },
+        ),
       );
     }
   }
@@ -372,7 +346,9 @@ class _HomeECommerceState extends State<HomeECommerce> {
     return WillPopScope(
       onWillPop: () async {
         // final bool shouldShowExitDialog = Get.arguments != null && Get.arguments == true;
-        final bool shouldShowExitDialog= Auth.isMLMLoggedIn == false && Auth.isGuestLoggedIn == true ? true : false;
+        final bool shouldShowExitDialog = Auth.isMLMLoggedIn == false && Auth.isGuestLoggedIn == true
+            ? true
+            : false;
         if (_selectedIndex != 0) {
           setState(() {
             _selectedIndex = 0;
@@ -406,20 +382,14 @@ class _HomeECommerceState extends State<HomeECommerce> {
                           backgroundColor: const Color(0xFF6366F1),
                           foregroundColor: Colors.white,
                           elevation: 12.0,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(25),
-                          ),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
                           icon: Container(
                             padding: const EdgeInsets.all(2),
                             decoration: BoxDecoration(
                               color: Colors.white.withOpacity(0.2),
                               borderRadius: BorderRadius.circular(8),
                             ),
-                            child: const Icon(
-                              UniconsLine.qrcode_scan,
-                              size: 20,
-                              color: Colors.white,
-                            ),
+                            child: const Icon(UniconsLine.qrcode_scan, size: 20, color: Colors.white),
                           ),
                           label: const Text(
                             'Scan & Pay',
@@ -438,20 +408,14 @@ class _HomeECommerceState extends State<HomeECommerce> {
                           backgroundColor: const Color(0xFF6366F1),
                           foregroundColor: Colors.white,
                           elevation: 12.0,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16),
-                          ),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
                           child: Container(
                             padding: const EdgeInsets.all(8),
                             decoration: BoxDecoration(
                               color: Colors.white.withOpacity(0.2),
                               borderRadius: BorderRadius.circular(8),
                             ),
-                            child: const Icon(
-                              UniconsLine.qrcode_scan,
-                              size: 22,
-                              color: Colors.white,
-                            ),
+                            child: const Icon(UniconsLine.qrcode_scan, size: 22, color: Colors.white),
                           ),
                         ),
                 ),
@@ -512,7 +476,7 @@ class _HomeECommerceState extends State<HomeECommerce> {
                   iconImage: 'assets/images/tab/user.png',
                   selectedIconImage: 'assets/images/tab/user_solid.png',
                   label: 'Account',
-                )
+                ),
               ],
             ),
           ),
@@ -539,9 +503,7 @@ class _HomeECommerceState extends State<HomeECommerce> {
             Container(
               padding: const EdgeInsets.all(6),
               decoration: BoxDecoration(
-                color: isSelected
-                    ? const Color(0xFF6366F1)
-                    : Colors.grey.withOpacity(0.1),
+                color: isSelected ? const Color(0xFF6366F1) : Colors.grey.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: (image == null)
@@ -550,8 +512,7 @@ class _HomeECommerceState extends State<HomeECommerce> {
                       width: 24,
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                          image: AssetImage(
-                              isSelected ? selectedIconImage : iconImage),
+                          image: AssetImage(isSelected ? selectedIconImage : iconImage),
                           colorFilter: ColorFilter.mode(
                             isSelected ? Colors.white : Colors.grey.shade600,
                             BlendMode.srcIn,
@@ -579,8 +540,7 @@ class _HomeECommerceState extends State<HomeECommerce> {
               style: TextStyle(
                 fontSize: isSelected ? 12 : 10,
                 fontFamily: isSelected ? fontBold : fontMedium,
-                color:
-                    isSelected ? const Color(0xFF6366F1) : Colors.grey.shade600,
+                color: isSelected ? const Color(0xFF6366F1) : Colors.grey.shade600,
                 fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -594,13 +554,10 @@ class _HomeECommerceState extends State<HomeECommerce> {
 }
 
 class Ecommerce extends StatefulWidget {
-  final Function(
-    int? taskBlockIndex,
-  )? switchTabCallback;
+  final Function(int? taskBlockIndex)? switchTabCallback;
   final ScrollController? scrollController;
 
-  Ecommerce({Key? key, this.switchTabCallback, this.scrollController})
-      : super(key: key);
+  Ecommerce({Key? key, this.switchTabCallback, this.scrollController}) : super(key: key);
 
   @override
   _EcommerceState createState() => _EcommerceState();
@@ -656,22 +613,18 @@ class _EcommerceState extends State<Ecommerce> {
         webSitePopUps = response.data['list']['websitePopups'];
         Auth.setVendor(isVendor: response.data['isVendor']);
         Auth.setAudioSetting(
-          audio: (response.data['isAudio'] != null &&
-                  response.data['isAudio'] != '')
+          audio: (response.data['isAudio'] != null && response.data['isAudio'] != '')
               ? response.data['isAudio']
               : 1,
         );
-        cartCount = response.data['list']['cartCount'] != null
-            ? response.data['list']['cartCount']
-            : 0;
+        cartCount = response.data['list']['cartCount'] != null ? response.data['list']['cartCount'] : 0;
       });
       AppUtils.videoSize = response.data['videoSize'];
       referralMessage = response.data['referralMsg'];
       isAfterPurchase = await Storage.get('isAfterPurchase');
       checkForDynamicLinkArguments();
       if (isOnDashboard! && mounted)
-        AnnouncementService.instance
-            .checkForAnnouncementPopUp(context, webSitePopUps!);
+        AnnouncementService.instance.checkForAnnouncementPopUp(context, webSitePopUps!);
       if (isAfterPurchase != null &&
           isAfterPurchase == true &&
           Auth.isGuestLoggedIn! &&
@@ -679,20 +632,17 @@ class _EcommerceState extends State<Ecommerce> {
         String sendData = jsonEncode({
           "type": "register",
           "data": {
-            "referralCode": Auth.userGuest()!['sponsorCode'] != null
-                ? Auth.userGuest()!['sponsorCode']
-                : "",
+            "referralCode": Auth.userGuest()!['sponsorCode'] != null ? Auth.userGuest()!['sponsorCode'] : "",
           },
         });
-        await DynamicLink.createDynamicLink(
-                type: "register", itemData: sendData, route: 'register-mlm')
-            .then((shortLink) async {
-          referralLink = shortLink.toString();
-        });
+        await DynamicLink.createDynamicLink(type: "register", itemData: sendData, route: 'register-mlm').then(
+          (shortLink) async {
+            referralLink = shortLink.toString();
+          },
+        );
         await Storage.delete('isAfterPurchase');
 
-        if (Get.isDialogOpen! == false)
-          await afterPurchasePopup(referralLink, referralMessage);
+        if (Get.isDialogOpen! == false) await afterPurchasePopup(referralLink, referralMessage);
       }
 
       return response.data;
@@ -735,8 +685,7 @@ class _EcommerceState extends State<Ecommerce> {
         }
         dashboardDetails = snapshot.data['list'];
         categoryData = snapshot.data['list']['categories'];
-        if (categories.length == 0)
-          categories.insertAll(0, snapshot.data['list']['categories']);
+        if (categories.length == 0) categories.insertAll(0, snapshot.data['list']['categories']);
 
         advertisement = snapshot.data['list']['advertisementBanner'];
         priceStore = snapshot.data['list']['priceStore'];
@@ -753,34 +702,18 @@ class _EcommerceState extends State<Ecommerce> {
         mainWidgetList = [
           SliverFixedExtentList(
             itemExtent: 140.0,
-            delegate: SliverChildBuilderDelegate(
-              (BuildContext context, int index) {
-                return topBarWidget();
-              },
-              childCount: 1,
-            ),
+            delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
+              return topBarWidget();
+            }, childCount: 1),
           ),
           SliverToBoxAdapter(
             child: Column(
-              children: [
-                buildAdvertisement(context),
-                const SizedBox(height: 20),
-                categoryList(),
-              ],
+              children: [buildAdvertisement(context), const SizedBox(height: 20), categoryList()],
             ),
           ),
-          if (bestSeller!.length > 0)
-            SliverToBoxAdapter(
-              child: buildBestSeller(context),
-            ),
-          if (trendingNow!.length > 0)
-            SliverToBoxAdapter(
-              child: buildTrendingNow(context),
-            ),
-          if (priceStore!.length > 0)
-            SliverToBoxAdapter(
-              child: buildPrice(context),
-            ),
+          if (bestSeller!.length > 0) SliverToBoxAdapter(child: buildBestSeller(context)),
+          if (trendingNow!.length > 0) SliverToBoxAdapter(child: buildTrendingNow(context)),
+          if (priceStore!.length > 0) SliverToBoxAdapter(child: buildPrice(context)),
           // SliverAppBar(
           //   automaticallyImplyLeading: false,
           //   backgroundColor: const Color(0xffF5F8FA),
@@ -816,10 +749,7 @@ class _EcommerceState extends State<Ecommerce> {
   Widget topBarWidget() {
     return Container(
       decoration: const BoxDecoration(
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(25),
-          bottomRight: Radius.circular(25),
-        ),
+        borderRadius: BorderRadius.only(bottomLeft: Radius.circular(25), bottomRight: Radius.circular(25)),
       ),
       child: SafeArea(
         bottom: false,
@@ -829,21 +759,15 @@ class _EcommerceState extends State<Ecommerce> {
               padding: EdgeInsets.symmetric(horizontal: 20.sp, vertical: 10.sp),
               child: Row(
                 children: [
-                  if(Auth.isGuestLoggedIn == true && Auth.isMLMLoggedIn == true)
-                 ...[ Icon(
-                    Icons.arrow_back,
-                    size: 22.sp,
-                  ).onTap(() {
-                    Get.back();
-                  }),
-                  10.widthBox,],
+                  if (Auth.isGuestLoggedIn == true && Auth.isMLMLoggedIn == true) ...[
+                    Icon(Icons.arrow_back, size: 22.sp).onTap(() {
+                      Get.back();
+                    }),
+                    10.widthBox,
+                  ],
                   Text(
                     'Shop',
-                    style: TextStyle(
-                      fontFamily: fontSemibold,
-                      fontSize: 18.sp,
-                      height: 1.0.h,
-                    ),
+                    style: TextStyle(fontFamily: fontSemiBold, fontSize: 18.sp, height: 1.0.h),
                   ),
 
                   // Logo
@@ -920,10 +844,7 @@ class _EcommerceState extends State<Ecommerce> {
               ),
             ),
             // Search field in header
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
-              child: searchWidget(),
-            ),
+            Padding(padding: const EdgeInsets.fromLTRB(20, 0, 20, 20), child: searchWidget()),
           ],
         ),
       ),
@@ -959,10 +880,7 @@ class _EcommerceState extends State<Ecommerce> {
       // ),
       child: Center(
         child: IconTheme(
-          data: const IconThemeData(
-            color: Colors.black,
-            size: 20,
-          ),
+          data: const IconThemeData(color: Colors.black, size: 20),
           child: icon,
         ),
       ),
@@ -990,11 +908,8 @@ class _EcommerceState extends State<Ecommerce> {
           Container(
             margin: const EdgeInsets.all(8),
             padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Icon(UniconsLine.search,
-                color: textColorSecondary, size: 18.sp),
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(12)),
+            child: Icon(UniconsLine.search, color: textColorSecondary, size: 18.sp),
           ),
           // Search Field
           Expanded(
@@ -1010,13 +925,8 @@ class _EcommerceState extends State<Ecommerce> {
                   enabledBorder: InputBorder.none,
                   focusedBorder: InputBorder.none,
                   hintText: "Search for products, brands & more...",
-                  hintStyle: TextStyle(
-                    fontSize: 14,
-                    fontFamily: fontRegular,
-                    color: Colors.grey.shade500,
-                  ),
-                  contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 0, vertical: 16),
+                  hintStyle: TextStyle(fontSize: 14, fontFamily: fontRegular, color: Colors.grey.shade500),
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 0, vertical: 16),
                 ),
               ),
             ),
@@ -1038,16 +948,9 @@ class _EcommerceState extends State<Ecommerce> {
               decoration: BoxDecoration(
                 color: Colors.grey.shade50,
                 borderRadius: BorderRadius.circular(10),
-                border: Border.all(
-                  color: Colors.grey.shade200,
-                  width: 1,
-                ),
+                border: Border.all(color: Colors.grey.shade200, width: 1),
               ),
-              child: Icon(
-                UniconsLine.microphone,
-                color: Colors.grey.shade600,
-                size: 16,
-              ),
+              child: Icon(UniconsLine.microphone, color: Colors.grey.shade600, size: 16),
             ),
           ),
           GestureDetector(
@@ -1060,16 +963,9 @@ class _EcommerceState extends State<Ecommerce> {
               decoration: BoxDecoration(
                 color: Colors.grey.shade50,
                 borderRadius: BorderRadius.circular(10),
-                border: Border.all(
-                  color: Colors.grey.shade200,
-                  width: 1,
-                ),
+                border: Border.all(color: Colors.grey.shade200, width: 1),
               ),
-              child: Icon(
-                UniconsLine.camera,
-                color: Colors.grey.shade600,
-                size: 16,
-              ),
+              child: Icon(UniconsLine.camera, color: Colors.grey.shade600, size: 16),
             ),
           ),
         ],
@@ -1177,21 +1073,25 @@ class _EcommerceState extends State<Ecommerce> {
     for (var i = 0; i < parts.length; i++) {
       replacedWidgets.add(TextSpan(text: parts[i]));
       if (i < parts.length - 1) {
-        replacedWidgets.add(WidgetSpan(
-          child: Text(
-            referralLink,
-            style: const TextStyle(
-                color: blue,
-                decoration: TextDecoration.underline,
-                fontFamily: fontBold),
-          ).onTap(() async {
-            Get.back();
-            await Auth.logoutGuest();
-            launch(referralLink);
-          }), // Use your custom link widget here
-          alignment: PlaceholderAlignment.baseline,
-          baseline: TextBaseline.alphabetic,
-        ));
+        replacedWidgets.add(
+          WidgetSpan(
+            child:
+                Text(
+                  referralLink,
+                  style: const TextStyle(
+                    color: blue,
+                    decoration: TextDecoration.underline,
+                    fontFamily: fontBold,
+                  ),
+                ).onTap(() async {
+                  Get.back();
+                  await Auth.logoutGuest();
+                  launch(referralLink);
+                }), // Use your custom link widget here
+            alignment: PlaceholderAlignment.baseline,
+            baseline: TextBaseline.alphabetic,
+          ),
+        );
       }
     }
     return showDialog(
@@ -1210,10 +1110,7 @@ class _EcommerceState extends State<Ecommerce> {
                 boxShadow: const [
                   BoxShadow(
                     color: Colors.grey,
-                    offset: Offset(
-                      -0.5,
-                      0.7,
-                    ),
+                    offset: Offset(-0.5, 0.7),
                     blurRadius: 1.0,
                     spreadRadius: 1.0,
                   ), //BoxShadow
@@ -1226,19 +1123,14 @@ class _EcommerceState extends State<Ecommerce> {
                     child: Column(
                       children: [
                         Center(
-                          child: text(
-                            'Join as a member',
-                            fontFamily: fontBold,
-                            fontSize: 22.sp,
-                          ),
+                          child: text('Join as a member', fontFamily: fontBold, fontSize: 22.sp),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(16),
                           child: RichText(
                             text: TextSpan(
                               children: replacedWidgets,
-                              style: TextStyle(
-                                  fontSize: 14.sp, color: Colors.black),
+                              style: TextStyle(fontSize: 14.sp, color: Colors.black),
                             ),
                           ),
                         ),
@@ -1267,20 +1159,13 @@ class _EcommerceState extends State<Ecommerce> {
                           boxShadow: [
                             BoxShadow(
                               color: Colors.grey,
-                              offset: Offset(
-                                -0.5,
-                                0.7,
-                              ),
+                              offset: Offset(-0.5, 0.7),
                               blurRadius: 1.0,
                               spreadRadius: 1.0,
                             ), //BoxShadow
                           ],
                         ),
-                        child: Icon(
-                          Icons.close_rounded,
-                          size: 20.sp,
-                          color: Colors.white,
-                        ),
+                        child: Icon(Icons.close_rounded, size: 20.sp, color: Colors.white),
                       ),
                     ),
                   ),
@@ -1312,8 +1197,7 @@ class _EcommerceState extends State<Ecommerce> {
                         height: h(20),
                         autoPlay: true,
                         autoPlayInterval: const Duration(seconds: 4),
-                        autoPlayAnimationDuration:
-                            const Duration(milliseconds: 1000),
+                        autoPlayAnimationDuration: const Duration(milliseconds: 1000),
                         autoPlayCurve: Curves.easeInOutCubic,
                         pauseAutoPlayOnTouch: true,
                         viewportFraction: 1.0,
@@ -1467,8 +1351,8 @@ class _EcommerceState extends State<Ecommerce> {
   Widget buildBestSeller(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      // padding: const EdgeInsets.all(20),
 
+      // padding: const EdgeInsets.all(20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -1476,10 +1360,7 @@ class _EcommerceState extends State<Ecommerce> {
           Row(
             children: [
               const SizedBox(width: 8),
-              ShinyTitle(
-                text: 'Best Sellers',
-                fontSize: 20.sp,
-              ),
+              ShinyTitle(text: 'Best Sellers', fontSize: 20.sp),
               8.widthBox,
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
@@ -1490,11 +1371,7 @@ class _EcommerceState extends State<Ecommerce> {
                 child: const Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(
-                      Icons.local_fire_department,
-                      size: 12,
-                      color: Color(0xFFFF6B35),
-                    ),
+                    Icon(Icons.local_fire_department, size: 12, color: Color(0xFFFF6B35)),
                     SizedBox(width: 2),
                     Text(
                       'HOT',
@@ -1519,8 +1396,7 @@ class _EcommerceState extends State<Ecommerce> {
             child: bestSeller == null || bestSeller!.isEmpty
                 ? const Center(child: CircularProgressIndicator())
                 : GridView.builder(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 0, vertical: 10.h),
+                    padding: EdgeInsets.symmetric(horizontal: 0, vertical: 10.h),
                     scrollDirection: Axis.horizontal,
                     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 1,
@@ -1536,17 +1412,14 @@ class _EcommerceState extends State<Ecommerce> {
                         radius: 20.r,
                         onTap: () {
                           print('id = $bestSellersId');
-                          Get.toNamed("/best-seller-page", arguments: {
-                            "category": bestSellersId,
-                            "bestSeller": true,
-                          });
+                          Get.toNamed(
+                            "/best-seller-page",
+                            arguments: {"category": bestSellersId, "bestSeller": true},
+                          );
                         },
                         child: Container(
                           width: 180.w,
-                          decoration: boxContain(
-                            borderColor: grey.withOpacity(0.3),
-                            radius: 20.r,
-                          ),
+                          decoration: boxContain(borderColor: grey.withOpacity(0.3), radius: 20.r),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -1564,13 +1437,12 @@ class _EcommerceState extends State<Ecommerce> {
                               5.heightBox,
                               Container(
                                 alignment: Alignment.center,
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 4.w, vertical: 2.h),
+                                padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.h),
                                 margin: EdgeInsets.only(top: 0.h, left: 6.w),
                                 child: Text(
                                   product['name'] ?? '--',
                                   style: TextStyle(
-                                    fontFamily: fontSemibold,
+                                    fontFamily: fontSemiBold,
                                     fontSize: 12.sp,
                                     // overflow: TextOverflow.ellipsis,
                                   ),
@@ -1598,10 +1470,7 @@ class _EcommerceState extends State<Ecommerce> {
           Row(
             children: [
               const SizedBox(width: 8),
-              ShinyTitle(
-                text: 'Trending Now',
-                fontSize: 20.sp,
-              ),
+              ShinyTitle(text: 'Trending Now', fontSize: 20.sp),
               8.widthBox,
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
@@ -1612,11 +1481,7 @@ class _EcommerceState extends State<Ecommerce> {
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: const [
-                    Icon(
-                      UniconsLine.bolt_alt,
-                      size: 12,
-                      color: Color(0xFFE91E63),
-                    ),
+                    Icon(UniconsLine.bolt_alt, size: 12, color: Color(0xFFE91E63)),
                     SizedBox(width: 2),
                     Text(
                       'TRENDING',
@@ -1641,67 +1506,62 @@ class _EcommerceState extends State<Ecommerce> {
             child: trendingNow == null || trendingNow!.isEmpty
                 ? const Center(child: CircularProgressIndicator())
                 : GridView.builder(
-              padding: EdgeInsets.symmetric(horizontal: 0, vertical: 10.h),
-              scrollDirection: Axis.horizontal,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 1,
-                mainAxisSpacing: 10,
-                crossAxisSpacing: 0,
-                childAspectRatio: 1.3,
-              ),
-              itemCount: trendingNow!.length,
-              itemBuilder: (_, int index) {
-                final product = trendingNow![index];
-
-                return InkWell(
-                  borderRadius: BorderRadius.circular(20.r),
-                  onTap: () {
-                    Get.toNamed("/trending-list",
-                        arguments: trendingNow![index]);
-                  },
-                  child: Container(
-                    width: 180.w,
-                    decoration: boxContain(
-                      borderColor: grey.withOpacity(0.3),
-                      radius: 20.r,
+                    padding: EdgeInsets.symmetric(horizontal: 0, vertical: 10.h),
+                    scrollDirection: Axis.horizontal,
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 1,
+                      mainAxisSpacing: 10,
+                      crossAxisSpacing: 0,
+                      childAspectRatio: 1.3,
                     ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          alignment: Alignment.center,
-                          margin: EdgeInsets.only(top: 5.h),
-                          child: PNetworkImage(
-                            product['url'] ?? '',
-                            width: 90.sp,
-                            height: 90.sp,
-                            fit: BoxFit.cover,
+                    itemCount: trendingNow!.length,
+                    itemBuilder: (_, int index) {
+                      final product = trendingNow![index];
+
+                      return InkWell(
+                        borderRadius: BorderRadius.circular(20.r),
+                        onTap: () {
+                          Get.toNamed("/trending-list", arguments: trendingNow![index]);
+                        },
+                        child: Container(
+                          width: 180.w,
+                          decoration: boxContain(borderColor: grey.withOpacity(0.3), radius: 20.r),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                alignment: Alignment.center,
+                                margin: EdgeInsets.only(top: 5.h),
+                                child: PNetworkImage(
+                                  product['url'] ?? '',
+                                  width: 90.sp,
+                                  height: 90.sp,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              5.heightBox,
+                              Container(
+                                alignment: Alignment.center,
+                                padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.h),
+                                margin: EdgeInsets.only(top: 0.h, left: 6.w),
+                                child: Text(
+                                  product['name'] ?? '--',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontFamily: fontSemiBold,
+                                    fontSize: 12.sp,
+
+                                    // overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                        5.heightBox,
-                        Container(
-                          alignment: Alignment.center,
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 4.w, vertical: 2.h),
-                          margin: EdgeInsets.only(top: 0.h, left: 6.w),
-                          child: Text(
-                            product['name'] ?? '--',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontFamily: fontSemibold,
-                              fontSize: 12.sp,
-
-                              // overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                      );
+                    },
                   ),
-                );
-              },
-            ),
           ),
         ],
       ),
@@ -1710,24 +1570,14 @@ class _EcommerceState extends State<Ecommerce> {
 
   Widget buildNewlyLaunchedSection() {
     final List<Map<String, dynamic>> dummyProducts = [
-      {
-        'name': 'Smart Watch',
-        'imageUrl': 'https://via.placeholder.com/150',
-        'mrp': '2999',
-        'dp': '1999',
-      },
+      {'name': 'Smart Watch', 'imageUrl': 'https://via.placeholder.com/150', 'mrp': '2999', 'dp': '1999'},
       {
         'name': 'Bluetooth Headphones',
         'imageUrl': 'https://via.placeholder.com/150',
         'mrp': '2499',
         'dp': '1499',
       },
-      {
-        'name': 'Fitness Band',
-        'imageUrl': 'https://via.placeholder.com/150',
-        'mrp': '1999',
-        'dp': '1299',
-      },
+      {'name': 'Fitness Band', 'imageUrl': 'https://via.placeholder.com/150', 'mrp': '1999', 'dp': '1299'},
     ];
 
     return Container(
@@ -1761,9 +1611,7 @@ class _EcommerceState extends State<Ecommerce> {
                       child: Container(
                         width: 180.w,
                         decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Colors.grey.withOpacity(0.3),
-                          ),
+                          border: Border.all(color: Colors.grey.withOpacity(0.3)),
                           borderRadius: BorderRadius.circular(20.r),
                         ),
                         child: Column(
@@ -1772,23 +1620,15 @@ class _EcommerceState extends State<Ecommerce> {
                             Container(
                               margin: EdgeInsets.only(top: 5.h),
                               alignment: Alignment.center,
-                              child: PNetworkImage(
-                                product['imageUrl'] ?? '',
-                                width: 110.sp,
-                                height: 110.sp,
-                              ),
+                              child: PNetworkImage(product['imageUrl'] ?? '', width: 110.sp, height: 110.sp),
                             ),
                             Container(
                               alignment: Alignment.center,
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 4.w, vertical: 2.h),
+                              padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.h),
                               margin: EdgeInsets.only(top: 0.h, left: 6.w),
                               child: Text(
                                 product['name'] ?? '',
-                                style: TextStyle(
-                                  fontSize: 12.sp,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
+                                style: TextStyle(fontSize: 12.sp, overflow: TextOverflow.ellipsis),
                                 textAlign: TextAlign.center,
                               ),
                             ),
@@ -1903,9 +1743,12 @@ class _EcommerceState extends State<Ecommerce> {
             itemBuilder: (context, index) {
               return GestureDetector(
                 onTap: () {
-                  Get.toNamed("/product-list", arguments: {
-                    'price': [priceStore![index]['id']],
-                  });
+                  Get.toNamed(
+                    "/product-list",
+                    arguments: {
+                      'price': [priceStore![index]['id']],
+                    },
+                  );
                 },
                 child: Container(
                   padding: const EdgeInsets.all(12),
@@ -1919,10 +1762,7 @@ class _EcommerceState extends State<Ecommerce> {
                       end: Alignment.bottomRight,
                     ),
                     borderRadius: BorderRadius.circular(16),
-                    border: Border.all(
-                      color: const Color(0xFF6366F1).withOpacity(0.2),
-                      width: 1,
-                    ),
+                    border: Border.all(color: const Color(0xFF6366F1).withOpacity(0.2), width: 1),
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -1933,10 +1773,7 @@ class _EcommerceState extends State<Ecommerce> {
                         height: 50,
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
-                            colors: [
-                              const Color(0xFF6366F1),
-                              const Color(0xFF8B5CF6),
-                            ],
+                            colors: [const Color(0xFF6366F1), const Color(0xFF8B5CF6)],
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,
                           ),
@@ -1952,13 +1789,7 @@ class _EcommerceState extends State<Ecommerce> {
                         ),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.currency_rupee,
-                              color: Colors.white,
-                              size: 24,
-                            ),
-                          ],
+                          children: [Icon(Icons.currency_rupee, color: Colors.white, size: 24)],
                         ),
                       ),
                       const SizedBox(height: 8),
@@ -1996,8 +1827,7 @@ class _EcommerceState extends State<Ecommerce> {
       double value = number / 1000;
 
       // Truncate to 2 decimals without rounding
-      String formatted =
-          value.toStringAsFixed(3); // 3 for safety before truncating
+      String formatted = value.toStringAsFixed(3); // 3 for safety before truncating
       if (formatted.contains('.')) {
         formatted = formatted.substring(0, formatted.indexOf('.') + 3);
       }

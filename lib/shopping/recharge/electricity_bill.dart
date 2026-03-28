@@ -299,7 +299,7 @@ class _ElectricityBillState extends State<ElectricityBill> {
       padding: const EdgeInsets.all(0.0),
       child: SizedBox(
         width: double.infinity,
-        child: CustomButton(
+        child: CustomButtonOld(
           textContent: "Proceed".toUpperCase(),
           onPressed: () {
             if (_billFormKey.currentState!.validate()) {

@@ -24,9 +24,7 @@ class _QrScannerBoxState extends State<QrScannerBox> {
     if (barcodes.isNotEmpty) {
       final code = barcodes.first.rawValue ?? "Unknown";
 
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text("Scanned: $code")));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Scanned: $code")));
 
       setState(() => _isScanning = false);
     }
@@ -69,21 +67,12 @@ class _QrScannerBoxState extends State<QrScannerBox> {
                   Container(
                     height: 210.h,
                     width: 210.w,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20.r),
-                    ),
+                    decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(20.r)),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(20.r),
                       child: _isScanning
-                          ? MobileScanner(
-                              controller: _controller,
-                              onDetect: _onDetect,
-                            )
-                          : Image.asset(
-                              "assets/images/qrcode.gif",
-                              fit: BoxFit.contain,
-                            ),
+                          ? MobileScanner(controller: _controller, onDetect: _onDetect)
+                          : Image.asset("assets/images/qrcode.gif", fit: BoxFit.contain),
                     ),
                   ),
 
@@ -100,11 +89,7 @@ class _QrScannerBoxState extends State<QrScannerBox> {
                             color: Colors.black.withOpacity(0.5),
                             shape: BoxShape.circle,
                           ),
-                          child: Icon(
-                            Icons.close,
-                            size: 18.sp,
-                            color: Colors.white,
-                          ),
+                          child: Icon(Icons.close, size: 18.sp, color: Colors.white),
                         ),
                       ),
                     ),
@@ -122,12 +107,7 @@ class _QrScannerBoxState extends State<QrScannerBox> {
                 SizedBox(width: 6.w),
                 Text(
                   "Get cashback on scan & pay",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 12.sp,
-                    fontFamily: fontPoppinsMedium,
-                    fontWeight: FontWeight.w500,
-                  ),
+                  style: TextStyle(color: Colors.black, fontSize: 12.sp, fontFamily: fontSemiBold),
                 ),
               ],
             ),

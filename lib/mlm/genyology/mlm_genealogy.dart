@@ -9,6 +9,7 @@ import 'package:unicons/unicons.dart';
 import '../../services/api.dart';
 import '../../services/auth.dart';
 import '../../services/size_config.dart';
+import '../../widget/colors.dart';
 import '../../widget/network_image.dart';
 import '../../widget/theme.dart';
 
@@ -50,8 +51,7 @@ class _MLMGenealogyState extends State<MLMGenealogy> {
                 context: context,
                 builder: (context) {
                   return AlertDialog(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(20.0))),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20.0))),
                     content: Container(
                       height: h(70),
                       child: Column(
@@ -71,66 +71,61 @@ class _MLMGenealogyState extends State<MLMGenealogy> {
             icon: Icon(UniconsLine.info_circle),
           ),
           IconButton(
-              icon: Icon(Icons.search),
-              onPressed: () {
-                showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: Text('Member Code'),
-                        content: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: <Widget>[
-                            TextFormField(
-                              keyboardType: TextInputType.text,
-                              inputFormatters: [
-                                FilteringTextInputFormatter.deny(
-                                    new RegExp(r'^[- ,.]')),
-                              ],
-                              autofocus: true,
-                              controller: _codeController,
-                              decoration: InputDecoration(
-                                labelText: 'Member Code',
-                                hintText: 'Search by Member Code...',
-                                border: OutlineInputBorder(),
-                              ),
-                            ),
-                          ],
+            icon: Icon(Icons.search),
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text('Member Code'),
+                    content: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        TextFormField(
+                          keyboardType: TextInputType.text,
+                          inputFormatters: [FilteringTextInputFormatter.deny(new RegExp(r'^[- ,.]'))],
+                          autofocus: true,
+                          controller: _codeController,
+                          decoration: InputDecoration(
+                            labelText: 'Member Code',
+                            hintText: 'Search by Member Code...',
+                            border: OutlineInputBorder(),
+                          ),
                         ),
-                        actions: <Widget>[
-                          TextButton(
-                            child: Text('Cancel'),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                          ),
-                          TextButton(
-                            child: Text('Search'),
-                            onPressed: () {
-                              FocusScope.of(context).requestFocus(FocusNode());
+                      ],
+                    ),
+                    actions: <Widget>[
+                      TextButton(
+                        child: Text('Cancel'),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                      TextButton(
+                        child: Text('Search'),
+                        onPressed: () {
+                          FocusScope.of(context).requestFocus(FocusNode());
 
-                              setState(() {
-                                _code = _codeController.text;
-                              });
-                              _codeController.clear();
-                              Navigator.of(context).pop();
-                            },
-                          ),
-                        ],
-                      );
-                    });
-              })
+                          setState(() {
+                            _code = _codeController.text;
+                          });
+                          _codeController.clear();
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
+          ),
         ],
       ),
       body: FutureBuilder(
-        future: Api.http
-            .get('member/sponsor-genealogy/show/$_code')
-            .then((res) => res.data),
+        future: Api.http.get('member/sponsor-genealogy/show/$_code').then((res) => res.data),
         builder: (context, AsyncSnapshot snapshot) {
           if (!snapshot.hasData) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
+            return Center(child: CircularProgressIndicator());
           }
           Map? rootNode = snapshot.data['tree'];
           List members = snapshot.data['tree']['children'];
@@ -141,23 +136,17 @@ class _MLMGenealogyState extends State<MLMGenealogy> {
           // }).toList();
 
           return Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 18.0,
-              vertical: 5,
-            ),
+            padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 5),
             child: Column(
               children: <Widget>[
                 Card(
                   color: Colors.grey[200],
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
                       children: <Widget>[
-                        text(
-                          'Go to my tree',
-                        ).onTap(() {
+                        text('Go to my tree').onTap(() {
                           setState(() {
                             _code = _codeController.text;
                             memberCodeList = [Auth.user()!['code']];
@@ -195,19 +184,10 @@ class _MLMGenealogyState extends State<MLMGenealogy> {
                         children: <Widget>[
                           Row(
                             children: <Widget>[
-                              Column(
-                                children: <Widget>[
-                                  _buildMemberIcon(rootNode!),
-                                ],
-                              ),
-                              if (_childCount != 0)
-                                Container(
-                                  height: 1.0,
-                                  width: 40.0,
-                                  color: Colors.black,
-                                ),
+                              Column(children: <Widget>[_buildMemberIcon(rootNode!)]),
+                              if (_childCount != 0) Container(height: 1.0, width: 40.0, color: Colors.black),
                             ],
-                          )
+                          ),
                         ],
                       ),
                       SingleChildScrollView(
@@ -227,26 +207,15 @@ class _MLMGenealogyState extends State<MLMGenealogy> {
                                         Column(
                                           children: <Widget>[
                                             Container(
-                                              child: VerticalDivider(
-                                                thickness: 1,
-                                                color: Colors.black,
-                                              ),
-                                              height: verticalDividerHeight(
-                                                  index,
-                                                  containerHeight,
-                                                  members),
+                                              child: VerticalDivider(thickness: 1, color: Colors.black),
+                                              height: verticalDividerHeight(index, containerHeight, members),
                                               width: 1,
                                             ),
                                           ],
-                                          mainAxisAlignment:
-                                              verticalDividerAlignment(
-                                                  index, members),
+                                          mainAxisAlignment: verticalDividerAlignment(index, members),
                                         ),
                                         Container(
-                                          child: Divider(
-                                            thickness: 1,
-                                            color: Colors.black,
-                                          ),
+                                          child: Divider(thickness: 1, color: Colors.black),
                                           width: 30,
                                           height: 1,
                                         ),
@@ -282,8 +251,7 @@ class _MLMGenealogyState extends State<MLMGenealogy> {
     return MainAxisAlignment.center;
   }
 
-  double verticalDividerHeight(
-      int index, double containerHeight, List members) {
+  double verticalDividerHeight(int index, double containerHeight, List members) {
     if (index == 0 || (index + 1) == members.length) {
       return containerHeight / 2;
     }
@@ -297,10 +265,7 @@ class _MLMGenealogyState extends State<MLMGenealogy> {
       child: Column(
         children: <Widget>[
           GestureDetector(
-            child: circularImage(
-                svg: node['isSvg'],
-                image: node['image'],
-                color: node['imageBackground']),
+            child: circularImage(svg: node['isSvg'], image: node['image'], color: node['imageBackground']),
             onTap: () {
               if (memberCodeList.length == 0) {
                 memberCodeList.add(node['code']);
@@ -309,8 +274,7 @@ class _MLMGenealogyState extends State<MLMGenealogy> {
                   _code = node['code'];
                 });
               } else {
-                int _index =
-                    memberCodeList.indexWhere((code) => code == node['code']);
+                int _index = memberCodeList.indexWhere((code) => code == node['code']);
                 if (_index == -1) {
                   memberCodeList.add(node['code']);
                   memberNameList.add(node['name']);
@@ -323,16 +287,14 @@ class _MLMGenealogyState extends State<MLMGenealogy> {
           ),
           SizedBox(height: 5),
           GestureDetector(
-              child: Text(
-                node['code'],
-                style: TextStyle(
-                    color: node['isPromotor'] == true
-                        ? Colors.green
-                        : colorPrimary),
-              ),
-              onTap: () {
-                if (node['code'] != '') showDialogMemberInfo(node);
-              }),
+            child: Text(
+              node['code'],
+              style: TextStyle(color: node['isPromotor'] == true ? Colors.green : colorPrimary),
+            ),
+            onTap: () {
+              if (node['code'] != '') showDialogMemberInfo(node);
+            },
+          ),
           SizedBox(height: 5),
           Container(
             width: w(30),
@@ -354,21 +316,18 @@ class _MLMGenealogyState extends State<MLMGenealogy> {
   }
 
   showDialogMemberInfo(node) {
-    Get.dialog(Material(
-      type: MaterialType.transparency,
-      child: Center(
-        child: memberInfoWidget(node),
+    Get.dialog(
+      Material(
+        type: MaterialType.transparency,
+        child: Center(child: memberInfoWidget(node)),
       ),
-    ));
+    );
   }
 
   Widget memberInfoWidget(node) {
     return Container(
       width: w(90),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        color: white,
-      ),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(20), color: white),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -378,16 +337,15 @@ class _MLMGenealogyState extends State<MLMGenealogy> {
               shape: BoxShape.rectangle,
               borderRadius: BorderRadius.circular(20),
               gradient: LinearGradient(
-                  colors: [
-                    node['isPromotor'] == true ? Colors.green : colorPrimary,
-                    node['isPromotor'] == true
-                        ? Colors.green.withOpacity(0.3)
-                        : colorPrimary.withOpacity(0.3),
-                  ],
-                  begin: const FractionalOffset(0.0, 0.0),
-                  end: const FractionalOffset(1.0, 1.0),
-                  stops: [0.0, 1.0],
-                  tileMode: TileMode.clamp),
+                colors: [
+                  node['isPromotor'] == true ? Colors.green : colorPrimary,
+                  node['isPromotor'] == true ? Colors.green.withOpacity(0.3) : colorPrimary.withOpacity(0.3),
+                ],
+                begin: const FractionalOffset(0.0, 0.0),
+                end: const FractionalOffset(1.0, 1.0),
+                stops: [0.0, 1.0],
+                tileMode: TileMode.clamp,
+              ),
             ),
             child: Stack(
               children: [
@@ -403,8 +361,7 @@ class _MLMGenealogyState extends State<MLMGenealogy> {
                       5.height,
                       _rowForMemberInfo('Joining Date:', node['joiningDate']),
                       5.height,
-                      _rowForMemberInfo(
-                          'Activation Date:', node['activationDate'] ?? "N/A"),
+                      _rowForMemberInfo('Activation Date:', node['activationDate'] ?? "N/A"),
                       if (node['sponsorName'] != null) ...[
                         5.height,
                         _rowForMemberInfo('Sponsor Name', node['sponsorName']),
@@ -414,28 +371,24 @@ class _MLMGenealogyState extends State<MLMGenealogy> {
                         _rowForMemberInfo('Sponsor Id:', node['sponsorCode']),
                       ],
                       5.height,
-                      _rowForMemberInfo(
-                          'Direct:', node['sponsoredCount'].toString()),
+                      _rowForMemberInfo('Direct:', node['sponsoredCount'].toString()),
                       5.height,
                       _rowForMemberInfo(
-                          'Current Month Purchase/Current Month Purchase Required:',
-                          "${node['currentMonthPurchase'] ?? "N/A"} / ${node['currentMonthPurchaseRequire'] ?? "N/A"}"),
+                        'Current Month Purchase/Current Month Purchase Required:',
+                        "${node['currentMonthPurchase'] ?? "N/A"} / ${node['currentMonthPurchaseRequire'] ?? "N/A"}",
+                      ),
                     ],
                   ),
                 ),
                 Positioned(
                   right: 0,
                   child: IconButton(
-                    icon: Icon(
-                      Icons.close,
-                      size: 25,
-                      color: Colors.black87,
-                    ),
+                    icon: Icon(Icons.close, size: 25, color: Colors.black87),
                     onPressed: () {
                       Get.back();
                     },
                   ),
-                )
+                ),
               ],
             ),
           ),
@@ -443,30 +396,19 @@ class _MLMGenealogyState extends State<MLMGenealogy> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              text(
-                node['code'],
-                fontSize: 20.0,
-                fontFamily: fontBold,
-                textColor: Colors.black87,
-              ),
+              text(node['code'], fontSize: 20.0, fontFamily: fontBold, textColor: Colors.black87),
               10.width,
               InkWell(
                 onTap: () {
-                  Clipboard.setData(
-                    ClipboardData(text: node['code']),
-                  );
+                  Clipboard.setData(ClipboardData(text: node['code']));
                   GetBar(
                     duration: Duration(seconds: 1),
                     message: 'Member ID copied to clipboard',
                     backgroundColor: green,
                   ).show();
                 },
-                child: Icon(
-                  Icons.content_copy,
-                  size: 22,
-                  color: colorPrimary,
-                ),
-              )
+                child: Icon(Icons.content_copy, size: 22, color: colorPrimary),
+              ),
             ],
           ),
           10.height,
@@ -480,13 +422,7 @@ class _MLMGenealogyState extends State<MLMGenealogy> {
       children: [
         Expanded(
           flex: 50,
-          child: text(
-            label1,
-            textColor: Colors.black,
-            fontSize: 14.0,
-            maxLine: 2,
-            isLongText: true,
-          ),
+          child: text(label1, textColor: Colors.black, fontSize: 14.0, maxLine: 2, isLongText: true),
         ),
         Expanded(
           flex: 40,
@@ -507,10 +443,7 @@ class _MLMGenealogyState extends State<MLMGenealogy> {
     return Container(
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        border: Border.all(
-          color: HexColor(color!),
-          width: 2.5,
-        ),
+        border: Border.all(color: HexColor(color!), width: 2.5),
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.all(Radius.circular(50.0)),
@@ -518,9 +451,7 @@ class _MLMGenealogyState extends State<MLMGenealogy> {
             ? SvgPicture.network(
                 image!,
                 height: 50,
-                placeholderBuilder: (context) => Center(
-                  child: CircularProgressIndicator(),
-                ),
+                placeholderBuilder: (context) => Center(child: CircularProgressIndicator()),
               )
             : PNetworkImage(image),
       ),
@@ -535,12 +466,7 @@ class _MLMGenealogyState extends State<MLMGenealogy> {
         Container(
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            border: Border.all(
-              color: HexColor(
-                color,
-              ),
-              width: 2.5,
-            ),
+            border: Border.all(color: HexColor(color), width: 2.5),
           ),
           child: Column(
             children: <Widget>[
@@ -549,9 +475,7 @@ class _MLMGenealogyState extends State<MLMGenealogy> {
                 child: SvgPicture.asset(
                   'assets/images/user_blank.svg',
                   height: 50,
-                  placeholderBuilder: (context) => Center(
-                    child: CircularProgressIndicator(),
-                  ),
+                  placeholderBuilder: (context) => Center(child: CircularProgressIndicator()),
                 ),
               ),
             ],
@@ -561,10 +485,7 @@ class _MLMGenealogyState extends State<MLMGenealogy> {
         ),
         SizedBox(height: 5),
         text(name),
-        if (subName != null) ...[
-          SizedBox(height: 5),
-          text(subName),
-        ],
+        if (subName != null) ...[SizedBox(height: 5), text(subName)],
       ],
     );
   }

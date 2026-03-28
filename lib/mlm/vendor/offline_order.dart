@@ -5,6 +5,7 @@ import 'package:unicons/unicons.dart';
 
 import '../../../../utils/app_utils.dart';
 import '../../services/api.dart';
+import '../../widget/colors.dart';
 import '../../widget/file_download_controller.dart';
 import '../../widget/paginated_list.dart';
 import '../../widget/theme.dart';
@@ -27,10 +28,7 @@ class OffLineOrdersState extends State<OffLineOrders> {
         setState(() {
           invoiceUrl = response.data['invoiceUrl'];
         });
-        FileDownloadCtrl().download(
-          invoiceUrl,
-          context,
-        );
+        FileDownloadCtrl().download(invoiceUrl, context);
         // downloadCtrl.download(invoiceUrl, context);
       } else {
         AppUtils.showErrorSnackBar(response.data['message']);
@@ -81,14 +79,11 @@ class OffLineOrdersState extends State<OffLineOrders> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       text(item['date'], fontSize: 14.0, fontweight: FontWeight.bold),
-                      text(
-                        item['orderNo'],
-                        fontSize: 13.0,
-                        isLongText: true,
-                        textColor: colorPrimary,
-                      ).onTap(() {
-                        AppUtils.copyText(item['orderNo']);
-                      }),
+                      text(item['orderNo'], fontSize: 13.0, isLongText: true, textColor: colorPrimary).onTap(
+                        () {
+                          AppUtils.copyText(item['orderNo']);
+                        },
+                      ),
                     ],
                   ).expand(),
                   if (item['paymentStatus']['id'] == 3)
@@ -96,80 +91,41 @@ class OffLineOrdersState extends State<OffLineOrders> {
                       onPressed: () {
                         getId(item['id']);
                       },
-                      icon: Icon(
-                        UniconsLine.download_alt,
-                        color: Colors.black54,
-                      ),
+                      icon: Icon(UniconsLine.download_alt, color: Colors.black54),
                     ),
                 ],
               ),
               10.height,
               Row(
                 children: [
-                  text(
-                    'Invoice :',
-                    textColor: textColorSecondary,
-                    fontSize: textSizeSMedium,
-                  ),
+                  text('Invoice :', textColor: textColorSecondary, fontSize: textSizeSMedium),
                   10.width,
-                  text(
-                    '${item['invoiceNo']}',
-                  ),
+                  text('${item['invoiceNo']}'),
                 ],
               ),
               10.height,
-              Divider(
-                height: 3,
-                color: colorPrimary_light.withOpacity(0.5),
-                thickness: 1.2,
-              ),
+              Divider(height: 3, color: colorPrimary_light.withOpacity(0.5), thickness: 1.2),
               Row(
                 children: [
-                  text(
-                    'Bill Amount :',
-                    textColor: textColorSecondary,
-                    fontSize: textSizeSMedium,
-                  ),
+                  text('Bill Amount :', textColor: textColorSecondary, fontSize: textSizeSMedium),
                   10.width,
-                  text(
-                    '₹ ${item['amount']}',
-                    textColor: green,
-                  ),
+                  text('₹ ${item['amount']}', textColor: green),
                 ],
               ),
               10.height,
-              Divider(
-                height: 3,
-                color: colorPrimary_light.withOpacity(0.5),
-                thickness: 1.2,
-              ),
+              Divider(height: 3, color: colorPrimary_light.withOpacity(0.5), thickness: 1.2),
               Row(
                 children: [
-                  text(
-                    'Point :',
-                    textColor: textColorSecondary,
-                    fontSize: textSizeSMedium,
-                  ),
+                  text('Point :', textColor: textColorSecondary, fontSize: textSizeSMedium),
                   10.width,
-                  text(
-                    '${item['point']}',
-                    textColor: green,
-                  ),
+                  text('${item['point']}', textColor: green),
                 ],
               ),
               10.height,
-              Divider(
-                height: 3,
-                color: colorPrimary_light.withOpacity(0.5),
-                thickness: 1.2,
-              ),
+              Divider(height: 3, color: colorPrimary_light.withOpacity(0.5), thickness: 1.2),
               Row(
                 children: [
-                  text(
-                    'Payment Type :',
-                    textColor: textColorSecondary,
-                    fontSize: textSizeSMedium,
-                  ),
+                  text('Payment Type :', textColor: textColorSecondary, fontSize: textSizeSMedium),
                   10.width,
                   text(
                     item['paymentType'] != null ? '${item['paymentType']['name']}' : 'N/A',
@@ -180,18 +136,10 @@ class OffLineOrdersState extends State<OffLineOrders> {
                 ],
               ),
               10.height,
-              Divider(
-                height: 3,
-                color: colorPrimary_light.withOpacity(0.5),
-                thickness: 1.2,
-              ),
+              Divider(height: 3, color: colorPrimary_light.withOpacity(0.5), thickness: 1.2),
               Row(
                 children: [
-                  text(
-                    'Myky Payment Status :',
-                    textColor: textColorSecondary,
-                    fontSize: textSizeSMedium,
-                  ),
+                  text('Myky Payment Status :', textColor: textColorSecondary, fontSize: textSizeSMedium),
                   10.width,
                   text(
                     item['paymentStatus'] != null ? '${item['paymentStatus']['name']}' : 'N/A',
@@ -202,23 +150,13 @@ class OffLineOrdersState extends State<OffLineOrders> {
                 ],
               ),
               10.height,
-              Divider(
-                height: 3,
-                color: colorPrimary_light.withOpacity(0.5),
-                thickness: 1.2,
-              ),
+              Divider(height: 3, color: colorPrimary_light.withOpacity(0.5), thickness: 1.2),
               Row(
                 children: [
-                  text(
-                    'Vendor Payment Status :',
-                    textColor: textColorSecondary,
-                    fontSize: textSizeSMedium,
-                  ),
+                  text('Vendor Payment Status :', textColor: textColorSecondary, fontSize: textSizeSMedium),
                   10.width,
                   text(
-                    item['step2paymentStatus'] != null
-                        ? '${item['step2paymentStatus']['name']}'
-                        : 'N/A',
+                    item['step2paymentStatus'] != null ? '${item['step2paymentStatus']['name']}' : 'N/A',
                     textColor: item['step2paymentStatus'] != null
                         ? AppUtils.setStatusColor(item['step2paymentStatus']['name'])
                         : colorPrimary,
@@ -227,20 +165,12 @@ class OffLineOrdersState extends State<OffLineOrders> {
               ),
               if (item['resumeStatus'] == true) ...[
                 10.height,
-                Divider(
-                  height: 3,
-                  color: colorPrimary_light.withOpacity(0.5),
-                  thickness: 1.2,
-                ),
+                Divider(height: 3, color: colorPrimary_light.withOpacity(0.5), thickness: 1.2),
                 Center(
-                  child: CustomButton(
+                  child: CustomButtonOld(
                     textContent: 'Resume',
                     onPressed: () {
-                      Get.toNamed(
-                        '/qr-view',
-                        arguments: item,
-                      )!
-                          .then((value) {
+                      Get.toNamed('/qr-view', arguments: item)!.then((value) {
                         offlineOrderPaginatedListKey.currentState!.refresh();
                       });
                     },

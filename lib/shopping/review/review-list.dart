@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../services/auth.dart';
-import '../../widget/network_image.dart';
 
 import '../../services/api.dart';
+import '../../services/auth.dart';
+import '../../widget/colors.dart';
+import '../../widget/network_image.dart';
 import '../../widget/theme.dart';
 
 class ReviewList extends StatefulWidget {
@@ -27,31 +28,31 @@ class _ReviewListState extends State<ReviewList> {
   }
 
   Future getReview() async {
-    Api.http.get("shopping/review/$productId", queryParameters: {
-      "user_type": Auth.check()!
-          ? 1
-          : Auth.isGuest()!
-              ? 2
-              : null
-    }).then((response) {
-      if (response.data['status']) {
-        setState(() {
-          reviewList = response.data!['message'];
+    Api.http
+        .get(
+          "shopping/review/$productId",
+          queryParameters: {
+            "user_type": Auth.check()!
+                ? 1
+                : Auth.isGuest()!
+                ? 2
+                : null,
+          },
+        )
+        .then((response) {
+          if (response.data['status']) {
+            setState(() {
+              reviewList = response.data!['message'];
+            });
+          }
+          return response.data;
         });
-      }
-      return response.data;
-    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: text(
-          'Review Details',
-          textColor: Colors.black,
-        ),
-      ),
+      appBar: AppBar(title: text('Review Details', textColor: Colors.black)),
       body: FutureBuilder(
         future: reviewFuture,
         builder: (context, AsyncSnapshot? snapshot) {
@@ -73,14 +74,11 @@ class _ReviewListState extends State<ReviewList> {
                         Row(
                           children: [
                             CircleAvatar(
-                                radius: 18.0,
-                                child: PNetworkImage(
-                                  reviewList[index]['profileImage'],
-                                )),
+                              radius: 18.0,
+                              child: PNetworkImage(reviewList[index]['profileImage']),
+                            ),
                             SizedBox(width: 20.0),
-                            text(
-                              reviewList[index]['name'],
-                            )
+                            text(reviewList[index]['name']),
                           ],
                         ),
                         SizedBox(height: 10.0),
@@ -96,11 +94,7 @@ class _ReviewListState extends State<ReviewList> {
                                     fontSize: 18.0,
                                   ),
                                   SizedBox(width: 5.0),
-                                  Icon(
-                                    Icons.star,
-                                    color: Colors.white,
-                                    size: 18,
-                                  ),
+                                  Icon(Icons.star, color: Colors.white, size: 18),
                                 ],
                               ),
                               decoration: BoxDecoration(
@@ -110,12 +104,7 @@ class _ReviewListState extends State<ReviewList> {
                               padding: EdgeInsets.symmetric(vertical: 2.0, horizontal: 15.0),
                             ),
                             SizedBox(width: 20.0),
-                            Expanded(
-                              child: text(
-                                reviewList[index]['review'],
-                                isLongText: true,
-                              ),
-                            )
+                            Expanded(child: text(reviewList[index]['review'], isLongText: true)),
                           ],
                         ),
                       ],

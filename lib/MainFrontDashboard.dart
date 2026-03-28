@@ -18,8 +18,10 @@ import 'package:myky_clone/mlm/account/ProfileScreen.dart';
 import 'package:myky_clone/services/auth.dart';
 import 'package:myky_clone/utils/en_extensions.dart';
 import 'package:myky_clone/widget/cash_giveaway.dart';
+import 'package:myky_clone/widget/colors.dart';
 import 'package:myky_clone/widget/custom_text.dart';
 import 'package:myky_clone/widget/qr_scanner.dart';
+import 'package:myky_clone/widget/theme.dart';
 import 'package:unicons/unicons.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -27,7 +29,6 @@ import 'mlm/wallet/wallet.dart';
 import 'services/api.dart';
 import 'shopping/recharge/recharge_page.dart';
 import 'shopping/reward/reward.dart';
-import 'widget/theme.dart';
 
 class MainFrontDashboard extends StatefulWidget {
   @override
@@ -94,10 +95,7 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
       print("Pending Rewards = ${pendingRewards.length}");
 
       // Show dialog only if: on Home tab + has 5+ pending + not shown before
-      if (_selectedIndex == 0 &&
-          pendingRewards.length >= 5 &&
-          !_hasShownRewardDialog &&
-          mounted) {
+      if (_selectedIndex == 0 && pendingRewards.length >= 5 && !_hasShownRewardDialog && mounted) {
         _hasShownRewardDialog = true;
         Future.delayed(const Duration(milliseconds: 800), () {
           if (mounted) _showPendingRewardsBottomSheet();
@@ -128,9 +126,7 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
     if (_selectedIndex == 0) {
       Get.dialog(
         Dialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(24),
-          ),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
           insetPadding: const EdgeInsets.all(25),
           clipBehavior: Clip.antiAliasWithSaveLayer,
           child: Material(
@@ -140,11 +136,7 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
                 shape: BoxShape.rectangle,
                 borderRadius: BorderRadius.circular(16),
                 boxShadow: [
-                  const BoxShadow(
-                    color: Colors.black26,
-                    blurRadius: 10.0,
-                    offset: Offset(0.0, 10.0),
-                  ),
+                  const BoxShadow(color: Colors.black26, blurRadius: 10.0, offset: Offset(0.0, 10.0)),
                 ],
               ),
               width: MediaQuery.of(context).size.width,
@@ -368,9 +360,7 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
               height: 50,
               width: 95,
               decoration: BoxDecoration(
-                color: _selectedIndex == 4
-                    ? Colors.black
-                    : const Color(0xFF2EE6C5),
+                color: _selectedIndex == 4 ? Colors.black : const Color(0xFF2EE6C5),
                 borderRadius: BorderRadius.circular(10),
                 boxShadow: [
                   BoxShadow(
@@ -383,18 +373,12 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(
-                    UniconsLine.store,
-                    color: _selectedIndex == 4 ? Colors.white : Colors.black,
-                    size: 22,
-                  ),
+                  Icon(UniconsLine.store, color: _selectedIndex == 4 ? Colors.white : Colors.black, size: 22),
                   const SizedBox(width: 4),
                   CustomText(
                     'Shop',
-                    textColor: _selectedIndex == 4
-                        ? Colors.white
-                        : Colors.black,
-                    fontFamily: fontPoppinsMedium,
+                    textColor: _selectedIndex == 4 ? Colors.white : Colors.black,
+                    fontFamily: fontSemiBold,
                     fontSize: 16.sp,
                   ),
                 ],
@@ -418,11 +402,7 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
         //   color: isSelected ? Colors.white : Colors.transparent,
         //   borderRadius: BorderRadius.circular(8),
         // ),
-        child: Icon(
-          icon,
-          size: 24,
-          color: isSelected ? const Color(0xFF2EE6C5) : Colors.white,
-        ),
+        child: Icon(icon, size: 24, color: isSelected ? const Color(0xFF2EE6C5) : Colors.white),
       ),
     );
   }
@@ -448,10 +428,7 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
   }
 
   // MARK: - Rest of your existing methods (unchanged)
-  Widget socialMediaContainers({
-    required String heading,
-    required List<SocialItem> items,
-  }) {
+  Widget socialMediaContainers({required String heading, required List<SocialItem> items}) {
     Future<void> _launchURL(String url) async {
       final Uri uri = Uri.parse(url);
       if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
@@ -464,11 +441,7 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
       children: [
         Text(
           heading.toUpperCase(),
-          style: TextStyle(
-            fontFamily: fontPoppinsMedium,
-            fontSize: 20.sp,
-            color: const Color(0xFF000115),
-          ),
+          style: TextStyle(fontFamily: fontSemiBold, fontSize: 20.sp, color: const Color(0xFF000115)),
         ),
 
         SizedBox(height: 18),
@@ -487,10 +460,7 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
                     Container(
                       width: 60.w,
                       height: 60.w,
-                      decoration: const BoxDecoration(
-                        color: Color(0xFFF2F4FF),
-                        shape: BoxShape.circle,
-                      ),
+                      decoration: const BoxDecoration(color: Color(0xFFF2F4FF), shape: BoxShape.circle),
                       child: Center(
                         child: SvgPicture.asset(
                           item.svgAssetPath,
@@ -506,7 +476,7 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
                       style: TextStyle(
                         fontSize: 14.sp,
 
-                        fontFamily: fontPoppinsMedium,
+                        fontFamily: fontSemiBold,
                         color: const Color(0xFF000115),
                       ),
                     ),
@@ -534,16 +504,9 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
           boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.3),
-              blurRadius: 8,
-              offset: const Offset(2, 4),
-            ),
+            BoxShadow(color: Colors.black.withOpacity(0.3), blurRadius: 8, offset: const Offset(2, 4)),
           ],
-          image: DecorationImage(
-            image: NetworkImage(thumbnailUrl),
-            fit: BoxFit.cover,
-          ),
+          image: DecorationImage(image: NetworkImage(thumbnailUrl), fit: BoxFit.cover),
         ),
         child: Stack(
           children: [
@@ -569,23 +532,11 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
                   color: Colors.white,
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
-                  shadows: [
-                    Shadow(
-                      color: Colors.black54,
-                      offset: Offset(1, 1),
-                      blurRadius: 3,
-                    ),
-                  ],
+                  shadows: [Shadow(color: Colors.black54, offset: Offset(1, 1), blurRadius: 3)],
                 ),
               ),
             ),
-            const Center(
-              child: Icon(
-                Icons.play_circle_fill_rounded,
-                color: Colors.white70,
-                size: 60,
-              ),
-            ),
+            const Center(child: Icon(Icons.play_circle_fill_rounded, color: Colors.white70, size: 60)),
           ],
         ),
       ),
@@ -612,15 +563,8 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
               },
               child: Container(
                 padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: Colors.black.withOpacity(0.25),
-                  shape: BoxShape.circle,
-                ),
-                child: const Icon(
-                  Icons.notifications_none_rounded,
-                  color: Colors.white,
-                  size: 22,
-                ),
+                decoration: BoxDecoration(color: Colors.black.withOpacity(0.25), shape: BoxShape.circle),
+                child: const Icon(Icons.notifications_none_rounded, color: Colors.white, size: 22),
               ),
             ),
 
@@ -638,8 +582,7 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
                 backgroundColor: Colors.white,
                 backgroundImage: profileImage != null
                     ? NetworkImage(profileImage)
-                    : const AssetImage("assets/images/no_image.png")
-                          as ImageProvider,
+                    : const AssetImage("assets/images/no_image.png") as ImageProvider,
               ),
             ),
           ],
@@ -655,10 +598,7 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
         height: MediaQuery.of(context).size.height * 0.8,
         color: Colors.grey[300],
         child: const Center(
-          child: Text(
-            'No banners available',
-            style: TextStyle(color: Colors.white, fontSize: 20),
-          ),
+          child: Text('No banners available', style: TextStyle(color: Colors.white, fontSize: 20)),
         ),
       );
     }
@@ -696,21 +636,13 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
                         fit: BoxFit.cover,
                         loadingBuilder: (context, child, loadingProgress) {
                           if (loadingProgress == null) return child;
-                          return const Center(
-                            child: CircularProgressIndicator(
-                              color: Colors.white,
-                            ),
-                          );
+                          return const Center(child: CircularProgressIndicator(color: Colors.white));
                         },
                         errorBuilder: (context, error, stackTrace) {
                           return Container(
                             color: Colors.grey[800],
                             child: const Center(
-                              child: Icon(
-                                Icons.broken_image_rounded,
-                                size: 60,
-                                color: Colors.white70,
-                              ),
+                              child: Icon(Icons.broken_image_rounded, size: 60, color: Colors.white70),
                             ),
                           );
                         },
@@ -728,9 +660,7 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
                               begin: Alignment.topCenter,
                               end: Alignment.bottomCenter,
                               colors: [
-                                Colors.black.withOpacity(
-                                  0.35,
-                                ), // subtle dark for readability
+                                Colors.black.withOpacity(0.35), // subtle dark for readability
                                 Colors.black.withOpacity(0.15),
                                 Colors.transparent,
                               ],
@@ -759,18 +689,13 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
   }
 
   String extractYouTubeVideoId(String embedUrl) {
-    RegExp regExp = RegExp(
-      r'youtube\.com\/embed\/([a-zA-Z0-9_-]+)',
-      caseSensitive: false,
-    );
+    RegExp regExp = RegExp(r'youtube\.com\/embed\/([a-zA-Z0-9_-]+)', caseSensitive: false);
     final match = regExp.firstMatch(embedUrl);
     return match?.group(1) ?? 'dQw4w9WgXcQ';
   }
 
   Future<void> _openYouTubeVideo(String videoId) async {
-    final youtubeAppUrl = Uri.parse(
-      'youtube://www.youtube.com/watch?v=$videoId',
-    );
+    final youtubeAppUrl = Uri.parse('youtube://www.youtube.com/watch?v=$videoId');
     final youtubeWebUrl = Uri.parse('https://www.youtube.com/watch?v=$videoId');
     try {
       if (await canLaunchUrl(youtubeAppUrl)) {
@@ -779,39 +704,25 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
         await launchUrl(youtubeWebUrl, mode: LaunchMode.externalApplication);
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Could not open video.'),
-          backgroundColor: Colors.red,
-        ),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Could not open video.'), backgroundColor: Colors.red));
     }
   }
 
   Future<void> _openQRScanner() async {
     try {
-      String barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
-        '#ff6666',
-        'Cancel',
-        true,
-        ScanMode.QR,
-      );
+      String barcodeScanRes = await FlutterBarcodeScanner.scanBarcode('#ff6666', 'Cancel', true, ScanMode.QR);
       if (barcodeScanRes != '-1') {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Scanned: $barcodeScanRes'),
-            backgroundColor: Colors.green,
-          ),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Scanned: $barcodeScanRes'), backgroundColor: Colors.green));
         _processScanResult(barcodeScanRes);
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Scan failed.'),
-          backgroundColor: Colors.red,
-        ),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Scan failed.'), backgroundColor: Colors.red));
     }
   }
 
@@ -826,17 +737,13 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
 
   Future<void> _openUrl(String url) async {
     final uri = Uri.parse(url);
-    if (await canLaunchUrl(uri))
-      await launchUrl(uri, mode: LaunchMode.externalApplication);
+    if (await canLaunchUrl(uri)) await launchUrl(uri, mode: LaunchMode.externalApplication);
   }
 
   void _processPaymentQR(String upiString) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: const Text('Payment QR detected'),
-        backgroundColor: colorPrimary,
-      ),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: const Text('Payment QR detected'), backgroundColor: colorPrimary));
   }
 
   Widget _buildScannerSection() => QrScannerBox();
@@ -850,23 +757,14 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
       children: [
         Text(
           "HOW TO PAY",
-          style: TextStyle(
-            fontSize: 20,
-
-            color: Colors.black,
-            fontFamily: fontPoppinsMedium,
-          ),
+          style: TextStyle(fontSize: 20, color: Colors.black, fontFamily: fontSemiBold),
         ),
         SizedBox(height: 10),
         CarouselSlider(
           items: images.map((path) {
             return ClipRRect(
               borderRadius: BorderRadius.circular(16),
-              child: Image.asset(
-                path,
-                fit: BoxFit.cover,
-                width: double.infinity,
-              ),
+              child: Image.asset(path, fit: BoxFit.cover, width: double.infinity),
             );
           }).toList(),
           options: CarouselOptions(
@@ -891,11 +789,7 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
         children: [
           Text(
             'Services'.toUpperCase(),
-            style: TextStyle(
-              color: Color(0XFF000115),
-              fontSize: 20.sp,
-              fontFamily: fontPoppinsMedium,
-            ),
+            style: TextStyle(color: Color(0XFF000115), fontSize: 20.sp, fontFamily: fontSemiBold),
           ),
           //  SizedBox(height: 16.h),
 
@@ -981,21 +875,12 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
           color: Colors.white,
           borderRadius: BorderRadius.circular(20.r),
           boxShadow: const [
-            BoxShadow(
-              color: Color.fromARGB(102, 0, 0, 0),
-              blurRadius: 12,
-              offset: Offset(0, 6),
-            ),
+            BoxShadow(color: Color.fromARGB(102, 0, 0, 0), blurRadius: 12, offset: Offset(0, 6)),
           ],
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(20.r),
-          child: Image.asset(
-            imagePath,
-            width: double.infinity,
-            height: double.infinity,
-            fit: fit,
-          ),
+          child: Image.asset(imagePath, width: double.infinity, height: double.infinity, fit: fit),
         ),
       ),
     );
@@ -1009,11 +894,7 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
         children: [
           Text(
             "Winners".toUpperCase(),
-            style: TextStyle(
-              fontSize: 20,
-              color: Color(0xFF000115),
-              fontFamily: fontPoppinsMedium,
-            ),
+            style: TextStyle(fontSize: 20, color: Color(0xFF000115), fontFamily: fontSemiBold),
           ),
           SizedBox(height: 10),
           ClipRRect(
@@ -1040,11 +921,7 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
       children: [
         Text(
           "Online Products".toUpperCase(),
-          style: TextStyle(
-            fontSize: 20,
-            color: Color(0xFF000115),
-            fontFamily: fontPoppinsMedium,
-          ),
+          style: TextStyle(fontSize: 20, color: Color(0xFF000115), fontFamily: fontSemiBold),
         ),
         SizedBox(height: 10),
         Image.asset("assets/images/luxury.png", fit: BoxFit.cover),
@@ -1068,11 +945,7 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
           // ------------------ TITLE ------------------
           const Text(
             "WHY PEOPLE LOVE MYKY",
-            style: TextStyle(
-              fontSize: 20,
-              fontFamily: fontPoppinsMedium,
-              color: Color(0xFF000115),
-            ),
+            style: TextStyle(fontSize: 20, fontFamily: fontSemiBold, color: Color(0xFF000115)),
           ),
 
           const SizedBox(height: 14),
@@ -1087,10 +960,7 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
               separatorBuilder: (_, __) => const SizedBox(width: 12),
               itemBuilder: (context, index) {
                 final person = people[index];
-                return _LoveCard(
-                  image: person["image"]!,
-                  name: person["name"]!,
-                );
+                return _LoveCard(image: person["image"]!, name: person["name"]!);
               },
             ),
           ),
@@ -1100,12 +970,9 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
   }
 
   Widget _buildYoutubeSection() {
-    List<Map<String, String>> videoData =
-        youtubeVideos != null && youtubeVideos!.isNotEmpty
+    List<Map<String, String>> videoData = youtubeVideos != null && youtubeVideos!.isNotEmpty
         ? youtubeVideos!.map((video) {
-            String videoId = extractYouTubeVideoId(
-              (video['link'] ?? '').toString(),
-            );
+            String videoId = extractYouTubeVideoId((video['link'] ?? '').toString());
             return {
               'thumbnail': 'https://img.youtube.com/vi/$videoId/hqdefault.jpg',
               'title': 'How to Play - Tutorial ${video['id']}',
@@ -1114,20 +981,17 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
           }).toList()
         : [
             {
-              'thumbnail':
-                  'https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg',
+              'thumbnail': 'https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg',
               'title': 'How to Play - Tutorial 1',
               'videoId': 'dQw4w9WgXcQ',
             },
             {
-              'thumbnail':
-                  'https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg',
+              'thumbnail': 'https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg',
               'title': 'How to Play - Tutorial 2',
               'videoId': 'dQw4w9WgXcQ',
             },
             {
-              'thumbnail':
-                  'https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg',
+              'thumbnail': 'https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg',
               'title': 'How to Play - Tutorial 3',
               'videoId': 'dQw4w9WgXcQ',
             },
@@ -1135,20 +999,13 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
 
     return Container(
       padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(15),
-      ),
+      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(15)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
             'Watch How to Play!',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-            ),
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
           ),
           const SizedBox(height: 15),
           SizedBox(
@@ -1164,15 +1021,11 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
                       onTap: () => _openYouTubeVideo(video['videoId']!),
                       child: Card(
                         elevation: 4,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                         child: Stack(
                           children: [
                             ClipRRect(
-                              borderRadius: const BorderRadius.vertical(
-                                top: Radius.circular(12),
-                              ),
+                              borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
                               child: AspectRatio(
                                 aspectRatio: 16 / 9,
                                 child: Image.network(
@@ -1181,11 +1034,7 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
                                   errorBuilder: (_, __, ___) => Container(
                                     color: Colors.grey[300],
                                     child: Center(
-                                      child: Icon(
-                                        Icons.video_library,
-                                        size: 40,
-                                        color: Colors.grey[600],
-                                      ),
+                                      child: Icon(Icons.video_library, size: 40, color: Colors.grey[600]),
                                     ),
                                   ),
                                 ),
@@ -1194,9 +1043,7 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
                             Positioned.fill(
                               child: Container(
                                 decoration: BoxDecoration(
-                                  borderRadius: const BorderRadius.vertical(
-                                    top: Radius.circular(12),
-                                  ),
+                                  borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
                                   color: Colors.black.withOpacity(0.3),
                                 ),
                                 child: Center(
@@ -1206,11 +1053,7 @@ class _MainFrontDashboardState extends State<MainFrontDashboard> {
                                       color: Colors.red,
                                       borderRadius: BorderRadius.circular(8),
                                     ),
-                                    child: const Icon(
-                                      Icons.play_arrow,
-                                      color: Colors.white,
-                                      size: 30,
-                                    ),
+                                    child: const Icon(Icons.play_arrow, color: Colors.white, size: 30),
                                   ),
                                 ),
                               ),
@@ -1273,9 +1116,7 @@ class _RewardCard extends StatelessWidget {
             if (isTop)
               Container(
                 margin: const EdgeInsets.all(4),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(22),
-                ),
+                decoration: BoxDecoration(borderRadius: BorderRadius.circular(22)),
               ),
 
             // Glass overlay effect
@@ -1361,28 +1202,20 @@ class PendingRewardsBottomSheet extends StatefulWidget {
   final List pendingRewards;
   final VoidCallback onRedeem;
 
-  const PendingRewardsBottomSheet({
-    Key? key,
-    required this.pendingRewards,
-    required this.onRedeem,
-  }) : super(key: key);
+  const PendingRewardsBottomSheet({Key? key, required this.pendingRewards, required this.onRedeem})
+    : super(key: key);
 
   @override
-  State<PendingRewardsBottomSheet> createState() =>
-      _PendingRewardsBottomSheetState();
+  State<PendingRewardsBottomSheet> createState() => _PendingRewardsBottomSheetState();
 }
 
-class _PendingRewardsBottomSheetState extends State<PendingRewardsBottomSheet>
-    with TickerProviderStateMixin {
+class _PendingRewardsBottomSheetState extends State<PendingRewardsBottomSheet> with TickerProviderStateMixin {
   late final AnimationController _pulseController;
 
   @override
   void initState() {
     super.initState();
-    _pulseController = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 2),
-    )..repeat();
+    _pulseController = AnimationController(vsync: this, duration: const Duration(seconds: 2))..repeat();
   }
 
   @override
@@ -1393,9 +1226,7 @@ class _PendingRewardsBottomSheetState extends State<PendingRewardsBottomSheet>
 
   @override
   Widget build(BuildContext context) {
-    final rewardNumber = widget.pendingRewards.isNotEmpty
-        ? widget.pendingRewards.first['id']
-        : 0;
+    final rewardNumber = widget.pendingRewards.isNotEmpty ? widget.pendingRewards.first['id'] : 0;
 
     final screenWidth = MediaQuery.of(context).size.width;
 
@@ -1420,10 +1251,7 @@ class _PendingRewardsBottomSheetState extends State<PendingRewardsBottomSheet>
             curve: Curves.easeOutBack, // spring effect
             tween: Tween(begin: 1.0, end: 0.0),
             builder: (context, value, child) {
-              return Transform.translate(
-                offset: Offset(0, value * 220),
-                child: child,
-              );
+              return Transform.translate(offset: Offset(0, value * 220), child: child);
             },
             child: Padding(
               padding: const EdgeInsets.fromLTRB(16, 0, 16, 20),
@@ -1460,10 +1288,7 @@ class _PendingRewardsBottomSheetState extends State<PendingRewardsBottomSheet>
                         ),
                         const Text(
                           "PENDING REWARDS",
-                          style: TextStyle(
-                            fontSize: 22,
-                            fontFamily: fontLexendMedium,
-                          ),
+                          style: TextStyle(fontSize: 22, fontFamily: fontSemiBold),
                         ),
 
                         const SizedBox(height: 40),
@@ -1504,11 +1329,7 @@ class _PendingRewardsBottomSheetState extends State<PendingRewardsBottomSheet>
                             ),
                           ],
                         ),
-                        child: const Icon(
-                          Icons.close,
-                          color: Colors.white,
-                          size: 28,
-                        ),
+                        child: const Icon(Icons.close, color: Colors.white, size: 28),
                       ),
                     ),
                   ),
@@ -1570,10 +1391,7 @@ class _PendingRewardsBottomSheetState extends State<PendingRewardsBottomSheet>
                   builder: (context, animValue, child) {
                     return Transform.scale(
                       scale: animValue,
-                      child: Opacity(
-                        opacity: opacity.clamp(0.6, 1.0),
-                        child: child,
-                      ),
+                      child: Opacity(opacity: opacity.clamp(0.6, 1.0), child: child),
                     );
                   },
                   child: _RewardCard(
@@ -1584,11 +1402,7 @@ class _PendingRewardsBottomSheetState extends State<PendingRewardsBottomSheet>
                     onTapTop: () {
                       Confetti.launch(
                         context,
-                        options: const ConfettiOptions(
-                          particleCount: 60,
-                          spread: 70,
-                          y: 0.6,
-                        ),
+                        options: const ConfettiOptions(particleCount: 60, spread: 70, y: 0.6),
                       );
 
                       Future.delayed(const Duration(milliseconds: 300), () {
@@ -1614,17 +1428,14 @@ class _PulsingRedeemButton extends StatefulWidget {
   State<_PulsingRedeemButton> createState() => _PulsingRedeemButtonState();
 }
 
-class _PulsingRedeemButtonState extends State<_PulsingRedeemButton>
-    with SingleTickerProviderStateMixin {
+class _PulsingRedeemButtonState extends State<_PulsingRedeemButton> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
 
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 2),
-    )..repeat(reverse: true);
+    _controller = AnimationController(vsync: this, duration: const Duration(seconds: 2))
+      ..repeat(reverse: true);
   }
 
   @override
@@ -1643,23 +1454,13 @@ class _PulsingRedeemButtonState extends State<_PulsingRedeemButton>
               onPressed: widget.onTap,
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xFF00D4C8),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(42),
-                ),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(42)),
                 elevation: 8,
               ),
-              icon: const Icon(
-                Icons.card_giftcard,
-                color: Color(0xFF000115),
-                size: 25,
-              ),
+              icon: const Icon(Icons.card_giftcard, color: Color(0xFF000115), size: 25),
               label: const Text(
                 "REDEEM NOW",
-                style: TextStyle(
-                  fontFamily: fontLexendMedium,
-                  fontSize: 16,
-                  color: Color(0xFF000115),
-                ),
+                style: TextStyle(fontFamily: fontSemiBold, fontSize: 16, color: Color(0xFF000115)),
               ),
             ),
           ),
@@ -1677,8 +1478,7 @@ class FloatingParticles extends StatefulWidget {
   State<FloatingParticles> createState() => _FloatingParticlesState();
 }
 
-class _FloatingParticlesState extends State<FloatingParticles>
-    with SingleTickerProviderStateMixin {
+class _FloatingParticlesState extends State<FloatingParticles> with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
   final Random _rand = Random();
   late final List<_Particle> _particles;
@@ -1697,10 +1497,7 @@ class _FloatingParticlesState extends State<FloatingParticles>
       );
     });
 
-    _controller = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 12),
-    )..repeat();
+    _controller = AnimationController(vsync: this, duration: const Duration(seconds: 12))..repeat();
   }
 
   @override
@@ -1714,10 +1511,7 @@ class _FloatingParticlesState extends State<FloatingParticles>
     return AnimatedBuilder(
       animation: _controller,
       builder: (context, child) {
-        return CustomPaint(
-          painter: _ParticlePainter(_particles, _controller.value),
-          child: Container(),
-        );
+        return CustomPaint(painter: _ParticlePainter(_particles, _controller.value), child: Container());
       },
     );
   }
@@ -1752,10 +1546,8 @@ class _ParticlePainter extends CustomPainter {
     final Paint p = Paint();
     for (var i = 0; i < particles.length; i++) {
       final particle = particles[i];
-      final double x =
-          (particle.dx * size.width) + sin((t * 2 * pi) + i) * particle.sway;
-      final double y =
-          ((particle.dy + (t * particle.speed)) % 1.0) * size.height;
+      final double x = (particle.dx * size.width) + sin((t * 2 * pi) + i) * particle.sway;
+      final double y = ((particle.dy + (t * particle.speed)) % 1.0) * size.height;
       p.color = Colors.pinkAccent.withOpacity(particle.opacity);
       canvas.drawCircle(Offset(x, y), particle.size, p);
     }
@@ -1843,19 +1635,12 @@ class _LoveCard extends StatelessWidget {
                   gradient: LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
-                    colors: [
-                      Colors.transparent,
-                      Colors.black.withOpacity(0.65),
-                    ],
+                    colors: [Colors.transparent, Colors.black.withOpacity(0.65)],
                   ),
                 ),
                 child: Text(
                   name,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 12.5,
-                    fontWeight: FontWeight.w600,
-                  ),
+                  style: const TextStyle(color: Colors.white, fontSize: 12.5, fontWeight: FontWeight.w600),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -1873,9 +1658,5 @@ class SocialItem {
   final String svgAssetPath;
   final String link;
 
-  const SocialItem({
-    required this.label,
-    required this.svgAssetPath,
-    required this.link,
-  });
+  const SocialItem({required this.label, required this.svgAssetPath, required this.link});
 }

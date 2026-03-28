@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 
 import '../../services/api.dart';
 import '../../services/validator_x.dart';
+import '../../widget/colors.dart';
 import '../../widget/theme.dart';
 
 class TransactionChangePassword extends StatefulWidget {
@@ -25,10 +26,7 @@ class _TransactionChangePasswordState extends State<TransactionChangePassword> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: white,
-      appBar: AppBar(
-        elevation: 2.0,
-        title: Text('Change Transaction Password'),
-      ),
+      appBar: AppBar(elevation: 2.0, title: Text('Change Transaction Password')),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Form(
@@ -57,10 +55,7 @@ class _TransactionChangePasswordState extends State<TransactionChangePassword> {
       isPassword: _oldTransactionPassword,
       keyboardType: TextInputType.text,
       suffixIcon: GestureDetector(
-        child: Icon(
-          _oldTransactionPassword ? Icons.visibility_off : Icons.visibility,
-          color: colorPrimary,
-        ),
+        child: Icon(_oldTransactionPassword ? Icons.visibility_off : Icons.visibility, color: colorPrimary),
         onTap: () {
           setState(() {
             _oldTransactionPassword = !_oldTransactionPassword;
@@ -70,9 +65,7 @@ class _TransactionChangePasswordState extends State<TransactionChangePassword> {
       controller: _oldTransactionPasswordController,
       validator: validator.add(
         key: 'old_password',
-        rules: [
-          ValidatorX.mandatory(message: "Old transaction password can't be empty"),
-        ],
+        rules: [ValidatorX.mandatory(message: "Old transaction password can't be empty")],
       ),
       onChanged: (value) {
         validator.clearErrorsAt('old_password');
@@ -86,10 +79,7 @@ class _TransactionChangePasswordState extends State<TransactionChangePassword> {
       isPassword: _newTransactionPassword,
       keyboardType: TextInputType.text,
       suffixIcon: GestureDetector(
-        child: Icon(
-          _newTransactionPassword ? Icons.visibility_off : Icons.visibility,
-          color: colorPrimary,
-        ),
+        child: Icon(_newTransactionPassword ? Icons.visibility_off : Icons.visibility, color: colorPrimary),
         onTap: () {
           setState(() {
             _newTransactionPassword = !_newTransactionPassword;
@@ -99,9 +89,7 @@ class _TransactionChangePasswordState extends State<TransactionChangePassword> {
       controller: _newTransactionPasswordController,
       validator: validator.add(
         key: 'password',
-        rules: [
-          ValidatorX.mandatory(message: "New transaction password can't be empty"),
-        ],
+        rules: [ValidatorX.mandatory(message: "New transaction password can't be empty")],
       ),
       onChanged: (value) {
         validator.clearErrorsAt("password");
@@ -128,7 +116,10 @@ class _TransactionChangePasswordState extends State<TransactionChangePassword> {
       controller: _confirmTransactionPasswordController,
       validator: validator.add(
         key: 'password_confirmation',
-        rules: [ValidatorX.mandatory(message: "Confirm new transaction password can't be empty"), ValidatorX.confirm(_newTransactionPasswordController, "confirm Password")],
+        rules: [
+          ValidatorX.mandatory(message: "Confirm new transaction password can't be empty"),
+          ValidatorX.confirm(_newTransactionPasswordController, "confirm Password"),
+        ],
       ),
       onChanged: (value) {
         validator.clearErrorsAt('password_confirmation');
@@ -137,7 +128,7 @@ class _TransactionChangePasswordState extends State<TransactionChangePassword> {
   }
 
   Widget _buildLoginButton(BuildContext context) {
-    return CustomButton(
+    return CustomButtonOld(
       textContent: 'Change Password',
       onPressed: () {
         if (_changeTransactionPasswordFormKey.currentState!.validate()) {
@@ -148,23 +139,26 @@ class _TransactionChangePasswordState extends State<TransactionChangePassword> {
             'password_confirmation': _confirmTransactionPasswordController.text,
           };
 
-          Api.http.post('member/profile/change-transaction-password', data: sendData).then((response) {
-            GetBar(
-              backgroundColor: Colors.green,
-              duration: Duration(seconds: 3),
-              message: response.data['message'],
-            ).show();
+          Api.http
+              .post('member/profile/change-transaction-password', data: sendData)
+              .then((response) {
+                GetBar(
+                  backgroundColor: Colors.green,
+                  duration: Duration(seconds: 3),
+                  message: response.data['message'],
+                ).show();
 
-            Timer(Duration(seconds: 3), () {
-              Get.offAllNamed("/dashboard");
-            });
-          }).catchError((error) {
-            if (error.response.statusCode == 422) {
-              setState(() {
-                validator.setErrors(error.response.data['errors']);
+                Timer(Duration(seconds: 3), () {
+                  Get.offAllNamed("/dashboard");
+                });
+              })
+              .catchError((error) {
+                if (error.response.statusCode == 422) {
+                  setState(() {
+                    validator.setErrors(error.response.data['errors']);
+                  });
+                }
               });
-            }
-          });
         }
       },
     );

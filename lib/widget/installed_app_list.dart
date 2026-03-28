@@ -3,17 +3,15 @@
 import 'package:external_app_launcher/external_app_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:myky_clone/widget/theme.dart';
 import 'package:nb_utils/nb_utils.dart';
+
+import 'colors.dart';
 
 class InstalledAppList extends StatelessWidget {
   final List<Map<String, String>> installedApps;
 
   // Constructor to accept the list of installed apps
-  const InstalledAppList({
-    Key? key,
-    required this.installedApps,
-  }) : super(key: key);
+  const InstalledAppList({Key? key, required this.installedApps}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -43,27 +41,14 @@ class InstalledAppList extends StatelessWidget {
                   Container(
                     height: 35.0,
                     width: 35.0,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.white,
-                    ),
-                    child: Image.asset(
-                      app['appIcon']!,
-                      height: 25.0,
-                      width: 25.0,
-                    ),
+                    decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.white),
+                    child: Image.asset(app['appIcon']!, height: 25.0, width: 25.0),
                   ),
                   SizedBox(width: 10.0),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        app['appName']!,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14.0,
-                        ),
-                      ),
+                      Text(app['appName']!, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.0)),
                     ],
                   ),
                 ],
@@ -72,9 +57,7 @@ class InstalledAppList extends StatelessWidget {
             ],
           ),
         ).onTap(() async {
-          await LaunchApp.openApp(
-            androidPackageName: app['packageName']!,
-          );
+          await LaunchApp.openApp(androidPackageName: app['packageName']!);
         });
       },
     );

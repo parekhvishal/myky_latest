@@ -25,6 +25,7 @@ import '../../services/CountCtl.dart';
 import '../../services/cart_service.dart';
 import '../../services/debouncer.dart';
 import '../../services/dynamic_link.dart';
+import '../../widget/colors.dart';
 import '../../widget/guest_login_service.dart';
 
 class ProductDetail extends StatefulWidget {
@@ -87,28 +88,33 @@ class _ProductDetailState extends State<ProductDetail> {
   int? productVariationId;
 
   Future<Map> getData() {
-    return Api.http.get("shopping/product/show/$productId", queryParameters: {
-      "user_type": Auth.check()!
-          ? 1
-          : Auth.isGuest()!
-              ? 2
-              : null
-    }).then((response) {
-      if (response.data['status']) {
-        setState(() {
-          productData = response.data['products'];
-          sp = num.parse(productData!['selling_price'].toString());
-          dp = num.parse(productData!['dp'].toString());
-          mrp = num.parse(productData!['mrp'].toString());
-          discount = num.parse(productData!['discount'].toString());
-          discountAmount = num.parse(productData!['discountAmount'].toString());
-          productData!['variation'].map((variation) {
-            variation.putIfAbsent('isSelected', () => false);
-          }).toList();
+    return Api.http
+        .get(
+          "shopping/product/show/$productId",
+          queryParameters: {
+            "user_type": Auth.check()!
+                ? 1
+                : Auth.isGuest()!
+                ? 2
+                : null,
+          },
+        )
+        .then((response) {
+          if (response.data['status']) {
+            setState(() {
+              productData = response.data['products'];
+              sp = num.parse(productData!['selling_price'].toString());
+              dp = num.parse(productData!['dp'].toString());
+              mrp = num.parse(productData!['mrp'].toString());
+              discount = num.parse(productData!['discount'].toString());
+              discountAmount = num.parse(productData!['discountAmount'].toString());
+              productData!['variation'].map((variation) {
+                variation.putIfAbsent('isSelected', () => false);
+              }).toList();
+            });
+          }
+          return response.data;
         });
-      }
-      return response.data;
-    });
   }
 
   @override
@@ -122,10 +128,7 @@ class _ProductDetailState extends State<ProductDetail> {
             height: 35.sp,
             decoration: BoxDecoration(
               color: const Color(0xFF658D28).withOpacity(0.1),
-              border: Border.all(
-                color: const Color(0xFF658D28).withOpacity(0.1),
-                width: 0.6,
-              ),
+              border: Border.all(color: const Color(0xFF658D28).withOpacity(0.1), width: 0.6),
               shape: BoxShape.circle,
               boxShadow: [
                 BoxShadow(
@@ -140,10 +143,7 @@ class _ProductDetailState extends State<ProductDetail> {
               onPressed: () {
                 Get.toNamed('/search-page');
               },
-              icon: Icon(
-                UniconsLine.search,
-                size: 18.sp,
-              ),
+              icon: Icon(UniconsLine.search, size: 18.sp),
             ),
           ),
           const SizedBox(width: 10.0),
@@ -173,7 +173,7 @@ class _ProductDetailState extends State<ProductDetail> {
                       children: <Widget>[
                         Image.asset("assets/images/results.png"),
                         const SizedBox(height: 20),
-                        text("No Product Found", fontSize: textSizeLarge),
+                        text("No Product Found", fontSize: 22),
                       ],
                     ),
                   );
@@ -193,8 +193,7 @@ class _ProductDetailState extends State<ProductDetail> {
           _buildProductSliderCard(context),
           _buildProductDetailsCard(context),
           _buildProductVariationCard(context),
-          if (productData!['description'] != null)
-            _buildProductDescriptionCard(context),
+          if (productData!['description'] != null) _buildProductDescriptionCard(context),
           _buildProductReviewsCard(context),
           20.height,
         ],
@@ -207,10 +206,7 @@ class _ProductDetailState extends State<ProductDetail> {
       children: [
         Container(
           padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 15.w),
-          decoration: boxContain(
-            borderColor: grey.withOpacity(0.3),
-            showShadow: true
-          ),
+          decoration: boxContain(borderColor: grey.withOpacity(0.3), showShadow: true),
           width: double.infinity,
           height: 350.h,
           child: CarouselSlider(
@@ -236,7 +232,7 @@ class _ProductDetailState extends State<ProductDetail> {
               );
             }).toList(),
           ),
-        )
+        ),
       ],
     );
   }
@@ -245,10 +241,7 @@ class _ProductDetailState extends State<ProductDetail> {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 10),
       padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 15.w),
-      decoration: boxContain(
-        borderColor: grey.withOpacity(0.3),
-        showShadow: true,
-      ),
+      decoration: boxContain(borderColor: grey.withOpacity(0.3), showShadow: true),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -256,7 +249,7 @@ class _ProductDetailState extends State<ProductDetail> {
             productData!['name'],
             textColor: colorPrimaryDark,
             fontSize: textSizeLargeMedium,
-            fontFamily: fontSemibold,
+            fontFamily: fontSemiBold,
             isLongText: true,
           ),
           const SizedBox(height: 5),
@@ -266,11 +259,7 @@ class _ProductDetailState extends State<ProductDetail> {
             children: [
               Expanded(
                 flex: 10,
-                child: text(
-                  "Product code: ${productData!['sku']}",
-                  fontSize: 12.0,
-                  isLongText: true,
-                ),
+                child: text("Product code: ${productData!['sku']}", fontSize: 12.0, isLongText: true),
               ),
             ],
           ),
@@ -312,18 +301,11 @@ class _ProductDetailState extends State<ProductDetail> {
               ),
               if (Auth.check()!)
                 Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10.0),
-                    color: green,
-                  ),
+                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(10.0), color: green),
                   padding: const EdgeInsets.all(5),
                   child: Row(
                     children: [
-                      const Icon(
-                        Icons.share,
-                        size: 15,
-                        color: white,
-                      ),
+                      const Icon(Icons.share, size: 15, color: white),
                       5.width,
                       text('Share & Earn', textColor: white),
                     ],
@@ -339,12 +321,11 @@ class _ProductDetailState extends State<ProductDetail> {
                     },
                   });
                   DynamicLink.createDynamicLink(
-                          type: "product-detail",
-                          itemData: sendData,
-                          route: 'product-detail')
-                      .then((shortLink) async {
-                    _shareNetworkImage(productData!['images'][0]['fileName'],
-                        shortLink.toString());
+                    type: "product-detail",
+                    itemData: sendData,
+                    route: 'product-detail',
+                  ).then((shortLink) async {
+                    _shareNetworkImage(productData!['images'][0]['fileName'], shortLink.toString());
                   });
                 }),
             ],
@@ -355,7 +336,7 @@ class _ProductDetailState extends State<ProductDetail> {
               text(
                 '\₹ ${discountAmount!.toStringAsFixed(2)} discount',
                 fontSize: 12.0,
-                fontFamily: fontSemibold,
+                fontFamily: fontSemiBold,
               ),
             ],
           ),
@@ -366,35 +347,22 @@ class _ProductDetailState extends State<ProductDetail> {
                 child: Row(
                   children: [
                     text(
-                      double.parse(productData!['averageRating'].toString())
-                          .toStringAsFixed(1),
+                      double.parse(productData!['averageRating'].toString()).toStringAsFixed(1),
                       textColor: Colors.white,
                       fontweight: FontWeight.w600,
                       fontSize: 13.0,
                     ),
                     const SizedBox(width: 2.0),
-                    const Icon(
-                      Icons.star,
-                      color: Colors.white,
-                      size: 12,
-                    ),
+                    const Icon(Icons.star, color: Colors.white, size: 12),
                   ],
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                 ),
-                decoration: BoxDecoration(
-                  color: colorPrimary,
-                  borderRadius: BorderRadius.circular(20.0),
-                ),
-                padding:
-                    const EdgeInsets.symmetric(vertical: 1.0, horizontal: 10.0),
+                decoration: BoxDecoration(color: colorPrimary, borderRadius: BorderRadius.circular(20.0)),
+                padding: const EdgeInsets.symmetric(vertical: 1.0, horizontal: 10.0),
               ),
               const SizedBox(width: 10.0),
-              text(
-                '${productData!['ratingCount']} Ratings',
-                fontSize: 12.0,
-                fontFamily: fontSemibold,
-              ),
+              text('${productData!['ratingCount']} Ratings', fontSize: 12.0, fontFamily: fontSemiBold),
             ],
           ),
           const SizedBox(height: 8.0),
@@ -417,10 +385,7 @@ class _ProductDetailState extends State<ProductDetail> {
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 5),
-            child: text(
-              "Select Variation",
-              fontFamily: fontSemibold,
-            ),
+            child: text("Select Variation", fontFamily: fontSemiBold),
           ),
           const SizedBox(height: 5.0),
           Container(
@@ -437,34 +402,31 @@ class _ProductDetailState extends State<ProductDetail> {
                       borderRadius: BorderRadius.circular(14),
                       boxShadow: productData!['variation'][i]['isSelected']
                           ? [
-                        BoxShadow(
-                          color: colorPrimary.withOpacity(0.2),
-                          blurRadius: 8,
-                          offset: const Offset(0, 4),
-                        ),
-                      ]
+                              BoxShadow(
+                                color: colorPrimary.withOpacity(0.2),
+                                blurRadius: 8,
+                                offset: const Offset(0, 4),
+                              ),
+                            ]
                           : [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.08),
-                          blurRadius: 6,
-                          offset: const Offset(0, 3),
-                        ),
-                      ],
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.08),
+                                blurRadius: 6,
+                                offset: const Offset(0, 3),
+                              ),
+                            ],
                     ),
                     child: ChoiceChip(
                       elevation: 0,
-                      labelPadding:
-                      const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+                      labelPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
                       label: Text(
                         productData!['variation'][i]['variationDetail']['name'],
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          fontFamily: fontSemibold,
+                          fontFamily: fontSemiBold,
                           fontSize: 14.sp,
                           letterSpacing: 0.2,
-                          color: productData!['variation'][i]['isSelected']
-                              ? Colors.black
-                              : Colors.black87,
+                          color: productData!['variation'][i]['isSelected'] ? Colors.black : Colors.black87,
                         ),
                       ),
                       backgroundColor: Colors.white,
@@ -480,11 +442,7 @@ class _ProductDetailState extends State<ProductDetail> {
                         ),
                       ),
                       avatar: productData!['variation'][i]['isSelected']
-                          ? const Icon(
-                        Icons.check_circle,
-                        size: 16,
-                        color: Colors.white,
-                      )
+                          ? const Icon(Icons.check_circle, size: 16, color: Colors.white)
                           : null,
                       // Custom gradient background for selected state
                       labelStyle: const TextStyle(fontWeight: FontWeight.w600),
@@ -492,8 +450,7 @@ class _ProductDetailState extends State<ProductDetail> {
                       onSelected: (bool selected) {
                         setState(() {
                           for (var variation in productData!['variation']) {
-                            variation['isSelected'] =
-                                variation['id'] == productData!['variation'][i]['id'];
+                            variation['isSelected'] = variation['id'] == productData!['variation'][i]['id'];
                           }
 
                           final v = productData!['variation'][i];
@@ -511,7 +468,6 @@ class _ProductDetailState extends State<ProductDetail> {
               ],
             ),
           ),
-
         ],
       ),
     );
@@ -521,9 +477,7 @@ class _ProductDetailState extends State<ProductDetail> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
       margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 10),
-      decoration: boxContain(
-        showShadow: true,
-      ),
+      decoration: boxContain(showShadow: true),
       width: double.infinity,
       child: Theme(
         data: ThemeData().copyWith(dividerColor: Colors.transparent),
@@ -532,10 +486,7 @@ class _ProductDetailState extends State<ProductDetail> {
           initiallyExpanded: true,
           title: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15),
-            child: text(
-              "Product Details",
-              fontFamily: fontSemibold,
-            ),
+            child: text("Product Details", fontFamily: fontSemiBold),
           ),
           children: [
             const SizedBox(height: 5.0),
@@ -544,16 +495,8 @@ class _ProductDetailState extends State<ProductDetail> {
               child: Html(
                 data: productData!['description'],
                 style: {
-                  "h4": Style(
-                    color: Colors.black,
-                    fontSize: FontSize(16.sp),
-                    fontFamily: fontRegular,
-                  ),
-                  "p": Style(
-                    color: Colors.black,
-                    fontSize: FontSize(12.sp),
-                    fontFamily: fontRegular,
-                  ),
+                  "h4": Style(color: Colors.black, fontSize: FontSize(16.sp), fontFamily: fontRegular),
+                  "p": Style(color: Colors.black, fontSize: FontSize(12.sp), fontFamily: fontRegular),
                 },
               ),
             ),
@@ -568,10 +511,7 @@ class _ProductDetailState extends State<ProductDetail> {
     num? rating;
     rating = double.parse(productData!['averageRating'].toString()).toDouble();
     return Container(
-      decoration: boxDecoration(
-        radius: 10,
-        showShadow: true,
-      ),
+      decoration: boxDecoration(radius: 10, showShadow: true),
       margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
       width: double.infinity,
       child: Column(
@@ -580,10 +520,7 @@ class _ProductDetailState extends State<ProductDetail> {
           const SizedBox(height: 8.0),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8),
-            child: text(
-              "Product Rating & Reviews",
-              fontFamily: fontSemibold,
-            ),
+            child: text("Product Rating & Reviews", fontFamily: fontSemiBold),
           ),
           const SizedBox(height: 5.0),
           Container(
@@ -605,27 +542,23 @@ class _ProductDetailState extends State<ProductDetail> {
                             rating.toStringAsFixed(1).toString(),
                             fontSize: 35.0,
                             fontweight: FontWeight.w600,
-                            fontFamily: fontSemibold,
+                            fontFamily: fontSemiBold,
                             textColor: colorAccent,
                           ),
-                          Icon(
-                            Icons.star,
-                            color: colorAccent,
-                            size: 20,
-                          ),
+                          Icon(Icons.star, color: colorAccent, size: 20),
                         ],
                       ),
                       text(
                         "${productData!['ratingCount'].toString()}  Ratings",
                         fontSize: 13.0,
-                        fontFamily: fontSemibold,
+                        fontFamily: fontSemiBold,
                         textColor: Colors.grey,
                       ),
                       const SizedBox(height: 2),
                       text(
                         "${productData!['reviewCount'].toString()}  Reviews",
                         fontSize: 13.0,
-                        fontFamily: fontSemibold,
+                        fontFamily: fontSemiBold,
                         textColor: Colors.grey,
                       ),
                     ],
@@ -642,33 +575,30 @@ class _ProductDetailState extends State<ProductDetail> {
                           text(
                             productData!['rating'][index]['name'].toString(),
                             fontSize: 11.0,
-                            fontFamily: fontSemibold,
-                            textColor: productData!['rating'][index]['id'] ==
-                                        5 ||
+                            fontFamily: fontSemiBold,
+                            textColor:
+                                productData!['rating'][index]['id'] == 5 ||
                                     productData!['rating'][index]['id'] == 4
                                 ? green
                                 : productData!['rating'][index]['id'] == 3 ||
-                                        productData!['rating'][index]['id'] == 2
-                                    ? colorAccent
-                                    : red,
+                                      productData!['rating'][index]['id'] == 2
+                                ? colorAccent
+                                : red,
                           ).expand(flex: 1),
                           // SizedBox(width: 10.0),
                           LinearPercentIndicator(
                             lineHeight: 4.0,
-                            percent: productData!['rating'][index]
-                                    ['ratingCount'] /
-                                100,
+                            percent: productData!['rating'][index]['ratingCount'] / 100,
                             linearStrokeCap: LinearStrokeCap.roundAll,
                             backgroundColor: Colors.grey.withOpacity(0.2),
                             progressColor: Colors.red,
                           ).expand(flex: 2),
                           const SizedBox(width: 10.0),
                           text(
-                            productData!['rating'][index]['ratingCount']
-                                .toString(),
+                            productData!['rating'][index]['ratingCount'].toString(),
                             fontSize: 14.0,
                             fontweight: FontWeight.w600,
-                            fontFamily: fontSemibold,
+                            fontFamily: fontSemiBold,
                             textColor: Colors.grey,
                           ),
                         ],
@@ -683,8 +613,7 @@ class _ProductDetailState extends State<ProductDetail> {
           if (productData!['review'].length > 0) ...[
             Container(
               height: 150,
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
+              padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
               child: ListView.builder(
                 itemCount: productData!['review'].length,
                 itemBuilder: (context, index) {
@@ -696,9 +625,7 @@ class _ProductDetailState extends State<ProductDetail> {
                       children: [
                         CircleAvatar(
                           radius: 18.0,
-                          backgroundImage: NetworkImage(
-                            productData!['review'][index]['profileImage'],
-                          ),
+                          backgroundImage: NetworkImage(productData!['review'][index]['profileImage']),
                         ),
                         const SizedBox(width: 12.0),
                         Expanded(
@@ -718,31 +645,22 @@ class _ProductDetailState extends State<ProductDetail> {
                                     child: Row(
                                       children: [
                                         text(
-                                          productData!['review'][index]
-                                                  ['rating']
-                                              .toString(),
+                                          productData!['review'][index]['rating'].toString(),
                                           textColor: Colors.white,
                                           fontweight: FontWeight.w600,
                                           fontSize: 16.0,
                                         ),
                                         const SizedBox(width: 2.0),
-                                        const Icon(
-                                          Icons.star,
-                                          color: Colors.white,
-                                          size: 15,
-                                        ),
+                                        const Icon(Icons.star, color: Colors.white, size: 15),
                                       ],
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
                                     ),
                                     decoration: BoxDecoration(
                                       color: colorPrimary,
                                       borderRadius: BorderRadius.circular(20.0),
                                     ),
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 1.0, horizontal: 10.0),
+                                    padding: const EdgeInsets.symmetric(vertical: 1.0, horizontal: 10.0),
                                   ),
                                 ],
                               ),
@@ -752,7 +670,7 @@ class _ProductDetailState extends State<ProductDetail> {
                                 isLongText: true,
                                 textColor: gray,
                                 fontSize: 14.0,
-                              )
+                              ),
                             ],
                           ),
                         ),
@@ -764,24 +682,24 @@ class _ProductDetailState extends State<ProductDetail> {
             ),
             // Divider(height: 2),
             Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 8.0, vertical: 5.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  text(
-                    'View All Reviews',
-                    // textAllCaps: true,
-                    textColor: colorAccent,
-                    fontFamily: fontBold,
-                    fontweight: FontWeight.w600,
-                    fontSize: 14.0,
-                  ),
-                ],
-              ).onTap(() {
-                Get.toNamed('review-list', arguments: productData!['id']);
-              }),
-            )
+              padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 5.0),
+              child:
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      text(
+                        'View All Reviews',
+                        // textAllCaps: true,
+                        textColor: colorAccent,
+                        fontFamily: fontBold,
+                        fontweight: FontWeight.w600,
+                        fontSize: 14.0,
+                      ),
+                    ],
+                  ).onTap(() {
+                    Get.toNamed('review-list', arguments: productData!['id']);
+                  }),
+            ),
           ],
         ],
       ),
@@ -794,12 +712,7 @@ class _ProductDetailState extends State<ProductDetail> {
       padding: const EdgeInsets.only(right: 15),
       decoration: const BoxDecoration(
         color: Colors.white,
-        border: Border(
-          top: BorderSide(
-            color: Colors.grey,
-            width: 1.5,
-          ),
-        ),
+        border: Border(top: BorderSide(color: Colors.grey, width: 1.5)),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -815,10 +728,7 @@ class _ProductDetailState extends State<ProductDetail> {
                   height: 35.sp,
                   decoration: BoxDecoration(
                     color: const Color(0xFF658D28).withOpacity(0.1),
-                    border: Border.all(
-                      color: const Color(0xFF658D28).withOpacity(0.1),
-                      width: 0.6,
-                    ),
+                    border: Border.all(color: const Color(0xFF658D28).withOpacity(0.1), width: 0.6),
                     shape: BoxShape.circle,
                     boxShadow: [
                       BoxShadow(
@@ -836,41 +746,48 @@ class _ProductDetailState extends State<ProductDetail> {
                         bool isStatus = false;
                         if (Auth.check()! || Auth.isGuestLoggedIn!) {
                           if (isLiked) {
-                            await Api.http.delete(
-                                'shopping/wishlist/delete/${productData!['id']}',
-                                queryParameters: {
-                                  "user_type": Auth.check()! ? 1 : 2,
-                                }).then((response) {
-                              if (response.data['status']) {
-                                isStatus = response.data['status'];
-                              } else {
-                                GetBar(
-                                  message: response.data['message'],
-                                  duration: const Duration(seconds: 5),
-                                  backgroundColor: Colors.red,
-                                ).show();
-                              }
-                            }).catchError((err) {
-                              GetBar(
-                                message: err.response.data['message'],
-                                duration: const Duration(seconds: 5),
-                                backgroundColor: Colors.red,
-                              ).show();
-                            });
+                            await Api.http
+                                .delete(
+                                  'shopping/wishlist/delete/${productData!['id']}',
+                                  queryParameters: {"user_type": Auth.check()! ? 1 : 2},
+                                )
+                                .then((response) {
+                                  if (response.data['status']) {
+                                    isStatus = response.data['status'];
+                                  } else {
+                                    GetBar(
+                                      message: response.data['message'],
+                                      duration: const Duration(seconds: 5),
+                                      backgroundColor: Colors.red,
+                                    ).show();
+                                  }
+                                })
+                                .catchError((err) {
+                                  GetBar(
+                                    message: err.response.data['message'],
+                                    duration: const Duration(seconds: 5),
+                                    backgroundColor: Colors.red,
+                                  ).show();
+                                });
                           } else {
-                            await Api.http.post('shopping/wishlist/store', data: {
-                              "product_id": productData!['id'],
-                              "user_type": Auth.check()! ? 1 : 2,
-                            }).then((response) {
-                              isStatus = response.data['status'];
-                            }).catchError((err) {
-                              if (err.response.statusCode == 401) {
-                                Get.offNamed('/login-mlm');
-                              } else {
-                                AppUtils.showErrorSnackBar(
-                                    err.response.data['message']);
-                              }
-                            });
+                            await Api.http
+                                .post(
+                                  'shopping/wishlist/store',
+                                  data: {
+                                    "product_id": productData!['id'],
+                                    "user_type": Auth.check()! ? 1 : 2,
+                                  },
+                                )
+                                .then((response) {
+                                  isStatus = response.data['status'];
+                                })
+                                .catchError((err) {
+                                  if (err.response.statusCode == 401) {
+                                    Get.offNamed('/login-mlm');
+                                  } else {
+                                    AppUtils.showErrorSnackBar(err.response.data['message']);
+                                  }
+                                });
                           }
                         } else {
                           // login logic (kept as-is)
@@ -881,10 +798,7 @@ class _ProductDetailState extends State<ProductDetail> {
                   ),
                 ),
                 const SizedBox(height: 2.0),
-                text(fontSize: 12.sp,
-                  'Wishlist',
-                  fontFamily: fontLight,
-                ),
+                text(fontSize: 12.sp, 'Wishlist', fontFamily: fontLight),
               ],
             ),
           ).expand(flex: 4),
@@ -912,9 +826,7 @@ class _ProductDetailState extends State<ProductDetail> {
           //     ),
           //   ),
           // ),
-          const SizedBox(
-            width: 30.0,
-          ),
+          const SizedBox(width: 30.0),
           GestureDetector(
             onTap: () async {
               // AppUtils.showErrorSnackBar('E-commerce coming soon');
@@ -937,120 +849,104 @@ class _ProductDetailState extends State<ProductDetail> {
                 if (outOfStock == false) {
                   if (productVariationId != null) {
                     Get.bottomSheet(
-                      StatefulBuilder(builder: (BuildContext context,
-                          void Function(void Function()) setDialogState) {
-                        return Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.only(
+                      StatefulBuilder(
+                        builder: (BuildContext context, void Function(void Function()) setDialogState) {
+                          return Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.only(
                                 topRight: Radius.circular(20.0),
-                                topLeft: Radius.circular(20.0)),
-                            color: white,
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 18, vertical: 8),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                SizedBox(
-                                  height: 12,
-                                ),
-                                Align(
-                                  alignment: Alignment.topRight,
-                                  child: Icon(
-                                    UniconsLine.times_circle,
-                                    color: Colors.grey,
-                                  ).onTap(() {
-                                    Get.back();
-                                  }),
-                                ),
-                                20.height,
-                                AppButton(
-                                  shapeBorder: RoundedRectangleBorder(
-                                      borderRadius: radius(10)),
-                                  elevation: 30,
-                                  width: double.infinity,
-                                  color: const Color(0xff9afdcd),
-                                  padding: EdgeInsets.symmetric(
-                                    vertical: 15,
-                                    horizontal: 20,
-                                  ),
-                                  onTap: () {
-                                    Get.back();
-                                    showBottomSheet(context, product);
-                                  },
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Icon(UniconsLine.user),
-                                          10.width,
-                                          Text(
-                                            'Login as a guest',
-                                            style: TextStyle(
-                                              fontFamily: fontBold,
-                                              color: black,
-                                              fontSize: 16,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      const Icon(Icons.chevron_right_rounded),
-                                    ],
-                                  ),
-                                ),
-                                20.height,
-                                AppButton(
-                                  shapeBorder: RoundedRectangleBorder(
-                                      borderRadius: radius(10)),
-                                  elevation: 30,
-                                  width: double.infinity,
-                                  color: const Color(0xff6153d3),
-                                  padding: EdgeInsets.symmetric(
-                                      vertical: 15, horizontal: 20),
-                                  onTap: () {
-                                    Get.back();
-                                    AppUtils.redirect('login-mlm',
-                                        callWhileBack: () {
-                                      setState(() {});
-                                    });
-                                  },
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          const Icon(
-                                            UniconsLine.user_arrows,
-                                            color: Colors.white,
-                                          ),
-                                          10.width,
-                                          Text(
-                                            'Login as a myky member',
-                                            style: TextStyle(
-                                              fontFamily: fontBold,
-                                              color: white,
-                                              fontSize: 16,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      const Icon(
-                                        Icons.chevron_right_rounded,
-                                        color: Colors.white,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                20.height,
-                              ],
+                                topLeft: Radius.circular(20.0),
+                              ),
+                              color: white,
                             ),
-                          ),
-                        );
-                      }),
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 18, vertical: 8),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  SizedBox(height: 12),
+                                  Align(
+                                    alignment: Alignment.topRight,
+                                    child: Icon(UniconsLine.times_circle, color: Colors.grey).onTap(() {
+                                      Get.back();
+                                    }),
+                                  ),
+                                  20.height,
+                                  AppButton(
+                                    shapeBorder: RoundedRectangleBorder(borderRadius: radius(10)),
+                                    elevation: 30,
+                                    width: double.infinity,
+                                    color: const Color(0xff9afdcd),
+                                    padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                                    onTap: () {
+                                      Get.back();
+                                      showBottomSheet(context, product);
+                                    },
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Icon(UniconsLine.user),
+                                            10.width,
+                                            Text(
+                                              'Login as a guest',
+                                              style: TextStyle(
+                                                fontFamily: fontBold,
+                                                color: black,
+                                                fontSize: 16,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        const Icon(Icons.chevron_right_rounded),
+                                      ],
+                                    ),
+                                  ),
+                                  20.height,
+                                  AppButton(
+                                    shapeBorder: RoundedRectangleBorder(borderRadius: radius(10)),
+                                    elevation: 30,
+                                    width: double.infinity,
+                                    color: const Color(0xff6153d3),
+                                    padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                                    onTap: () {
+                                      Get.back();
+                                      AppUtils.redirect(
+                                        'login-mlm',
+                                        callWhileBack: () {
+                                          setState(() {});
+                                        },
+                                      );
+                                    },
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            const Icon(UniconsLine.user_arrows, color: Colors.white),
+                                            10.width,
+                                            Text(
+                                              'Login as a myky member',
+                                              style: TextStyle(
+                                                fontFamily: fontBold,
+                                                color: white,
+                                                fontSize: 16,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        const Icon(Icons.chevron_right_rounded, color: Colors.white),
+                                      ],
+                                    ),
+                                  ),
+                                  20.height,
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      ),
                     );
                   } else {
                     AppUtils.showErrorSnackBar('First select the variation');
@@ -1078,23 +974,27 @@ class _ProductDetailState extends State<ProductDetail> {
   }
 
   void _addProductToCart(int userType) {
-    Api.http.post('shopping/cart/add', data: {
-      'product_price_id': productVariationId,
-      'qty': 1,
-      'user_type': userType
-    }).then((response) {
-      if (response.data['status']) {
-        AppUtils.showSuccessSnackBar('Added to cart successfully');
-        MLMCountCtl.to.operation(operationToPerform: "add");
-        Future.delayed(const Duration(seconds: 1), () {
-          AppUtils.redirect('/cart', callWhileBack: () {
-            setState(() {});
-          });
+    Api.http
+        .post(
+          'shopping/cart/add',
+          data: {'product_price_id': productVariationId, 'qty': 1, 'user_type': userType},
+        )
+        .then((response) {
+          if (response.data['status']) {
+            AppUtils.showSuccessSnackBar('Added to cart successfully');
+            MLMCountCtl.to.operation(operationToPerform: "add");
+            Future.delayed(const Duration(seconds: 1), () {
+              AppUtils.redirect(
+                '/cart',
+                callWhileBack: () {
+                  setState(() {});
+                },
+              );
+            });
+          } else {
+            AppUtils.showErrorSnackBar(response.data['message']);
+          }
         });
-      } else {
-        AppUtils.showErrorSnackBar(response.data['message']);
-      }
-    });
   }
 
   _shareNetworkImage(String url, String? text) async {
@@ -1102,9 +1002,12 @@ class _ProductDetailState extends State<ProductDetail> {
     final path = '${tempDir.path}/myky.jpeg';
 
     await Dio().download(url, path);
-    Share.shareFiles([path],
-        text: "Shop now on MYKY!\n $text\n\n"
-            "Referral Code : ${Auth.user()!['code']}\n");
+    Share.shareFiles(
+      [path],
+      text:
+          "Shop now on MYKY!\n $text\n\n"
+          "Referral Code : ${Auth.user()!['code']}\n",
+    );
 
     return path;
   }

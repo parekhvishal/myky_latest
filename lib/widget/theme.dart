@@ -6,42 +6,28 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nb_utils/nb_utils.dart';
 
+import 'colors.dart';
+import 'custom_text.dart';
+
 // type for litview Builder
 typedef Widget ListItemBuilder(dynamic itemData, int index);
 
 //type for Gridview Builder
 typedef Widget GridItemBuilder(dynamic itemData, int index);
 
-// const fontThin = 'Thin';
-
-// const fontMedium = 'Medium';
-
+const fontExtraLight = 'ExtraLight';
 const fontLight = 'Light';
 const fontRegular = 'Regular';
-// const fontMedium = 'Medium';
-const fontSemibold = 'SemiBold';
+const fontMedium = 'Medium';
+const fontSemiBold = 'SemiBold';
 const fontBold = 'Bold';
-const fontInterLight = 'InterLight';
-const fontMedium = 'InterRegular';
-const fontInterBold = 'InterBold';
-const fontInterSemiBold = 'InterSemiBold';
-const fontPoppinsBold = 'PoppinsBold';
-const fontPoppinsRegular = 'PoppinsRegular';
-const fontPoppinsMedium = 'PoppinsMedium';
-const fontPoppinsSemiBold = 'PoppinsSemiMedium';
-const fontLexendBold = 'LexendBold';
-const fontLexendRegular = 'LexendRegular';
-const fontLexendMedium = 'LexendMedium';
-const fontLexendSemiBold = 'LexendSemiMedium';
 
 /* font sizes*/
-const textSizeExtraSmall = 10.0;
 const textSizeSmall = 12.0;
 const textSizeSMedium = 14.0;
 const textSizeMedium = 16.0;
 const textSizeLargeMedium = 18.0;
 const textSizeNormal = 20.0;
-const textSizeLarge = 22.0;
 const textSizeXLarge = 30.0;
 
 /* margin */
@@ -50,21 +36,9 @@ const spacing_control = 4.0;
 const spacing_standard = 8.0;
 const spacing_middle = 10.0;
 const spacing_standard_new = 16.0;
-const spacing_large = 24.0;
-const spacing_xlarge = 32.0;
-const spacing_xxLarge = 40.0;
 
-const bodyColor = Color(0XFF000700);
-
-Color colorPrimary = Color(0xFF00089E);
-//Color(0xff2736BD)
-
-Color colorAccent = Color(0xffF2B34A);
-const textColorPrimary = Color(0XFF333333);
-const textColorSecondary = Color(0XFF747474);
 const colorPrimary_light = Color(0XFFE9E9E9);
 const colorPrimaryDark = Color(0XFF212121);
-const newClientColor = Color(0XFF7047A7);
 
 const view_color = Color(0XFFDADADA);
 
@@ -72,9 +46,7 @@ const app_background = Color(0XFFE9E9E9);
 const icon_color = Color(0XFF747474);
 const selected_tab = Color(0XFFFCE9E9);
 const primary = Color(0Xff0047ba);
-const red = Color(0XFFF10202);
-const blue = Color(0XFF1D36C0);
-const green = Color(0XFF4CAF50);
+
 const edit_text_background = Color(0XFFE8E8E8);
 const shadow = Color(0X70E2E2E5);
 const shadow_color = Color(0X95E9EBF0);
@@ -113,102 +85,214 @@ ListView listviewBuilder(
     scrollDirection: scrollDirection,
     shrinkWrap: (shrinkWrap != null) ? shrinkWrap : true,
     itemBuilder: (BuildContext ctxt, int index) {
-      return index < items!.length
-          ? itemBuilder(items[index], index)
-          : SizedBox.shrink();
+      return index < items!.length ? itemBuilder(items[index], index) : SizedBox.shrink();
     },
     physics: scrollPhysics,
   );
 }
 
-ThemeData buildThemeData() {
+// final ThemeController themeController = Get.find();
+
+ThemeData buildLightThemeData() {
   return ThemeData(
-    primarySwatch: createMaterialColor(colorPrimary),
-    scaffoldBackgroundColor: Color(0xffF5F8FA),
-    useMaterial3: true,
-    bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-      backgroundColor: Colors.white,
-    ),
-    dialogBackgroundColor: Colors.white,
-    unselectedWidgetColor: Colors.black,
-    dividerColor: Colors.white,
-    dialogTheme: DialogThemeData(shape: dialogShape()),
-    bottomSheetTheme: BottomSheetThemeData(
-      shape: RoundedRectangleBorder(
-        borderRadius: radiusOnly(
-          topLeft: defaultRadius,
-          topRight: defaultRadius,
-        ),
-      ),
-      backgroundColor: Colors.white,
-    ),
-    cardColor: Colors.white,
-    radioTheme: RadioThemeData(fillColor: MaterialStateProperty.all(gray)),
-    iconTheme: IconThemeData(color: Colors.black, size: 25.sp),
-    listTileTheme: const ListTileThemeData(
-      iconColor: Colors.black,
-      textColor: Colors.black,
-    ),
+    scaffoldBackgroundColor: appLightBackground,
+    radioTheme: RadioThemeData(fillColor: WidgetStateProperty.all(gray)),
+    iconTheme: IconThemeData(color: black, size: 25.sp),
+    listTileTheme: const ListTileThemeData(iconColor: black, textColor: black),
     fontFamily: fontRegular,
     textTheme: TextTheme(
-      bodyMedium: TextStyle(
-        fontFamily: fontRegular,
-        color: Colors.black,
-        fontSize: 18.sp,
-      ),
-      bodyLarge: TextStyle(fontFamily: fontRegular, fontSize: 16.sp),
+      bodyMedium: TextStyle(fontFamily: fontRegular, fontSize: 18.sp),
+      bodyLarge: TextStyle(fontFamily: fontRegular, fontSize: 18.sp),
     ),
     inputDecorationTheme: InputDecorationTheme(
-      contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 17),
-      filled: true,
+      contentPadding: const EdgeInsets.fromLTRB(18, 15, 18, 15),
+      filled: false,
       fillColor: white,
-      prefixIconColor: colorPrimary,
+      labelStyle: TextStyle(fontSize: 14.sp, color: colorPrimary),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12.r),
-        borderSide: BorderSide(
-          color: textPrimaryColor.withOpacity(0.3),
-          width: 0.5,
-        ),
+        borderSide: BorderSide(color: textInputBorderColor.withValues(alpha: 0.2), width: 0.7.w),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12.r),
-        borderSide: BorderSide(color: colorPrimary, width: 0.5.w),
+        borderSide: BorderSide(color: colorPrimary, width: 1.0),
       ),
       errorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12.r),
-        borderSide: const BorderSide(color: redColor, width: 1.0),
-        gapPadding: 0,
+        borderSide: BorderSide(color: red, width: 1.w),
       ),
       disabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12.r),
-        borderSide: const BorderSide(color: white, width: 0.0),
+        borderSide: const BorderSide(color: white),
       ),
       focusedErrorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12.r),
-        borderSide: const BorderSide(color: redColor, width: 1.5),
+        borderSide: BorderSide(color: red, width: 1.w),
       ),
-      hintStyle: TextStyle(
-        color: textPrimaryColor.withOpacity(0.5),
-        fontSize: 16.sp,
-      ),
+      hintStyle: TextStyle(color: bodyColor.withValues(alpha: 0.5), fontSize: 18.sp),
       suffixIconColor: black,
+      prefixIconColor: grey,
       isDense: true,
     ),
-    appBarTheme: appBarTheme(),
+    appBarTheme: AppBarTheme(
+      backgroundColor: Colors.white,
+      elevation: 0,
+      titleTextStyle: TextStyle(fontFamily: fontBold, fontSize: 22.sp),
+      actionsIconTheme: const IconThemeData(color: white),
+      iconTheme: const IconThemeData(color: white),
+    ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        foregroundColor: Colors.green,
+        backgroundColor: white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      ),
+    ),
   );
 }
 
-AppBarTheme appBarTheme() {
-  return AppBarTheme(
-    color: white,
-    elevation: 1,
-    titleTextStyle: TextStyle(
-      fontFamily: fontSemibold,
-      fontSize: 16.sp,
-      color: Colors.black,
+ThemeData buildDarkThemeData() {
+  return ThemeData(
+    scaffoldBackgroundColor: appBackground,
+    radioTheme: RadioThemeData(fillColor: WidgetStateProperty.all(colorPrimary)),
+    iconTheme: const IconThemeData(color: gray, size: 25),
+    listTileTheme: const ListTileThemeData(iconColor: white, textColor: white),
+    fontFamily: fontRegular,
+    textTheme: TextTheme(
+      bodyMedium: TextStyle(fontFamily: fontRegular, color: white, fontSize: 16.sp),
+      bodyLarge: TextStyle(fontFamily: fontRegular, fontSize: 16.sp, color: white),
     ),
-    actionsIconTheme: IconThemeData(color: Colors.black),
-    iconTheme: IconThemeData(color: Colors.black),
+    inputDecorationTheme: InputDecorationTheme(
+      contentPadding: const EdgeInsets.fromLTRB(25, 15, 25, 15),
+      prefixIconColor: colorPrimary,
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(5.r),
+        borderSide: BorderSide(color: textInputBorderColor, width: 1.w),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(5.r),
+        borderSide: BorderSide(color: colorPrimary, width: 1.w),
+      ),
+      errorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(5.r),
+        borderSide: BorderSide(color: red, width: 1.w),
+      ),
+      disabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(5.r),
+        borderSide: BorderSide(color: colorPrimary, width: 0.w),
+      ),
+      focusedErrorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(5.r),
+        borderSide: BorderSide(color: red, width: 0.5.w),
+      ),
+      hintStyle: TextStyle(color: white.withValues(alpha: 0.5), fontSize: 16.sp),
+      suffixIconColor: black,
+      isDense: true,
+    ),
+    appBarTheme: AppBarTheme(
+      backgroundColor: appBackground,
+      elevation: 0,
+      titleTextStyle: TextStyle(fontFamily: fontBold, fontSize: 22.sp),
+      actionsIconTheme: const IconThemeData(color: white),
+      iconTheme: const IconThemeData(color: white),
+    ),
+    bottomNavigationBarTheme: BottomNavigationBarThemeData(backgroundColor: Colors.transparent),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        foregroundColor: colorPrimary,
+        backgroundColor: white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      ),
+    ),
+  );
+}
+
+Widget formField(
+  String hintText, {
+  isPassword = false,
+  bool textCapital = false,
+  bool enableInterAction = true,
+  bool isRegexToRemoveEmoji = true,
+  String? labelText,
+  bool? obscureText,
+  FocusNode? focusNode,
+  TextInputAction? textInputAction,
+  TextEditingController? controller,
+  FormFieldSetter<String>? onSaved,
+  FormFieldValidator<String>? validator,
+  int? maxLength,
+  bool enabled = true,
+  ValueChanged<String>? onChanged,
+  TextInputType? keyboardType,
+  List<TextInputFormatter>? inputFormatters,
+  Widget? suffixIcon,
+  Widget? prefixIcon,
+  int maxLines = 1,
+  TextCapitalization? textCapitalization,
+  ValueChanged<String>? onFieldSubmitted,
+  labelColor = labelInputColor,
+  bool readOnly = false,
+  int? errorMaxLine = 1,
+  Color borderColor = colorPrimary,
+  Function()? onTap,
+}) {
+  String regexToRemoveEmoji = r'[^\x00-\x7F]';
+  if (isRegexToRemoveEmoji == true) {
+    if (inputFormatters == null) {
+      inputFormatters = [FilteringTextInputFormatter.deny(RegExp(regexToRemoveEmoji))];
+    } else {
+      inputFormatters.add(FilteringTextInputFormatter.deny(RegExp(regexToRemoveEmoji)));
+    }
+  }
+  return Container(
+    decoration: BoxDecoration(
+      color: Colors.white,
+      borderRadius: BorderRadius.circular(12.r),
+      boxShadow: [
+        BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 16, offset: const Offset(0, 2)),
+      ],
+    ),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if (labelText != null) ...[
+          CustomText(labelText, fontSize: 14.sp, fontFamily: fontSemiBold),
+          10.height,
+        ],
+        TextFormField(
+          focusNode: focusNode,
+          readOnly: readOnly,
+          enabled: enabled,
+          obscureText: isPassword,
+          enableInteractiveSelection: enableInterAction,
+          controller: controller,
+          validator: validator,
+          onSaved: onSaved,
+          onChanged: onChanged,
+          onTap: onTap,
+          maxLength: maxLength,
+          textCapitalization: textCapital ? TextCapitalization.characters : TextCapitalization.none,
+          inputFormatters: inputFormatters,
+          keyboardType: keyboardType,
+          style: TextStyle(color: black.withValues(alpha: 0.5), fontSize: 18.sp),
+          decoration: InputDecoration(
+            contentPadding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 14.h),
+            hintText: hintText,
+            suffixIcon: suffixIcon,
+            prefixIcon: prefixIcon,
+            prefixIconConstraints: BoxConstraints(
+              maxWidth: 50.w,
+              maxHeight: 50.h,
+              minWidth: 40.w,
+              minHeight: 40.h,
+            ),
+            counterText: '',
+            errorMaxLines: errorMaxLine,
+          ),
+          maxLines: maxLines,
+        ),
+      ],
+    ),
   );
 }
 
@@ -277,9 +361,7 @@ GridView gridviewBuilder(
     scrollDirection: scrollDirection,
     shrinkWrap: (shrinkWrap != null) ? shrinkWrap : true,
     itemBuilder: (BuildContext ctxt, int index) {
-      return index < items.length
-          ? itemBuilder(items[index], index)
-          : SizedBox.shrink();
+      return index < items.length ? itemBuilder(items[index], index) : SizedBox.shrink();
     },
   );
 }
@@ -343,12 +425,7 @@ Widget rowHeading(var label, var subLabel) {
           flex: 55,
           child: Align(
             alignment: Alignment.topRight,
-            child: text(
-              subLabel,
-              fontSize: 16.0,
-              fontFamily: fontBold,
-              isLongText: true,
-            ),
+            child: text(subLabel, fontSize: 16.0, fontFamily: fontBold, isLongText: true),
           ),
         ),
       ],
@@ -389,58 +466,6 @@ BoxDecoration boxDecoration({
         : [BoxShadow(color: Colors.transparent)],
     border: Border.all(color: color!),
     borderRadius: BorderRadius.all(Radius.circular(radius)),
-  );
-}
-
-Container inputBoxStyle(
-  var hintText, {
-  isPassword = false,
-  bool readonly = false,
-  bool? obscureText,
-  TextEditingController? controller,
-  FormFieldSetter<String>? onSaved,
-  FormFieldValidator<String>? validator,
-  int? maxLength,
-  ValueChanged<String>? onChanged,
-  TextInputType? keyboardType,
-  List<TextInputFormatter>? inputFormatters,
-  Widget? suffixIcon,
-  Widget? prefixIcon,
-  GestureTapCallback? onTap,
-}) {
-  return Container(
-    decoration: boxDecoration(radius: 6, showShadow: false, bgColor: white),
-    child: TextFormField(
-      style: TextStyle(fontSize: textSizeMedium, fontFamily: fontRegular),
-      readOnly: readonly,
-      obscureText: isPassword,
-      controller: controller,
-      validator: validator,
-      onSaved: onSaved,
-      onChanged: onChanged,
-      maxLength: maxLength,
-      inputFormatters: inputFormatters,
-      keyboardType: keyboardType,
-      cursorColor: colorPrimary,
-      onTap: onTap,
-      decoration: InputDecoration(
-        isDense: true,
-        hintText: hintText,
-        filled: true,
-        fillColor: white,
-        suffixIcon: suffixIcon,
-        prefixIcon: prefixIcon,
-        counterText: "",
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(color: white, width: 0.0),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(color: white, width: 0.0),
-        ),
-      ),
-    ),
   );
 }
 
@@ -496,9 +521,7 @@ Widget scaffoldBackgroundImage({
   }
 
   // overlay to tweak contrast
-  final overlay = Container(
-    color: overlayColor.withOpacity(overlayOpacity.clamp(0.0, 1.0)),
-  );
+  final overlay = Container(color: overlayColor.withOpacity(overlayOpacity.clamp(0.0, 1.0)));
 
   Widget content = Stack(
     children: [
@@ -508,11 +531,7 @@ Widget scaffoldBackgroundImage({
         child: SafeArea(
           top: false,
           bottom: false,
-          child: Container(
-            padding: padding ?? EdgeInsets.zero,
-            color: Colors.transparent,
-            child: child,
-          ),
+          child: Container(padding: padding ?? EdgeInsets.zero, color: Colors.transparent, child: child),
         ),
       ),
     ],
@@ -521,7 +540,7 @@ Widget scaffoldBackgroundImage({
   return safeArea ? SafeArea(child: content) : content;
 }
 
-Widget formField(
+Widget formFieldOld(
   context,
   hint, {
   isEnabled = true,
@@ -553,12 +572,7 @@ Widget formField(
       color: Colors.white,
       borderRadius: BorderRadius.circular(spacing_standard),
       boxShadow: [
-        BoxShadow(
-          color: Colors.black.withOpacity(0.2),
-          offset: Offset(3, 3),
-          blurRadius: 5,
-          spreadRadius: 1,
-        ),
+        BoxShadow(color: Colors.black.withOpacity(0.2), offset: Offset(3, 3), blurRadius: 5, spreadRadius: 1),
         BoxShadow(
           color: Colors.white.withOpacity(0.5),
           offset: Offset(-2, -2),
@@ -604,17 +618,9 @@ Widget formField(
         hintStyle: TextStyle(
           fontSize: textSizeMedium,
           color: textColorSecondary.withOpacity(0.7),
-          shadows: [
-            Shadow(
-              blurRadius: 2.0,
-              color: Colors.black.withOpacity(0.1),
-              offset: Offset(1, 1),
-            ),
-          ],
+          shadows: [Shadow(blurRadius: 2.0, color: Colors.black.withOpacity(0.1), offset: Offset(1, 1))],
         ),
-        prefixIcon: prefixIcon != null
-            ? Icon(prefixIcon, color: textColorSecondary, size: 20)
-            : null,
+        prefixIcon: prefixIcon != null ? Icon(prefixIcon, color: textColorSecondary, size: 20) : null,
         suffixIcon: suffixWidget,
       ),
       style: TextStyle(
@@ -667,24 +673,20 @@ floatingInput(
       suffixIcon: suffixIcon,
       prefixIcon: prefixIcon,
       counterText: '',
-      enabledBorder: UnderlineInputBorder(
-        borderSide: BorderSide(color: Colors.black12),
-      ),
-      focusedBorder: UnderlineInputBorder(
-        borderSide: BorderSide(color: colorPrimary),
-      ),
+      enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.black12)),
+      focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: colorPrimary)),
     ),
     maxLines: maxLines,
   );
 }
 
-class CustomButton extends StatefulWidget {
+class CustomButtonOld extends StatefulWidget {
   var textContent;
   VoidCallback? onPressed;
   var isStroked = false;
   Color? customColor;
 
-  CustomButton({
+  CustomButtonOld({
     @required this.textContent,
     @required this.onPressed,
     this.isStroked = false,
@@ -692,10 +694,10 @@ class CustomButton extends StatefulWidget {
   });
 
   @override
-  CustomButtonState createState() => CustomButtonState();
+  CustomButtonOldState createState() => CustomButtonOldState();
 }
 
-class CustomButtonState extends State<CustomButton> {
+class CustomButtonOldState extends State<CustomButtonOld> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -707,21 +709,17 @@ class CustomButtonState extends State<CustomButton> {
           widget.textContent,
           textColor: widget.isStroked ? colorPrimary : white,
           isCentered: true,
-          fontFamily: fontSemibold,
+          fontFamily: fontSemiBold,
           textAllCaps: true,
         ),
         decoration: widget.isStroked
             ? boxDecoration(
                 bgColor: Colors.transparent,
-                color: widget.customColor != null
-                    ? widget.customColor!
-                    : colorPrimary,
+                color: widget.customColor != null ? widget.customColor! : colorPrimary,
                 radius: 5,
               )
             : boxDecoration(
-                bgColor: widget.customColor != null
-                    ? widget.customColor!
-                    : colorPrimary,
+                bgColor: widget.customColor != null ? widget.customColor! : colorPrimary,
                 radius: 5,
               ),
       ),
@@ -754,11 +752,7 @@ Widget emptyWidget(
           left: 20,
           right: 20,
           child: Container(
-            decoration: boxDecoration(
-              radius: 10,
-              showShadow: true,
-              bgColor: Colors.grey[200]!,
-            ),
+            decoration: boxDecoration(radius: 10, showShadow: true, bgColor: Colors.grey[200]!),
             padding: EdgeInsets.all(8),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,

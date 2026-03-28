@@ -3,7 +3,6 @@ import 'package:unicons/unicons.dart';
 
 import '../../services/api.dart';
 import '../../widget/paginated_list.dart';
-import '../../widget/theme.dart';
 import '../common_list.dart';
 import 'common_wallet_display.dart';
 
@@ -21,9 +20,7 @@ class _PendingWalletState extends State<PendingWallet> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Pending Wallet Transactions'),
-      ),
+      appBar: AppBar(title: const Text('Pending Wallet Transactions')),
       body: PaginatedList(
         apiFuture: (int page) async {
           return Api.http.get("member/pending-wallet-transaction?page=$page");
@@ -40,7 +37,6 @@ class _PendingWalletState extends State<PendingWallet> {
   Widget _walletBuilder(dynamic item, int index) {
     return PendingWalletListCard(item: item);
   }
-
 
   // Widget _walletBuilder(dynamic item, int index) {
   //   return Container(
@@ -85,7 +81,7 @@ class _PendingWalletState extends State<PendingWallet> {
   //                 item['type'],
   //                 textColor: white,
   //                 textAllCaps: true,
-  //                 fontFamily: fontSemibold,
+  //                 fontFamily: fontSemiBold,
   //                 fontSize: textSizeSMedium,
   //               ),
   //             ),
@@ -100,7 +96,7 @@ class _PendingWalletState extends State<PendingWallet> {
   //               children: <Widget>[
   //                 text(
   //                   "Total Amount",
-  //                   fontFamily: fontSemibold,
+  //                   fontFamily: fontSemiBold,
   //                   fontSize: textSizeSMedium,
   //                 ),
   //                 Row(
@@ -120,7 +116,7 @@ class _PendingWalletState extends State<PendingWallet> {
   //               children: <Widget>[
   //                 text(
   //                   "Net Amount",
-  //                   fontFamily: fontSemibold,
+  //                   fontFamily: fontSemiBold,
   //                   fontSize: textSizeSMedium,
   //                 ),
   //                 Row(
@@ -145,7 +141,7 @@ class _PendingWalletState extends State<PendingWallet> {
   //               children: <Widget>[
   //                 text(
   //                   "Admin Charge",
-  //                   fontFamily: fontSemibold,
+  //                   fontFamily: fontSemiBold,
   //                   fontSize: textSizeSMedium,
   //                 ),
   //                 text(
@@ -168,7 +164,7 @@ class _PendingWalletState extends State<PendingWallet> {
   //         //             style: TextStyle(
   //         //               fontSize: textSizeSMedium,
   //         //               color: colorPrimary,
-  //         //               fontFamily: fontSemibold,
+  //         //               fontFamily: fontSemiBold,
   //         //             ),
   //         //           ),
   //         //           TextSpan(
@@ -197,8 +193,7 @@ class PendingWalletListCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bool isDebit = item['type'] == "Debit";
-    final Color typeColor =
-    isDebit ? Colors.redAccent.shade200 : Colors.greenAccent.shade700;
+    final Color typeColor = isDebit ? Colors.redAccent.shade200 : Colors.greenAccent.shade700;
 
     return DataDisplayCard(
       data: item,

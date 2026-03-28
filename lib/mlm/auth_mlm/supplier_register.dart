@@ -13,6 +13,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../services/getImage_service.dart';
 import '../../services/validator_x.dart';
+import '../../widget/colors.dart';
 import '../../widget/image_picker.dart';
 import '../../widget/theme.dart';
 import 'register.dart';
@@ -29,9 +30,7 @@ class SupplierRegister extends GetView<RegisterController> {
         return SafeArea(
           child: Scaffold(
             backgroundColor: whiteColor,
-            appBar: AppBar(
-              title: text('SUPPLIER SIGN UP'),
-            ),
+            appBar: AppBar(title: text('SUPPLIER SIGN UP')),
             body: Stack(
               children: [
                 Container(
@@ -45,14 +44,12 @@ class SupplierRegister extends GetView<RegisterController> {
                   alignment: Alignment.bottomLeft,
                   child: SingleChildScrollView(
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 8.0, horizontal: 16.0),
+                      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
                       child: Column(
                         children: [
                           Form(
                             key: controller.supplierRegisterFormKey,
-                            autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
+                            autovalidateMode: AutovalidateMode.onUserInteraction,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -60,11 +57,7 @@ class SupplierRegister extends GetView<RegisterController> {
                                 10.height,
                                 Container(
                                   alignment: Alignment.center,
-                                  child: Image.asset(
-                                    logo,
-                                    width: 200,
-                                    height: 200,
-                                  ),
+                                  child: Image.asset(logo, width: 200, height: 200),
                                 ),
                                 buildNameField(context),
                                 10.height,
@@ -74,11 +67,9 @@ class SupplierRegister extends GetView<RegisterController> {
                                 10.height,
                                 buildAddressField(context),
                                 10.height,
-                                if (controller.stateData != null)
-                                  _stateDropdown(),
+                                if (controller.stateData != null) _stateDropdown(),
                                 if (controller.citiesData != null) 10.height,
-                                if (controller.citiesData != null)
-                                  _cityDropdown(),
+                                if (controller.citiesData != null) _cityDropdown(),
                                 10.height,
                                 buildPincodeField(context),
                                 10.height,
@@ -91,24 +82,19 @@ class SupplierRegister extends GetView<RegisterController> {
                                 if (controller.sponsorName == null)
                                   RichText(
                                     text: TextSpan(
-                                      style: const TextStyle(
-                                          fontSize: 16, color: Colors.black),
+                                      style: const TextStyle(fontSize: 16, color: Colors.black),
                                       children: [
-                                        const TextSpan(
-                                            text:
-                                                "Please contact customer care "),
+                                        const TextSpan(text: "Please contact customer care "),
                                         TextSpan(
                                           text: "+91 9054949498",
                                           style: const TextStyle(
-                                              color: Colors.blue,
-                                              decoration:
-                                                  TextDecoration.underline),
+                                            color: Colors.blue,
+                                            decoration: TextDecoration.underline,
+                                          ),
                                           recognizer: TapGestureRecognizer()
                                             ..onTap = () async {
-                                              final Uri phoneUri = Uri.parse(
-                                                  "tel:+919054949498");
-                                              if (await canLaunchUrl(
-                                                  phoneUri)) {
+                                              final Uri phoneUri = Uri.parse("tel:+919054949498");
+                                              if (await canLaunchUrl(phoneUri)) {
                                                 await launchUrl(phoneUri);
                                               } else {
                                                 throw 'Could not launch $phoneUri';
@@ -140,12 +126,9 @@ class SupplierRegister extends GetView<RegisterController> {
                                 buildPickUpCheckbox(context),
                                 buildPickUpAddressField(context),
                                 10.height,
-                                if (controller.pickUpStateData != null)
-                                  _pickUpstateDropdown(),
-                                if (controller.pickUpCitiesData != null)
-                                  10.height,
-                                if (controller.pickUpCitiesData != null)
-                                  _pickUpCityDropdown(),
+                                if (controller.pickUpStateData != null) _pickUpstateDropdown(),
+                                if (controller.pickUpCitiesData != null) 10.height,
+                                if (controller.pickUpCitiesData != null) _pickUpCityDropdown(),
                                 10.height,
                                 buildPickUpPincodeField(context),
                                 10.height,
@@ -218,15 +201,11 @@ class SupplierRegister extends GetView<RegisterController> {
                                     text('Already have an account ?'),
                                     SizedBox(width: 4),
                                     GestureDetector(
-                                      child: text(
-                                        'Sign In',
-                                        textColor: colorPrimary,
-                                        fontFamily: fontBold,
-                                      ),
+                                      child: text('Sign In', textColor: colorPrimary, fontFamily: fontBold),
                                       onTap: () {
                                         Get.back();
                                       },
-                                    )
+                                    ),
                                   ],
                                 ),
                                 10.height,
@@ -247,7 +226,7 @@ class SupplierRegister extends GetView<RegisterController> {
   }
 
   Widget buildWhatsappNoField(BuildContext context) {
-    return formField(
+    return formFieldOld(
       context,
       'Whatsapp Number',
       prefixIcon: UniconsLine.whatsapp_alt,
@@ -270,7 +249,7 @@ class SupplierRegister extends GetView<RegisterController> {
             } else if (!regExp.hasMatch(value)) {
               return "Whatsapp number invalid";
             }
-          })
+          }),
         ],
       ),
       onChanged: (value) {
@@ -284,7 +263,7 @@ class SupplierRegister extends GetView<RegisterController> {
       padding: const EdgeInsets.all(8.0),
       child: SizedBox(
         width: double.infinity,
-        child: CustomButton(
+        child: CustomButtonOld(
           textContent: 'Sign Up'.toUpperCase(),
           onPressed: () {
             controller.register(context);
@@ -365,27 +344,17 @@ class SupplierRegister extends GetView<RegisterController> {
             onTap: () {
               showDialog(
                 context: context,
-                builder: (BuildContext context) =>
-                    Terms(term: controller.termCondition),
+                builder: (BuildContext context) => Terms(term: controller.termCondition),
               );
             },
             child: RichText(
               text: TextSpan(
                 text: "I agree to the ",
-                style: TextStyle(
-                  color: Colors.black,
-                  height: 1.5,
-                  fontSize: 14,
-                  fontFamily: fontRegular,
-                ),
+                style: TextStyle(color: Colors.black, height: 1.5, fontSize: 14, fontFamily: fontRegular),
                 children: [
                   TextSpan(
                     text: 'Terms & Conditions.',
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: colorAccent,
-                      fontFamily: fontBold,
-                    ),
+                    style: TextStyle(fontSize: 14, color: colorAccent, fontFamily: fontBold),
                   ),
                 ],
               ),
@@ -412,14 +381,12 @@ class SupplierRegister extends GetView<RegisterController> {
   }
 
   Widget buildAadharCardField(BuildContext context) {
-    return formField(
+    return formFieldOld(
       context,
       'Aadhaar Card',
       validator: controller.validator.add(
         key: 'aadhaar_card',
-        rules: [
-          ValidatorX.mandatory(message: 'Aadhaar card field is required'),
-        ],
+        rules: [ValidatorX.mandatory(message: 'Aadhaar card field is required')],
       ),
       onChanged: (String? value) {
         controller.validator.clearErrorsAt('aadhaar_card');
@@ -432,9 +399,8 @@ class SupplierRegister extends GetView<RegisterController> {
     );
   }
 
-
   Widget buildBranchNameField(BuildContext context) {
-    return formField(
+    return formFieldOld(
       context,
       "Branch Name",
       controller: controller.branchNameController,
@@ -442,9 +408,7 @@ class SupplierRegister extends GetView<RegisterController> {
       textInputAction: TextInputAction.next,
       inputFormatters: [FilteringTextInputFormatter.deny(RegExp(r'^[ -.,]'))],
       validator: controller.validator.add(
-        rules: [
-          ValidatorX.mandatory(message: "Branch name field is required"),
-        ],
+        rules: [ValidatorX.mandatory(message: "Branch name field is required")],
         key: 'bank_branch',
       ),
       onChanged: (value) {
@@ -454,7 +418,7 @@ class SupplierRegister extends GetView<RegisterController> {
   }
 
   Widget buildBankNameField(BuildContext context) {
-    return formField(
+    return formFieldOld(
       context,
       "Bank Name",
       controller: controller.bankNameController,
@@ -462,9 +426,7 @@ class SupplierRegister extends GetView<RegisterController> {
       textInputAction: TextInputAction.next,
       inputFormatters: [FilteringTextInputFormatter.deny(RegExp(r'^[ -.,]'))],
       validator: controller.validator.add(
-        rules: [
-          ValidatorX.mandatory(message: "Bank name field is required"),
-        ],
+        rules: [ValidatorX.mandatory(message: "Bank name field is required")],
         key: 'bank_name',
       ),
       onChanged: (value) {
@@ -474,7 +436,7 @@ class SupplierRegister extends GetView<RegisterController> {
   }
 
   Widget buildIFSCField(BuildContext context) {
-    return formField(
+    return formFieldOld(
       context,
       "IFSC Code",
       controller: controller.ifscCodeController,
@@ -483,9 +445,7 @@ class SupplierRegister extends GetView<RegisterController> {
       textInputAction: TextInputAction.next,
       inputFormatters: [FilteringTextInputFormatter.deny(RegExp(r'^[ -.,]'))],
       validator: controller.validator.add(
-        rules: [
-          ValidatorX.mandatory(message: "IFSC Code field is required"),
-        ],
+        rules: [ValidatorX.mandatory(message: "IFSC Code field is required")],
         key: 'bank_ifsc',
       ),
       onChanged: (value) {
@@ -496,7 +456,7 @@ class SupplierRegister extends GetView<RegisterController> {
   }
 
   Widget buildAccountNoField(BuildContext context) {
-    return formField(
+    return formFieldOld(
       context,
       "Account Number",
       controller: controller.accountNumberController,
@@ -504,9 +464,7 @@ class SupplierRegister extends GetView<RegisterController> {
       textInputAction: TextInputAction.next,
       inputFormatters: [FilteringTextInputFormatter.deny(RegExp(r'^[ -.,]'))],
       validator: controller.validator.add(
-        rules: [
-          ValidatorX.mandatory(message: "Account number field is required"),
-        ],
+        rules: [ValidatorX.mandatory(message: "Account number field is required")],
         key: 'account_number',
       ),
       onChanged: (value) {
@@ -516,7 +474,7 @@ class SupplierRegister extends GetView<RegisterController> {
   }
 
   Widget buildAccountNameField(BuildContext context) {
-    return formField(
+    return formFieldOld(
       context,
       "Account Holder Name",
       controller: controller.accountNameController,
@@ -524,10 +482,7 @@ class SupplierRegister extends GetView<RegisterController> {
       textInputAction: TextInputAction.next,
       inputFormatters: [FilteringTextInputFormatter.deny(RegExp(r'^[ -.,]'))],
       validator: controller.validator.add(
-        rules: [
-          ValidatorX.mandatory(
-              message: "Account holder name field is required"),
-        ],
+        rules: [ValidatorX.mandatory(message: "Account holder name field is required")],
         key: 'account_name',
       ),
       onChanged: (value) {
@@ -537,7 +492,7 @@ class SupplierRegister extends GetView<RegisterController> {
   }
 
   Widget buildGSTNoField(BuildContext context) {
-    return formField(
+    return formFieldOld(
       context,
       "GST Number",
       controller: controller.gstController,
@@ -546,9 +501,7 @@ class SupplierRegister extends GetView<RegisterController> {
       textInputAction: TextInputAction.next,
       inputFormatters: [FilteringTextInputFormatter.deny(RegExp(r'^[ -.,]'))],
       validator: controller.validator.add(
-        rules: [
-          ValidatorX.mandatory(message: "GST number field is required"),
-        ],
+        rules: [ValidatorX.mandatory(message: "GST number field is required")],
         key: 'gst_number',
       ),
       onChanged: (value) {
@@ -558,7 +511,7 @@ class SupplierRegister extends GetView<RegisterController> {
   }
 
   Widget buildNomineeNameField(BuildContext context) {
-    return formField(
+    return formFieldOld(
       context,
       'Nominee Name',
       prefixIcon: UniconsLine.user,
@@ -567,9 +520,7 @@ class SupplierRegister extends GetView<RegisterController> {
       inputFormatters: [FilteringTextInputFormatter.deny(RegExp(r'^[- ,.]'))],
       validator: controller.validator.add(
         key: 'nominee_name',
-        rules: [
-          ValidatorX.mandatory(message: "Nominee name field is required"),
-        ],
+        rules: [ValidatorX.mandatory(message: "Nominee name field is required")],
       ),
       onChanged: (String? value) {
         controller.validator.clearErrorsAt('nominee_name');
@@ -578,7 +529,7 @@ class SupplierRegister extends GetView<RegisterController> {
   }
 
   Widget buildSponsorIDField(BuildContext context) {
-    return formField(
+    return formFieldOld(
       context,
       "Sponsor Tracking ID",
       controller: controller.sponsorIdController,
@@ -586,9 +537,7 @@ class SupplierRegister extends GetView<RegisterController> {
       textInputAction: TextInputAction.next,
       inputFormatters: [FilteringTextInputFormatter.deny(RegExp(r'^[ -.,]'))],
       validator: controller.validator.add(
-        rules: [
-          ValidatorX.mandatory(message: "Sponsor ID field is required"),
-        ],
+        rules: [ValidatorX.mandatory(message: "Sponsor ID field is required")],
         key: 'code',
       ),
       onChanged: (value) {
@@ -599,7 +548,7 @@ class SupplierRegister extends GetView<RegisterController> {
   }
 
   Widget buildEmailField(BuildContext context) {
-    return formField(
+    return formFieldOld(
       context,
       "Email ID",
       controller: controller.emailController,
@@ -607,9 +556,7 @@ class SupplierRegister extends GetView<RegisterController> {
       textInputAction: TextInputAction.next,
       inputFormatters: [FilteringTextInputFormatter.deny(RegExp(r'^[ -.,]'))],
       validator: controller.validator.add(
-        rules: [
-          ValidatorX.email(message: "Email ID field is required"),
-        ],
+        rules: [ValidatorX.email(message: "Email ID field is required")],
         key: 'email',
       ),
       onChanged: (value) {
@@ -624,8 +571,7 @@ class SupplierRegister extends GetView<RegisterController> {
       validator: (date) {
         if (date == null && controller.dobController.text.isEmpty) {
           return 'Date of Birth field is required';
-        } else if (date != null &&
-            DateTime.now().difference(date) < Duration(days: 6570)) {
+        } else if (date != null && DateTime.now().difference(date) < Duration(days: 6570)) {
           return 'Only 18+ can join';
         } else {
           return null;
@@ -648,13 +594,8 @@ class SupplierRegister extends GetView<RegisterController> {
         filled: true,
         fillColor: Color(0xFFf7f7f7),
         hintText: 'Date of birth (Only 18+ can join)',
-        hintStyle:
-            TextStyle(fontSize: textSizeMedium, color: textColorSecondary),
-        prefixIcon: Icon(
-          Icons.date_range,
-          color: textColorSecondary,
-          size: 20,
-        ),
+        hintStyle: TextStyle(fontSize: textSizeMedium, color: textColorSecondary),
+        prefixIcon: Icon(Icons.date_range, color: textColorSecondary, size: 20),
       ),
       format: format,
       onShowPicker: (context, currentValue) {
@@ -665,8 +606,7 @@ class SupplierRegister extends GetView<RegisterController> {
           lastDate: DateTime.now(),
         ).then((res) {
           if (res != null) {
-            controller.dobController.text =
-                res.toLocal().toString().split(' ')[0];
+            controller.dobController.text = res.toLocal().toString().split(' ')[0];
           }
           return res;
         });
@@ -675,7 +615,7 @@ class SupplierRegister extends GetView<RegisterController> {
   }
 
   Widget buildPickUpPincodeField(BuildContext context) {
-    return formField(
+    return formFieldOld(
       context,
       "Pick Up Pincode",
       controller: controller.pickUpPinCodeController,
@@ -699,7 +639,7 @@ class SupplierRegister extends GetView<RegisterController> {
   }
 
   Widget buildPincodeField(BuildContext context) {
-    return formField(
+    return formFieldOld(
       context,
       "Pincode",
       controller: controller.pinCodeController,
@@ -709,8 +649,7 @@ class SupplierRegister extends GetView<RegisterController> {
       inputFormatters: [FilteringTextInputFormatter.deny(RegExp(r'[ -.,]'))],
       keyboardType: TextInputType.number,
       validator: (value) {
-        if (controller.pinCodeController.text.length < 6 &&
-            controller.pinCodeController.text.length != 0) {
+        if (controller.pinCodeController.text.length < 6 && controller.pinCodeController.text.length != 0) {
           return 'The Pincode must be 6 digit';
         } else {
           return null;
@@ -723,7 +662,7 @@ class SupplierRegister extends GetView<RegisterController> {
   }
 
   Widget buildPickUpAddressField(BuildContext context) {
-    return formField(
+    return formFieldOld(
       context,
       "Pick Up Address",
       controller: controller.pickUpAddressController,
@@ -731,9 +670,7 @@ class SupplierRegister extends GetView<RegisterController> {
       textInputAction: TextInputAction.next,
       inputFormatters: [FilteringTextInputFormatter.deny(RegExp(r'^[ ]'))],
       validator: controller.validator.add(
-        rules: [
-          ValidatorX.mandatory(message: "Pick up address field is required"),
-        ],
+        rules: [ValidatorX.mandatory(message: "Pick up address field is required")],
         key: 'pickup_address',
       ),
       onChanged: (value) {
@@ -743,7 +680,7 @@ class SupplierRegister extends GetView<RegisterController> {
   }
 
   Widget buildAddressField(BuildContext context) {
-    return formField(
+    return formFieldOld(
       context,
       "Address",
       controller: controller.addressController,
@@ -751,9 +688,7 @@ class SupplierRegister extends GetView<RegisterController> {
       textInputAction: TextInputAction.next,
       inputFormatters: [FilteringTextInputFormatter.deny(RegExp(r'^[ ]'))],
       validator: controller.validator.add(
-        rules: [
-          ValidatorX.mandatory(message: "Address field is required"),
-        ],
+        rules: [ValidatorX.mandatory(message: "Address field is required")],
         key: 'address',
       ),
       onChanged: (value) {
@@ -763,7 +698,7 @@ class SupplierRegister extends GetView<RegisterController> {
   }
 
   Widget buildMobileNoField(BuildContext context) {
-    return formField(
+    return formFieldOld(
       context,
       "Mobile Number",
       controller: controller.mobileController,
@@ -771,17 +706,12 @@ class SupplierRegister extends GetView<RegisterController> {
       maxLength: 10,
       textInputAction: TextInputAction.next,
       keyboardType: TextInputType.number,
-      inputFormatters: [
-        FilteringTextInputFormatter.deny(RegExp(r'^[0-5 -.,]|[-., ]'))
-      ],
+      inputFormatters: [FilteringTextInputFormatter.deny(RegExp(r'^[0-5 -.,]|[-., ]'))],
       validator: controller.validator.add(
         key: 'mobile',
         rules: [
           ValidatorX.mandatory(message: "Mobile field is required"),
-          ValidatorX.minLength(
-            length: 10,
-            message: 'Mobile number must be at least 10 digit long',
-          )
+          ValidatorX.minLength(length: 10, message: 'Mobile number must be at least 10 digit long'),
         ],
       ),
       onChanged: (value) {
@@ -791,25 +721,21 @@ class SupplierRegister extends GetView<RegisterController> {
   }
 
   Widget buildBusinessNameField(BuildContext context) {
-    return formField(
+    return formFieldOld(
       context,
       "Business Name",
       controller: controller.businessNameController,
       prefixIcon: UniconsLine.building,
       textInputAction: TextInputAction.next,
       inputFormatters: [
-        FilteringTextInputFormatter.deny(
-          RegExp(r'^[ ]'),
-        ),
+        FilteringTextInputFormatter.deny(RegExp(r'^[ ]')),
         // FilteringTextInputFormatter.allow(
         //   RegExp(r'[a-zA-Z ]'),
         //   // RegExp(r'[a-zA-Z]+(?: [a-zA-Z]+)*'),
         // ),
       ],
       validator: controller.validator.add(
-        rules: [
-          ValidatorX.mandatory(message: "Business name field is required"),
-        ],
+        rules: [ValidatorX.mandatory(message: "Business name field is required")],
         key: 'business_name',
       ),
       onChanged: (value) {
@@ -819,19 +745,15 @@ class SupplierRegister extends GetView<RegisterController> {
   }
 
   Widget buildNameField(BuildContext context) {
-    return formField(
+    return formFieldOld(
       context,
       "Name",
       controller: controller.nameController,
       prefixIcon: UniconsLine.user,
       textInputAction: TextInputAction.next,
-      inputFormatters: [
-        FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]|[ ]+$'))
-      ],
+      inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]|[ ]+$'))],
       validator: controller.validator.add(
-        rules: [
-          ValidatorX.mandatory(message: "Name field is required"),
-        ],
+        rules: [ValidatorX.mandatory(message: "Name field is required")],
         key: 'name',
       ),
       onChanged: (value) {
@@ -848,7 +770,7 @@ class SupplierRegister extends GetView<RegisterController> {
           text(
             'Upload GST Certificate',
             fontSize: 15.0,
-            fontFamily: fontSemibold,
+            fontFamily: fontSemiBold,
             textColor: textColorPrimary,
           ),
           Container(
@@ -863,24 +785,18 @@ class SupplierRegister extends GetView<RegisterController> {
                 isExpanded: true,
                 hint: Text(
                   "Select Type",
-                  style: TextStyle(
-                    fontSize: 15.sp,
-                    color: gray,
-                    fontFamily: fontMedium,
-                  ),
+                  style: TextStyle(fontSize: 15.sp, color: gray, fontFamily: fontMedium),
                 ),
                 items: controller.items
-                    .map((item) => DropdownMenuItem<String>(
-                          value: item,
-                          child: Text(
-                            item,
-                            style: TextStyle(
-                              fontSize: 15.sp,
-                              color: Colors.black,
-                              fontFamily: fontMedium,
-                            ),
-                          ),
-                        ))
+                    .map(
+                      (item) => DropdownMenuItem<String>(
+                        value: item,
+                        child: Text(
+                          item,
+                          style: TextStyle(fontSize: 15.sp, color: Colors.black, fontFamily: fontMedium),
+                        ),
+                      ),
+                    )
                     .toList(),
                 value: controller.selectedType,
                 onChanged: (value) {
@@ -899,11 +815,7 @@ class SupplierRegister extends GetView<RegisterController> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Icon(
-                      Icons.file_copy,
-                      size: 22.sp,
-                      color: colorPrimary,
-                    ),
+                    Icon(Icons.file_copy, size: 22.sp, color: colorPrimary),
                     12.widthBox,
                     Column(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -937,83 +849,70 @@ class SupplierRegister extends GetView<RegisterController> {
                               children: <Widget>[
                                 CircularProgressIndicator(),
                                 SizedBox(height: 20.0),
-                                Text(
-                                  "Uploading Image: ${controller.progressStringGST} ",
-                                ),
+                                Text("Uploading Image: ${controller.progressStringGST} "),
                               ],
                             ),
-                          )
+                          ),
                       ],
                     ).expand(),
-                    Icon(
-                      Icons.upload,
-                      size: 22.sp,
-                      color: Colors.black,
-                    ).onTap(() {
+                    Icon(Icons.upload, size: 22.sp, color: Colors.black).onTap(() {
                       controller.pickFile();
                     }),
                   ],
-                ).paddingSymmetric(
-                  horizontal: 14.w,
-                  vertical: 8.h,
-                ),
+                ).paddingSymmetric(horizontal: 14.w, vertical: 8.h),
               )
             else
               Stack(
                 alignment: Alignment.topRight,
                 children: <Widget>[
                   Card(
-                      semanticContainer: true,
-                      clipBehavior: Clip.antiAliasWithSaveLayer,
-                      margin: EdgeInsets.all(spacing_control),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      child: Column(
-                        children: <Widget>[
-                          if (!controller.uploadingGST)
-                            controller.gstCardImage != null
-                                ? Image.file(
-                                    controller.gstCardImage!,
-                                    width: double.infinity,
-                                    height: 200,
-                                    fit: BoxFit.contain,
-                                  )
-                                : Image.asset(
-                                    'assets/images/no_image.png',
-                                    fit: BoxFit.contain,
-                                    width: double.infinity,
-                                    height: 200,
-                                  ),
-                          if (controller.uploadingGST)
-                            Container(
-                              height: 200.0,
-                              width: double.infinity,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  CircularProgressIndicator(),
-                                  SizedBox(height: 20.0),
-                                  Text(
-                                    "Uploading Image: ${controller.progressStringGST} ",
-                                  ),
-                                ],
-                              ),
-                            )
-                        ],
-                      )),
+                    semanticContainer: true,
+                    clipBehavior: Clip.antiAliasWithSaveLayer,
+                    margin: EdgeInsets.all(spacing_control),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+                    child: Column(
+                      children: <Widget>[
+                        if (!controller.uploadingGST)
+                          controller.gstCardImage != null
+                              ? Image.file(
+                                  controller.gstCardImage!,
+                                  width: double.infinity,
+                                  height: 200,
+                                  fit: BoxFit.contain,
+                                )
+                              : Image.asset(
+                                  'assets/images/no_image.png',
+                                  fit: BoxFit.contain,
+                                  width: double.infinity,
+                                  height: 200,
+                                ),
+                        if (controller.uploadingGST)
+                          Container(
+                            height: 200.0,
+                            width: double.infinity,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                CircularProgressIndicator(),
+                                SizedBox(height: 20.0),
+                                Text("Uploading Image: ${controller.progressStringGST} "),
+                              ],
+                            ),
+                          ),
+                      ],
+                    ),
+                  ),
                   Container(
                     padding: EdgeInsets.all(spacing_control),
                     margin: EdgeInsets.only(top: 15, right: 10),
                     decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: whiteColor,
-                        border: Border.all(color: colorPrimary)),
+                      shape: BoxShape.circle,
+                      color: whiteColor,
+                      border: Border.all(color: colorPrimary),
+                    ),
                     child: GestureDetector(
                       onTap: () {
-                        GetImageFromDevice.instance
-                            .getImage(ImgSource.both, context)
-                            .then((file) {
+                        GetImageFromDevice.instance.getImage(ImgSource.both, context).then((file) {
                           if (file != null) {
                             controller.gstCardImage = file;
                             controller.update();
@@ -1021,23 +920,16 @@ class SupplierRegister extends GetView<RegisterController> {
                         });
                         // controller.getGstImage(ImgSource.Both, context);
                       },
-                      child: Icon(
-                        Icons.camera_alt,
-                        color: colorPrimary,
-                        size: 20,
-                      ),
+                      child: Icon(Icons.camera_alt, color: colorPrimary, size: 20),
                     ),
                   ),
                 ],
               ),
-            if ((controller.selectedType?.toLowerCase() == "pdf" &&
-                    controller.fileName == null) ||
-                (controller.selectedType?.toLowerCase() == "image" &&
-                    controller.gstCardImage == null) ||
+            if ((controller.selectedType?.toLowerCase() == "pdf" && controller.fileName == null) ||
+                (controller.selectedType?.toLowerCase() == "image" && controller.gstCardImage == null) ||
                 controller.errors != null &&
                     controller.gstCardImage == null &&
-                    controller.errors!
-                        .containsKey('gst_certificate_image')) ...[
+                    controller.errors!.containsKey('gst_certificate_image')) ...[
               const SizedBox(height: 5),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -1064,7 +956,7 @@ class SupplierRegister extends GetView<RegisterController> {
           text(
             'Bank Passbook Front Page Image',
             fontSize: 15.0,
-            fontFamily: fontSemibold,
+            fontFamily: fontSemiBold,
             textColor: textColorPrimary,
             isLongText: true,
             maxLine: 2,
@@ -1073,57 +965,53 @@ class SupplierRegister extends GetView<RegisterController> {
             alignment: Alignment.topRight,
             children: <Widget>[
               Card(
-                  semanticContainer: true,
-                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                  margin: EdgeInsets.all(spacing_control),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  child: Column(
-                    children: <Widget>[
-                      if (!controller.uploadingBank)
-                        controller.bankCopyImage != null
-                            ? Image.file(
-                                controller.bankCopyImage!,
-                                width: double.infinity,
-                                height: 200,
-                                fit: BoxFit.contain,
-                              )
-                            : Image.asset(
-                                'assets/images/no_image.png',
-                                fit: BoxFit.contain,
-                                width: double.infinity,
-                                height: 200,
-                              ),
-                      if (controller.uploadingBank)
-                        Container(
-                          height: 200.0,
-                          width: double.infinity,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              CircularProgressIndicator(),
-                              SizedBox(height: 20.0),
-                              Text(
-                                "Uploading Image: ${controller.progressStringBank} ",
-                              )
-                            ],
-                          ),
-                        )
-                    ],
-                  )),
+                semanticContainer: true,
+                clipBehavior: Clip.antiAliasWithSaveLayer,
+                margin: EdgeInsets.all(spacing_control),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+                child: Column(
+                  children: <Widget>[
+                    if (!controller.uploadingBank)
+                      controller.bankCopyImage != null
+                          ? Image.file(
+                              controller.bankCopyImage!,
+                              width: double.infinity,
+                              height: 200,
+                              fit: BoxFit.contain,
+                            )
+                          : Image.asset(
+                              'assets/images/no_image.png',
+                              fit: BoxFit.contain,
+                              width: double.infinity,
+                              height: 200,
+                            ),
+                    if (controller.uploadingBank)
+                      Container(
+                        height: 200.0,
+                        width: double.infinity,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            CircularProgressIndicator(),
+                            SizedBox(height: 20.0),
+                            Text("Uploading Image: ${controller.progressStringBank} "),
+                          ],
+                        ),
+                      ),
+                  ],
+                ),
+              ),
               Container(
                 padding: EdgeInsets.all(spacing_control),
                 margin: EdgeInsets.only(top: 15, right: 10),
                 decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: whiteColor,
-                    border: Border.all(color: colorPrimary)),
+                  shape: BoxShape.circle,
+                  color: whiteColor,
+                  border: Border.all(color: colorPrimary),
+                ),
                 child: GestureDetector(
                   onTap: () {
-                    GetImageFromDevice.instance
-                        .getImage(ImgSource.both, context)
-                        .then((file) {
+                    GetImageFromDevice.instance.getImage(ImgSource.both, context).then((file) {
                       if (file != null) {
                         controller.bankCopyImage = file;
                         controller.update();
@@ -1131,11 +1019,7 @@ class SupplierRegister extends GetView<RegisterController> {
                     });
                     // controller.getBankImage(ImgSource.Both, context);
                   },
-                  child: Icon(
-                    Icons.camera_alt,
-                    color: colorPrimary,
-                    size: 20,
-                  ),
+                  child: Icon(Icons.camera_alt, color: colorPrimary, size: 20),
                 ),
               ),
             ],
@@ -1155,7 +1039,7 @@ class SupplierRegister extends GetView<RegisterController> {
                 style: TextStyle(color: Colors.red),
               ),
             ),
-          ]
+          ],
         ],
       ),
     );
@@ -1169,64 +1053,60 @@ class SupplierRegister extends GetView<RegisterController> {
           text(
             'Upload Aadhar Card Front Image',
             fontSize: 15.0,
-            fontFamily: fontSemibold,
+            fontFamily: fontSemiBold,
             textColor: textColorPrimary,
           ),
           Stack(
             alignment: Alignment.topRight,
             children: <Widget>[
               Card(
-                  semanticContainer: true,
-                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                  margin: EdgeInsets.all(spacing_control),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  child: Column(
-                    children: <Widget>[
-                      if (!controller.uploadingAadhaarCardFront)
-                        controller.aadharCardFrontImage != null
-                            ? Image.file(
-                                controller.aadharCardFrontImage!,
-                                width: double.infinity,
-                                height: 200,
-                                fit: BoxFit.contain,
-                              )
-                            : Image.asset(
-                                'assets/images/no_image.png',
-                                fit: BoxFit.contain,
-                                width: double.infinity,
-                                height: 200,
-                              ),
-                      if (controller.uploadingAadhaarCardFront)
-                        Container(
-                          height: 200.0,
-                          width: double.infinity,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              CircularProgressIndicator(),
-                              SizedBox(height: 20.0),
-                              Text(
-                                "Uploading Image: ${controller.progressStringAadhaarFront} ",
-                              )
-                            ],
-                          ),
-                        )
-                    ],
-                  )),
+                semanticContainer: true,
+                clipBehavior: Clip.antiAliasWithSaveLayer,
+                margin: EdgeInsets.all(spacing_control),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+                child: Column(
+                  children: <Widget>[
+                    if (!controller.uploadingAadhaarCardFront)
+                      controller.aadharCardFrontImage != null
+                          ? Image.file(
+                              controller.aadharCardFrontImage!,
+                              width: double.infinity,
+                              height: 200,
+                              fit: BoxFit.contain,
+                            )
+                          : Image.asset(
+                              'assets/images/no_image.png',
+                              fit: BoxFit.contain,
+                              width: double.infinity,
+                              height: 200,
+                            ),
+                    if (controller.uploadingAadhaarCardFront)
+                      Container(
+                        height: 200.0,
+                        width: double.infinity,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            CircularProgressIndicator(),
+                            SizedBox(height: 20.0),
+                            Text("Uploading Image: ${controller.progressStringAadhaarFront} "),
+                          ],
+                        ),
+                      ),
+                  ],
+                ),
+              ),
               Container(
                 padding: EdgeInsets.all(spacing_control),
                 margin: EdgeInsets.only(top: 15, right: 10),
                 decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: whiteColor,
-                    border: Border.all(color: colorPrimary)),
+                  shape: BoxShape.circle,
+                  color: whiteColor,
+                  border: Border.all(color: colorPrimary),
+                ),
                 child: GestureDetector(
                   onTap: () {
-                    GetImageFromDevice.instance
-                        .getImage(ImgSource.both, context)
-                        .then((file) {
+                    GetImageFromDevice.instance.getImage(ImgSource.both, context).then((file) {
                       if (file != null) {
                         controller.aadharCardFrontImage = file;
                         controller.update();
@@ -1234,11 +1114,7 @@ class SupplierRegister extends GetView<RegisterController> {
                     });
                     // controller.getAadharFrontImage(ImgSource.Both, context);
                   },
-                  child: Icon(
-                    Icons.camera_alt,
-                    color: colorPrimary,
-                    size: 20,
-                  ),
+                  child: Icon(Icons.camera_alt, color: colorPrimary, size: 20),
                 ),
               ),
             ],
@@ -1256,7 +1132,7 @@ class SupplierRegister extends GetView<RegisterController> {
                 style: TextStyle(color: Colors.red),
               ),
             ),
-          ]
+          ],
         ],
       ),
     );
@@ -1270,7 +1146,7 @@ class SupplierRegister extends GetView<RegisterController> {
           text(
             'Upload Aadhar Card Back Image',
             fontSize: 15.0,
-            fontFamily: fontSemibold,
+            fontFamily: fontSemiBold,
             textColor: textColorPrimary,
           ),
           Stack(
@@ -1280,9 +1156,7 @@ class SupplierRegister extends GetView<RegisterController> {
                 semanticContainer: true,
                 clipBehavior: Clip.antiAliasWithSaveLayer,
                 margin: EdgeInsets.all(spacing_control),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
                 child: Column(
                   children: <Widget>[
                     if (!controller.uploadingAadhaarCardBack)
@@ -1308,12 +1182,10 @@ class SupplierRegister extends GetView<RegisterController> {
                           children: <Widget>[
                             CircularProgressIndicator(),
                             SizedBox(height: 20.0),
-                            Text(
-                              "Uploading Image: ${controller.progressStringAadhaarBack} ",
-                            )
+                            Text("Uploading Image: ${controller.progressStringAadhaarBack} "),
                           ],
                         ),
-                      )
+                      ),
                   ],
                 ),
               ),
@@ -1321,25 +1193,20 @@ class SupplierRegister extends GetView<RegisterController> {
                 padding: EdgeInsets.all(spacing_control),
                 margin: EdgeInsets.only(top: 15, right: 10),
                 decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: whiteColor,
-                    border: Border.all(color: colorPrimary)),
+                  shape: BoxShape.circle,
+                  color: whiteColor,
+                  border: Border.all(color: colorPrimary),
+                ),
                 child: GestureDetector(
                   onTap: () {
-                    GetImageFromDevice.instance
-                        .getImage(ImgSource.both, context)
-                        .then((file) {
+                    GetImageFromDevice.instance.getImage(ImgSource.both, context).then((file) {
                       if (file != null) {
                         controller.aadharCardBackImage = file;
                         controller.update();
                       }
                     });
                   },
-                  child: Icon(
-                    Icons.camera_alt,
-                    color: colorPrimary,
-                    size: 20,
-                  ),
+                  child: Icon(Icons.camera_alt, color: colorPrimary, size: 20),
                 ),
               ),
             ],
@@ -1347,8 +1214,7 @@ class SupplierRegister extends GetView<RegisterController> {
           if (controller.aadharCardBackImage == null ||
               controller.errors != null &&
                   controller.aadharCardBackImage == null &&
-                  controller.errors!
-                      .containsKey('aadhaar_card_back_image')) ...[
+                  controller.errors!.containsKey('aadhaar_card_back_image')) ...[
             SizedBox(height: 5),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -1365,7 +1231,6 @@ class SupplierRegister extends GetView<RegisterController> {
     );
   }
 
-
   Widget _pickUpstateDropdown() {
     return Padding(
       padding: const EdgeInsets.all(2.0),
@@ -1373,20 +1238,14 @@ class SupplierRegister extends GetView<RegisterController> {
         isDense: true,
         isExpanded: true,
         validator: (String? value) {
-          if (controller.myPickUpStateSelection == null ||
-              controller.myPickUpStateSelection!.isEmpty) {
+          if (controller.myPickUpStateSelection == null || controller.myPickUpStateSelection!.isEmpty) {
             return "Please select state";
           }
           return null;
         },
-        hint: text('Select State',
-            fontSize: textSizeMedium, textColor: textColorSecondary),
+        hint: text('Select State', fontSize: textSizeMedium, textColor: textColorSecondary),
         decoration: InputDecoration(
-          prefixIcon: const Icon(
-            Icons.add_location_alt,
-            color: textColorSecondary,
-            size: 20,
-          ),
+          prefixIcon: const Icon(Icons.add_location_alt, color: textColorSecondary, size: 20),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
             borderSide: BorderSide(color: whiteColor, width: 0.0),
@@ -1395,8 +1254,7 @@ class SupplierRegister extends GetView<RegisterController> {
             borderRadius: BorderRadius.circular(8),
             borderSide: BorderSide(color: whiteColor, width: 0.0),
           ),
-          border: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.black12)),
+          border: UnderlineInputBorder(borderSide: BorderSide(color: Colors.black12)),
           contentPadding: EdgeInsets.symmetric(vertical: 15),
           // hintText: 'Select State',
           filled: true,
@@ -1414,16 +1272,12 @@ class SupplierRegister extends GetView<RegisterController> {
           controller.myPickUpStateSelection = newValue;
           controller.update();
         },
-        items: controller.pickUpStateData!['states']
-            .map<DropdownMenuItem<String>>((state) {
+        items: controller.pickUpStateData!['states'].map<DropdownMenuItem<String>>((state) {
           return DropdownMenuItem<String>(
             value: state['id'].toString(),
             child: Padding(
               padding: const EdgeInsets.only(left: 10.0),
-              child: Text(
-                state['name'].toString(),
-                style: TextStyle(color: Colors.black),
-              ),
+              child: Text(state['name'].toString(), style: TextStyle(color: Colors.black)),
             ),
           );
         }).toList(),
@@ -1438,20 +1292,14 @@ class SupplierRegister extends GetView<RegisterController> {
         isDense: true,
         isExpanded: true,
         validator: (String? value) {
-          if (controller.myStateSelection == null ||
-              controller.myStateSelection!.isEmpty) {
+          if (controller.myStateSelection == null || controller.myStateSelection!.isEmpty) {
             return "Please select state";
           }
           return null;
         },
-        hint: text('Select State',
-            fontSize: textSizeMedium, textColor: textColorSecondary),
+        hint: text('Select State', fontSize: textSizeMedium, textColor: textColorSecondary),
         decoration: InputDecoration(
-          prefixIcon: Icon(
-            Icons.add_location_alt,
-            color: textColorSecondary,
-            size: 20,
-          ),
+          prefixIcon: Icon(Icons.add_location_alt, color: textColorSecondary, size: 20),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
             borderSide: BorderSide(color: whiteColor, width: 0.0),
@@ -1460,8 +1308,7 @@ class SupplierRegister extends GetView<RegisterController> {
             borderRadius: BorderRadius.circular(8),
             borderSide: BorderSide(color: whiteColor, width: 0.0),
           ),
-          border: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.black12)),
+          border: UnderlineInputBorder(borderSide: BorderSide(color: Colors.black12)),
           contentPadding: EdgeInsets.symmetric(vertical: 15),
           // hintText: 'Select State',
           filled: true,
@@ -1479,16 +1326,12 @@ class SupplierRegister extends GetView<RegisterController> {
           controller.myStateSelection = newValue;
           controller.update();
         },
-        items: controller.stateData!['states']
-            .map<DropdownMenuItem<String>>((state) {
+        items: controller.stateData!['states'].map<DropdownMenuItem<String>>((state) {
           return DropdownMenuItem<String>(
             value: state['id'].toString(),
             child: Padding(
               padding: const EdgeInsets.only(left: 10.0),
-              child: Text(
-                state['name'].toString(),
-                style: TextStyle(color: Colors.black),
-              ),
+              child: Text(state['name'].toString(), style: TextStyle(color: Colors.black)),
             ),
           );
         }).toList(),
@@ -1503,20 +1346,14 @@ class SupplierRegister extends GetView<RegisterController> {
         isDense: true,
         isExpanded: true,
         validator: (String? value) {
-          if (controller.myPickUpCitySelection == null ||
-              controller.myPickUpCitySelection!.isEmpty) {
+          if (controller.myPickUpCitySelection == null || controller.myPickUpCitySelection!.isEmpty) {
             return "Please select city";
           }
           return null;
         },
-        hint: text('Select City',
-            fontSize: textSizeMedium, textColor: textColorSecondary),
+        hint: text('Select City', fontSize: textSizeMedium, textColor: textColorSecondary),
         decoration: InputDecoration(
-          prefixIcon: Icon(
-            Icons.add_location_alt,
-            color: textColorSecondary,
-            size: 20,
-          ),
+          prefixIcon: Icon(Icons.add_location_alt, color: textColorSecondary, size: 20),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
             borderSide: BorderSide(color: whiteColor, width: 0.0),
@@ -1525,8 +1362,7 @@ class SupplierRegister extends GetView<RegisterController> {
             borderRadius: BorderRadius.circular(8),
             borderSide: BorderSide(color: whiteColor, width: 0.0),
           ),
-          border: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.black12)),
+          border: UnderlineInputBorder(borderSide: BorderSide(color: Colors.black12)),
           contentPadding: EdgeInsets.symmetric(vertical: 15),
           filled: true,
           fillColor: Color(0xFFf7f7f7),
@@ -1542,16 +1378,10 @@ class SupplierRegister extends GetView<RegisterController> {
           controller.myPickUpCitySelection = newValue!;
           controller.update();
         },
-        items:
-            controller.pickUpCitiesData!.map<DropdownMenuItem<String>>((city) {
+        items: controller.pickUpCitiesData!.map<DropdownMenuItem<String>>((city) {
           return DropdownMenuItem<String>(
             value: city['id'].toString(),
-            child: Padding(
-              padding: const EdgeInsets.only(left: 10.0),
-              child: Text(
-                city['name'].toString(),
-              ),
-            ),
+            child: Padding(padding: const EdgeInsets.only(left: 10.0), child: Text(city['name'].toString())),
           );
         }).toList(),
       ),
@@ -1565,20 +1395,14 @@ class SupplierRegister extends GetView<RegisterController> {
         isDense: true,
         isExpanded: true,
         validator: (String? value) {
-          if (controller.myCitySelection == null ||
-              controller.myCitySelection!.isEmpty) {
+          if (controller.myCitySelection == null || controller.myCitySelection!.isEmpty) {
             return "Please select city";
           }
           return null;
         },
-        hint: text('Select City',
-            fontSize: textSizeMedium, textColor: textColorSecondary),
+        hint: text('Select City', fontSize: textSizeMedium, textColor: textColorSecondary),
         decoration: InputDecoration(
-          prefixIcon: Icon(
-            Icons.add_location_alt,
-            color: textColorSecondary,
-            size: 20,
-          ),
+          prefixIcon: Icon(Icons.add_location_alt, color: textColorSecondary, size: 20),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
             borderSide: BorderSide(color: whiteColor, width: 0.0),
@@ -1587,8 +1411,7 @@ class SupplierRegister extends GetView<RegisterController> {
             borderRadius: BorderRadius.circular(8),
             borderSide: BorderSide(color: whiteColor, width: 0.0),
           ),
-          border: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.black12)),
+          border: UnderlineInputBorder(borderSide: BorderSide(color: Colors.black12)),
           contentPadding: EdgeInsets.symmetric(vertical: 15),
           filled: true,
           fillColor: Color(0xFFf7f7f7),
@@ -1607,12 +1430,7 @@ class SupplierRegister extends GetView<RegisterController> {
         items: controller.citiesData!.map<DropdownMenuItem<String>>((city) {
           return DropdownMenuItem<String>(
             value: city['id'].toString(),
-            child: Padding(
-              padding: const EdgeInsets.only(left: 10.0),
-              child: Text(
-                city['name'].toString(),
-              ),
-            ),
+            child: Padding(padding: const EdgeInsets.only(left: 10.0), child: Text(city['name'].toString())),
           );
         }).toList(),
       ),
@@ -1625,9 +1443,7 @@ class SupplierRegister extends GetView<RegisterController> {
       isExpanded: true,
       validator: controller.validator.add(
         key: 'account_type',
-        rules: [
-          ValidatorX.mandatory(message: "Select Your Account Type"),
-        ],
+        rules: [ValidatorX.mandatory(message: "Select Your Account Type")],
       ),
       hint: Text('Select Account Type'),
       value: controller.accountType,
@@ -1653,10 +1469,7 @@ class SupplierRegister extends GetView<RegisterController> {
         controller.update();
       },
       items: controller.accountTypes.map<DropdownMenuItem<String>>((type) {
-        return DropdownMenuItem<String>(
-          child: Text(type['type']),
-          value: type['value'].toString(),
-        );
+        return DropdownMenuItem<String>(child: Text(type['type']), value: type['value'].toString());
       }).toList(),
     );
   }

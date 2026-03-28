@@ -19,6 +19,7 @@ import '../../services/api.dart';
 import '../../services/getImage_service.dart';
 import '../../utils/app_utils.dart';
 import '../../utils/en_extensions.dart';
+import '../../widget/colors.dart';
 import '../../widget/custom_container.dart';
 import '../../widget/image_picker.dart';
 import '../../widget/show_uploading_model.dart';
@@ -78,9 +79,7 @@ class CreateTicketState extends State<CreateTicket> {
         vendorCustomList = vendorList.map((item) {
           return DropdownMenuItem<String>(
             value: item['name'],
-            child: Text(
-              '${item['name']} (${item['code']})',
-            ),
+            child: Text('${item['name']} (${item['code']})'),
             onTap: () {
               setState(() {
                 selectedVendor = item['id'].toString();
@@ -102,14 +101,8 @@ class CreateTicketState extends State<CreateTicket> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          "Create Ticket",
-        ),
-      ),
-      body: SingleChildScrollView(
-        child: _buildCreateTicketBlock(),
-      ),
+      appBar: AppBar(title: const Text("Create Ticket")),
+      body: SingleChildScrollView(child: _buildCreateTicketBlock()),
     );
   }
 
@@ -128,19 +121,14 @@ class CreateTicketState extends State<CreateTicket> {
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(15.r),
-                  border: Border.all(
-                    color: silver,
-                    width: 0.5.w,
-                  ),
+                  border: Border.all(color: silver, width: 0.5.w),
                 ),
                 child: SearchChoices.single(
                   items: vendorCustomList,
                   value: selectedSearchVendor,
                   hint: "Select one",
                   searchHint: "Select one",
-                  underline: Container(
-                    height: 0.0,
-                  ),
+                  underline: Container(height: 0.0),
                   padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 4.h),
                   onChanged: (value) {
                     setState(() {
@@ -152,7 +140,6 @@ class CreateTicketState extends State<CreateTicket> {
               ),
 
             // selectVendorDropdown(),
-
             20.heightBox,
             selectIssueDropdown(),
             20.heightBox,
@@ -177,53 +164,33 @@ class CreateTicketState extends State<CreateTicket> {
       children: [
         Padding(
           padding: EdgeInsets.only(top: 15.h),
-          child: text(
-            "Attachments (optional)",
-            fontSize: 14.sp,
-          ),
+          child: text("Attachments (optional)", fontSize: 14.sp),
         ),
         if (!isImageUpload)
           Container(
             margin: EdgeInsets.only(top: 10.h),
-            padding: EdgeInsets.symmetric(
-              vertical: 15.h,
-              horizontal: 15.w,
-            ),
+            padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 15.w),
             decoration: BoxDecoration(
               color: white,
               borderRadius: radius(8.r),
-              border: Border.all(
-                color: textPrimaryColor,
-                width: 0.5.w,
-              ),
+              border: Border.all(color: textPrimaryColor, width: 0.5.w),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                text(
-                  'Select Image',
-                  textColor: grey,
-                  fontSize: 15.sp,
-                ),
-                SvgPicture.asset(
-                  attach,
-                  height: 22,
-                )
+                text('Select Image', textColor: grey, fontSize: 15.sp),
+                SvgPicture.asset(attach, height: 22),
               ],
             ),
           ).onTap(() {
-            GetImageFromDevice.instance.getImage(ImgSource.both, context).then(
-              (file) {
-                if (file != null) {
-                  setState(
-                    () {
-                      isImageUpload = true;
-                      _image = file;
-                    },
-                  );
-                }
-              },
-            );
+            GetImageFromDevice.instance.getImage(ImgSource.both, context).then((file) {
+              if (file != null) {
+                setState(() {
+                  isImageUpload = true;
+                  _image = file;
+                });
+              }
+            });
           }),
       ],
     );
@@ -234,10 +201,7 @@ class CreateTicketState extends State<CreateTicket> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        text(
-          'Please choose type of issue you are facing',
-          fontSize: 14.sp,
-        ),
+        text('Please choose type of issue you are facing', fontSize: 14.sp),
         8.heightBox,
         DropdownButtonHideUnderline(
           child: DropdownButtonFormField2(
@@ -246,11 +210,7 @@ class CreateTicketState extends State<CreateTicket> {
               contentPadding: EdgeInsets.fromLTRB(0, 20, 15, 13),
             ),
             iconStyleData: IconStyleData(
-              icon: Icon(
-                Boxicons.bx_chevron_down,
-                color: Colors.black,
-                size: 20.sp,
-              ),
+              icon: Icon(Boxicons.bx_chevron_down, color: Colors.black, size: 20.sp),
               iconSize: 22.sp,
               iconEnabledColor: colorPrimary,
               iconDisabledColor: gray,
@@ -270,11 +230,7 @@ class CreateTicketState extends State<CreateTicket> {
               padding: EdgeInsets.only(left: 25.w),
             ),
             value: selectedIssue,
-            hint: text(
-              'Select issue',
-              fontSize: 16.sp,
-              textColor: gray,
-            ),
+            hint: text('Select issue', fontSize: 16.sp, textColor: gray),
             items: issueList.map<DropdownMenuItem<String>>((type) {
               return DropdownMenuItem<String>(
                 value: type['id'].toString(),
@@ -311,10 +267,7 @@ class CreateTicketState extends State<CreateTicket> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        text(
-          'Please select vendor',
-          fontSize: 14.sp,
-        ),
+        text('Please select vendor', fontSize: 14.sp),
         8.heightBox,
         DropdownButtonHideUnderline(
           child: DropdownButtonFormField2(
@@ -323,11 +276,7 @@ class CreateTicketState extends State<CreateTicket> {
               contentPadding: EdgeInsets.fromLTRB(0, 20, 15, 13),
             ),
             iconStyleData: IconStyleData(
-              icon: Icon(
-                Boxicons.bx_chevron_down,
-                color: Colors.black,
-                size: 20.sp,
-              ),
+              icon: Icon(Boxicons.bx_chevron_down, color: Colors.black, size: 20.sp),
               iconSize: 22.sp,
               iconEnabledColor: colorPrimary,
               iconDisabledColor: gray,
@@ -347,18 +296,11 @@ class CreateTicketState extends State<CreateTicket> {
               padding: EdgeInsets.only(left: 25.w),
             ),
             value: selectedVendor,
-            hint: text(
-              'Select vendor',
-              fontSize: 16.sp,
-              textColor: gray,
-            ),
+            hint: text('Select vendor', fontSize: 16.sp, textColor: gray),
             items: vendorList.map<DropdownMenuItem<String>>((type) {
               return DropdownMenuItem<String>(
                 value: type['id'].toString(),
-                child: text(
-                  '${type['name']} (${type['code']})',
-                  fontSize: 17.sp,
-                ),
+                child: text('${type['name']} (${type['code']})', fontSize: 17.sp),
               );
             }).toList(),
             validator: (value) {
@@ -390,11 +332,12 @@ class CreateTicketState extends State<CreateTicket> {
         compressQuality: 100,
         uiSettings: [
           AndroidUiSettings(
-              toolbarTitle: 'Crop your image',
-              toolbarColor: colorPrimary,
-              toolbarWidgetColor: Colors.white,
-              initAspectRatio: CropAspectRatioPreset.original,
-              lockAspectRatio: false),
+            toolbarTitle: 'Crop your image',
+            toolbarColor: colorPrimary,
+            toolbarWidgetColor: Colors.white,
+            initAspectRatio: CropAspectRatioPreset.original,
+            lockAspectRatio: false,
+          ),
         ],
       );
       if (croppedFile != null) {
@@ -414,55 +357,46 @@ class CreateTicketState extends State<CreateTicket> {
   }
 
   Widget buildSubjectField() {
-    return formField(context, 'Enter the subject',
-        keyboardType: TextInputType.text,
-        controller: _subjectController,
-        validator: validator.add(
-          key: 'subject',
-          rules: [
-            ValidatorX.mandatory(),
-          ],
-        ), onChanged: (value) {
-      value = value?.replaceAll(' ', '');
-      bool onlyWhiteSpaces = value!.isEmpty;
-      if (onlyWhiteSpaces) {
-        _subjectController.clear();
-      }
-      validator.clearErrorsAt('subject');
-    }, inputFormatters: [
-      FilteringTextInputFormatter.deny(
-        RegExp(r'^\s'),
-      ),
-    ]);
+    return formFieldOld(
+      context,
+      'Enter the subject',
+      keyboardType: TextInputType.text,
+      controller: _subjectController,
+      validator: validator.add(key: 'subject', rules: [ValidatorX.mandatory()]),
+      onChanged: (value) {
+        value = value?.replaceAll(' ', '');
+        bool onlyWhiteSpaces = value!.isEmpty;
+        if (onlyWhiteSpaces) {
+          _subjectController.clear();
+        }
+        validator.clearErrorsAt('subject');
+      },
+      inputFormatters: [FilteringTextInputFormatter.deny(RegExp(r'^\s'))],
+    );
   }
 
   Widget buildMessageField() {
-    return formField(context,
-        'Please enter the details of your request, our support staff will provide a response as soon as possible',
-        keyboardType: TextInputType.text,
-        maxLine: 5,
-        controller: _descriptionController,
-        validator: validator.add(
-          key: 'description',
-          rules: [
-            ValidatorX.mandatory(),
-          ],
-        ), onChanged: (value) {
-      value = value!.replaceAll(' ', '');
-      bool onlyWhiteSpaces = value.isEmpty;
-      if (onlyWhiteSpaces) {
-        _descriptionController.clear();
-      }
-      validator.clearErrorsAt('description');
-    }, inputFormatters: [
-      FilteringTextInputFormatter.deny(
-        RegExp(r'^\s'),
-      ),
-    ]);
+    return formFieldOld(
+      context,
+      'Please enter the details of your request, our support staff will provide a response as soon as possible',
+      keyboardType: TextInputType.text,
+      maxLine: 5,
+      controller: _descriptionController,
+      validator: validator.add(key: 'description', rules: [ValidatorX.mandatory()]),
+      onChanged: (value) {
+        value = value!.replaceAll(' ', '');
+        bool onlyWhiteSpaces = value.isEmpty;
+        if (onlyWhiteSpaces) {
+          _descriptionController.clear();
+        }
+        validator.clearErrorsAt('description');
+      },
+      inputFormatters: [FilteringTextInputFormatter.deny(RegExp(r'^\s'))],
+    );
   }
 
   Widget buildSubmitButton(BuildContext context) {
-    return CustomButton(
+    return CustomButtonOld(
       textContent: 'Submit',
       onPressed: () async {
         setState(() {
@@ -522,21 +456,24 @@ class CreateTicketState extends State<CreateTicket> {
         "complaintType": selectedIssue,
         "vendorId": selectedVendor,
       };
-      Api.http.post('member/offline-store-complaint/store', data: sendData).then((response) {
-        isCreatingTicket = false;
-        if (response.data['status']) {
-          Get.back(result: true);
-          AppUtils.showSuccessSnackBar(response.data['message']);
-        } else {
-          AppUtils.showErrorSnackBar(response.data['message']);
-        }
-      }).catchError((error) {
-        isCreatingTicket = false;
-        if (error.response.statusCode == 422) {
-          validator.setErrors(error.response.data['errors']);
-          AppUtils.showSuccessSnackBar(error.response.data['errors'][0]['message']);
-        }
-      });
+      Api.http
+          .post('member/offline-store-complaint/store', data: sendData)
+          .then((response) {
+            isCreatingTicket = false;
+            if (response.data['status']) {
+              Get.back(result: true);
+              AppUtils.showSuccessSnackBar(response.data['message']);
+            } else {
+              AppUtils.showErrorSnackBar(response.data['message']);
+            }
+          })
+          .catchError((error) {
+            isCreatingTicket = false;
+            if (error.response.statusCode == 422) {
+              validator.setErrors(error.response.data['errors']);
+              AppUtils.showSuccessSnackBar(error.response.data['errors'][0]['message']);
+            }
+          });
     }
   }
 
@@ -552,9 +489,7 @@ class CreateTicketState extends State<CreateTicket> {
                 semanticContainer: true,
                 clipBehavior: Clip.antiAliasWithSaveLayer,
                 margin: EdgeInsets.all(4.sp),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8.r),
-                ),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
                 child: Column(
                   children: <Widget>[
                     if (!uploading)
@@ -570,38 +505,29 @@ class CreateTicketState extends State<CreateTicket> {
                             ).onTap(() {
                               AppUtils.showDialogForImageExpand(
                                 context,
+                                imageWidget: Image.file(_image!, width: 500.sp, height: 500.sp),
+                              );
+                            })
+                          : _image == null && croppedXFile != null
+                          ? Container(
+                              margin: EdgeInsets.symmetric(horizontal: 40.w),
+                              child: Image.file(
+                                File(croppedXFile!.path),
+                                width: double.infinity,
+                                height: 200.h,
+                                fit: BoxFit.contain,
+                              ),
+                            ).onTap(() {
+                              AppUtils.showDialogForImageExpand(
+                                context,
                                 imageWidget: Image.file(
-                                  _image!,
+                                  File(croppedXFile!.path),
                                   width: 500.sp,
                                   height: 500.sp,
                                 ),
                               );
                             })
-                          : _image == null && croppedXFile != null
-                              ? Container(
-                                  margin: EdgeInsets.symmetric(horizontal: 40.w),
-                                  child: Image.file(
-                                    File(croppedXFile!.path),
-                                    width: double.infinity,
-                                    height: 200.h,
-                                    fit: BoxFit.contain,
-                                  ),
-                                ).onTap(() {
-                                  AppUtils.showDialogForImageExpand(
-                                    context,
-                                    imageWidget: Image.file(
-                                      File(croppedXFile!.path),
-                                      width: 500.sp,
-                                      height: 500.sp,
-                                    ),
-                                  );
-                                })
-                              : Image.asset(
-                                  noImage,
-                                  width: double.infinity,
-                                  height: 200.h,
-                                  fit: BoxFit.contain,
-                                ),
+                          : Image.asset(noImage, width: double.infinity, height: 200.h, fit: BoxFit.contain),
                     if (uploading && _image != null)
                       Container(
                         margin: EdgeInsets.symmetric(horizontal: 40.w),
@@ -611,7 +537,7 @@ class CreateTicketState extends State<CreateTicket> {
                           height: 200.h,
                           fit: BoxFit.fitHeight,
                         ),
-                      )
+                      ),
                   ],
                 ),
               ),
@@ -626,10 +552,7 @@ class CreateTicketState extends State<CreateTicket> {
                           _image = null;
                         });
                       },
-                      icon: const Icon(
-                        UniconsLine.trash_alt,
-                        color: red,
-                      ),
+                      icon: const Icon(UniconsLine.trash_alt, color: red),
                     ),
                     if (_image != null)
                       IconButton(
@@ -638,13 +561,10 @@ class CreateTicketState extends State<CreateTicket> {
                             cropImage();
                           });
                         },
-                        icon: const Icon(
-                          UniconsLine.crop_alt,
-                          color: red,
-                        ),
+                        icon: const Icon(UniconsLine.crop_alt, color: red),
                       ),
                   ],
-                )
+                ),
             ],
           ),
         ],

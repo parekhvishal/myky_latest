@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:myky_clone/widget/custom_text.dart';
 import 'package:nb_utils/nb_utils.dart' hide white;
 import 'package:unicons/unicons.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -10,6 +12,7 @@ import '../../services/auth.dart';
 import '../../services/size_config.dart';
 import '../../services/validator_x.dart';
 import '../../utils/app_utils.dart';
+import '../../widget/colors.dart';
 import '../../widget/guest_login_service.dart';
 import '../../widget/network_image.dart';
 import '../../widget/theme.dart';
@@ -46,12 +49,15 @@ class MyAccountState extends State<MyAccount> {
   }
 
   void openUrlWithAuthToken() async {
-    Api.httpWithoutLoader.get('member/supplier/authUrl').then((response) {
-      setState(() {
-        url = response.data['url'];
-        supplierStatus = response.data['supplierStatus'];
-      });
-    }).catchError((error) {});
+    Api.httpWithoutLoader
+        .get('member/supplier/authUrl')
+        .then((response) {
+          setState(() {
+            url = response.data['url'];
+            supplierStatus = response.data['supplierStatus'];
+          });
+        })
+        .catchError((error) {});
   }
 
   @override
@@ -69,10 +75,7 @@ class MyAccountState extends State<MyAccount> {
       appBar: AppBar(
         elevation: 2.0,
         automaticallyImplyLeading: false,
-        title: text(
-          'Account'.toUpperCase(),
-          fontweight: FontWeight.bold,
-        ),
+        title: text('Account'.toUpperCase(), fontweight: FontWeight.bold),
         actions: [
           IconButton(
             constraints: const BoxConstraints(maxWidth: 35),
@@ -85,19 +88,11 @@ class MyAccountState extends State<MyAccount> {
           buildMLMCart(context),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Auth.check()! ? buildIfAuthTrue() : buildIfAuthFalse(),
-      ),
+      body: SingleChildScrollView(child: Auth.check()! ? buildIfAuthTrue() : buildIfAuthFalse()),
     );
   }
 
-  Widget option(
-    var icon,
-    var heading,
-    String page, {
-    dynamic arguments,
-    linkUrl,
-  }) {
+  Widget option(var icon, var heading, String page, {dynamic arguments, linkUrl}) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 10, 16, 8),
       child: GestureDetector(
@@ -124,23 +119,13 @@ class MyAccountState extends State<MyAccount> {
                   width: 40,
                   height: 40,
                   padding: const EdgeInsets.all(8),
-                  child: Icon(
-                    icon,
-                    color: textColorPrimary,
-                  ),
+                  child: Icon(icon, color: colorPrimary),
                 ),
                 const SizedBox(width: 16),
-                text(
-                  heading,
-                  fontFamily: fontMedium,
-                  fontSize: textSizeMedium,
-                ),
+                CustomText(heading, fontFamily: fontSemiBold, fontSize: 14.sp),
               ],
             ),
-            const Icon(
-              Icons.keyboard_arrow_right,
-              color: textColorSecondary,
-            ),
+            const Icon(Icons.keyboard_arrow_right, color: textColorSecondary),
           ],
         ),
       ),
@@ -155,32 +140,26 @@ class MyAccountState extends State<MyAccount> {
           Container(
             margin: const EdgeInsets.only(top: 10, left: 16, right: 16),
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                color: white,
-                border: Border.all(color: Colors.grey, width: 1)),
+              borderRadius: BorderRadius.circular(12),
+              color: white,
+              border: Border.all(color: Colors.grey, width: 1),
+            ),
             padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 5),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                text('Go To Supplier Terminal',
-                    textColor: Colors.black, fontFamily: fontBold),
+                CustomText('Go To Supplier Terminal', textColor: Colors.black, fontFamily: fontBold),
                 Container(
                   padding: const EdgeInsets.all(8.0),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8.0),
-                    color: colorPrimary,
-                  ),
-                  child:
-                      text('Proceed', textColor: white, fontFamily: fontBold),
+                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(8.0), color: colorPrimary),
+                  child: text('Proceed', textColor: white, fontFamily: fontBold),
                 ).onTap(() {
                   if (url != null) launch(url!);
                 }),
               ],
             ),
           ),
-        const SizedBox(
-          height: 15,
-        ),
+        const SizedBox(height: 15),
         Container(
           margin: const EdgeInsets.symmetric(horizontal: 16),
           decoration: BoxDecoration(
@@ -189,10 +168,7 @@ class MyAccountState extends State<MyAccount> {
             boxShadow: [
               BoxShadow(
                 color: const Color(0x194343b2).withOpacity(0.15),
-                offset: const Offset(
-                  5.0,
-                  5.0,
-                ),
+                offset: const Offset(5.0, 5.0),
                 blurRadius: 10.0,
                 spreadRadius: 2.0,
               ), //BoxShadow
@@ -217,24 +193,14 @@ class MyAccountState extends State<MyAccount> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    text(
-                      Auth.user()!['name'],
-                      fontSize: textSizeLargeMedium,
-                      fontFamily: fontBold,
-                      textColor: textColorPrimary,
-                    ),
+                    CustomText(Auth.user()!['name'], fontSize: textSizeLargeMedium, fontFamily: fontBold),
                     const SizedBox(width: 10),
-                    text(
-                      Auth.user()!['code'],
-                      fontSize: textSizeLargeMedium,
-                      fontFamily: fontBold,
-                      textColor: textColorPrimary,
-                    ),
+                    CustomText(Auth.user()!['code'], fontSize: textSizeLargeMedium, fontFamily: fontBold),
                     text(
                       Auth.user()!['email'] ?? "",
                       fontSize: textSizeMedium,
                       textColor: textColorSecondary,
-                    )
+                    ),
                   ],
                 ),
               ),
@@ -244,21 +210,14 @@ class MyAccountState extends State<MyAccount> {
                     setState(() {});
                   });
                 },
-                child: const Icon(
-                  UniconsLine.edit,
-                  color: textColorPrimary,
-                ),
+                child: const Icon(UniconsLine.edit, color: textColorPrimary),
               ),
             ],
           ),
         ),
         Container(
           margin: const EdgeInsets.only(top: 10, left: 16),
-          child: text(
-            'General',
-            fontFamily: fontBold,
-            textAllCaps: true,
-          ),
+          child: text('General', fontFamily: fontBold, textAllCaps: true),
         ),
         const SizedBox(height: 10),
         Container(
@@ -269,10 +228,7 @@ class MyAccountState extends State<MyAccount> {
             boxShadow: [
               BoxShadow(
                 color: const Color(0x194343b2).withOpacity(0.15),
-                offset: const Offset(
-                  5.0,
-                  5.0,
-                ),
+                offset: const Offset(5.0, 5.0),
                 blurRadius: 10.0,
                 spreadRadius: 2.0,
               ), //BoxShadow
@@ -280,27 +236,10 @@ class MyAccountState extends State<MyAccount> {
           ),
           child: Column(
             children: <Widget>[
-              option(
-                UniconsLine.home,
-                'Member Dashboard',
-                '/dashboard',
-              ),
-              option(
-                UniconsLine.lock,
-                'Change Password',
-                '/change-password',
-              ),
-              option(
-                UniconsLine.shopping_cart,
-                'Return Orders',
-                '/return-orders',
-              ),
-              option(
-                UniconsLine.language,
-                'Language Settings',
-                '/language-video',
-                arguments: true,
-              ),
+              option(UniconsLine.home, 'Member Dashboard', '/dashboard'),
+              option(UniconsLine.lock, 'Change Password', '/change-password'),
+              option(UniconsLine.shopping_cart, 'Return Orders', '/return-orders'),
+              option(UniconsLine.language, 'Language Settings', '/language-video', arguments: true),
               if (linkResponse != null) ...[
                 option(
                   UniconsLine.user_square,
@@ -316,13 +255,7 @@ class MyAccountState extends State<MyAccount> {
                   arguments: true,
                   linkUrl: linkResponse['founderMessage'],
                 ),
-                option(
-                  UniconsLine.file,
-                  'Legal',
-                  'link',
-                  arguments: true,
-                  linkUrl: linkResponse['legal'],
-                ),
+                option(UniconsLine.file, 'Legal', 'link', arguments: true, linkUrl: linkResponse['legal']),
                 option(
                   UniconsLine.image,
                   'Gallery',
@@ -373,8 +306,7 @@ class MyAccountState extends State<MyAccount> {
                   linkUrl: linkResponse['grievance'],
                 ),
               ],
-              if (Auth.user()!['isVendor']!)
-                option(UniconsLine.gift, 'Audio Settings', '/audio-settings'),
+              if (Auth.user()!['isVendor']!) option(UniconsLine.gift, 'Audio Settings', '/audio-settings'),
               // option(
               //   UniconsLine.power,
               //   'Log Out',
@@ -402,10 +334,7 @@ class MyAccountState extends State<MyAccount> {
               boxShadow: [
                 BoxShadow(
                   color: const Color(0x194343b2).withOpacity(0.15),
-                  offset: const Offset(
-                    5.0,
-                    5.0,
-                  ),
+                  offset: const Offset(5.0, 5.0),
                   blurRadius: 10.0,
                   spreadRadius: 2.0,
                 ), //BoxShadow
@@ -414,13 +343,7 @@ class MyAccountState extends State<MyAccount> {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                CircleAvatar(
-                  radius: 30,
-                  child: Image.asset(
-                    'assets/images/users.png',
-                    fit: BoxFit.fill,
-                  ),
-                ),
+                CircleAvatar(radius: 30, child: Image.asset('assets/images/users.png', fit: BoxFit.fill)),
                 SizedBox(width: w(4)),
                 text(
                   Auth.userGuest()!['phone'] ?? "N/A",
@@ -433,11 +356,7 @@ class MyAccountState extends State<MyAccount> {
           ),
         Container(
           margin: const EdgeInsets.only(top: 10, left: 16),
-          child: text(
-            'General',
-            fontFamily: fontBold,
-            textAllCaps: true,
-          ),
+          child: text('General', fontFamily: fontBold, textAllCaps: true),
         ),
         Container(
           margin: const EdgeInsets.only(top: 15, left: 16, right: 16),
@@ -448,10 +367,7 @@ class MyAccountState extends State<MyAccount> {
             boxShadow: [
               BoxShadow(
                 color: const Color(0x194343b2).withOpacity(0.15),
-                offset: const Offset(
-                  5.0,
-                  5.0,
-                ),
+                offset: const Offset(5.0, 5.0),
                 blurRadius: 10.0,
                 spreadRadius: 2.0,
               ), //BoxShadow
@@ -459,15 +375,10 @@ class MyAccountState extends State<MyAccount> {
           ),
           child: Column(
             children: <Widget>[
-              optionIfFalse(UniconsLine.info_circle, 'Grievance-Redressal',
-                  '/grievance-redressal'),
-              optionIfFalse(
-                  UniconsLine.university, 'Bank Details', '/bank-details',
-                  isInfoShow: true),
-              optionIfFalse(
-                  UniconsLine.shopping_cart, 'Return Orders', '/return-orders'),
-              if (Auth.isGuestLoggedIn!)
-                optionIfFalse(UniconsLine.power, 'Log Out', 'guest-logout'),
+              optionIfFalse(UniconsLine.info_circle, 'Grievance-Redressal', '/grievance-redressal'),
+              optionIfFalse(UniconsLine.university, 'Bank Details', '/bank-details', isInfoShow: true),
+              optionIfFalse(UniconsLine.shopping_cart, 'Return Orders', '/return-orders'),
+              if (Auth.isGuestLoggedIn!) optionIfFalse(UniconsLine.power, 'Log Out', 'guest-logout'),
             ],
           ),
         ),
@@ -484,84 +395,73 @@ class MyAccountState extends State<MyAccount> {
   // }
 
   logoutBox(BuildContext context, pageName) {
-    return Get.dialog(Dialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
-      insetPadding: const EdgeInsets.all(25),
-      clipBehavior: Clip.antiAliasWithSaveLayer,
-      child: Material(
-        child: Container(
-          decoration: new BoxDecoration(
-            color: Colors.white,
-            shape: BoxShape.rectangle,
-            borderRadius: BorderRadius.circular(16),
-            boxShadow: [
-              const BoxShadow(
-                color: Colors.black26,
-                blurRadius: 10.0,
-                offset: Offset(0.0, 10.0),
-              ),
-            ],
-          ),
-          width: MediaQuery.of(context).size.width,
-          child: Column(
-            mainAxisSize: MainAxisSize.min, // To make the card compact
-            children: <Widget>[
-              const SizedBox(height: 24),
-              Container(
-                width: 45,
-                height: 45,
-                decoration:
-                    const BoxDecoration(shape: BoxShape.circle, color: green),
-                child: const Icon(
-                  Icons.power_settings_new_rounded,
-                  color: white,
+    return Get.dialog(
+      Dialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+        insetPadding: const EdgeInsets.all(25),
+        clipBehavior: Clip.antiAliasWithSaveLayer,
+        child: Material(
+          child: Container(
+            decoration: new BoxDecoration(
+              color: Colors.white,
+              shape: BoxShape.rectangle,
+              borderRadius: BorderRadius.circular(16),
+              boxShadow: [
+                const BoxShadow(color: Colors.black26, blurRadius: 10.0, offset: Offset(0.0, 10.0)),
+              ],
+            ),
+            width: MediaQuery.of(context).size.width,
+            child: Column(
+              mainAxisSize: MainAxisSize.min, // To make the card compact
+              children: <Widget>[
+                const SizedBox(height: 24),
+                Container(
+                  width: 45,
+                  height: 45,
+                  decoration: const BoxDecoration(shape: BoxShape.circle, color: green),
+                  child: const Icon(Icons.power_settings_new_rounded, color: white),
                 ),
-              ),
-              const SizedBox(height: 24),
-              text(
-                'Are you sure you want to logout ?',
-                textColor: textColorPrimary,
-                fontFamily: fontBold,
-                fontSize: textSizeLargeMedium,
-                isCentered: true,
-                isLongText: true,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  TextButton(
-                    onPressed: () => Navigator.pop(context),
-                    child: text(
-                      'No',
-                      fontSize: textSizeLargeMedium,
-                      fontFamily: fontBold,
-                      textColor: green,
+                const SizedBox(height: 24),
+                text(
+                  'Are you sure you want to logout ?',
+                  textColor: textColorPrimary,
+                  fontFamily: fontBold,
+                  fontSize: textSizeLargeMedium,
+                  isCentered: true,
+                  isLongText: true,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: text(
+                        'No',
+                        fontSize: textSizeLargeMedium,
+                        fontFamily: fontBold,
+                        textColor: green,
+                      ),
                     ),
-                  ),
-                  TextButton(
-                    onPressed: () async {
-                      if (pageName == 'member-logout') {
-                        await Auth.logout();
-                        Get.offAllNamed('/ecommerce');
-                      } else {
-                        await Auth.logoutGuest();
-                        Get.offAllNamed('/ecommerce');
-                      }
-                    },
-                    child: text(
-                      'Yes',
-                      fontSize: textSizeLargeMedium,
-                      fontFamily: fontBold,
-                      textColor: red,
+                    TextButton(
+                      onPressed: () async {
+                        if (pageName == 'member-logout') {
+                          await Auth.logout();
+                          Get.offAllNamed('/ecommerce');
+                        } else {
+                          await Auth.logoutGuest();
+                          Get.offAllNamed('/ecommerce');
+                        }
+                      },
+                      child: text('Yes', fontSize: textSizeLargeMedium, fontFamily: fontBold, textColor: red),
                     ),
-                  ),
-                ],
-              )
-            ],
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
-    ));
+    );
   }
 
   Future<void> fetchWebLinks() async {
@@ -576,17 +476,19 @@ class MyAccountState extends State<MyAccount> {
     });
   }
 
-  Widget optionIfFalse(var icon, var heading, String page,
-      {bool isInfoShow = false}) {
+  Widget optionIfFalse(var icon, var heading, String page, {bool isInfoShow = false}) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0, 10, 0, 8),
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: () async {
           if (page == '/member-login') {
-            AppUtils.redirect('/login-mlm', callWhileBack: () {
-              Get.offAllNamed('ecommerce');
-            });
+            AppUtils.redirect(
+              '/login-mlm',
+              callWhileBack: () {
+                Get.offAllNamed('ecommerce');
+              },
+            );
           } else if (page == "/guest-dashboard") {
             if (Auth.isGuestLoggedIn!) {
               Get.toNamed('/guest-order-tab');
@@ -610,54 +512,36 @@ class MyAccountState extends State<MyAccount> {
                     width: 40,
                     height: 40,
                     padding: const EdgeInsets.all(8),
-                    child: Icon(
-                      icon,
-                      color: textColorPrimary,
-                    ),
+                    child: Icon(icon, color: textColorPrimary),
                   ),
                   const SizedBox(width: 5),
-                  text(
-                    heading,
-                    fontFamily: fontMedium,
-                    fontSize: textSizeMedium,
-                  ),
+                  text(heading, fontFamily: fontMedium, fontSize: textSizeMedium),
                   const SizedBox(width: 10),
                   if (isInfoShow == true)
-                    const Icon(
-                      Icons.info,
-                      color: textColorSecondary,
-                    ).onTap(
-                      () {
-                        Get.dialog(
-                          AlertDialog(
-                            shape: const RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(32.0)),
-                            ),
-                            content: const Text(
-                              'Please fill your bank details for return or refund purposes',
-                            ),
-                            actions: <Widget>[
-                              TextButton(
-                                child: const Text('Ok'),
-                                onPressed: () {
-                                  // Pop the confirmation dialog and indicate that the page should
-                                  // not be popped.
-                                  Navigator.of(context).pop(false);
-                                },
-                              ),
-                            ],
+                    const Icon(Icons.info, color: textColorSecondary).onTap(() {
+                      Get.dialog(
+                        AlertDialog(
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(32.0)),
                           ),
-                        );
-                      },
-                    ),
+                          content: const Text('Please fill your bank details for return or refund purposes'),
+                          actions: <Widget>[
+                            TextButton(
+                              child: const Text('Ok'),
+                              onPressed: () {
+                                // Pop the confirmation dialog and indicate that the page should
+                                // not be popped.
+                                Navigator.of(context).pop(false);
+                              },
+                            ),
+                          ],
+                        ),
+                      );
+                    }),
                 ],
               ),
             ),
-            const Icon(
-              Icons.keyboard_arrow_right,
-              color: textColorSecondary,
-            ),
+            const Icon(Icons.keyboard_arrow_right, color: textColorSecondary),
           ],
         ),
       ),
@@ -669,30 +553,26 @@ class MyAccountState extends State<MyAccount> {
     setDialogState(() {});
 
     if (_guestLoginFormKey.currentState!.validate()) {
-      Api.http.post('guest/login', data: {
-        'mobile': mobile,
-        "otp": _otpController.text
-      }).then((response) async {
-        validationMode = AutovalidateMode.always;
-        if (response.data['status']) {
-          await Auth.guestLogin(
-            token: response.data['token'],
-            user: response.data['guestUser'],
-          );
-          Get.toNamed('/guest-order-tab');
-        } else {
-          AppUtils.showErrorSnackBar(response.data['message']);
-        }
-      }).catchError((error) {
-        if (error.response.statusCode == 401 ||
-            error.response.statusCode == 403) {
-          AppUtils.showErrorSnackBar(error.response.data['message']);
-        }
-        if (error.response.statusCode == 422) {
-          validator.setErrors(error.response.data['errors']);
-          setDialogState(() {});
-        }
-      });
+      Api.http
+          .post('guest/login', data: {'mobile': mobile, "otp": _otpController.text})
+          .then((response) async {
+            validationMode = AutovalidateMode.always;
+            if (response.data['status']) {
+              await Auth.guestLogin(token: response.data['token'], user: response.data['guestUser']);
+              Get.toNamed('/guest-order-tab');
+            } else {
+              AppUtils.showErrorSnackBar(response.data['message']);
+            }
+          })
+          .catchError((error) {
+            if (error.response.statusCode == 401 || error.response.statusCode == 403) {
+              AppUtils.showErrorSnackBar(error.response.data['message']);
+            }
+            if (error.response.statusCode == 422) {
+              validator.setErrors(error.response.data['errors']);
+              setDialogState(() {});
+            }
+          });
     }
   }
 
@@ -700,26 +580,26 @@ class MyAccountState extends State<MyAccount> {
     FocusScope.of(context).requestFocus(FocusNode());
     setDialogState(() {});
     if (_mobileController.text.isEmpty) {
-      AppUtils.showErrorSnackBar(
-        "Mobile No field is required",
-      );
+      AppUtils.showErrorSnackBar("Mobile No field is required");
     }
-    Api.http.post('guest/otp', data: {"mobile": _mobileController.text}).then(
-        (response) {
-      if (response.data['status']) {
-        setDialogState(() {
-          isOTP = true;
+    Api.http
+        .post('guest/otp', data: {"mobile": _mobileController.text})
+        .then((response) {
+          if (response.data['status']) {
+            setDialogState(() {
+              isOTP = true;
+            });
+            AppUtils.showSuccessSnackBar(response.data['message']);
+          } else {
+            AppUtils.showErrorSnackBar(response.data['message']);
+          }
+        })
+        .catchError((error) {
+          if (error.response.statusCode == 422) {
+            validator.setErrors(error.response.data['errors']);
+            setDialogState(() {});
+          }
         });
-        AppUtils.showSuccessSnackBar(response.data['message']);
-      } else {
-        AppUtils.showErrorSnackBar(response.data['message']);
-      }
-    }).catchError((error) {
-      if (error.response.statusCode == 422) {
-        validator.setErrors(error.response.data['errors']);
-        setDialogState(() {});
-      }
-    });
   }
 
   void onResend(context, setDialogState) {

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import '../../utils/app_utils.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../../services/api.dart';
 import '../../../../services/validator_x.dart';
 import '../../../widget/theme.dart';
+import '../../utils/app_utils.dart';
 
 class GasBill extends StatefulWidget {
   @override
@@ -41,15 +41,10 @@ class _GasBillState extends State<GasBill> {
   Widget build(BuildContext context) {
     return new Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: Text('Gas Bill Payment'),
-      ),
+      appBar: AppBar(title: Text('Gas Bill Payment')),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 10,
-            vertical: 15,
-          ),
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
           child: Form(
             key: _gasFormKey,
             autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -57,10 +52,7 @@ class _GasBillState extends State<GasBill> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.max,
               children: <Widget>[
-                if (gasOperator.length > 0) ...[
-                  _buildOperatorField(context),
-                  SizedBox(height: 20.0),
-                ],
+                if (gasOperator.length > 0) ...[_buildOperatorField(context), SizedBox(height: 20.0)],
                 _buildConsumerNumberField(context),
                 SizedBox(height: 20.0),
                 _buildAmountField(context),
@@ -92,17 +84,13 @@ class _GasBillState extends State<GasBill> {
             } else if (!regExp.hasMatch(value)) {
               return "Mobile Number invalid";
             }
-          })
+          }),
         ],
       ),
       controller: _mobileController,
       maxLength: 10,
       keyboardType: TextInputType.number,
-      decoration: InputDecoration(
-        counterText: '',
-        border: OutlineInputBorder(),
-        labelText: 'Mobile No',
-      ),
+      decoration: InputDecoration(counterText: '', border: OutlineInputBorder(), labelText: 'Mobile No'),
     );
   }
 
@@ -111,9 +99,7 @@ class _GasBillState extends State<GasBill> {
       inputFormatters: [FilteringTextInputFormatter.deny(new RegExp(r'[ ,.-]'))],
       validator: validator.add(
         key: 'consumer_number',
-        rules: [
-          ValidatorX.mandatory(message: "Consumer Number is required"),
-        ],
+        rules: [ValidatorX.mandatory(message: "Consumer Number is required")],
       ),
       controller: _consumerNumberController,
       keyboardType: TextInputType.number,
@@ -122,9 +108,7 @@ class _GasBillState extends State<GasBill> {
         border: OutlineInputBorder(),
         labelText: 'Consumer number',
       ),
-      style: primaryTextStyle(
-        fontFamily: fontMedium,
-      ),
+      style: primaryTextStyle(fontFamily: fontMedium),
     );
   }
 
@@ -133,17 +117,11 @@ class _GasBillState extends State<GasBill> {
       inputFormatters: [FilteringTextInputFormatter.deny(new RegExp(r'[ ,.-]'))],
       validator: validator.add(
         key: 'bill_number',
-        rules: [
-          ValidatorX.mandatory(message: "Bill number is required"),
-        ],
+        rules: [ValidatorX.mandatory(message: "Bill number is required")],
       ),
       controller: _billNumberController,
       keyboardType: TextInputType.number,
-      decoration: InputDecoration(
-        counterText: '',
-        border: OutlineInputBorder(),
-        labelText: 'Bill number',
-      ),
+      decoration: InputDecoration(counterText: '', border: OutlineInputBorder(), labelText: 'Bill number'),
     );
   }
 
@@ -163,7 +141,7 @@ class _GasBillState extends State<GasBill> {
             } else if (!regExp.hasMatch(value)) {
               return "Customer mobile Number invalid";
             }
-          })
+          }),
         ],
       ),
       controller: _customerMobileNumberController,
@@ -174,9 +152,7 @@ class _GasBillState extends State<GasBill> {
         border: OutlineInputBorder(),
         labelText: 'Customer Mobile Number',
       ),
-      style: primaryTextStyle(
-        fontFamily: fontMedium,
-      ),
+      style: primaryTextStyle(fontFamily: fontMedium),
     );
   }
 
@@ -185,19 +161,11 @@ class _GasBillState extends State<GasBill> {
       inputFormatters: [FilteringTextInputFormatter.deny(new RegExp(r'[ ,.-]'))],
       validator: validator.add(
         key: 'customer_name',
-        rules: [
-          ValidatorX.mandatory(message: "Customer name is required"),
-        ],
+        rules: [ValidatorX.mandatory(message: "Customer name is required")],
       ),
       controller: _customerNameController,
-      decoration: InputDecoration(
-        counterText: '',
-        border: OutlineInputBorder(),
-        labelText: 'Customer Name',
-      ),
-      style: primaryTextStyle(
-        fontFamily: fontMedium,
-      ),
+      decoration: InputDecoration(counterText: '', border: OutlineInputBorder(), labelText: 'Customer Name'),
+      style: primaryTextStyle(fontFamily: fontMedium),
     );
   }
 
@@ -205,9 +173,7 @@ class _GasBillState extends State<GasBill> {
     return TextFormField(
       validator: validator.add(
         key: 'amount',
-        rules: [
-          ValidatorX.mandatory(message: "Amount is required"),
-        ],
+        rules: [ValidatorX.mandatory(message: "Amount is required")],
       ),
       maxLength: 4,
       keyboardType: TextInputType.number,
@@ -219,9 +185,7 @@ class _GasBillState extends State<GasBill> {
         labelText: 'Amount',
         prefixText: ' ₹ ',
       ),
-      style: primaryTextStyle(
-        fontFamily: fontMedium,
-      ),
+      style: primaryTextStyle(fontFamily: fontMedium),
     );
   }
 
@@ -231,9 +195,7 @@ class _GasBillState extends State<GasBill> {
       isExpanded: true,
       validator: validator.add(
         key: 'operator_id',
-        rules: [
-          ValidatorX.mandatory(message: "Select your operator"),
-        ],
+        rules: [ValidatorX.mandatory(message: "Select your operator")],
       ),
       hint: text('Select your operator', fontFamily: fontMedium, textColor: grey),
       decoration: InputDecoration(border: OutlineInputBorder()),
@@ -249,10 +211,7 @@ class _GasBillState extends State<GasBill> {
       items: gasOperator.map<DropdownMenuItem<String>>((category) {
         return DropdownMenuItem<String>(
           value: category['id'].toString(),
-          child: text(
-            category['name'].toString(),
-            overflow: TextOverflow.ellipsis,
-          ),
+          child: text(category['name'].toString(), overflow: TextOverflow.ellipsis),
         );
       }).toList(),
     );
@@ -263,9 +222,7 @@ class _GasBillState extends State<GasBill> {
       inputFormatters: [FilteringTextInputFormatter.deny(new RegExp(r'[ ,.-]'))],
       validator: validator.add(
         key: 'financial_password',
-        rules: [
-          ValidatorX.mandatory(message: "Transaction Password is required"),
-        ],
+        rules: [ValidatorX.mandatory(message: "Transaction Password is required")],
       ),
       controller: _transactionPasswordController,
       obscureText: passwordVisible,
@@ -282,9 +239,7 @@ class _GasBillState extends State<GasBill> {
           child: passwordVisible ? Icon(Icons.visibility_off) : Icon(Icons.visibility),
         ),
       ),
-      style: primaryTextStyle(
-        fontFamily: fontMedium,
-      ),
+      style: primaryTextStyle(fontFamily: fontMedium),
     );
   }
 
@@ -293,7 +248,7 @@ class _GasBillState extends State<GasBill> {
       padding: const EdgeInsets.all(0.0),
       child: SizedBox(
         width: double.infinity,
-        child: CustomButton(
+        child: CustomButtonOld(
           textContent: "Proceed".toUpperCase(),
           onPressed: () {
             if (_gasFormKey.currentState!.validate()) {
@@ -309,19 +264,20 @@ class _GasBillState extends State<GasBill> {
                 'operator_id': operatorSelection,
               };
 
-              Api.http.post('member/recharge/gas-bill', data: sendData).then((response) {
-                if (response.data['status']) {
-                  // AppUtils.startTransaction(response.data);
-                } else {
-                  AppUtils.showErrorSnackBar(response.data['message']);
-                }
-              }).catchError(
-                (error) {
-                  if (error.response.statusCode == 422) {
-                    validator.setErrors(error.response.data['errors']);
-                  }
-                },
-              );
+              Api.http
+                  .post('member/recharge/gas-bill', data: sendData)
+                  .then((response) {
+                    if (response.data['status']) {
+                      // AppUtils.startTransaction(response.data);
+                    } else {
+                      AppUtils.showErrorSnackBar(response.data['message']);
+                    }
+                  })
+                  .catchError((error) {
+                    if (error.response.statusCode == 422) {
+                      validator.setErrors(error.response.data['errors']);
+                    }
+                  });
             }
           },
         ),

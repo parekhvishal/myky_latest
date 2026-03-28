@@ -12,6 +12,7 @@ import '../../services/size_config.dart';
 import '../../services/storage.dart';
 import '../../utils/app_utils.dart';
 import '../../widget/theme.dart';
+import '../widget/colors.dart';
 
 class LanguageVideo extends StatefulWidget {
   const LanguageVideo({Key? key}) : super(key: key);
@@ -70,10 +71,7 @@ class _LanguageVideoState extends State<LanguageVideo> {
                 20.height,
                 Wrap(
                   alignment: WrapAlignment.center,
-                  children: [
-                    for (int i = 0; i < languageVideo.length; i++)
-                      _languageVideoBuilder(i),
-                  ],
+                  children: [for (int i = 0; i < languageVideo.length; i++) _languageVideoBuilder(i)],
                 ),
               ],
             ),
@@ -85,10 +83,7 @@ class _LanguageVideoState extends State<LanguageVideo> {
 
   Widget _languageVideoBuilder(i) {
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        vertical: 10.0,
-        horizontal: 15,
-      ),
+      padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15),
       child: GestureDetector(
         onTap: () {
           Auth.setLanguage(language: languageVideo[i]['code']);
@@ -115,10 +110,7 @@ class _LanguageVideoState extends State<LanguageVideo> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
             gradient: LinearGradient(
-              colors: [
-                Colors.purple.shade700,
-                colorPrimary,
-              ],
+              colors: [Colors.purple.shade700, colorPrimary],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
@@ -167,17 +159,9 @@ class _VideoWatchState extends State<VideoWatch> {
     WakelockPlus.enable();
 
     setState(() {
-      youtubeLink = widget.languageData!['link']
-          .split('embed/')
-          .sublist(1)
-          .join('embed/')
-          .trim();
+      youtubeLink = widget.languageData!['link'].split('embed/').sublist(1).join('embed/').trim();
       _controller = YoutubePlayerController(
-        flags: YoutubePlayerFlags(
-          forceHD: true,
-          autoPlay: true,
-          controlsVisibleAtStart: true,
-        ),
+        flags: YoutubePlayerFlags(forceHD: true, autoPlay: true, controlsVisibleAtStart: true),
         // initialVideoId: "geKLYcY6KWk",
         initialVideoId: youtubeLink!,
       );
@@ -204,15 +188,10 @@ class _VideoWatchState extends State<VideoWatch> {
   @override
   Widget build(BuildContext context) {
     return YoutubePlayerBuilder(
-      player: YoutubePlayer(
-        controller: _controller,
-      ),
+      player: YoutubePlayer(controller: _controller),
       builder: (context, player) {
         return Scaffold(
-          appBar: AppBar(
-            elevation: 2.0,
-            title: Text(widget.languageData!['language']),
-          ),
+          appBar: AppBar(elevation: 2.0, title: Text(widget.languageData!['language'])),
           body: SingleChildScrollView(
             child: Column(
               children: <Widget>[
@@ -230,21 +209,20 @@ class _VideoWatchState extends State<VideoWatch> {
           ),
           bottomNavigationBar: Container(
             height: h(8.0),
-            decoration: BoxDecoration(
-              color: colorAccent,
-            ),
-            child: Center(
-              child: text(
-                'Continue',
-                textColor: white,
-                fontFamily: fontBold,
-                fontSize: textSizeLargeMedium,
-                textAllCaps: true,
-              ),
-            ).onClick(() {
-              setData('isWellCome', 'true');
-              Get.offAllNamed('/login-mlm');
-            }),
+            decoration: BoxDecoration(color: colorAccent),
+            child:
+                Center(
+                  child: text(
+                    'Continue',
+                    textColor: white,
+                    fontFamily: fontBold,
+                    fontSize: textSizeLargeMedium,
+                    textAllCaps: true,
+                  ),
+                ).onClick(() {
+                  setData('isWellCome', 'true');
+                  Get.offAllNamed('/login-mlm');
+                }),
           ),
         );
       },

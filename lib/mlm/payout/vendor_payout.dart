@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:unicons/unicons.dart';
 
 import '../../services/api.dart';
 import '../../services/size_config.dart';
+import '../../widget/colors.dart';
 import '../../widget/paginated_list.dart';
 import '../../widget/theme.dart';
 
@@ -27,15 +27,8 @@ class _VendorPayoutState extends State<VendorPayout> {
 
   Widget _payoutBuilder(dynamic payout, int index) {
     return Container(
-      decoration: boxDecoration(
-        showShadow: true,
-        bgColor: white,
-        radius: 10.0,
-      ),
-      margin: EdgeInsets.symmetric(
-        horizontal: 7.5,
-        vertical: 7.5,
-      ),
+      decoration: boxDecoration(showShadow: true, bgColor: white, radius: 10.0),
+      margin: EdgeInsets.symmetric(horizontal: 7.5, vertical: 7.5),
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
         child: Row(
@@ -54,22 +47,14 @@ class _VendorPayoutState extends State<VendorPayout> {
                           children: [
                             Padding(
                               padding: const EdgeInsets.only(top: 4.0),
-                              child: Icon(
-                                UniconsLine.file,
-                                color: colorPrimary,
-                                size: textSizeXLarge,
-                              ),
+                              child: Icon(UniconsLine.file, color: colorPrimary, size: textSizeXLarge),
                             ),
                             SizedBox(width: w(4)),
                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
-                                  text(
-                                    payout['createdAt'],
-                                    fontFamily: fontBold,
-                                    isLongText: true,
-                                  ),
+                                  text(payout['createdAt'], fontFamily: fontBold, isLongText: true),
                                 ],
                               ),
                             ),
@@ -92,11 +77,7 @@ class _VendorPayoutState extends State<VendorPayout> {
                             isLongText: true,
                           ),
                           SizedBox(height: 4),
-                          text(
-                            payout['amount'],
-                            textColor: textColorSecondary,
-                            isLongText: true,
-                          ),
+                          text(payout['amount'], textColor: textColorSecondary, isLongText: true),
                         ],
                       ),
                       SizedBox(width: 10),
@@ -110,11 +91,7 @@ class _VendorPayoutState extends State<VendorPayout> {
                             isLongText: true,
                           ),
                           SizedBox(height: 4),
-                          text(
-                            payout['companyCharge'],
-                            textColor: textColorSecondary,
-                            isLongText: true,
-                          ),
+                          text(payout['companyCharge'], textColor: textColorSecondary, isLongText: true),
                         ],
                       ),
                     ],
@@ -134,11 +111,7 @@ class _VendorPayoutState extends State<VendorPayout> {
                               isLongText: true,
                             ),
                             SizedBox(height: 4),
-                            text(
-                              payout['gstAmount'],
-                              textColor: textColorSecondary,
-                              isLongText: true,
-                            ),
+                            text(payout['gstAmount'], textColor: textColorSecondary, isLongText: true),
                           ],
                         ),
                       ),
@@ -154,11 +127,7 @@ class _VendorPayoutState extends State<VendorPayout> {
                               isLongText: true,
                             ),
                             SizedBox(height: 4),
-                            text(
-                              payout['payableAmount'],
-                              textColor: textColorSecondary,
-                              isLongText: true,
-                            ),
+                            text(payout['payableAmount'], textColor: textColorSecondary, isLongText: true),
                           ],
                         ),
                       ),

@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '../../services/api.dart';
+import '../../widget/colors.dart';
 import '../../widget/customWidget.dart';
 import '../../widget/paginated_list.dart';
 import '../../widget/theme.dart';
@@ -54,93 +55,87 @@ class _PinListState extends State<PinList> {
         child: FloatingActionButton.extended(
           onPressed: () {
             showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return AlertDialog(
-                    title: Text('Transfer To'),
-                    content: Form(
-                      key: _transferPinFormKey,
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      child: TextFormField(
-                        buildCounter: (BuildContext context, {int? currentLength, int? maxLength, bool? isFocused}) => null,
-                        inputFormatters: [
-                          FilteringTextInputFormatter.deny(new RegExp(r'[- ,.]')),
-                        ],
-                        textCapitalization: TextCapitalization.characters,
-                        validator: (code) {
-                          if (code!.isEmpty) {
-                            return "Member ID can't be empty";
-                          }
-                          if (_errors.containsKey('code')) {
-                            return _errors['code'][0];
-                          }
-                          return null;
-                        },
-                        controller: _codeController,
-                        autofocus: true,
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'Member ID',
-                          hintText: 'OS98512447',
-                        ),
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text('Transfer To'),
+                  content: Form(
+                    key: _transferPinFormKey,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    child: TextFormField(
+                      buildCounter:
+                          (BuildContext context, {int? currentLength, int? maxLength, bool? isFocused}) =>
+                              null,
+                      inputFormatters: [FilteringTextInputFormatter.deny(new RegExp(r'[- ,.]'))],
+                      textCapitalization: TextCapitalization.characters,
+                      validator: (code) {
+                        if (code!.isEmpty) {
+                          return "Member ID can't be empty";
+                        }
+                        if (_errors.containsKey('code')) {
+                          return _errors['code'][0];
+                        }
+                        return null;
+                      },
+                      controller: _codeController,
+                      autofocus: true,
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Member ID',
+                        hintText: 'OS98512447',
                       ),
                     ),
-                    actions: <Widget>[
-                      TextButton(
-                        child: Text('Cancel'),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                      ),
-                      TextButton(
-                        child: Text('Transfer Pin'),
-                        onPressed: () {
-                          FocusScope.of(context).requestFocus(FocusNode());
-                          if (_transferPinFormKey.currentState!.validate()) {
-                            Api.http.post('member/pin/pin-transfer', data: {
-                              "code": _codeController.text,
-                              "pins": _selectedPins,
-                            }).then((res) {
-                              if (res.data['status']) {
-                                _codeController.clear();
-                                Navigator.of(context).pop();
-                                showDialogSingleButton(
-                                  context,
-                                  {
+                  ),
+                  actions: <Widget>[
+                    TextButton(
+                      child: Text('Cancel'),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                    TextButton(
+                      child: Text('Transfer Pin'),
+                      onPressed: () {
+                        FocusScope.of(context).requestFocus(FocusNode());
+                        if (_transferPinFormKey.currentState!.validate()) {
+                          Api.http
+                              .post(
+                                'member/pin/pin-transfer',
+                                data: {"code": _codeController.text, "pins": _selectedPins},
+                              )
+                              .then((res) {
+                                if (res.data['status']) {
+                                  _codeController.clear();
+                                  Navigator.of(context).pop();
+                                  showDialogSingleButton(context, {
                                     'status': true,
                                     'msg': res.data['message'],
-                                  },
-                                  customCode: pinsPaginatedListKey,
-                                );
-                              } else {
-                                showDialogSingleButton(
-                                  context,
-                                  {
+                                  }, customCode: pinsPaginatedListKey);
+                                } else {
+                                  showDialogSingleButton(context, {
                                     'status': false,
                                     'msg': res.data['error'],
-                                  },
-                                );
-                              }
-                            }).catchError((error) {
-                              if (error.response.statusCode == 422) {
-                                setState(() {
-                                  _errors = error.response.data['errors'];
-                                });
-                                showDialogSingleButton(
-                                  context,
-                                  {
+                                  });
+                                }
+                              })
+                              .catchError((error) {
+                                if (error.response.statusCode == 422) {
+                                  setState(() {
+                                    _errors = error.response.data['errors'];
+                                  });
+                                  showDialogSingleButton(context, {
                                     'status': false,
                                     'msg': error.response.data['errors']['code'][0],
-                                  },
-                                );
-                              }
-                            });
-                          }
-                        },
-                      ),
-                    ],
-                  );
-                });
+                                  });
+                                }
+                              });
+                        }
+                      },
+                    ),
+                  ],
+                );
+              },
+            );
           },
           label: Text('Transfer Pin'),
           icon: Icon(Icons.attach_file),
@@ -176,21 +171,18 @@ class _PinListState extends State<PinList> {
               text(item['createdAt']),
               Container(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 6.0,
-                    vertical: 2.0,
-                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 2.0),
                   child: text(
                     item['status']['name'].toString().toUpperCase(),
                     textColor: white,
-                    fontFamily: fontSemibold,
+                    fontFamily: fontSemiBold,
                   ),
                 ),
                 color: item['status']['id'] == 2
                     ? Colors.amber
                     : item['status']['id'] == 1
-                        ? green
-                        : Colors.black,
+                    ? green
+                    : Colors.black,
               ),
             ],
           ),
@@ -228,20 +220,13 @@ class _PinListState extends State<PinList> {
                           SizedBox(width: 5),
                           GestureDetector(
                             onTap: () {
-                              Clipboard.setData(
-                                new ClipboardData(text: item['pin']),
-                              );
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text('Text Copied to Clipboard'),
-                                ),
-                              );
+                              Clipboard.setData(new ClipboardData(text: item['pin']));
+                              ScaffoldMessenger.of(
+                                context,
+                              ).showSnackBar(SnackBar(content: Text('Text Copied to Clipboard')));
                             },
-                            child: Icon(
-                              Icons.content_copy,
-                              size: 14,
-                            ),
-                          )
+                            child: Icon(Icons.content_copy, size: 14),
+                          ),
                         ],
                       ),
                     ],
@@ -255,19 +240,20 @@ class _PinListState extends State<PinList> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                text(
-                  'Used By',
-                  fontSize: textSizeMedium,
-                  fontFamily: fontSemibold,
-                ),
+                text('Used By', fontSize: textSizeMedium, fontFamily: fontSemiBold),
                 SizedBox(width: 10),
                 Expanded(
                   child: Column(
                     children: <Widget>[
-                      text(" ${item['usedBy']['name']} | ${item['usedBy']['code']}", fontSize: textSizeMedium, maxLine: 4, isLongText: true),
+                      text(
+                        " ${item['usedBy']['name']} | ${item['usedBy']['code']}",
+                        fontSize: textSizeMedium,
+                        maxLine: 4,
+                        isLongText: true,
+                      ),
                     ],
                   ),
-                )
+                ),
               ],
             ),
           if (item['status']['id'] == 1)
@@ -276,13 +262,16 @@ class _PinListState extends State<PinList> {
               children: <Widget>[
                 MaterialButton(
                   onPressed: () {
-                    Get.toNamed('/top-up-mlm', arguments: item['pin'])!.then((value) => pinsPaginatedListKey.currentState!.refresh());
+                    Get.toNamed(
+                      '/top-up-mlm',
+                      arguments: item['pin'],
+                    )!.then((value) => pinsPaginatedListKey.currentState!.refresh());
                   },
                   child: text('TopUp', textColor: white),
                   color: colorPrimary,
                 ),
               ],
-            )
+            ),
         ],
       ),
     );

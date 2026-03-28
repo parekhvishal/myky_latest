@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import '../../services/size_config.dart';
-import '../../widget/custom_container.dart';
-import '../../widget/theme.dart';
 import 'package:nb_utils/nb_utils.dart';
 
+import '../../services/size_config.dart';
 import '../../widget/confirmation_dialog.dart';
+import '../../widget/custom_container.dart';
+import '../../widget/theme.dart';
 
 class AppMaintenance extends StatefulWidget {
   const AppMaintenance({Key? key}) : super(key: key);
@@ -60,10 +60,7 @@ class _AppMaintenanceState extends State<AppMaintenance> {
               50.height,
               Container(
                 transform: Matrix4.translationValues(0, -20, 0),
-                child: text(
-                  "Under maintenance",
-                  fontSize: 23.sp,
-                ),
+                child: text("Under maintenance", fontSize: 23.sp),
               ),
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 10.w),
@@ -80,10 +77,7 @@ class _AppMaintenanceState extends State<AppMaintenance> {
               30.height,
               Container(
                 margin: EdgeInsets.only(left: 30.w, right: 30.w),
-                child: CustomButton(
-                  onPressed: () => SystemNavigator.pop(),
-                  textContent: 'Exit',
-                ),
+                child: CustomButtonOld(onPressed: () => SystemNavigator.pop(), textContent: 'Exit'),
               ),
               15.height,
             ],

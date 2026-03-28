@@ -1,7 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:myky_clone/widget/theme.dart';
+
+import 'colors.dart';
 
 class WinnersWidget extends StatefulWidget {
   const WinnersWidget({super.key});
@@ -11,8 +12,7 @@ class WinnersWidget extends StatefulWidget {
 }
 
 class _WinnersWidgetState extends State<WinnersWidget> {
-  final CarouselSliderControllerImpl _carouselController =
-      CarouselSliderControllerImpl();
+  final CarouselSliderControllerImpl _carouselController = CarouselSliderControllerImpl();
   int _currentIndex = 0;
 
   final List<Map<String, String>> winners = [
@@ -43,10 +43,7 @@ class _WinnersWidgetState extends State<WinnersWidget> {
   Widget build(BuildContext context) {
     return Container(
       height: 235.h,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16.r),
-      ),
+      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16.r)),
       padding: EdgeInsets.all(12.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -84,19 +81,12 @@ class _WinnersWidgetState extends State<WinnersWidget> {
           Center(
             child: Text(
               winners[_currentIndex]['name']!,
-              style: TextStyle(
-                fontSize: 14.sp,
-                fontWeight: FontWeight.bold,
-                color: Colors.black87,
-              ),
+              style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold, color: Colors.black87),
             ),
           ),
           SizedBox(height: 8.h),
           Center(
-            child: AnimatedSmoothIndicator(
-              count: winners.length,
-              activeIndex: _currentIndex,
-            ),
+            child: AnimatedSmoothIndicator(count: winners.length, activeIndex: _currentIndex),
           ),
         ],
       ),
@@ -138,11 +128,7 @@ class WinnerCard extends StatelessWidget {
               children: [
                 Text(
                   name,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: TextStyle(color: Colors.white, fontSize: 14.sp, fontWeight: FontWeight.bold),
                 ),
               ],
             ),
@@ -160,20 +146,13 @@ class WinnerCard extends StatelessWidget {
             left: 12.w,
             child: Text(
               "Gold Coin",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 22.sp,
-                fontWeight: FontWeight.bold,
-              ),
+              style: TextStyle(color: Colors.white, fontSize: 22.sp, fontWeight: FontWeight.bold),
             ),
           ),
           Positioned(
             top: 30.h,
             right: 25.w,
-            child: CircleAvatar(
-              radius: 35.r,
-              backgroundImage: AssetImage(imageAsset),
-            ),
+            child: CircleAvatar(radius: 35.r, backgroundImage: AssetImage(imageAsset)),
           ),
           Positioned(
             top: 80
@@ -182,19 +161,12 @@ class WinnerCard extends StatelessWidget {
             child: Container(
               width: 80.w,
               padding: EdgeInsets.symmetric(horizontal: 3.w, vertical: 3.h),
-              decoration: BoxDecoration(
-                color: Colors.yellow,
-                borderRadius: BorderRadius.circular(6.r),
-              ),
+              decoration: BoxDecoration(color: Colors.yellow, borderRadius: BorderRadius.circular(6.r)),
               child: Center(
                 child: Text(
                   tag,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 9.sp,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
+                  style: TextStyle(fontSize: 9.sp, fontWeight: FontWeight.bold, color: Colors.black),
                 ),
               ),
             ),
@@ -209,11 +181,7 @@ class AnimatedSmoothIndicator extends StatelessWidget {
   final int count;
   final int activeIndex;
 
-  const AnimatedSmoothIndicator({
-    super.key,
-    required this.count,
-    required this.activeIndex,
-  });
+  const AnimatedSmoothIndicator({super.key, required this.count, required this.activeIndex});
 
   @override
   Widget build(BuildContext context) {

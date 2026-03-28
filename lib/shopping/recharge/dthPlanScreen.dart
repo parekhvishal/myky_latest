@@ -1,8 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Response;
-import '../../widget/theme.dart';
 import 'package:nb_utils/src/extensions/widget_extensions.dart';
+
+import '../../widget/colors.dart';
+import '../../widget/theme.dart';
 
 class DTHPlanScreen extends StatefulWidget {
   final Map data;
@@ -41,8 +43,8 @@ class _DTHPlanScreenState extends State<DTHPlanScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      text('Plan Details')
-//                            Text('Col'),
+                      text('Plan Details'),
+                      //                            Text('Col'),
                     ],
                   ),
                 ),
@@ -52,16 +54,13 @@ class _DTHPlanScreenState extends State<DTHPlanScreen> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: colorAccent,
-                        ),
+                        style: ElevatedButton.styleFrom(backgroundColor: colorAccent),
                         onPressed: () {},
                         child: Text('₹ ${res['recharge_amount']}'),
-                      )
-
+                      ),
                     ],
                   ),
-                )
+                ),
               ],
             ),
             Row(
@@ -71,13 +70,8 @@ class _DTHPlanScreenState extends State<DTHPlanScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text(
-                        'Talktime',
-                        style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15.0),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
+                      Text('Talktime', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15.0)),
+                      SizedBox(height: 10),
                       Text(
                         res['recharge_talktime'],
                         softWrap: true,
@@ -91,16 +85,8 @@ class _DTHPlanScreenState extends State<DTHPlanScreen> {
                   flex: 2,
                   child: Column(
                     children: <Widget>[
-                      Text(
-                        'Validity',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 15.0,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
+                      Text('Validity', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15.0)),
+                      SizedBox(height: 10),
                       Text(res['recharge_validity'] + '\n'),
                     ],
                   ),
@@ -112,19 +98,12 @@ class _DTHPlanScreenState extends State<DTHPlanScreen> {
                 children: [
                   TextSpan(
                     text: 'Description : ',
-                    style: TextStyle(
-                      fontSize: textSizeMedium,
-                      color: colorPrimary,
-                      fontFamily: fontSemibold,
-                    ),
+                    style: TextStyle(fontSize: textSizeMedium, color: colorPrimary, fontFamily: fontSemiBold),
                   ),
                   TextSpan(
                     text: res['recharge_desc'],
-                    style: TextStyle(
-                      fontSize: textSizeSMedium,
-                      color: textColorSecondary,
-                    ),
-                  )
+                    style: TextStyle(fontSize: textSizeSMedium, color: textColorSecondary),
+                  ),
                 ],
               ),
             ),

@@ -6,6 +6,7 @@ import '../../../../services/api.dart';
 import '../../../../utils/app_utils.dart';
 import '../../../../widget/paginated_list.dart';
 import '../../../../widget/theme.dart';
+import '../../widget/colors.dart';
 import '../../widget/file_download_controller.dart';
 
 class VendorInvoice extends StatefulWidget {
@@ -26,10 +27,7 @@ class _VendorInvoiceState extends State<VendorInvoice> {
         setState(() {
           invoiceUrl = response.data['invoiceUrl'];
         });
-        FileDownloadCtrl().download(
-          invoiceUrl,
-          context,
-        );
+        FileDownloadCtrl().download(invoiceUrl, context);
         // downloadCtrl.download(invoiceUrl, context);
       } else {
         AppUtils.showErrorSnackBar(response.data['message']);
@@ -44,10 +42,7 @@ class _VendorInvoiceState extends State<VendorInvoice> {
         setState(() {
           invoiceUrl = response.data['gstInvoiceUrl'];
         });
-        FileDownloadCtrl().download(
-          invoiceUrl,
-          context,
-        );
+        FileDownloadCtrl().download(invoiceUrl, context);
         // downloadCtrl.download(invoiceUrl, context);
       } else {
         AppUtils.showErrorSnackBar(response.data['message']);
@@ -94,9 +89,7 @@ class _VendorInvoiceState extends State<VendorInvoice> {
                 children: [
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      text(item['date'], fontSize: 14.0),
-                    ],
+                    children: [text(item['date'], fontSize: 14.0)],
                   ),
                   Row(
                     children: [
@@ -124,10 +117,7 @@ class _VendorInvoiceState extends State<VendorInvoice> {
                               getGstId(item['id']);
                             },
                             constraints: BoxConstraints(),
-                            icon: Icon(
-                              UniconsLine.download_alt,
-                              color: Colors.black54,
-                            ),
+                            icon: Icon(UniconsLine.download_alt, color: Colors.black54),
                           ),
                         ],
                       ),
@@ -137,138 +127,68 @@ class _VendorInvoiceState extends State<VendorInvoice> {
               ),
               Row(
                 children: [
-                  text(
-                    'Member Id: ',
-                    textColor: textColorSecondary,
-                    fontSize: textSizeSMedium,
-                  ),
+                  text('Member Id: ', textColor: textColorSecondary, fontSize: textSizeSMedium),
                   10.width,
-                  text(
-                    '${item['memberId']}',
-                    textColor: green,
-                  ),
+                  text('${item['memberId']}', textColor: green),
                 ],
               ),
               Row(
                 children: [
-                  text(
-                    'Member Name: ',
-                    textColor: textColorSecondary,
-                    fontSize: textSizeSMedium,
-                  ),
+                  text('Member Name: ', textColor: textColorSecondary, fontSize: textSizeSMedium),
                   10.width,
-                  text(
-                    '${item['memberName']}',
-                    textColor: green,
-                  ),
+                  text('${item['memberName']}', textColor: green),
                 ],
               ),
               Row(
                 children: [
-                  text(
-                    'Member Mobile: ',
-                    textColor: textColorSecondary,
-                    fontSize: textSizeSMedium,
-                  ),
+                  text('Member Mobile: ', textColor: textColorSecondary, fontSize: textSizeSMedium),
                   10.width,
-                  text(
-                    '${item['memberMobile']}',
-                    textColor: green,
-                  ),
+                  text('${item['memberMobile']}', textColor: green),
                 ],
               ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  text(
-                    'Order No: ',
-                    textColor: textColorSecondary,
-                    fontSize: textSizeSMedium,
-                  ),
+                  text('Order No: ', textColor: textColorSecondary, fontSize: textSizeSMedium),
                   10.width,
-                  Expanded(
-                    child: text(
-                      '${item['orderNo']}',
-                      textColor: green,
-                      isLongText: true,
-                    ),
-                  ),
+                  Expanded(child: text('${item['orderNo']}', textColor: green, isLongText: true)),
                 ],
               ),
               Row(
                 children: [
-                  text(
-                    'Invoice No: ',
-                    textColor: textColorSecondary,
-                    fontSize: textSizeSMedium,
-                  ),
+                  text('Invoice No: ', textColor: textColorSecondary, fontSize: textSizeSMedium),
                   10.width,
-                  text(
-                    '${item['invoiceNo']}',
-                    textColor: green,
-                  ),
+                  text('${item['invoiceNo']}', textColor: green),
                 ],
               ),
               10.height,
-              Divider(
-                height: 3,
-                color: colorPrimary_light.withOpacity(0.5),
-                thickness: 1.2,
-              ),
+              Divider(height: 3, color: colorPrimary_light.withOpacity(0.5), thickness: 1.2),
               Row(
                 children: [
-                  text(
-                    'Bill Amount: ',
-                    textColor: textColorSecondary,
-                    fontSize: textSizeSMedium,
-                  ),
+                  text('Bill Amount: ', textColor: textColorSecondary, fontSize: textSizeSMedium),
                   10.width,
-                  text(
-                    '₹ ${item['amount']}',
-                    textColor: green,
-                  ),
+                  text('₹ ${item['amount']}', textColor: green),
                 ],
               ),
               Row(
                 children: [
-                  text(
-                    'Profit Shared: ',
-                    textColor: textColorSecondary,
-                    fontSize: textSizeSMedium,
-                  ),
+                  text('Profit Shared: ', textColor: textColorSecondary, fontSize: textSizeSMedium),
                   10.width,
-                  text(
-                    '₹ ${item['companyCharge']}',
-                    textColor: green,
-                  ),
+                  text('₹ ${item['companyCharge']}', textColor: green),
                 ],
               ),
               Row(
                 children: [
-                  text(
-                    'GST Amount: ',
-                    textColor: textColorSecondary,
-                    fontSize: textSizeSMedium,
-                  ),
+                  text('GST Amount: ', textColor: textColorSecondary, fontSize: textSizeSMedium),
                   10.width,
-                  text(
-                    '₹ ${item['gstAmount']}',
-                    textColor: green,
-                  ),
+                  text('₹ ${item['gstAmount']}', textColor: green),
                 ],
               ),
               Row(
                 children: [
-                  text(
-                    'Payable  Amount: ',
-                    textColor: textColorSecondary,
-                    fontSize: textSizeSMedium,
-                  ),
+                  text('Payable  Amount: ', textColor: textColorSecondary, fontSize: textSizeSMedium),
                   10.width,
-                  text(
-                    '₹ ${item['total']}',
-                    textColor: green,
-                  ),
+                  text('₹ ${item['total']}', textColor: green),
                 ],
               ),
             ],

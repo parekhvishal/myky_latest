@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 
 import '../../services/api.dart';
 import '../../services/size_config.dart';
+import '../../widget/colors.dart';
 import '../../widget/paginated_list.dart';
 import '../../widget/theme.dart';
 
@@ -30,15 +30,8 @@ class _BankingPartnerState extends State<BankingPartner> {
   Widget _bankDetailsBuilder(dynamic bank, int index) {
     return Container(
       width: w(80),
-      decoration: boxDecoration(
-        showShadow: true,
-        bgColor: white,
-        radius: 10.0,
-      ),
-      margin: EdgeInsets.symmetric(
-        horizontal: 7.5,
-        vertical: 7.5,
-      ),
+      decoration: boxDecoration(showShadow: true, bgColor: white, radius: 10.0),
+      margin: EdgeInsets.symmetric(horizontal: 7.5, vertical: 7.5),
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
         child: Row(
@@ -55,20 +48,13 @@ class _BankingPartnerState extends State<BankingPartner> {
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Icon(
-                              Icons.domain,
-                              color: colorPrimary,
-                              size: textSizeXLarge,
-                            ),
+                            Icon(Icons.domain, color: colorPrimary, size: textSizeXLarge),
                             SizedBox(width: w(2)),
                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
-                                  text(
-                                    bank['name'],
-                                    fontFamily: fontBold,
-                                  ),
+                                  text(bank['name'], fontFamily: fontBold),
                                   // text(
                                   //   bank['branchName'],
                                   //   textColor: textColorSecondary,
@@ -93,7 +79,7 @@ class _BankingPartnerState extends State<BankingPartner> {
                       //     bank['acType'],
                       //     textColor: white,
                       //     textAllCaps: true,
-                      //     fontFamily: fontSemibold,
+                      //     fontFamily: fontSemiBold,
                       //     fontSize: textSizeSMedium,
                       //   ),
                       // )

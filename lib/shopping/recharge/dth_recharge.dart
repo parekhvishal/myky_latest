@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import '../../shopping/recharge/dthPlanScreen.dart';
-import '../../utils/app_utils.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../../services/api.dart';
 import '../../../services/validator_x.dart';
 import '../../../widget/theme.dart';
+import '../../shopping/recharge/dthPlanScreen.dart';
+import '../../utils/app_utils.dart';
+import '../../widget/colors.dart';
 
 class DthRecharge extends StatefulWidget {
   @override
@@ -40,15 +41,10 @@ class _DthRechargeState extends State<DthRecharge> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: text('DTH Recharge'),
-      ),
+      appBar: AppBar(title: text('DTH Recharge')),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 10,
-            vertical: 15,
-          ),
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
           child: Form(
             autovalidateMode: AutovalidateMode.onUserInteraction,
             key: _dthFormKey,
@@ -126,12 +122,7 @@ class _DthRechargeState extends State<DthRecharge> {
         });
       },
       items: dthOperator.map<DropdownMenuItem<Map>>((category) {
-        return DropdownMenuItem<Map>(
-          value: category,
-          child: text(
-            category['name'].toString(),
-          ),
-        );
+        return DropdownMenuItem<Map>(value: category, child: text(category['name'].toString()));
       }).toList(),
     );
   }
@@ -140,9 +131,7 @@ class _DthRechargeState extends State<DthRecharge> {
     return TextFormField(
       validator: validator.add(
         key: 'phone',
-        rules: [
-          ValidatorX.mandatory(message: "Registered Mobile No./ Subscriber ID Number can't be empty"),
-        ],
+        rules: [ValidatorX.mandatory(message: "Registered Mobile No./ Subscriber ID Number can't be empty")],
       ),
       controller: _cardNumberController,
       keyboardType: TextInputType.number,
@@ -151,9 +140,7 @@ class _DthRechargeState extends State<DthRecharge> {
         border: OutlineInputBorder(),
         labelText: 'Registered Mobile No./ Subscriber ID',
       ),
-      style: primaryTextStyle(
-        fontFamily: fontMedium,
-      ),
+      style: primaryTextStyle(fontFamily: fontMedium),
     );
   }
 
@@ -161,9 +148,7 @@ class _DthRechargeState extends State<DthRecharge> {
     return TextFormField(
       validator: validator.add(
         key: 'amount',
-        rules: [
-          ValidatorX.mandatory(message: "Amount is required"),
-        ],
+        rules: [ValidatorX.mandatory(message: "Amount is required")],
       ),
       keyboardType: TextInputType.number,
       inputFormatters: [FilteringTextInputFormatter.deny(RegExp(r'[ ,-]'))],
@@ -176,9 +161,7 @@ class _DthRechargeState extends State<DthRecharge> {
         labelText: 'Amount',
         prefixText: ' ₹ ',
       ),
-      style: primaryTextStyle(
-        fontFamily: fontMedium,
-      ),
+      style: primaryTextStyle(fontFamily: fontMedium),
     );
   }
 
@@ -187,9 +170,7 @@ class _DthRechargeState extends State<DthRecharge> {
       inputFormatters: [FilteringTextInputFormatter.deny(new RegExp(r'[ ,.-]'))],
       validator: validator.add(
         key: 'financial_password',
-        rules: [
-          ValidatorX.mandatory(message: "Transaction Password is required"),
-        ],
+        rules: [ValidatorX.mandatory(message: "Transaction Password is required")],
       ),
       controller: _transactionPasswordController,
       obscureText: passwordVisible,
@@ -206,9 +187,7 @@ class _DthRechargeState extends State<DthRecharge> {
           child: passwordVisible ? Icon(Icons.visibility_off) : Icon(Icons.visibility),
         ),
       ),
-      style: primaryTextStyle(
-        fontFamily: fontMedium,
-      ),
+      style: primaryTextStyle(fontFamily: fontMedium),
     );
   }
 
@@ -217,7 +196,7 @@ class _DthRechargeState extends State<DthRecharge> {
       padding: const EdgeInsets.all(0),
       child: SizedBox(
         width: double.infinity,
-        child: CustomButton(
+        child: CustomButtonOld(
           textContent: "Proceed".toUpperCase(),
           onPressed: () {
             if (_dthFormKey.currentState!.validate()) {
@@ -230,30 +209,30 @@ class _DthRechargeState extends State<DthRecharge> {
                 // 'financial_password': _transactionPasswordController.text,
               };
 
-              Api.http.post('member/recharge/dth-recharge', data: sendData).then((response) {
-                if (response.data['status']) {
-                  orderId = response.data['rechargeOrder']['id'];
-                  Get.toNamed(
-                    '/payment-web-view',
-                    arguments: response.data['webPaymentUrl'],
-                  )?.then((value) {
-                    if (value != null) {
-                      Get.toNamed('/recharge-thanks', arguments: orderId);
+              Api.http
+                  .post('member/recharge/dth-recharge', data: sendData)
+                  .then((response) {
+                    if (response.data['status']) {
+                      orderId = response.data['rechargeOrder']['id'];
+                      Get.toNamed('/payment-web-view', arguments: response.data['webPaymentUrl'])?.then((
+                        value,
+                      ) {
+                        if (value != null) {
+                          Get.toNamed('/recharge-thanks', arguments: orderId);
+                        }
+                      });
+                      // AppUtils.startTransaction(response.data);
+                    } else {
+                      AppUtils.showErrorSnackBar(response.data['message']);
+                    }
+                  })
+                  .catchError((error) {
+                    if (error.response.statusCode == 422) {
+                      setState(() {
+                        validator.setErrors(error.response.data['errors']);
+                      });
                     }
                   });
-                  // AppUtils.startTransaction(response.data);
-                } else {
-                  AppUtils.showErrorSnackBar(response.data['message']);
-                }
-              }).catchError(
-                (error) {
-                  if (error.response.statusCode == 422) {
-                    setState(() {
-                      validator.setErrors(error.response.data['errors']);
-                    });
-                  }
-                },
-              );
             }
           },
         ),

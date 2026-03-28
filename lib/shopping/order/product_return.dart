@@ -15,6 +15,7 @@ import '../../services/getImage_service.dart';
 import '../../services/size_config.dart';
 import '../../services/validator_x.dart';
 import '../../utils/app_utils.dart';
+import '../../widget/colors.dart';
 import '../../widget/image_picker.dart';
 import '../../widget/theme.dart';
 import '../../widget/video_thumbnail.dart';
@@ -61,9 +62,7 @@ class _ProductReturnState extends State<ProductReturn> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: text('Return Process'),
-      ),
+      appBar: AppBar(title: text('Return Process')),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
@@ -71,10 +70,7 @@ class _ProductReturnState extends State<ProductReturn> {
               padding: const EdgeInsets.all(8),
               child: Container(
                 width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
-                ),
+                decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10)),
                 child: Padding(
                   padding: EdgeInsets.all(16),
                   child: Form(
@@ -90,8 +86,7 @@ class _ProductReturnState extends State<ProductReturn> {
                         buildReturnReasonFormField(context),
                         10.height,
                         buildImagePickerBlock(),
-                        text('(Note : Must upload video and images)',
-                            textColor: redColor, fontSize: 12.0),
+                        text('(Note : Must upload video and images)', textColor: redColor, fontSize: 12.0),
                         20.height,
                         buildVideoPickerBlock(),
                         10.height,
@@ -116,16 +111,14 @@ class _ProductReturnState extends State<ProductReturn> {
   }
 
   Widget buildReturnReasonFormField(BuildContext context) {
-    return formField(
+    return formFieldOld(
       context,
       'Why you want to return ?',
       controller: _reasonController,
       inputFormatters: [FilteringTextInputFormatter.deny(RegExp(r'^[ ]'))],
       validator: validator.add(
         key: 'reason',
-        rules: [
-          ValidatorX.mandatory(message: 'Reason field is required'),
-        ],
+        rules: [ValidatorX.mandatory(message: 'Reason field is required')],
       ),
       onChanged: (String? value) {
         validator.clearErrorsAt('reason');
@@ -143,9 +136,7 @@ class _ProductReturnState extends State<ProductReturn> {
                   semanticContainer: true,
                   clipBehavior: Clip.antiAliasWithSaveLayer,
                   margin: EdgeInsets.all(spacing_control),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
                   child: Column(
                     children: <Widget>[
                       Container(
@@ -154,22 +145,11 @@ class _ProductReturnState extends State<ProductReturn> {
                         decoration: BoxDecoration(
                           // color: Colors.black,
                           color: white,
-                          image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: FileImage(
-                              File(thumbnail!),
-                            ),
-                          ),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(0),
-                          ),
+                          image: DecorationImage(fit: BoxFit.cover, image: FileImage(File(thumbnail!))),
+                          borderRadius: BorderRadius.all(Radius.circular(0)),
                         ),
-                        child: Icon(
-                          Icons.play_circle_fill,
-                          color: colorPrimary,
-                          size: 50,
-                        ),
-                      )
+                        child: Icon(Icons.play_circle_fill, color: colorPrimary, size: 50),
+                      ),
                     ],
                   ),
                 ),
@@ -177,29 +157,27 @@ class _ProductReturnState extends State<ProductReturn> {
                   padding: EdgeInsets.all(spacing_control),
                   margin: EdgeInsets.only(top: 15, right: 10),
                   decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: white_color,
-                      border: Border.all(color: colorPrimary)),
+                    shape: BoxShape.circle,
+                    color: white_color,
+                    border: Border.all(color: colorPrimary),
+                  ),
                   child: GestureDetector(
                     onTap: () {
                       getVideo();
                     },
-                    child: Icon(
-                      Icons.video_camera_back_outlined,
-                      color: colorPrimary,
-                      size: 15,
-                    ),
+                    child: Icon(Icons.video_camera_back_outlined, color: colorPrimary, size: 15),
                   ),
                 ),
               ],
             ),
           )
-        : CustomButton(
+        : CustomButtonOld(
             customColor: colorAccent,
             textContent: 'Add Video',
             onPressed: () {
               getVideo();
-            });
+            },
+          );
   }
 
   Widget buildImagePickerBlock() {
@@ -213,19 +191,12 @@ class _ProductReturnState extends State<ProductReturn> {
               semanticContainer: true,
               clipBehavior: Clip.antiAliasWithSaveLayer,
               margin: EdgeInsets.all(spacing_control),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0),
-              ),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
               child: Column(
                 children: <Widget>[
                   if (!uploadingImage1)
                     _image1 != null
-                        ? Image.file(
-                            _image1!,
-                            width: w(40.0),
-                            height: 100,
-                            fit: BoxFit.contain,
-                          )
+                        ? Image.file(_image1!, width: w(40.0), height: 100, fit: BoxFit.contain)
                         : Image.asset(
                             'assets/images/no_image.png',
                             width: w(40.0),
@@ -241,12 +212,10 @@ class _ProductReturnState extends State<ProductReturn> {
                         children: <Widget>[
                           CircularProgressIndicator(),
                           SizedBox(height: 20.0),
-                          Text(
-                            "Uploading Image: $progressStringImage1 ",
-                          )
+                          Text("Uploading Image: $progressStringImage1 "),
                         ],
                       ),
-                    )
+                    ),
                 ],
               ),
             ),
@@ -254,9 +223,10 @@ class _ProductReturnState extends State<ProductReturn> {
               padding: EdgeInsets.all(spacing_control),
               margin: EdgeInsets.only(top: 15, right: 10),
               decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: white_color,
-                  border: Border.all(color: colorPrimary)),
+                shape: BoxShape.circle,
+                color: white_color,
+                border: Border.all(color: colorPrimary),
+              ),
               child: GestureDetector(
                 onTap: () {
                   GetImageFromDevice.instance.getImage(ImgSource.both, context).then((file) {
@@ -267,11 +237,7 @@ class _ProductReturnState extends State<ProductReturn> {
                   });
                   // getImage1(ImgSource.Both);
                 },
-                child: Icon(
-                  Icons.camera_alt,
-                  color: colorPrimary,
-                  size: 15,
-                ),
+                child: Icon(Icons.camera_alt, color: colorPrimary, size: 15),
               ),
             ),
           ],
@@ -283,19 +249,12 @@ class _ProductReturnState extends State<ProductReturn> {
               semanticContainer: true,
               clipBehavior: Clip.antiAliasWithSaveLayer,
               margin: EdgeInsets.all(spacing_control),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0),
-              ),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
               child: Column(
                 children: <Widget>[
                   if (!uploadingImage2)
                     _image2 != null
-                        ? Image.file(
-                            _image2!,
-                            width: w(40.0),
-                            height: 100,
-                            fit: BoxFit.contain,
-                          )
+                        ? Image.file(_image2!, width: w(40.0), height: 100, fit: BoxFit.contain)
                         : Image.asset(
                             'assets/images/no_image.png',
                             width: w(40.0),
@@ -311,12 +270,10 @@ class _ProductReturnState extends State<ProductReturn> {
                         children: <Widget>[
                           CircularProgressIndicator(),
                           SizedBox(height: 20.0),
-                          Text(
-                            "Uploading Image: $progressStringImage2 ",
-                          )
+                          Text("Uploading Image: $progressStringImage2 "),
                         ],
                       ),
-                    )
+                    ),
                 ],
               ),
             ),
@@ -324,9 +281,10 @@ class _ProductReturnState extends State<ProductReturn> {
               padding: EdgeInsets.all(spacing_control),
               margin: EdgeInsets.only(top: 15, right: 10),
               decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: white_color,
-                  border: Border.all(color: colorPrimary)),
+                shape: BoxShape.circle,
+                color: white_color,
+                border: Border.all(color: colorPrimary),
+              ),
               child: GestureDetector(
                 onTap: () {
                   GetImageFromDevice.instance.getImage(ImgSource.both, context).then((file) {
@@ -337,11 +295,7 @@ class _ProductReturnState extends State<ProductReturn> {
                   });
                   // getImage2(ImgSource.Both);
                 },
-                child: Icon(
-                  Icons.camera_alt,
-                  color: colorPrimary,
-                  size: 15,
-                ),
+                child: Icon(Icons.camera_alt, color: colorPrimary, size: 15),
               ),
             ),
           ],
@@ -356,9 +310,7 @@ class _ProductReturnState extends State<ProductReturn> {
       isExpanded: true,
       validator: validator.add(
         key: 'return_reason_id',
-        rules: [
-          ValidatorX.mandatory(message: "Select Reason"),
-        ],
+        rules: [ValidatorX.mandatory(message: "Select Reason")],
       ),
       hint: Text('Select Reason'),
       value: reasonType,
@@ -384,10 +336,7 @@ class _ProductReturnState extends State<ProductReturn> {
         validator.clearErrorsAt('return_reason_id');
       },
       items: reasonTypes.map<DropdownMenuItem<String>>((type) {
-        return DropdownMenuItem<String>(
-          child: Text(type['reason']),
-          value: type['id'].toString(),
-        );
+        return DropdownMenuItem<String>(child: Text(type['reason']), value: type['id'].toString());
       }).toList(),
     );
   }
@@ -427,12 +376,7 @@ class _ProductReturnState extends State<ProductReturn> {
       child: MaterialButton(
         color: colorPrimary,
         padding: EdgeInsets.all(15),
-        child: text(
-          'Submit',
-          textColor: white,
-          fontFamily: fontBold,
-          textAllCaps: true,
-        ),
+        child: text('Submit', textColor: white, fontFamily: fontBold, textAllCaps: true),
         onPressed: () async {
           if (_requestFormKey.currentState!.validate()) {
             if (_image1 == null || _image1!.path.toString().isEmpty) {
@@ -465,27 +409,26 @@ class _ProductReturnState extends State<ProductReturn> {
       'order_return_video': allIDImages[2],
       // 'user_type': Auth.check()! ? 1 : 2,
     };
-    Api.http.post('shopping/order/return', data: requestData).then(
-      (response) async {
-        AppUtils.showInfoSnackBar(
-          response.data['message'],
-          color: response.data['status'] ? Colors.green : Colors.red,
-        );
-        if (response.data['status']) {
-          Timer(Duration(seconds: 3), () {
-            Get.back(result: true);
-          });
-        }
-      },
-    ).catchError(
-      (error) {
-        if (error.response.statusCode == 422) {
-          AppUtils.showErrorSnackBar(error.response.data['message']);
-        } else if (error.response.statusCode == 401) {
-          AppUtils.showErrorSnackBar(error.response.data['message']);
-        }
-      },
-    );
+    Api.http
+        .post('shopping/order/return', data: requestData)
+        .then((response) async {
+          AppUtils.showInfoSnackBar(
+            response.data['message'],
+            color: response.data['status'] ? Colors.green : Colors.red,
+          );
+          if (response.data['status']) {
+            Timer(Duration(seconds: 3), () {
+              Get.back(result: true);
+            });
+          }
+        })
+        .catchError((error) {
+          if (error.response.statusCode == 422) {
+            AppUtils.showErrorSnackBar(error.response.data['message']);
+          } else if (error.response.statusCode == 401) {
+            AppUtils.showErrorSnackBar(error.response.data['message']);
+          }
+        });
   }
 
   Future getImage1(ImgSource source) async {

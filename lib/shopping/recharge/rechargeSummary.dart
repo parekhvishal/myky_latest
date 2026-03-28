@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 
 import '../../../services/api.dart';
 import '../../../widget/paginated_list.dart';
 import '../../../widget/theme.dart';
+import '../../widget/colors.dart';
 
 class RechargeSummary extends StatefulWidget {
   const RechargeSummary({Key? key}) : super(key: key);
@@ -29,21 +29,11 @@ class _RechargeSummaryState extends State<RechargeSummary> {
   Widget _rechargeOrderBuilder(dynamic rechargeOrder, int index) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-      decoration: boxDecoration(
-        showShadow: true,
-        bgColor: white_color,
-        radius: 10.0,
-      ),
+      decoration: boxDecoration(showShadow: true, bgColor: white_color, radius: 10.0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Expanded(
-            flex: 15,
-            child: CircleAvatar(
-              radius: 30.0,
-              backgroundImage: AssetImage(logo),
-            ),
-          ),
+          Expanded(flex: 15, child: CircleAvatar(radius: 30.0, backgroundImage: AssetImage(logo))),
           SizedBox(width: 10.0),
           Expanded(
             flex: 85,
@@ -57,19 +47,11 @@ class _RechargeSummaryState extends State<RechargeSummary> {
                   children: [
                     Expanded(
                       flex: 75,
-                      child: text(
-                        "${rechargeOrder['operator']}",
-                        maxLine: 3,
-                        fontFamily: fontSemibold,
-                      ),
+                      child: text("${rechargeOrder['operator']}", maxLine: 3, fontFamily: fontSemiBold),
                     ),
                     Expanded(
                       flex: 25,
-                      child: text(
-                        rechargeOrder['date'],
-                        fontSize: 13.0,
-                        textColor: Colors.grey.shade500,
-                      ),
+                      child: text(rechargeOrder['date'], fontSize: 13.0, textColor: Colors.grey.shade500),
                     ),
                   ],
                 ),
@@ -82,16 +64,9 @@ class _RechargeSummaryState extends State<RechargeSummary> {
                 SizedBox(height: 3.0),
                 Row(
                   children: [
-                    text(
-                      rechargeOrder['number'],
-                      fontFamily: fontMedium,
-                    ),
+                    text(rechargeOrder['number'], fontFamily: fontMedium),
                     SizedBox(width: 5.0),
-                    text(
-                      "(Type : ${rechargeOrder['type']})",
-                      fontSize: textSizeSmall,
-                      isLongText: true,
-                    ),
+                    text("(Type : ${rechargeOrder['type']})", fontSize: textSizeSmall, isLongText: true),
                   ],
                 ),
                 SizedBox(height: 8.0),
@@ -111,16 +86,12 @@ class _RechargeSummaryState extends State<RechargeSummary> {
                     ),
                   ],
                 ),
-                SizedBox(
-                  height: 10,
-                ),
+                SizedBox(height: 10),
                 Container(
                   padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                    border: Border.all(
-                      color: Colors.black54,
-                    ),
+                    border: Border.all(color: Colors.black54),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

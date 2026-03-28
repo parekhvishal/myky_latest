@@ -20,6 +20,7 @@ import '../../services/Vapor.dart';
 import '../../services/api.dart';
 import '../../services/getImage_service.dart';
 import '../../services/validator_x.dart';
+import '../../widget/colors.dart';
 import '../../widget/image_picker.dart';
 import '../../widget/network_image.dart';
 import '../../widget/theme.dart';
@@ -45,8 +46,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _numberController = TextEditingController();
-  final TextEditingController _whatsappNumberController =
-      TextEditingController();
+  final TextEditingController _whatsappNumberController = TextEditingController();
   final TextEditingController _pinCodeController = TextEditingController();
   final TextEditingController _addressController = TextEditingController();
   final TextEditingController _nomineeController = TextEditingController();
@@ -84,10 +84,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Position? position;
 
   void _onDropdownChanged(Map<String, dynamic> newValue) {
-    dynamic id = selectedItems.firstWhere(
-      (item) => item['id'] == newValue['id'],
-      orElse: () => -1,
-    );
+    dynamic id = selectedItems.firstWhere((item) => item['id'] == newValue['id'], orElse: () => -1);
     bool itemAlreadyAdded = id != -1;
     if (selectedItems.length < 3 && !itemAlreadyAdded) {
       selectedItems.add(newValue);
@@ -121,9 +118,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           orElse: () => null,
         );
         if (itemFound != null) {
-          filteredList.removeWhere(
-            (element) => element['id'] == itemFound['id'],
-          );
+          filteredList.removeWhere((element) => element['id'] == itemFound['id']);
         }
       }
       selectedValue = null;
@@ -159,24 +154,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
         _emailIDController.text = userResponse!['email'] ?? "";
         _gstController.text = userResponse!['gst_number'] ?? "";
 
-        if (userResponse!['category'] != null &&
-            userResponse!['category'].isNotEmpty) {
+        if (userResponse!['category'] != null && userResponse!['category'].isNotEmpty) {
           selectedItems = userResponse!['category'];
 
-          selectedIds = selectedItems
-              .map((item) => item['id'].toString())
-              .toList();
+          selectedIds = selectedItems.map((item) => item['id'].toString()).toList();
 
           getSubCategory();
         }
-        _pinCodeController.text = userResponse!['pincode'] != null
-            ? userResponse!['pincode'].toString()
-            : "";
+        _pinCodeController.text = userResponse!['pincode'] != null ? userResponse!['pincode'].toString() : "";
         if (userResponse!['dob'] != null && userResponse!['dob'] != "") {
-          _dobController.text = formatDate(
-            DateTime.parse(userResponse!['dob']).toLocal(),
-            [dd, '-', mm, '-', yyyy],
-          );
+          _dobController.text = formatDate(DateTime.parse(userResponse!['dob']).toLocal(), [
+            dd,
+            '-',
+            mm,
+            '-',
+            yyyy,
+          ]);
         }
 
         if (userResponse!['gender'] != null) {
@@ -197,12 +190,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
         _shopAddressController.text = userResponse!['shopAddress'] ?? '';
         _shopPinCodeController.text = userResponse!['shopPincode'].toString();
 
-        if (response.data['ShopState'] != null &&
-            response.data['ShopState'] != '') {
+        if (response.data['ShopState'] != null && response.data['ShopState'] != '') {
           myShopStateSelection = response.data['ShopState']['id'].toString();
         }
-        if (response.data['ShopCity'] != null &&
-            response.data['ShopCity'] != '') {
+        if (response.data['ShopCity'] != null && response.data['ShopCity'] != '') {
           shopCityId = response.data['ShopCity']['id'].toString();
           getCity(myShopStateSelection!, isLoad: true, isShop: true);
         }
@@ -226,25 +217,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
   getDeviceLocation() async {
     permission = await Geolocator.checkPermission();
 
-    if (permission == LocationPermission.denied ||
-        permission == LocationPermission.deniedForever) {
+    if (permission == LocationPermission.denied || permission == LocationPermission.deniedForever) {
       permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied ||
-          permission == LocationPermission.deniedForever) {
+      if (permission == LocationPermission.denied || permission == LocationPermission.deniedForever) {
         await Geolocator.requestPermission();
       }
       if (permission == LocationPermission.deniedForever) {
         AppUtils.showErrorSnackBar(
           'Location permissions are permanently denied, we cannot request permissions.',
         );
-        return Future.error(
-          'Location permissions are permanently denied, we cannot request permissions.',
-        );
+        return Future.error('Location permissions are permanently denied, we cannot request permissions.');
       }
     }
-    position = await Geolocator.getCurrentPosition(
-      desiredAccuracy: LocationAccuracy.high,
-    );
+    position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
 
     setState(() {});
   }
@@ -271,11 +256,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
             title: const Text(
               "Profile",
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
-              ),
+              style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.w600),
             ),
           ),
         ),
@@ -340,7 +321,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ],
                         ),
 
-                        formField(
+                        formFieldOld(
                           context,
                           'Name',
                           prefixIcon: UniconsLine.user,
@@ -348,23 +329,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           textCapitalization: TextCapitalization.characters,
                           textInputAction: TextInputAction.next,
                           readOnly: true,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.deny(RegExp(r'[ -.,]')),
-                          ],
+                          inputFormatters: [FilteringTextInputFormatter.deny(RegExp(r'[ -.,]'))],
                           validator: validator.add(
                             key: 'name',
-                            rules: [
-                              ValidatorX.mandatory(
-                                message: "Name field is required",
-                              ),
-                            ],
+                            rules: [ValidatorX.mandatory(message: "Name field is required")],
                           ),
                           onChanged: (value) {
                             validator.clearErrorsAt('name');
                           },
                         ),
                         const SizedBox(height: 10.0),
-                        formField(
+                        formFieldOld(
                           context,
                           'Whatsapp Number',
                           prefixIcon: UniconsLine.whatsapp_alt,
@@ -373,9 +348,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           textCapitalization: TextCapitalization.characters,
                           textInputAction: TextInputAction.next,
                           keyboardType: TextInputType.number,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.deny(RegExp(r'[ -.,]')),
-                          ],
+                          inputFormatters: [FilteringTextInputFormatter.deny(RegExp(r'[ -.,]'))],
                           validator: validator.add(
                             key: 'whatsapp_no',
                             rules: [
@@ -397,7 +370,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           },
                         ),
                         const SizedBox(height: 10.0),
-                        formField(
+                        formFieldOld(
                           context,
                           'Mobile Number',
                           prefixIcon: UniconsLine.phone,
@@ -405,19 +378,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           maxLength: 10,
                           readOnly: true,
                           keyboardType: TextInputType.number,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.deny(RegExp(r'[ -.,]')),
-                          ],
+                          inputFormatters: [FilteringTextInputFormatter.deny(RegExp(r'[ -.,]'))],
                           validator: validator.add(
                             key: 'phone',
                             rules: [
-                              ValidatorX.mandatory(
-                                message: "Mobile Number field is required",
-                              ),
-                              ValidatorX.minLength(
-                                length: 10,
-                                message: "Mobile Number must be of 10 digit",
-                              ),
+                              ValidatorX.mandatory(message: "Mobile Number field is required"),
+                              ValidatorX.minLength(length: 10, message: "Mobile Number must be of 10 digit"),
                             ],
                           ),
                           onChanged: (value) {
@@ -431,8 +397,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             if (date == null && _dobController.text.isEmpty) {
                               return 'Date of Birth is required';
                             } else if (date != null &&
-                                DateTime.now().difference(date) <
-                                    const Duration(days: 6570)) {
+                                DateTime.now().difference(date) < const Duration(days: 6570)) {
                               return 'Only 18+ can join';
                             } else {
                               return null;
@@ -440,37 +405,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           },
                           decoration: InputDecoration(
                             focusedBorder: UnderlineInputBorder(
-                              borderRadius: BorderRadius.circular(
-                                spacing_standard,
-                              ),
-                              borderSide: const BorderSide(
-                                color: Colors.transparent,
-                              ),
+                              borderRadius: BorderRadius.circular(spacing_standard),
+                              borderSide: const BorderSide(color: Colors.transparent),
                             ),
                             enabledBorder: UnderlineInputBorder(
-                              borderRadius: BorderRadius.circular(
-                                spacing_standard,
-                              ),
-                              borderSide: const BorderSide(
-                                color: Colors.transparent,
-                              ),
+                              borderRadius: BorderRadius.circular(spacing_standard),
+                              borderSide: const BorderSide(color: Colors.transparent),
                             ),
-                            contentPadding: const EdgeInsets.symmetric(
-                              vertical: 15,
-                            ),
+                            contentPadding: const EdgeInsets.symmetric(vertical: 15),
                             counterText: "",
                             filled: true,
                             fillColor: const Color(0xFFf7f7f7),
                             hintText: 'Date of birth',
-                            hintStyle: const TextStyle(
-                              fontSize: textSizeMedium,
-                              color: textColorSecondary,
-                            ),
-                            prefixIcon: const Icon(
-                              Icons.date_range,
-                              color: textColorSecondary,
-                              size: 20,
-                            ),
+                            hintStyle: const TextStyle(fontSize: textSizeMedium, color: textColorSecondary),
+                            prefixIcon: const Icon(Icons.date_range, color: textColorSecondary, size: 20),
                           ),
                           format: format,
                           onShowPicker: (context, currentValue) {
@@ -481,34 +429,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               lastDate: DateTime.now(),
                             ).then((res) {
                               if (res != null) {
-                                _dobController.text = res
-                                    .toLocal()
-                                    .toString()
-                                    .split(' ')[0];
+                                _dobController.text = res.toLocal().toString().split(' ')[0];
                               }
                               return res;
                             });
                           },
                         ),
                         const SizedBox(height: 10.0),
-                        formField(
+                        formFieldOld(
                           context,
                           'address',
                           prefixIcon: UniconsLine.home,
                           controller: _addressController,
                           textInputAction: TextInputAction.next,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.deny(
-                              RegExp(r'^[ -.,]'),
-                            ),
-                          ],
+                          inputFormatters: [FilteringTextInputFormatter.deny(RegExp(r'^[ -.,]'))],
                           validator: validator.add(
                             key: 'address',
-                            rules: [
-                              ValidatorX.mandatory(
-                                message: "Address field is required",
-                              ),
-                            ],
+                            rules: [ValidatorX.mandatory(message: "Address field is required")],
                           ),
                           onChanged: (value) {
                             validator.clearErrorsAt('address');
@@ -519,44 +456,34 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         if (citiesData != null) const SizedBox(height: 10),
                         if (citiesData != null) _cityDropdown(),
                         const SizedBox(height: 10.0),
-                        formField(
+                        formFieldOld(
                           context,
                           'Pincode',
                           prefixIcon: Icons.pin_drop,
                           controller: _pinCodeController,
                           textInputAction: TextInputAction.next,
                           maxLength: 6,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.deny(RegExp(r'[ -.,]')),
-                          ],
+                          inputFormatters: [FilteringTextInputFormatter.deny(RegExp(r'[ -.,]'))],
                           validator: validator.add(
                             key: 'pincode',
-                            rules: [
-                              ValidatorX.mandatory(
-                                message: "Pincode field is required",
-                              ),
-                            ],
+                            rules: [ValidatorX.mandatory(message: "Pincode field is required")],
                           ),
                           onChanged: (value) {
                             validator.clearErrorsAt('pincode');
                           },
                         ),
                         const SizedBox(height: 10.0),
-                        formField(
+                        formFieldOld(
                           context,
                           'Enter Email ID',
                           prefixIcon: Icons.email,
                           controller: _emailIDController,
                           keyboardType: TextInputType.text,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.deny(RegExp(r'^[ ]')),
-                          ],
+                          inputFormatters: [FilteringTextInputFormatter.deny(RegExp(r'^[ ]'))],
                           validator: validator.add(
                             key: 'email',
                             rules: [
-                              ValidatorX.mandatory(
-                                message: "The Email ID can't be empty",
-                              ),
+                              ValidatorX.mandatory(message: "The Email ID can't be empty"),
                               ValidatorX.custom((value, {key}) {
                                 bool emailValid = RegExp(
                                   r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
@@ -573,23 +500,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           },
                         ),
                         const SizedBox(height: 10.0),
-                        formField(
+                        formFieldOld(
                           context,
                           'Nominee Name',
                           prefixIcon: UniconsLine.user,
                           controller: _nomineeController,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.deny(
-                              RegExp(r'^[ -.,]'),
-                            ),
-                          ],
+                          inputFormatters: [FilteringTextInputFormatter.deny(RegExp(r'^[ -.,]'))],
                           validator: validator.add(
                             key: 'nomineeName',
-                            rules: [
-                              ValidatorX.mandatory(
-                                message: "Nominee Name field is required",
-                              ),
-                            ],
+                            rules: [ValidatorX.mandatory(message: "Nominee Name field is required")],
                           ),
                           onChanged: (value) {
                             validator.clearErrorsAt('nomineeName');
@@ -597,27 +516,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                         const SizedBox(height: 10.0),
 
-                        if (Auth.isUserVendor != null &&
-                            Auth.isUserVendor!) ...[
-                          formField(
+                        if (Auth.isUserVendor != null && Auth.isUserVendor!) ...[
+                          formFieldOld(
                             context,
                             'Shop Name',
                             prefixIcon: UniconsLine.shop,
                             controller: _shopNameController,
                             textCapitalization: TextCapitalization.characters,
                             textInputAction: TextInputAction.next,
-                            inputFormatters: [
-                              FilteringTextInputFormatter.deny(
-                                RegExp(r'^[- ,.]'),
-                              ),
-                            ],
+                            inputFormatters: [FilteringTextInputFormatter.deny(RegExp(r'^[- ,.]'))],
                             validator: validator.add(
                               key: 'shop_name',
-                              rules: [
-                                ValidatorX.mandatory(
-                                  message: "Shop name is required",
-                                ),
-                              ],
+                              rules: [ValidatorX.mandatory(message: "Shop name is required")],
                             ),
                             onChanged: (String? value) {
                               validator.clearErrorsAt('shop_name');
@@ -647,15 +557,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     },
                                     items: categoryItems!
                                         .where(
-                                          (item) => !selectedItems.any(
-                                            (element) =>
-                                                element['id'] == item['id'],
-                                          ),
+                                          (item) =>
+                                              !selectedItems.any((element) => element['id'] == item['id']),
                                         )
                                         .map((item) {
-                                          return DropdownMenuItem<
-                                            Map<String, dynamic>
-                                          >(
+                                          return DropdownMenuItem<Map<String, dynamic>>(
                                             value: item,
                                             child: Text(item['name']),
                                           );
@@ -675,9 +581,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 return Chip(
                                   label: Text(item['name']),
                                   onDeleted: () {
-                                    selectedItems.removeWhere(
-                                      (element) => element['id'] == item['id'],
-                                    );
+                                    selectedItems.removeWhere((element) => element['id'] == item['id']);
                                     filterCategoryList();
 
                                     // selectedValue = null;
@@ -687,34 +591,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                           ],
                           const SizedBox(height: 10),
-                          formField(
+                          formFieldOld(
                             context,
                             'Shop Address',
                             prefixIcon: UniconsLine.home,
                             controller: _shopAddressController,
                             textCapitalization: TextCapitalization.characters,
                             textInputAction: TextInputAction.next,
-                            inputFormatters: [
-                              FilteringTextInputFormatter.deny(
-                                RegExp(r'^[ -.,]'),
-                              ),
-                            ],
+                            inputFormatters: [FilteringTextInputFormatter.deny(RegExp(r'^[ -.,]'))],
                             validator: validator.add(
                               key: 'shop_address',
-                              rules: [
-                                ValidatorX.mandatory(
-                                  message: "Shop address field is required",
-                                ),
-                              ],
+                              rules: [ValidatorX.mandatory(message: "Shop address field is required")],
                             ),
                           ),
                           const SizedBox(height: 10),
                           if (shopStateData != null) _pickUpstateDropdown(),
-                          if (shopCitiesData != null)
-                            const SizedBox(height: 10),
+                          if (shopCitiesData != null) const SizedBox(height: 10),
                           if (shopCitiesData != null) _pickUpCityDropdown(),
                           const SizedBox(height: 10),
-                          formField(
+                          formFieldOld(
                             context,
                             'Shop Pincode',
                             prefixIcon: UniconsLine.location_pin_alt,
@@ -722,39 +617,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             textInputAction: TextInputAction.next,
                             keyboardType: TextInputType.number,
                             maxLength: 6,
-                            inputFormatters: [
-                              FilteringTextInputFormatter.deny(
-                                RegExp(r'^[- ,.]'),
-                              ),
-                            ],
+                            inputFormatters: [FilteringTextInputFormatter.deny(RegExp(r'^[- ,.]'))],
                             validator: validator.add(
                               key: 'shop_pincode',
-                              rules: [
-                                ValidatorX.mandatory(
-                                  message: "Shop pincode field is required",
-                                ),
-                              ],
+                              rules: [ValidatorX.mandatory(message: "Shop pincode field is required")],
                             ),
                             onChanged: (String? value) {
                               validator.clearErrorsAt('shop_pincode');
                             },
                           ),
                           const SizedBox(height: 10),
-                          formField(
+                          formFieldOld(
                             context,
                             'GST Number',
                             prefixIcon: UniconsLine.file_landscape_alt,
                             controller: _gstController,
                             textCapitalization: TextCapitalization.characters,
-                            inputFormatters: [
-                              FilteringTextInputFormatter.deny(
-                                RegExp(r'^[- ,.]'),
-                              ),
-                            ],
-                            validator: validator.add(
-                              key: 'gst_number',
-                              rules: [],
-                            ),
+                            inputFormatters: [FilteringTextInputFormatter.deny(RegExp(r'^[- ,.]'))],
+                            validator: validator.add(key: 'gst_number', rules: []),
                             onChanged: (String? value) {
                               validator.clearErrorsAt('gst_number');
                             },
@@ -769,12 +649,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   Card(
                                     semanticContainer: true,
                                     clipBehavior: Clip.antiAliasWithSaveLayer,
-                                    margin: const EdgeInsets.all(
-                                      spacing_control,
-                                    ),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10.0),
-                                    ),
+                                    margin: const EdgeInsets.all(spacing_control),
+                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
                                     child: Column(
                                       children: <Widget>[
                                         if (!uploadingImage1)
@@ -785,8 +661,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                   height: 100,
                                                   fit: BoxFit.contain,
                                                 )
-                                              : userResponse!['vendorImages'] !=
-                                                    null
+                                              : userResponse!['vendorImages'] != null
                                               ? PNetworkImage(
                                                   userResponse!['vendorImages'][0]['fileName'],
                                                   width: 150,
@@ -804,14 +679,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             height: 150,
                                             width: 100,
                                             child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
+                                              mainAxisAlignment: MainAxisAlignment.center,
                                               children: <Widget>[
                                                 const CircularProgressIndicator(),
                                                 const SizedBox(height: 20.0),
-                                                Text(
-                                                  "Uploading Image: $progressStringImage1 ",
-                                                ),
+                                                Text("Uploading Image: $progressStringImage1 "),
                                               ],
                                             ),
                                           ),
@@ -819,13 +691,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     ),
                                   ),
                                   Container(
-                                    padding: const EdgeInsets.all(
-                                      spacing_control,
-                                    ),
-                                    margin: const EdgeInsets.only(
-                                      top: 15,
-                                      right: 10,
-                                    ),
+                                    padding: const EdgeInsets.all(spacing_control),
+                                    margin: const EdgeInsets.only(top: 15, right: 10),
                                     decoration: BoxDecoration(
                                       shape: BoxShape.circle,
                                       color: white_color,
@@ -833,20 +700,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     ),
                                     child: GestureDetector(
                                       onTap: () {
-                                        GetImageFromDevice.instance
-                                            .getImage(ImgSource.both, context)
-                                            .then((file) {
-                                              if (file != null) {
-                                                _image1 = file;
-                                                setState(() {});
-                                              }
-                                            });
+                                        GetImageFromDevice.instance.getImage(ImgSource.both, context).then((
+                                          file,
+                                        ) {
+                                          if (file != null) {
+                                            _image1 = file;
+                                            setState(() {});
+                                          }
+                                        });
                                       },
-                                      child: Icon(
-                                        Icons.camera_alt,
-                                        color: colorPrimary,
-                                        size: 15,
-                                      ),
+                                      child: Icon(Icons.camera_alt, color: colorPrimary, size: 15),
                                     ),
                                   ),
                                 ],
@@ -857,12 +720,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   Card(
                                     semanticContainer: true,
                                     clipBehavior: Clip.antiAliasWithSaveLayer,
-                                    margin: const EdgeInsets.all(
-                                      spacing_control,
-                                    ),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10.0),
-                                    ),
+                                    margin: const EdgeInsets.all(spacing_control),
+                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
                                     child: Column(
                                       children: <Widget>[
                                         if (!uploadingImage2)
@@ -873,11 +732,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                   height: 100,
                                                   fit: BoxFit.contain,
                                                 )
-                                              : userResponse!['vendorImages'] !=
-                                                        null &&
-                                                    userResponse!['vendorImages']
-                                                            .length >
-                                                        1
+                                              : userResponse!['vendorImages'] != null &&
+                                                    userResponse!['vendorImages'].length > 1
                                               ? PNetworkImage(
                                                   userResponse!['vendorImages'][1]['fileName'],
                                                   width: 150,
@@ -895,14 +751,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             height: 150,
                                             width: 100,
                                             child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
+                                              mainAxisAlignment: MainAxisAlignment.center,
                                               children: <Widget>[
                                                 const CircularProgressIndicator(),
                                                 const SizedBox(height: 20.0),
-                                                Text(
-                                                  "Uploading Image: $progressStringImage2 ",
-                                                ),
+                                                Text("Uploading Image: $progressStringImage2 "),
                                               ],
                                             ),
                                           ),
@@ -910,13 +763,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     ),
                                   ),
                                   Container(
-                                    padding: const EdgeInsets.all(
-                                      spacing_control,
-                                    ),
-                                    margin: const EdgeInsets.only(
-                                      top: 15,
-                                      right: 10,
-                                    ),
+                                    padding: const EdgeInsets.all(spacing_control),
+                                    margin: const EdgeInsets.only(top: 15, right: 10),
                                     decoration: BoxDecoration(
                                       shape: BoxShape.circle,
                                       color: white_color,
@@ -924,21 +772,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     ),
                                     child: GestureDetector(
                                       onTap: () {
-                                        GetImageFromDevice.instance
-                                            .getImage(ImgSource.both, context)
-                                            .then((file) {
-                                              if (file != null) {
-                                                _image2 = file;
-                                                setState(() {});
-                                              }
-                                            });
+                                        GetImageFromDevice.instance.getImage(ImgSource.both, context).then((
+                                          file,
+                                        ) {
+                                          if (file != null) {
+                                            _image2 = file;
+                                            setState(() {});
+                                          }
+                                        });
                                         // getImage2(ImgSource.Both);
                                       },
-                                      child: Icon(
-                                        Icons.camera_alt,
-                                        color: colorPrimary,
-                                        size: 15,
-                                      ),
+                                      child: Icon(Icons.camera_alt, color: colorPrimary, size: 15),
                                     ),
                                   ),
                                 ],
@@ -955,12 +799,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   Card(
                                     semanticContainer: true,
                                     clipBehavior: Clip.antiAliasWithSaveLayer,
-                                    margin: const EdgeInsets.all(
-                                      spacing_control,
-                                    ),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10.0),
-                                    ),
+                                    margin: const EdgeInsets.all(spacing_control),
+                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
                                     child: Column(
                                       children: <Widget>[
                                         if (!uploadingImage3)
@@ -971,11 +811,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                   height: 100,
                                                   fit: BoxFit.contain,
                                                 )
-                                              : userResponse!['vendorImages'] !=
-                                                        null &&
-                                                    userResponse!['vendorImages']
-                                                            .length >
-                                                        2
+                                              : userResponse!['vendorImages'] != null &&
+                                                    userResponse!['vendorImages'].length > 2
                                               ? PNetworkImage(
                                                   userResponse!['vendorImages'][2]['fileName'],
                                                   width: 150,
@@ -993,14 +830,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             height: 150,
                                             width: 100,
                                             child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
+                                              mainAxisAlignment: MainAxisAlignment.center,
                                               children: <Widget>[
                                                 const CircularProgressIndicator(),
                                                 const SizedBox(height: 20.0),
-                                                Text(
-                                                  "Uploading Image: $progressStringImage3 ",
-                                                ),
+                                                Text("Uploading Image: $progressStringImage3 "),
                                               ],
                                             ),
                                           ),
@@ -1008,13 +842,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     ),
                                   ),
                                   Container(
-                                    padding: const EdgeInsets.all(
-                                      spacing_control,
-                                    ),
-                                    margin: const EdgeInsets.only(
-                                      top: 15,
-                                      right: 10,
-                                    ),
+                                    padding: const EdgeInsets.all(spacing_control),
+                                    margin: const EdgeInsets.only(top: 15, right: 10),
                                     decoration: BoxDecoration(
                                       shape: BoxShape.circle,
                                       color: white_color,
@@ -1022,21 +851,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     ),
                                     child: GestureDetector(
                                       onTap: () {
-                                        GetImageFromDevice.instance
-                                            .getImage(ImgSource.both, context)
-                                            .then((file) {
-                                              if (file != null) {
-                                                _image3 = file;
-                                                setState(() {});
-                                              }
-                                            });
+                                        GetImageFromDevice.instance.getImage(ImgSource.both, context).then((
+                                          file,
+                                        ) {
+                                          if (file != null) {
+                                            _image3 = file;
+                                            setState(() {});
+                                          }
+                                        });
                                         // getImage3(ImgSource.Both);
                                       },
-                                      child: Icon(
-                                        Icons.camera_alt,
-                                        color: colorPrimary,
-                                        size: 15,
-                                      ),
+                                      child: Icon(Icons.camera_alt, color: colorPrimary, size: 15),
                                     ),
                                   ),
                                 ],
@@ -1047,12 +872,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   Card(
                                     semanticContainer: true,
                                     clipBehavior: Clip.antiAliasWithSaveLayer,
-                                    margin: const EdgeInsets.all(
-                                      spacing_control,
-                                    ),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10.0),
-                                    ),
+                                    margin: const EdgeInsets.all(spacing_control),
+                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
                                     child: Column(
                                       children: <Widget>[
                                         if (!uploadingImage4)
@@ -1063,11 +884,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                   height: 100,
                                                   fit: BoxFit.contain,
                                                 )
-                                              : userResponse!['vendorImages'] !=
-                                                        null &&
-                                                    userResponse!['vendorImages']
-                                                            .length >
-                                                        3
+                                              : userResponse!['vendorImages'] != null &&
+                                                    userResponse!['vendorImages'].length > 3
                                               ? PNetworkImage(
                                                   userResponse!['vendorImages'][3]['fileName'],
                                                   width: 150,
@@ -1085,14 +903,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             height: 150,
                                             width: 100,
                                             child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
+                                              mainAxisAlignment: MainAxisAlignment.center,
                                               children: <Widget>[
                                                 const CircularProgressIndicator(),
                                                 const SizedBox(height: 20.0),
-                                                Text(
-                                                  "Uploading Image: $progressStringImage4 ",
-                                                ),
+                                                Text("Uploading Image: $progressStringImage4 "),
                                               ],
                                             ),
                                           ),
@@ -1100,13 +915,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     ),
                                   ),
                                   Container(
-                                    padding: const EdgeInsets.all(
-                                      spacing_control,
-                                    ),
-                                    margin: const EdgeInsets.only(
-                                      top: 15,
-                                      right: 10,
-                                    ),
+                                    padding: const EdgeInsets.all(spacing_control),
+                                    margin: const EdgeInsets.only(top: 15, right: 10),
                                     decoration: BoxDecoration(
                                       shape: BoxShape.circle,
                                       color: white_color,
@@ -1114,21 +924,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     ),
                                     child: GestureDetector(
                                       onTap: () {
-                                        GetImageFromDevice.instance
-                                            .getImage(ImgSource.both, context)
-                                            .then((file) {
-                                              if (file != null) {
-                                                _image4 = file;
-                                                setState(() {});
-                                              }
-                                            });
+                                        GetImageFromDevice.instance.getImage(ImgSource.both, context).then((
+                                          file,
+                                        ) {
+                                          if (file != null) {
+                                            _image4 = file;
+                                            setState(() {});
+                                          }
+                                        });
                                         // getImage4(ImgSource.Both);
                                       },
-                                      child: Icon(
-                                        Icons.camera_alt,
-                                        color: colorPrimary,
-                                        size: 15,
-                                      ),
+                                      child: Icon(Icons.camera_alt, color: colorPrimary, size: 15),
                                     ),
                                   ),
                                 ],
@@ -1146,19 +952,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ),
                               const SizedBox(height: 10),
                               Container(
-                                decoration: boxDecoration(
-                                  bgColor: colorAccent,
-                                  radius: 8.r,
-                                ),
-                                padding: EdgeInsets.symmetric(
-                                  vertical: 5.h,
-                                  horizontal: 12.w,
-                                ),
-                                child: text(
-                                  "Update",
-                                  fontSize: 14.sp,
-                                  textColor: white_color,
-                                ),
+                                decoration: boxDecoration(bgColor: colorAccent, radius: 8.r),
+                                padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 12.w),
+                                child: text("Update", fontSize: 14.sp, textColor: white_color),
                               ).onTap(() {
                                 // showDialog(
                                 //     context: context,
@@ -1167,8 +963,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 showDialog(
                                   context: context,
                                   builder: (context) => ConfirmationDialog(
-                                    title:
-                                        "Are you sure you want to change location?",
+                                    title: "Are you sure you want to change location?",
                                     onPositiveClick: () {
                                       Get.back();
                                       getDeviceLocation();
@@ -1186,24 +981,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           child: MaterialButton(
                             onPressed: () async {
                               if (_profileFormKey.currentState!.validate()) {
-                                FocusScope.of(
-                                  context,
-                                ).requestFocus(FocusNode());
+                                FocusScope.of(context).requestFocus(FocusNode());
 
                                 dynamic profileImage;
                                 if (_image != null) {
                                   profileImage = await Vapor.upload(
                                     _image,
-                                    progressCallback:
-                                        (int? completed, int? total) {
-                                          setState(() {
-                                            uploading = true;
-                                            progressString =
-                                                ((completed! / total!) * 100)
-                                                    .toStringAsFixed(0) +
-                                                "%";
-                                          });
-                                        },
+                                    progressCallback: (int? completed, int? total) {
+                                      setState(() {
+                                        uploading = true;
+                                        progressString =
+                                            ((completed! / total!) * 100).toStringAsFixed(0) + "%";
+                                      });
+                                    },
                                   );
 
                                   setState(() {
@@ -1221,80 +1011,68 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 if (_image1 != null) {
                                   image1 = await Vapor.uploadRegister(
                                     _image1,
-                                    progressCallback:
-                                        (int? completed, int? total) {
-                                          setState(() {
-                                            if (completed != total) {
-                                              uploadingImage1 = true;
-                                              progressStringImage1 =
-                                                  ((completed! / total!) * 100)
-                                                      .toStringAsFixed(0) +
-                                                  "%";
-                                            } else {
-                                              uploadingImage1 = false;
-                                            }
-                                          });
-                                        },
+                                    progressCallback: (int? completed, int? total) {
+                                      setState(() {
+                                        if (completed != total) {
+                                          uploadingImage1 = true;
+                                          progressStringImage1 =
+                                              ((completed! / total!) * 100).toStringAsFixed(0) + "%";
+                                        } else {
+                                          uploadingImage1 = false;
+                                        }
+                                      });
+                                    },
                                   );
                                 }
 
                                 if (_image2 != null) {
                                   image2 = await Vapor.uploadRegister(
                                     _image2,
-                                    progressCallback:
-                                        (int? completed, int? total) {
-                                          setState(() {
-                                            if (completed != total) {
-                                              uploadingImage2 = true;
-                                              progressStringImage2 =
-                                                  ((completed! / total!) * 100)
-                                                      .toStringAsFixed(0) +
-                                                  "%";
-                                            } else {
-                                              uploadingImage2 = false;
-                                            }
-                                          });
-                                        },
+                                    progressCallback: (int? completed, int? total) {
+                                      setState(() {
+                                        if (completed != total) {
+                                          uploadingImage2 = true;
+                                          progressStringImage2 =
+                                              ((completed! / total!) * 100).toStringAsFixed(0) + "%";
+                                        } else {
+                                          uploadingImage2 = false;
+                                        }
+                                      });
+                                    },
                                   );
                                 }
 
                                 if (_image3 != null) {
                                   image3 = await Vapor.uploadRegister(
                                     _image3,
-                                    progressCallback:
-                                        (int? completed, int? total) {
-                                          setState(() {
-                                            if (completed != total) {
-                                              uploadingImage3 = true;
-                                              progressStringImage3 =
-                                                  ((completed! / total!) * 100)
-                                                      .toStringAsFixed(0) +
-                                                  "%";
-                                            } else {
-                                              uploadingImage3 = false;
-                                            }
-                                          });
-                                        },
+                                    progressCallback: (int? completed, int? total) {
+                                      setState(() {
+                                        if (completed != total) {
+                                          uploadingImage3 = true;
+                                          progressStringImage3 =
+                                              ((completed! / total!) * 100).toStringAsFixed(0) + "%";
+                                        } else {
+                                          uploadingImage3 = false;
+                                        }
+                                      });
+                                    },
                                   );
                                 }
 
                                 if (_image4 != null) {
                                   image4 = await Vapor.uploadRegister(
                                     _image4,
-                                    progressCallback:
-                                        (int? completed, int? total) {
-                                          setState(() {
-                                            if (completed != total) {
-                                              uploadingImage4 = true;
-                                              progressStringImage4 =
-                                                  ((completed! / total!) * 100)
-                                                      .toStringAsFixed(0) +
-                                                  "%";
-                                            } else {
-                                              uploadingImage4 = false;
-                                            }
-                                          });
-                                        },
+                                    progressCallback: (int? completed, int? total) {
+                                      setState(() {
+                                        if (completed != total) {
+                                          uploadingImage4 = true;
+                                          progressStringImage4 =
+                                              ((completed! / total!) * 100).toStringAsFixed(0) + "%";
+                                        } else {
+                                          uploadingImage4 = false;
+                                        }
+                                      });
+                                    },
                                   );
                                 }
 
@@ -1316,11 +1094,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   "state_id": myStateSelection,
                                   "city_id": myCitySelection,
                                   "pincode": _pinCodeController.text,
-                                  "is_vendor":
-                                      Auth.isUserVendor != null &&
-                                          Auth.isUserVendor!
-                                      ? 1
-                                      : 0,
+                                  "is_vendor": Auth.isUserVendor != null && Auth.isUserVendor! ? 1 : 0,
                                   "category_id": selectedIds,
                                   "sub_category_id": subCategorySelection,
                                   "gst_number": _gstController.text,
@@ -1331,56 +1105,39 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   "shop_state_id": myShopStateSelection,
                                   "shop_city_id": myShopCitySelection,
                                   "shop_pincode": _shopPinCodeController.text,
-                                  if (position != null)
-                                    "latitude": position!.latitude,
-                                  if (position != null)
-                                    "longitude": position!.longitude,
+                                  if (position != null) "latitude": position!.latitude,
+                                  if (position != null) "longitude": position!.longitude,
                                 };
 
                                 Api.http
-                                    .post(
-                                      'member/profile/update',
-                                      data: sendData,
-                                    )
+                                    .post('member/profile/update', data: sendData)
                                     .then((response) async {
                                       if (response.data['status']) {
                                         Map? exitingUser = Auth.user();
 
-                                        exitingUser!['profileImage'] = response
-                                            .data['member']['profileImage'];
-                                        exitingUser['email'] = response
-                                            .data['member']['user']['email'];
+                                        exitingUser!['profileImage'] =
+                                            response.data['member']['profileImage'];
+                                        exitingUser['email'] = response.data['member']['user']['email'];
                                         Auth.updateUser(exitingUser);
                                         Get.back();
 
-                                        AppUtils.showSuccessSnackBar(
-                                          response.data['message'],
-                                        );
+                                        AppUtils.showSuccessSnackBar(response.data['message']);
                                       }
                                     })
                                     .catchError((error) {
-                                      AppUtils.showErrorSnackBar(
-                                        error.response.data['message'],
-                                      );
+                                      AppUtils.showErrorSnackBar(error.response.data['message']);
 
-                                      validator.setErrors(
-                                        error.response.data['errors'],
-                                      );
+                                      validator.setErrors(error.response.data['errors']);
                                     });
                               }
                             },
                             child: const Text(
                               'SUBMIT',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w700,
-                              ),
+                              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
                             ),
                             color: Theme.of(context).primaryColor,
                             textColor: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5.0),
-                            ),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
                             padding: const EdgeInsets.all(15.0),
                           ),
                         ),
@@ -1398,19 +1155,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget buildBusinessNameField(BuildContext context) {
-    return formField(
+    return formFieldOld(
       context,
       "Business Name",
       controller: _businessNameController,
       prefixIcon: UniconsLine.building,
       textInputAction: TextInputAction.next,
-      inputFormatters: [
-        FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]|[ ]+$')),
-      ],
+      inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]|[ ]+$'))],
       validator: validator.add(
-        rules: [
-          ValidatorX.mandatory(message: "Business name field is required"),
-        ],
+        rules: [ValidatorX.mandatory(message: "Business name field is required")],
         key: 'business_name',
       ),
       onChanged: (value) {
@@ -1420,7 +1173,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget buildGstNoField(BuildContext context) {
-    return formField(
+    return formFieldOld(
       context,
       "GST Number",
       controller: _gstController,
@@ -1438,7 +1191,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget buildEmailField(BuildContext context) {
-    return formField(
+    return formFieldOld(
       context,
       "Email",
       controller: _emailIDController,
@@ -1468,9 +1221,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               clipBehavior: Clip.antiAliasWithSaveLayer,
               elevation: spacing_standard,
               margin: const EdgeInsets.all(spacing_control),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(100.0),
-              ),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100.0)),
               child: CircleAvatar(
                 radius: 50,
                 backgroundColor: Colors.white,
@@ -1480,12 +1231,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       _image != null
                           ? ClipRRect(
                               borderRadius: BorderRadius.circular(50),
-                              child: Image.file(
-                                _image!,
-                                width: 100,
-                                height: 100,
-                                fit: BoxFit.contain,
-                              ),
+                              child: Image.file(_image!, width: 100, height: 100, fit: BoxFit.contain),
                             )
                           : userResponse!['profileImage'] != null
                           ? PNetworkImage(
@@ -1505,10 +1251,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         height: 85.0,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Text(progressString),
-                            const CircularProgressIndicator(),
-                          ],
+                          children: <Widget>[Text(progressString), const CircularProgressIndicator()],
                         ),
                       ),
                   ],
@@ -1526,14 +1269,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
             child: GestureDetector(
               onTap: () {
-                GetImageFromDevice.instance
-                    .getImage(ImgSource.both, context)
-                    .then((file) {
-                      if (file != null) {
-                        _image = file;
-                        setState(() {});
-                      }
-                    });
+                GetImageFromDevice.instance.getImage(ImgSource.both, context).then((file) {
+                  if (file != null) {
+                    _image = file;
+                    setState(() {});
+                  }
+                });
                 // getImage(ImgSource.Both);
               },
               child: Icon(Icons.camera_alt, color: colorPrimary, size: 20),
@@ -1556,17 +1297,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
           }
           return null;
         },
-        hint: text(
-          'Select State',
-          fontSize: textSizeMedium,
-          textColor: textColorSecondary,
-        ),
+        hint: text('Select State', fontSize: textSizeMedium, textColor: textColorSecondary),
         decoration: InputDecoration(
-          prefixIcon: const Icon(
-            Icons.add_location_alt,
-            color: textColorSecondary,
-            size: 20,
-          ),
+          prefixIcon: const Icon(Icons.add_location_alt, color: textColorSecondary, size: 20),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
             borderSide: BorderSide(color: whiteColor, width: 0.0),
@@ -1575,9 +1308,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             borderRadius: BorderRadius.circular(8),
             borderSide: BorderSide(color: whiteColor, width: 0.0),
           ),
-          border: UnderlineInputBorder(
-            borderSide: BorderSide(color: Colors.black12),
-          ),
+          border: UnderlineInputBorder(borderSide: BorderSide(color: Colors.black12)),
           contentPadding: EdgeInsets.symmetric(vertical: 15),
           // hintText: 'Select State',
           filled: true,
@@ -1601,10 +1332,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             value: state['id'].toString(),
             child: Padding(
               padding: const EdgeInsets.only(left: 10.0),
-              child: Text(
-                state['name'].toString(),
-                style: TextStyle(color: Colors.black),
-              ),
+              child: Text(state['name'].toString(), style: TextStyle(color: Colors.black)),
             ),
           );
         }).toList(),
@@ -1624,17 +1352,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
           }
           return null;
         },
-        hint: text(
-          'Select City',
-          fontSize: textSizeMedium,
-          textColor: textColorSecondary,
-        ),
+        hint: text('Select City', fontSize: textSizeMedium, textColor: textColorSecondary),
         decoration: InputDecoration(
-          prefixIcon: Icon(
-            Icons.add_location_alt,
-            color: textColorSecondary,
-            size: 20,
-          ),
+          prefixIcon: Icon(Icons.add_location_alt, color: textColorSecondary, size: 20),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
             borderSide: BorderSide(color: whiteColor, width: 0.0),
@@ -1643,9 +1363,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             borderRadius: BorderRadius.circular(8),
             borderSide: BorderSide(color: whiteColor, width: 0.0),
           ),
-          border: UnderlineInputBorder(
-            borderSide: BorderSide(color: Colors.black12),
-          ),
+          border: UnderlineInputBorder(borderSide: BorderSide(color: Colors.black12)),
           contentPadding: EdgeInsets.symmetric(vertical: 15),
           filled: true,
           fillColor: Color(0xFFf7f7f7),
@@ -1665,10 +1383,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         items: shopCitiesData!.map<DropdownMenuItem<String>>((city) {
           return DropdownMenuItem<String>(
             value: city['id'].toString(),
-            child: Padding(
-              padding: const EdgeInsets.only(left: 10.0),
-              child: Text(city['name'].toString()),
-            ),
+            child: Padding(padding: const EdgeInsets.only(left: 10.0), child: Text(city['name'].toString())),
           );
         }).toList(),
       ),
@@ -1685,10 +1400,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         }
         return null;
       },
-      hint: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-        child: text('Select State'),
-      ),
+      hint: Padding(padding: const EdgeInsets.symmetric(horizontal: 8.0), child: text('Select State')),
       decoration: InputDecoration(
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
@@ -1698,18 +1410,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
           borderRadius: BorderRadius.circular(8),
           borderSide: const BorderSide(color: white, width: 0.0),
         ),
-        border: const UnderlineInputBorder(
-          borderSide: BorderSide(color: Colors.black12),
-        ),
+        border: const UnderlineInputBorder(borderSide: BorderSide(color: Colors.black12)),
         contentPadding: const EdgeInsets.symmetric(vertical: 15),
         // hintText: 'Select State',
         filled: true,
         fillColor: const Color(0xFFf7f7f7),
         prefixIcon: const Icon(Icons.location_city),
-        hintStyle: const TextStyle(
-          fontSize: textSizeMedium,
-          color: Colors.black,
-        ),
+        hintStyle: const TextStyle(fontSize: textSizeMedium, color: Colors.black),
       ),
       value: myStateSelection,
       iconSize: 20,
@@ -1728,10 +1435,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           value: state['id'].toString(),
           child: Padding(
             padding: const EdgeInsets.only(left: 10.0),
-            child: Text(
-              state['name'].toString(),
-              style: const TextStyle(color: Colors.black),
-            ),
+            child: Text(state['name'].toString(), style: const TextStyle(color: Colors.black)),
           ),
         );
       }).toList(),
@@ -1750,10 +1454,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           }
           return null;
         },
-        hint: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10.0),
-          child: text('Select City'),
-        ),
+        hint: Padding(padding: const EdgeInsets.symmetric(horizontal: 10.0), child: text('Select City')),
         decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
@@ -1763,18 +1464,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
             borderRadius: BorderRadius.circular(8),
             borderSide: const BorderSide(color: white, width: 0.0),
           ),
-          border: const UnderlineInputBorder(
-            borderSide: BorderSide(color: Colors.black12),
-          ),
+          border: const UnderlineInputBorder(borderSide: BorderSide(color: Colors.black12)),
           contentPadding: const EdgeInsets.symmetric(vertical: 15),
           filled: true,
           fillColor: const Color(0xFFf7f7f7),
           prefixIcon: const Icon(Icons.location_city),
           // hintText: 'Select City',
-          hintStyle: const TextStyle(
-            fontSize: textSizeMedium,
-            color: Colors.black,
-          ),
+          hintStyle: const TextStyle(fontSize: textSizeMedium, color: Colors.black),
         ),
         value: myCitySelection,
         iconSize: 20,
@@ -1788,10 +1484,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         items: citiesData!.map<DropdownMenuItem<String>>((city) {
           return DropdownMenuItem<String>(
             value: city['id'].toString(),
-            child: Padding(
-              padding: const EdgeInsets.only(left: 10.0),
-              child: Text(city['name'].toString()),
-            ),
+            child: Padding(padding: const EdgeInsets.only(left: 10.0), child: Text(city['name'].toString())),
           );
         }).toList(),
       ),
